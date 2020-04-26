@@ -7,9 +7,10 @@
 	br = branch -vv
 	bra = branch -vv --all
 	bed = branch --edit-description
-	aa = add --all :/
+	aa = add .
 	ci = commit -v
 	ca = commit --amend -v
+	s = status
 	save = commit -a -m "Save"
 	co = checkout
 	pullrb = pull --rebase

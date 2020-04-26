@@ -1,14 +1,49 @@
-# ls aliases
-alias ll='ls -lah'
-alias la='ls -A'
-alias l='ls'
+# Commonly Used Aliases
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+alias ll="ls -l"
+alias la="ls -la"
+
+alias cla="clear && ls -la"
+alias cll="clear && ls -l"
+alias cls="clear && ls"
+
+# Tmux shortcuts
+alias t="tmux"
+alias ta="tmux attach"
+alias td="tmux detach"
+
+# VIM
+alias vim="nvim"
+
+# Git aliases
+alias gaa="git add ."
+alias gd="git --no-pager diff"
+alias gs="git status"
+alias glog="git log --oneline --decorate --graph"
+alias gloga="git log --oneline --decorate --graph --all"
+alias grb="git rebase -i"
+alias gb="git branch"
+alias gcom="git commit"
+alias gc="git checkout"
+alias gcb="git checkout -b"
+alias gp="git push"
+alias gpo="git push origin"
+alias gpu="git pull"
+alias gpuo="git pull origin"
+
+# Random
+alias whatever="echo '¯\_(ツ)_/¯' | pbcopy"
+
+# Custom functions
+chpwd() ll
 
 # Aliases to protect against overwriting
 alias cp='cp -i'
 alias mv='mv -i'
-
-# Vim aliases
-alias vim='nvim'
 
 # Update dotfiles
 dfu() {

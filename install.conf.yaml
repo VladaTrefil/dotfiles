@@ -15,6 +15,7 @@
     ~/.oh-my-zsh:
     ~/.zsh:
     ~/.zshrc:
+    ~/.config/nvim: .config/nvim
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]

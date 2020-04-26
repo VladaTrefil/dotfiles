@@ -1,7 +1,3 @@
-# Use colors in coreutils utilities output
-alias ls='ls --color=auto'
-alias grep='grep --color'
-
 # ls aliases
 alias ll='ls -lah'
 alias la='ls -A'
@@ -13,9 +9,6 @@ alias mv='mv -i'
 
 # Vim aliases
 alias vim='nvim'
-
-# git related aliases
-alias gag='git exec ag'
 
 # Update dotfiles
 dfu() {

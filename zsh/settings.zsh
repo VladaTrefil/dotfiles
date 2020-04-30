@@ -1,6 +1,6 @@
 PATH="$HOME/.local/bin${PATH:+:${PATH}}"
 EDITOR="nvim"
-ZSH=~/.oh-my-zsh/
+ZSH=~/.oh-my-zsh
 
 # Invoke TMUX on start
 if [[ -z "$TMUX" ]]; then

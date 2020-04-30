@@ -2,5 +2,8 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 [submodule "oh-my-zsh"]
-	path = oh-my-zsh
+	path = zsh/plugins/oh-my-zsh
 	url = git@github.com:ohmyzsh/ohmyzsh.git
+[submodule "zsh/plugins/spaceship-prompt"]
+	path = zsh/plugins/spaceship-prompt
+	url = https://github.com/denysdovhan/spaceship-prompt.git

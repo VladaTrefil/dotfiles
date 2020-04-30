@@ -9,13 +9,14 @@
     ~/.shell:
     ~/.gitconfig:
     ~/.gitignore_global:
-    ~/.tmux.conf:
+    ~/.tmux.conf: tmux/tmux.conf
     ~/.vim:
-    ~/.vimrc:
-    ~/.oh-my-zsh:
+    ~/.vimrc: vim/vimrc
     ~/.zsh:
-    ~/.zshrc:
-    ~/.config/nvim: .config/nvim
+    ~/.zshrc: zsh/zshrc
+    ~/.oh-my-zsh/custom/themes/spaceship.zsh-theme: zsh/plugins/spaceship-prompt/spaceship.zsh-theme
+    ~/.oh-my-zsh: zsh/plugins/oh-my-zsh
+    ~/.config/nvim: config/nvim
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]

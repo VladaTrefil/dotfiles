@@ -5,6 +5,11 @@
 
 - clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/']
 
+- shell:
+  - [sh pre-install.sh, Running pre installation script]
+  - [mkdir -p ~/.oh-my-zsh/custom/, Creating oh-my-zsh custom forlders]
+  - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins forlders]
+
 - link:
     ~/.dotfiles: ''
     ~/.shell:
@@ -14,14 +19,14 @@
     ~/.vim:
     ~/.vimrc: vim/vimrc
     ~/.zsh:
-    ~/.zshrc: zsh/zshrc
+    ~/.zshrc:
+      force: true
+      path: zsh/zshrc
     ~/.oh-my-zsh/custom/plugins/zsh-completions: zsh/custom/plugins/zsh-completions/
     ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting: zsh/custom/plugins/zsh-syntax-highlighting/
+    ~/.oh-my-zsh/custom/themes/spaceship.zsh-theme: zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme
     ~/.config/nvim: config/nvim
 
 - shell:
-  - [sh pre-install.sh, Running pre installation script]
-  - [mkdir -p ~/.oh-my-zsh/custom/, Creating oh-my-zsh custom forlders]
-  - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins forlders]
   - [sh fonts/install.sh, Installing Powerline fonts]
   - [git submodule update --init --recursive, Installing submodules]

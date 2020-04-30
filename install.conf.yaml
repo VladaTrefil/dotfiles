@@ -22,7 +22,7 @@
     ~/.zshrc:
       force: true
       path: zsh/zshrc
-    ~/.oh-my-zsh/custom/plugins/zsh-completions: zsh/custom/plugins/zsh-completions/
+    ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: zsh/custom/plugins/zsh-autosuggestions/
     ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting: zsh/custom/plugins/zsh-syntax-highlighting/
     ~/.oh-my-zsh/custom/themes/spaceship.zsh-theme: zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme
     ~/.config/nvim: config/nvim

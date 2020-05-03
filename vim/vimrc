@@ -1,0 +1,78 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vim Plug - Managing Plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'joshdick/onedark.vim'
+Plug 'vim-airline/vim-airline'
+call plug#end()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set path+=**					" Searches current directory recursively.
+set t_Co=256                    " Set if term supports 256 colors.
+set number relativenumber       " Display line numbers
+
+set encoding=utf8
+
+set hlsearch
+set ignorecase
+set smartcase
+
+set clipboard=unnamed
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Theme Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax on
+colorscheme onedark
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Text Edit Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set expandtab                   " Use spaces instead of tabs.
+set smarttab                    " Be smart using tabs ;)
+set shiftwidth=4                " One tab == four spaces.
+set tabstop=4                   " One tab == four spaces.
+" change spacing for language specific
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Keybindings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap Y y$
+nnoremap H 0
+nnoremap L $
+nnoremap J G
+nnoremap K gg
+
+nnoremap <C-w> :nohl<CR><C-w>:echo "Search cleared"<CR>
+
+nnoremap <Space> <Nop>
+let mapleader = " "
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Splits Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-l> :wincmd l<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NERDTree Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Autostart the NERDTree
+autocmd vimenter * NERDTree
+" Close Vim if only NERDTree is open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowLineNumbers=1
+let NERDTreeShowHidden=1
+let NERDTreeMinimalUI = 1
+let g:NERDTreeWinSize=38

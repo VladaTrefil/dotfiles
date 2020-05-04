@@ -16,6 +16,7 @@
     ~/.gitconfig:
     ~/.gitignore_global:
     ~/.tmux.conf: tmux/tmux.conf
+    ~/.tmux/themes: tmux/themes
     ~/.vim:
     ~/.vimrc: vim/vimrc
     ~/.zsh:

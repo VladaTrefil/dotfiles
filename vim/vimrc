@@ -32,6 +32,10 @@ set clipboard=unnamed
 syntax on
 colorscheme onedark
 
+let g:lightline = {
+  \ 'colorscheme': 'onedark',
+  \ }
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text Edit Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

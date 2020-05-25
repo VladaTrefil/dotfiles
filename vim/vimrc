@@ -5,10 +5,19 @@ filetype off                  " required
 " Vim Plug - Managing Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
+
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'vifm/vifm.vim'                               
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight' 
+Plug 'ryanoasis/vim-devicons'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'joshdick/onedark.vim'
+Plug 'sheerun/vim-polyglot'
 Plug 'vim-airline/vim-airline'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -45,11 +54,13 @@ set shiftwidth=4                " One tab == four spaces.
 set tabstop=4                   " One tab == four spaces.
 " change spacing for language specific
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype typescriptreact setlocal ts=2 sts=2 sw=2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap Y y$
+
 nnoremap H 0
 nnoremap L $
 nnoremap J G
@@ -60,13 +71,30 @@ nnoremap <C-w> :nohl<CR><C-w>:echo "Search cleared"<CR>
 nnoremap <Space> <Nop>
 let mapleader = " "
 
+noremap <Leader>s :update<CR>
+noremap <Leader>w :q<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FZF Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+noremap <Leader>t :Files<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Splits Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set splitbelow
+set splitright
+
 nmap <silent> <c-k> :wincmd k<CR>
 nmap <silent> <c-j> :wincmd j<CR>
 nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-l> :wincmd l<CR>
+
+noremap <silent> <Leader>h :vertical resize +3<CR>
+noremap <silent> <Leader>l :vertical resize -3<CR>
+noremap <silent> <Leader>k :resize +3<CR>
+noremap <silent> <Leader>j :resize -3<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree Settings
@@ -74,9 +102,15 @@ nmap <silent> <c-l> :wincmd l<CR>
 " Autostart the NERDTree
 autocmd vimenter * NERDTree
 " Close Vim if only NERDTree is open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-map <C-n> :NERDTreeToggle<CR>
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+map <Leader>n :NERDTreeToggle<CR>
 let NERDTreeShowLineNumbers=1
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI = 1
 let g:NERDTreeWinSize=38
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CoC Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+ 

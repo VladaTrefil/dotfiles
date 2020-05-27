@@ -10,3 +10,6 @@
 [submodule "zsh/custom/plugins/zsh-autosuggestions"]
 	path = zsh/custom/plugins/zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
+[submodule "fonts"]
+	path = fonts
+	url = https://github.com/powerline/fonts

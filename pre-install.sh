@@ -9,6 +9,19 @@ else
   brew update
 fi
 
+# Check if TMUX is installed
+if [ ! -f "`which tmux`" ]; then
+  echo 'Installing tmux'
+  brew install tmux
+fi
+
+# Check if NVIM is installed
+if [ ! -f "`which nvim`" ]; then
+  echo 'Installing nvim'
+  brew install nvim
+fi
+
+
 # Check if oh-my-zsh is installed
 OMZDIR="$HOME/.oh-my-zsh"
 if [ ! -d "$OMZDIR" ]; then

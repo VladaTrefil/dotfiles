@@ -16,7 +16,6 @@
     ~/.gitconfig:
     ~/.gitignore_global:
     ~/.tmux.conf: tmux/tmux.conf
-    ~/.tmux/themes: tmux/themes
     ~/.vim:
     ~/.vimrc: vim/vimrc
     ~/.zsh:
@@ -29,5 +28,5 @@
     ~/.config/nvim: config/nvim
 
 - shell:
-  - [sh fonts/install.sh, Installing Powerline fonts]
+  # - [sh fonts/install.sh, Installing Powerline fonts]
   - [git submodule update --init --recursive, Installing submodules]

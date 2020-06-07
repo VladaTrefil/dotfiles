@@ -91,6 +91,9 @@ nmap <silent> <c-j> :wincmd j<CR>
 nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-l> :wincmd l<CR>
 
+nmap <silent> <Leader>" :sp<CR>
+nmap <silent> <Leader>% :vsp<CR>
+
 noremap <silent> <Leader>h :vertical resize +3<CR>
 noremap <silent> <Leader>l :vertical resize -3<CR>
 noremap <silent> <Leader>k :resize +3<CR>

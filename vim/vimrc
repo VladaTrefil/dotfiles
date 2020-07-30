@@ -63,8 +63,8 @@ nnoremap Y y$
 
 nnoremap H 0
 nnoremap L $
-nnoremap J G
-nnoremap K gg
+nnoremap J }
+nnoremap K {
 
 nnoremap <C-w> :nohl<CR><C-w>:echo "Search cleared"<CR>
 

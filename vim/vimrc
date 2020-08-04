@@ -89,6 +89,14 @@ noremap <Leader>fq :q!<CR>
 " toggle spellcheck
 map <Leader>ss :setlocal spell!<CR>
 
+" Wrap bracket/quote around selection
+vnoremap ( <esc>`>a)<esc>`<i(<esc>
+vnoremap [ <esc>`>a]<esc>`<i[<esc>
+vnoremap { <esc>`>a}<esc>`<i{<esc>
+vnoremap < <esc>`>a><esc>`<i<<esc>
+vnoremap " <esc>`>a"<esc>`<i"<esc>
+vnoremap ' <esc>`>a'<esc>`<i'<esc>
+vnoremap ` <esc>`>a`<esc>`<i`<esc>
 
 " Move to next tab
 noremap <Leader>t gt

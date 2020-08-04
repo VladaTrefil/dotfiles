@@ -4,20 +4,19 @@ filetype off                  " required
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim Plug - Managing Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin('~/.vim/plugged')
 
+call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'vifm/vifm.vim'                               
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight' 
-Plug 'ryanoasis/vim-devicons'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'vifm/vifm.vim'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ayu-theme/ayu-vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'joshdick/onedark.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'vim-airline/vim-airline'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -28,51 +27,72 @@ set t_Co=256                    " Set if term supports 256 colors.
 set number relativenumber       " Display line numbers
 
 set encoding=utf8
+set guifont=Monoid_Nerd_Font_Retina:h11
+
+set conceallevel=3
+let g:WebDevIconsUnicodeDecorateFolderNodes=1
 
 set hlsearch
 set ignorecase
 set smartcase
+
+set directory^=$HOME/.vim/tmp//
 
 set clipboard=unnamed
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-syntax on
-colorscheme onedark
+set termguicolors     " enable true colors support
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
 
-let g:lightline = {
-  \ 'colorscheme': 'onedark',
-  \ }
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FileType Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" autocmd BufNewFile,BufRead *.latte set syntax=html
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text Edit Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set smartindent
+set nowrap
 set expandtab                   " Use spaces instead of tabs.
 set smarttab                    " Be smart using tabs ;)
 set shiftwidth=4                " One tab == four spaces.
 set tabstop=4                   " One tab == four spaces.
 " change spacing for language specific
-autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
-autocmd Filetype typescriptreact setlocal ts=2 sts=2 sw=2
+" autocmd Filetype typescriptreact setlocal ts=2 sts=2 sw=2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap Y y$
 
-nnoremap H 0
-nnoremap L $
-nnoremap J }
-nnoremap K {
+noremap H 0
+noremap L $
+noremap J }
+noremap K {
 
 nnoremap <C-w> :nohl<CR><C-w>:echo "Search cleared"<CR>
 
 nnoremap <Space> <Nop>
 let mapleader = " "
 
-noremap <Leader>s :update<CR>
-noremap <Leader>w :q<CR>
+" Save, quit, force quit
+noremap <Leader>w :w!<CR>
+noremap <Leader>W :w!<CR>:q<CR>
+noremap <Leader>q :q<CR>
+noremap <Leader>fq :q!<CR>
+
+" toggle spellcheck
+map <Leader>ss :setlocal spell!<CR>
+
+
+" Move to next tab
+noremap <Leader>t gt
+
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -104,16 +124,19 @@ noremap <silent> <Leader>j :resize -3<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Autostart the NERDTree
 autocmd vimenter * NERDTree
+
 " Close Vim if only NERDTree is open
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 map <Leader>n :NERDTreeToggle<CR>
 let NERDTreeShowLineNumbers=1
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI = 1
 let g:NERDTreeWinSize=38
 
+let NERDTreeMapOpenInTab='O'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CoC Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
- 
+

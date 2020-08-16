@@ -9,7 +9,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'vifm/vifm.vim'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'ayu-theme/ayu-vim'
+Plug 'morhetz/gruvbox'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'sheerun/vim-polyglot'
 Plug 'vim-airline/vim-airline'
@@ -29,8 +29,6 @@ set number relativenumber       " Display line numbers
 set encoding=utf8
 set guifont=Monoid_Nerd_Font_Retina:h11
 
-set conceallevel=3
-let g:WebDevIconsUnicodeDecorateFolderNodes=1
 
 set hlsearch
 set ignorecase
@@ -44,8 +42,7 @@ set clipboard=unnamed
 " Theme Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors     " enable true colors support
-let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
+colorscheme gruvbox
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FileType Settings

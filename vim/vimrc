@@ -6,6 +6,7 @@ filetype off                  " required
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call plug#begin('~/.vim/plugged')
+Plug 'chrisbra/Colorizer'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'vifm/vifm.vim'
@@ -187,6 +188,11 @@ noremap <silent> <Leader>h :vertical resize +3<CR>
 noremap <silent> <Leader>l :vertical resize -3<CR>
 noremap <silent> <Leader>k :resize +3<CR>
 noremap <silent> <Leader>j :resize -3<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Colorizer Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <Leader>ch :ColorToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree Settings

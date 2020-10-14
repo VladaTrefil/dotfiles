@@ -10,3 +10,5 @@ if [[ -z "$TMUX" ]]; then
         exec tmux
     fi
 fi
+
+export BAT_THEME="ayu"

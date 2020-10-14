@@ -1,25 +1,35 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible              " be iMproved, requiredfiletype off                  " required
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim Plug - Managing Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call plug#begin('~/.vim/plugged')
+Plug 'ayu-theme/ayu-vim'
+Plug 'franbach/miramare'
+Plug 'morhetz/gruvbox'
+
+Plug 'tpope/vim-commentary'
+Plug 'mattn/emmet-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'dense-analysis/ale'
+
+Plug 'tpope/vim-fugitive'
 Plug 'chrisbra/Colorizer'
+Plug 'sheerun/vim-polyglot'
+Plug 'ryanoasis/vim-devicons'
+Plug 'vifm/vifm.vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'vifm/vifm.vim'
-Plug 'tpope/vim-commentary'
-Plug 'morhetz/gruvbox'
-Plug 'sheerun/vim-polyglot'
-Plug 'vim-airline/vim-airline'
+Plug 'narajaon/onestatus'
 Plug 'christoomey/vim-tmux-navigator'
+
 Plug 'BurntSushi/ripgrep'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'ryanoasis/vim-devicons'
+Plug 'iloginow/vim-stylus'
+Plug 'VladaTrefil/vim-snippets'
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -38,14 +48,31 @@ set smartcase
 
 set directory^=$HOME/.vim/tmp//
 
-set clipboard=unnamed
+set clipboard=unnamedplus
+
+au BufEnter * :OneStatus
+" Status bar always visible
+set laststatus=2
+
+"Disable safe write for webpack compilation
+set backupcopy=yes
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors     " enable true colors support
+
+let g:gruvbox_contrast_dark="hard"
 colorscheme gruvbox
 
+" let ayucolor="dark"   " for dark version of theme
+" colorscheme ayu
+
+" status bar color
+hi StatusLine cterm=bold guibg=#ffffff guifg=#004E98
+
+" au InsertEnter * hi StatusLine term=reverse cterm=bold guibg=#D84F21 guifg=#ffffff
+" au InsertLeave * hi StatusLine term=reverse cterm=bold guibg=#004E98 guifg=#ffffff
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FileType Settings
@@ -60,8 +87,8 @@ set smartindent
 set nowrap
 set expandtab                   " Use spaces instead of tabs.
 set smarttab                    " Be smart using tabs ;)
-set shiftwidth=4                " One tab == four spaces.
-set tabstop=4                   " One tab == four spaces.
+set shiftwidth=2                " One tab == four spaces.
+set tabstop=2                   " One tab == four spaces.
 " change spacing for language specific
 " autocmd Filetype typescriptreact setlocal ts=2 sts=2 sw=2
 
@@ -70,105 +97,85 @@ set tabstop=4                   " One tab == four spaces.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap Y y$
 
+noremap } K
+noremap { J
+
 noremap H 0
 noremap L $
 noremap J }
 noremap K {
 
-nnoremap <C-w> :nohl<CR><C-w>:echo "Search cleared"<CR>
+nnoremap <C-c> :nohl<CR><C-w>:echo "Search cleared"<CR>
 
 nnoremap <Space> <Nop>
 let mapleader = " "
 
 " Save, quit, force quit
-noremap <Leader>w :w!<CR>
-noremap <Leader>W :w!<CR>:q<CR>
-noremap <Leader>q :q<CR>
+noremap <C-w> :w!<CR>
+noremap <C-q> :q<CR>
 noremap <Leader>fq :q!<CR>
 
 " toggle spellcheck
 map <Leader>ss :setlocal spell!<CR>
 
-" Wrap bracket/quote around selection
-vnoremap ( <esc>`>a)<esc>`<i(<esc>
-vnoremap [ <esc>`>a]<esc>`<i[<esc>
-vnoremap { <esc>`>a}<esc>`<i{<esc>
-vnoremap < <esc>`>a><esc>`<i<<esc>
-vnoremap " <esc>`>a"<esc>`<i"<esc>
-vnoremap ' <esc>`>a'<esc>`<i'<esc>
-vnoremap ` <esc>`>a`<esc>`<i`<esc>
-
 " Move to next tab
 noremap <Leader>t gt
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" On Save
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd BufWritePre * %s/\s\+$//e
+" Surround visual selection with brackets/parenthesis
+vnoremap ' c''<ESC>P
+vnoremap " c""<ESC>P
+vnoremap ` c``<ESC>P
 
+vnoremap ( c()<ESC>P
+vnoremap { c{}<ESC>P
+vnoremap [ c[]<ESC>P
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FZF Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Open file finder
-noremap <C-p> :Files<CR>
 
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit'
+  \}
+
+" Changes fzf highlight
 let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+\ { "fg":      ["fg", "Normal"],
+  \ "bg":      ["bg", "Normal"],
+  \ "hl":      ["fg", "IncSearch"],
+  \ "fg+":     ["fg", "CursorLine", "CursorColumn", "Normal"],
+  \ "bg+":     ["bg", "CursorLine", "CursorColumn"],
+  \ "hl+":     ["fg", "IncSearch"],
+  \ "info":    ["fg", "IncSearch"],
+  \ "border":  ["fg", "Ignore"],
+  \ "prompt":  ["fg", "Comment"],
+  \ "pointer": ["fg", "IncSearch"],
+  \ "marker":  ["fg", "IncSearch"],
+  \ "spinner": ["fg", "IncSearch"],
+  \ "header":  ["fg", "WildMenu"] }
 
-nnoremap <silent> <leader>e :call Fzf_dev()<CR>
+" Default GFiles, fallback Files if no .git
+" function! GFilesFallback()
+"   let output = system('git rev-parse --show-toplevel') " Is there a faster way?
+"   let prefix = get(g:, 'fzf_command_prefix', '')
+"   if v:shell_error == 0
+"     exec "normal :" . prefix . "GFiles\<CR>"
+"   else
+"     exec "normal :" . prefix . "Files\<CR>"
+"   endif
+"   return 0
+" endfunction
 
-" ripgrep
-if executable('rg')
-  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-  set grepprg=rg\ --vimgrep
-  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-endif
+let $FZF_DEFAULT_OPTS="--color=dark --layout=reverse --margin=1,1 --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,pointer:12,marker:4,spinner:11"
 
-" Files + devicons
-function! Fzf_dev()
-  let l:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {2..-1} | head -'.&lines.'"'
+command! -bang  -complete=dir Files
+        \ call fzf#vim#files(<q-args>, { 'options': "$FZF_DEFAULT_OPTS"}, <bang>)
 
-  function! s:files()
-    let l:files = split(system($FZF_DEFAULT_COMMAND), '\n')
-    return s:prepend_icon(l:files)
-  endfunction
+" position FzF
+let g:fzf_layout = { 'window': { 'width': 0.4, 'height': 0.25, 'yoffset': 0 } }
 
-  function! s:prepend_icon(candidates)
-    let l:result = []
-    for l:candidate in a:candidates
-      let l:filename = fnamemodify(l:candidate, ':p:t')
-      let l:icon = WebDevIconsGetFileTypeSymbol(l:filename, isdirectory(l:filename))
-      call add(l:result, printf('%s %s', l:icon, l:candidate))
-    endfor
-
-    return l:result
-  endfunction
-
-  function! s:edit_file(item)
-    let l:pos = stridx(a:item, ' ')
-    let l:file_path = a:item[pos+1:-1]
-    execute 'silent e' l:file_path
-  endfunction
-
-  call fzf#run({
-        \ 'source': <sid>files(),
-        \ 'sink':   function('s:edit_file'),
-        \ 'options': '-m ' . l:fzf_files_options,
-        \ 'down':    '40%' })
-endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Splits Settings
@@ -197,23 +204,27 @@ nnoremap <Leader>ch :ColorToggle<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Autostart the NERDTree
-autocmd vimenter * NERDTree
-
 " Close Vim if only NERDTree is open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-map <Leader>n :NERDTreeToggle<CR>
+nmap <Leader>n :NERDTreeToggle<CR>
+
+let NERDTreeMapOpenSplit="s"
+let NERDTreeMapOpenVSplit="v"
 let NERDTreeShowLineNumbers=1
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI = 1
 let g:NERDTreeWinSize=38
 
-let g:NERDTreeChDirMode = 2
+function! s:fzf_statusline()
+  " Override statusline as you like
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf2 ctermfg=23 ctermbg=251
+  highlight fzf3 ctermfg=237 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+endfunction
 
-let g:NERDTreeDirArrowExpandable = ''
-let g:NERDTreeDirArrowCollapsible = ''
-
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CoC Settings

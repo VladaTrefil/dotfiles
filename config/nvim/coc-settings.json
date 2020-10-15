@@ -1,8 +1,6 @@
 {
   "snippets.ultisnips.directories": ["snippets"],
   "coc.preferences.formatOnSaveFiletypes": [
-    "stylus",
-    "styl",
     "css",
     "html",
     "javascript",
@@ -16,6 +14,5 @@
   "prettier.printWidth": 120,
   "prettier.trailingComma": "es5",
   "prettier.eslintIntegration": true,
-  "tsserver.formatOnType": true,
-  "eslint.packageManager": "npm"
+  "tsserver.formatOnType": true
 }

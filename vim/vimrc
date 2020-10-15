@@ -3,7 +3,6 @@ set nocompatible              " be iMproved, requiredfiletype off               
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim Plug - Managing Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 call plug#begin('~/.vim/plugged')
 Plug 'ayu-theme/ayu-vim'
 Plug 'franbach/miramare'
@@ -21,8 +20,6 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'vifm/vifm.vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'narajaon/onestatus'
-Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'BurntSushi/ripgrep'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -50,7 +47,6 @@ set directory^=$HOME/.vim/tmp//
 
 set clipboard=unnamedplus
 
-au BufEnter * :OneStatus
 " Status bar always visible
 set laststatus=2
 

@@ -45,6 +45,18 @@ chpwd() ll
 alias cp='cp -i'
 alias mv='mv -i'
 
+# colorize default commands
+# alias ls='ls --color=auto'
+# alias grep='grep --color=auto'
+# alias fgrep='fgrep --color=auto'
+# alias egrep='egrep --color=auto'
+# alias diff='diff --color=auto'
+
+#npm
+alias npmrs='npm run start'
+alias npmrd='npm run dev'
+alias npmrb='npm run build'
+
 # Update dotfiles
 dfu() {
     (
@@ -56,7 +68,7 @@ dfu() {
 alias cdgr='cd "$(git root)"'
 
 # Create a directory and cd into it
-mcd() {
+mkcd() {
     mkdir "${1}" && cd "${1}"
 }
 
@@ -83,3 +95,6 @@ up()
     cd "${cdir}"
 }
 
+# LSD config
+# command -v lsd > /dev/null && alias ls='lsd --group-dirs first'
+# command -v lsd > /dev/null && alias ls='lsd --tree'

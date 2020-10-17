@@ -1,5 +1,13 @@
+# set utf-8 encoding
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+
+export TERM=screen-256color
+
 PATH="$HOME/.local/bin${PATH:+:${PATH}}"
 EDITOR="nvim"
+ZSH_THEME="lambda"
+ZSH_DISABLE_COMPFIX=true
 ZSH=~/.oh-my-zsh
 
 # Invoke TMUX on start
@@ -21,3 +29,4 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
+

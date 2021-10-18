@@ -35,11 +35,10 @@ alias gpo="git push origin"
 alias gpu="git pull"
 alias gpuo="git pull origin"
 
-# Random
-alias whatever="echo '¯\_(ツ)_/¯' | pbcopy"
+alias clear_branches="~/.zsh/scripts/clear-git-branches.sh"
 
-# Custom functions
-chpwd() ll
+# Youtube-DL download music
+alias ydl="youtube-dl -x --audio-format \"mp3\" -o '%(title)s - %(uploader)s.%(ext)s'"
 
 # Aliases to protect against overwriting
 alias cp='cp -i'

@@ -51,6 +51,12 @@ alias mv='mv -i'
 # alias egrep='egrep --color=auto'
 # alias diff='diff --color=auto'
 
+# Docker
+# remove all images
+alias dockrai='docker system prune -a'
+# remove dangling images
+alias dockrdi='docker system prune'
+
 #npm
 alias npmrs='npm run start'
 alias npmrd='npm run dev'

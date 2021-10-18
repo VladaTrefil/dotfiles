@@ -9,6 +9,7 @@ EDITOR="nvim"
 ZSH_THEME="lambda"
 ZSH_DISABLE_COMPFIX=true
 ZSH=~/.oh-my-zsh
+PKG_CONFIG_PATH=/usr/local/Cellar/imagemagick@6/6.9.12-6/lib/pkgconfig
 
 # Invoke TMUX on start
 if [[ -z "$TMUX" ]]; then

@@ -1,0 +1,30 @@
+{
+  "snippets.ultisnips.directories": ["UltiSnips", "snippets"],
+  "snippets.ultisnips.enable": true,
+  "snippets.snipmate.enable": false,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "scss",
+    "sass",
+    "html",
+    "slim",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "coffee",
+    "json"
+  ],
+  "coc.preferences.formatOnType": true,
+  "tsserver.formatOnType": true,
+  "tsserver.enable": false,
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "prettier.trailingComma": "es5",
+  "prettier.printWidth": 100,
+  "prettier.arrowParens": "avoid",
+  "diagnostic.errorSign": "!",
+  "diagnostic.warningSign": ">",
+  "diagnostic.infoSign": "-",
+  "yank.enableCompletion": false
+}

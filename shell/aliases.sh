@@ -57,6 +57,13 @@ alias npmrs='npm run start'
 alias npmrd='npm run dev'
 alias npmrb='npm run build'
 
+#Ruby
+alias r='bin/rails'
+alias rs='bin/rails s -p 3000'
+alias rr='bin/rake'
+
+alias rt='PARALLEL_WORKERS=3 bin/rails test'
+
 # Update dotfiles
 dfu() {
     (

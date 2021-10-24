@@ -1,9 +1,10 @@
 let g:skip_defaults_vim = 1
 
 " TODO
-" 1. fix mouse
+" 1. create folio cell map
 " 2. better create/delete file
-" 3. offset tab bar
+" 3. create default tmux pane layout for sinfin projects
+" 4. offset tab bar
 "
 " https://github.com/wellle/targets.vim
 " https://github.com/ntpeters/vim-better-whitespace

@@ -69,6 +69,9 @@ set clipboard=unnamedplus
 
 set noswapfile
 
+" Folding on marker
+set foldmethod=marker
+
 " Enable mouse control for resizing panes
 set mouse=a
 

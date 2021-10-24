@@ -11,6 +11,12 @@ ZSH_DISABLE_COMPFIX=true
 ZSH=~/.oh-my-zsh
 PKG_CONFIG_PATH=/usr/local/Cellar/imagemagick@6/6.9.12-6/lib/pkgconfig
 
+# Fix for imagemagic bundle compiler
+export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
+
+# Rails test fix
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
 # Invoke TMUX on start
 if [[ -z "$TMUX" ]]; then
     if tmux has-session 2>/dev/null; then
@@ -30,4 +36,3 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
-

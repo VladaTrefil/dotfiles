@@ -114,7 +114,7 @@ if exists("plugs['gruvbox']")
 
   if exists("g:gruvbox_pallete")
     " Vertical split separator
-    exe "hi VertSplit guibg=" . g:gruvbox_pallete.dark0[0] . " guifg=" . g:gruvbox_pallete.dark0[0]
+    exe "hi VertSplit guifg=" . g:gruvbox_pallete.dark0_soft[0]
 
     " Status line
     exe "hi StatusLine guibg=" . g:gruvbox_pallete.bright_aqua[0] . " guifg=" . g:gruvbox_pallete.dark0[0]

@@ -92,62 +92,9 @@ autocmd BufWinEnter .vimrc silent loadview
 " Theme Settings: {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Enable true color
-set termguicolors
-
-" Set separator character to '▌'
-set fillchars+=vert:\▌
-
-" Double sign column
-set signcolumn=yes:2
-
 if exists("plugs['gruvbox']")
-  " let g:gruvbox_improved_strings=1
-
-  let g:gruvbox_contrast_dark="hard"
   colorscheme gruvbox
-  
-  hi! link Comment GruvboxGray
-
-  if exists("g:gruvbox_pallete")
-    " Vertical split separator
-    exe "hi VertSplit guifg=" . g:gruvbox_pallete.dark0_soft[0]
-
-    " Status line
-    exe "hi StatusLine guibg=" . g:gruvbox_pallete.bright_aqua[0] . " guifg=" . g:gruvbox_pallete.dark0[0]
-    exe "hi StatusLineNc guibg=" . g:gruvbox_pallete.light0[0] . " guifg=" . g:gruvbox_pallete.dark0[0]
-
-    " Gutter
-    exe "hi SignColumn guibg=none guifg=" . g:gruvbox_pallete.light2[0]
-    exe "hi CursorLineNR guibg=none guifg=" . g:gruvbox_pallete.bright_orange[0]
-    exe "hi GitGutterAdd guibg=none guifg=" . g:gruvbox_pallete.bright_aqua[0]
-    exe "hi GitGutterChange guibg=none guifg=" . g:gruvbox_pallete.bright_green[0]
-    exe "hi GitGutterDelete guibg=none guifg=" . g:gruvbox_pallete.bright_red[0]
-    exe "hi GitGutterChangeDelete guibg=none guifg=" . g:gruvbox_pallete.bright_red[0]
-
-    " Folds
-    exe "hi Folded guifg=" . g:gruvbox_pallete.faded_aqua[0] . " guibg=" . g:gruvbox_pallete.dark0[0]
-
-    exe "hi TabLine guibg=none guisp=NONE guifg=" . g:gruvbox_pallete.light0[0]
-    " Current Tab
-    exe "hi TabLineSel guibg=none guisp=NONE guifg=" . g:gruvbox_pallete.bright_red[0]
-
-    function! ResetStatusLineColor()
-      exe "hi StatusLine guibg=" . g:gruvbox_pallete.bright_aqua[0] . " guifg=" . g:gruvbox_pallete.dark0[0]
-    endfunction
-
-    function! SetStatusLineInsertColor()
-      exe "hi StatusLine guibg=" . g:gruvbox_pallete.light0[0] . " guifg=" . g:gruvbox_pallete.faded_aqua[0]
-    endfunction
-
-    autocmd InsertEnter * call SetStatusLineInsertColor()
-    autocmd InsertLeave * call ResetStatusLineColor()
-  end
 end
-
-" Comments italic style
-hi String cterm=italic gui=italic
-hi Comment cterm=italic gui=italic
 
 " Resets
 hi EndOfBuffer guifg=bg
@@ -158,6 +105,11 @@ hi TabLineFill guibg=bg
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " StatusLine Settings: {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+if exists("*g:SetStatusLineInsertColor") && exists("*g:ResetStatusLineColor")
+  autocmd InsertEnter * call g:SetStatusLineInsertColor()
+  autocmd InsertLeave * call g:ResetStatusLineColor()
+end
 
 function! LinterStatus() abort
   let l:counts = ale#statusline#Count(bufnr(''))

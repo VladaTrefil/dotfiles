@@ -91,3 +91,18 @@ zle-line-init() {
 zle -N zle-line-init
 echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+
+# make vim open target file instead of symlink
+function vim() {
+  args=()
+
+  for i in $@; do
+    if [[ -h $i ]]; then
+      args+=`readlink $i`
+    else
+      args+=$i
+    fi
+  done
+
+  /usr/local/bin/nvim "${args[@]}"
+}

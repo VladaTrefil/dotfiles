@@ -16,9 +16,6 @@ alias t="tmux"
 alias ta="tmux attach"
 alias td="tmux detach"
 
-# VIM
-alias vim="nvim"
-
 # Git aliases
 alias gaa="git add ."
 alias gd="git --no-pager diff"

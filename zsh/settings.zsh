@@ -40,6 +40,20 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 # PHP ENV PATH
 export PATH="/usr/local/opt/php@7.2/bin:$PATH"
 
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+  git 
+  vi-mode 
+  zsh-autosuggestions 
+  zsh-syntax-highlighting
+)
+
+source $ZSH/oh-my-zsh.sh
+
 # Vi Mode
 bindkey -v
 export KEYTIMEOUT=1

@@ -7,13 +7,10 @@ let g:skip_defaults_vim = 1
 " 4. offset tab bar
 "
 " https://github.com/wellle/targets.vim
-" https://github.com/ntpeters/vim-better-whitespace
 " https://github.com/ap/vim-css-color
 " https://github.com/nathanaelkane/vim-indent-guides
 " https://github.com/vim-ruby/vim-ruby
 " https://github.com/pechorin/any-jump.vim
-" https://github.com/editorconfig/editorconfig-vim
-" https://github.com/xolox/vim-shell
 " https://github.com/editorconfig/editorconfig-vim
 " Plug 'mattn/emmet-vim'
 " Plug 'pangloss/vim-javascript'
@@ -344,6 +341,10 @@ inoremap <expr> <CR> IsCursorInsideNewBlock() ? "<CR><esc>O" : "<CR>"
 " Keybindings: {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" map space to leader
+nnoremap <Space> <NOP>
+let mapleader = " "
+
 " Toggle fold
 noremap Z za
 
@@ -363,10 +364,6 @@ noremap K {
 
 " Clear search
 nnoremap <C-c> :nohl<CR>:<CR>
-
-" map space to leader
-nnoremap <Space> <NOP>
-let mapleader = " "
 
 " save, quit
 noremap <C-w> :w!<CR>
@@ -395,20 +392,8 @@ nnoremap <LEADER>' e<ESC>a'<ESC>bi'<ESC>lel
 nnoremap <LEADER>" e<ESC>a"<ESC>bi"<ESC>lel
 
 " tab controls
-nnoremap <C-left> :tabprevious<CR>
-nnoremap <C-right> :tabnext<CR>
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
-
-nnoremap t1 1gt
-nnoremap t2 2gt
-nnoremap t3 3gt
-nnoremap t4 4gt
-nnoremap t5 5gt
-nnoremap t6 6gt
-nnoremap t7 7gt
-nnoremap t8 8gt
-nnoremap t9 9gt
 
 nnoremap <LEADER>V :<C-u>source $MYVIMRC<CR>
 

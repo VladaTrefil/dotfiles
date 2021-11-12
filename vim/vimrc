@@ -30,13 +30,34 @@ Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale' " Linter and prettify
 
-Plug 'sheerun/vim-polyglot' " Support for languages
-Plug 'tomtom/tcomment_vim'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'wavded/vim-stylus'
+Plug 'jasonshell/vim-svg-indent'
+Plug 'vim-scripts/svg.vim'
+
+Plug 'ericpruitt/tmux.vim'
+Plug 'tpope/vim-git'
+Plug 'SirJson/fzf-gitignore'
+
+Plug 'GutenYe/json5.vim'
+Plug 'elzr/vim-json'
+
+" JS
+Plug 'posva/vim-vue'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'jelera/vim-javascript-syntax'
+
+" ruby
+Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-haml'
+Plug 'kchmck/vim-coffee-script'
+Plug 'slim-template/vim-slim'
+
+Plug 'tomtom/tcomment_vim'
 Plug 'Yggdroot/indentLine'
 Plug 'RRethy/vim-illuminate' " Highlights words that match the word under cursor
 Plug 'BurntSushi/ripgrep' " For CocSearch
-Plug 'vim-ruby/vim-ruby'
 Plug 'APZelos/blamer.nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'chrisbra/Colorizer'

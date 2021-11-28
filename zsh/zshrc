@@ -1,8 +1,11 @@
 # Settings
 source ~/.zsh/settings.zsh
 
-# Custom prompt
-source ~/.zsh/prompt.zsh
+# Ruby specific
+source ~/.zsh/langs.zsh
+
+# Zsh vi settings
+source ~/.zsh/vi.zsh
 
 # Aliases
 source ~/.shell/aliases.sh

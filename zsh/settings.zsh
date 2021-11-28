@@ -41,4 +41,6 @@ plugins=(
   fast-syntax-highlighting
 )
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#757575,bg=none,bold,underline"
+
 source $ZSH/oh-my-zsh.sh

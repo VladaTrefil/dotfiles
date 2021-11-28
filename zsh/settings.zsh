@@ -5,9 +5,9 @@ export LC_CTYPE=en_US.UTF-8
 PATH="$HOME/.local/bin${PATH:+:${PATH}}"
 
 EDITOR="nvim"
-ZSH_THEME="lambda"
 ZSH_DISABLE_COMPFIX=true
 ZSH=~/.oh-my-zsh
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Invoke TMUX on start
 if [[ -z "$TMUX" ]]; then

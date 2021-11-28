@@ -2,8 +2,6 @@
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-export TERM=screen-256color
-
 PATH="$HOME/.local/bin${PATH:+:${PATH}}"
 EDITOR="nvim"
 ZSH_THEME="lambda"
@@ -26,7 +24,7 @@ if [[ -z "$TMUX" ]]; then
     fi
 fi
 
-export BAT_THEME="ayu"
+export BAT_THEME="gruvbox"
 
 # colorize manual pages 
 export LESS_TERMCAP_mb=$'\e[1;32m'

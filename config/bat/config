@@ -1,0 +1,5 @@
+# Set theme to gruvbox
+--theme="gruvbox"
+
+# Associate sublime-syntax with YAML
+--map-syntax='*.sublime-syntax:YAML'

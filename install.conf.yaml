@@ -3,12 +3,13 @@
       create: true
       relink: true
 
-- clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/']
+- clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/', '~/.oh-my-zsh/custom/themes/']
 
 - shell:
   - [sh pre-install.sh, Running pre installation script]
   - [mkdir -p ~/.oh-my-zsh/custom/, Creating oh-my-zsh custom forlders]
-  - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins forlders]
+  - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins folders]
+  - [mkdir -p ~/.oh-my-zsh/custom/themes, Creating oh-my-zsh custom themes folders]
 
 - link:
     ~/.dotfiles: ''
@@ -22,13 +23,14 @@
     ~/.zshrc:
       force: true
       path: zsh/zshrc
+    ~/.inputrc: inputrc
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: zsh/custom/plugins/zsh-autosuggestions/
-    ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting: zsh/custom/plugins/zsh-syntax-highlighting/
-    ~/.oh-my-zsh/custom/themes/spaceship.zsh-theme: zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme
+    ~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting: zsh/custom/plugins/fast-syntax-highlighting/
+    ~/.oh-my-zsh/custom/themes/powerlevel10k: zsh/custom/themes/powerlevel10k
     ~/.config/nvim: config/nvim
 
 - shell:
   - [sh fonts/install.sh, Installing Powerline fonts]
   - [git submodule update --init --recursive, Installing submodules]
   - [wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/L/Regular/complete/Meslo%20LG%20L%20Regular%20Nerd%20Font%20Complete.ttf -O fonts/Meslo-Nerd-Regular.ttf]
-  - [cp fonts/Meslo-Nerd-Regular.ttf ~/Library/Fonts/Meslo-Nerd-Regular.ttf]
+  # - [cp fonts/Meslo-Nerd-Regular.ttf ~/Library/Fonts/Meslo-Nerd-Regular.ttf]

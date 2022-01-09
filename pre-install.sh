@@ -3,7 +3,7 @@
 # Check if Homebrew is installed
 if [ ! -f "`which brew`" ]; then
   echo 'Installing homebrew'
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
   echo 'Updating homebrew'
   brew update
@@ -20,7 +20,6 @@ if [ ! -f "`which nvim`" ]; then
   echo 'Installing nvim'
   brew install nvim
 fi
-
 
 # Check if oh-my-zsh is installed
 OMZDIR="$HOME/.oh-my-zsh"

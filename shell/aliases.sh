@@ -4,6 +4,8 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
+alias vim="nvim"
+
 alias ll="ls -l"
 alias la="ls -la"
 

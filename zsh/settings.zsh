@@ -43,4 +43,6 @@ plugins=(
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#757575,bg=none,bold,underline"
 
+bindkey '^ ' autosuggest-accept
+
 source $ZSH/oh-my-zsh.sh

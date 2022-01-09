@@ -41,6 +41,9 @@ alias kill_server="sh ~/.zsh/scripts/kill-rails-server.sh"
 # Youtube-DL download music
 alias ydl="youtube-dl -x --audio-format \"mp3\" -o '%(title)s - %(uploader)s.%(ext)s'"
 
+# Bat on debian
+alias bat="batcat"
+
 # Aliases to protect against overwriting
 alias cp='cp -i'
 alias mv='mv -i'

@@ -32,7 +32,7 @@ else
 fi
 
 # Change default shell
-if [! $0 = "-zsh"]; then
+if [ -z "`echo $SHELL | grep zsh`" ]; then
   echo 'Changing default shell to zsh'
   chsh -s /bin/zsh
 else

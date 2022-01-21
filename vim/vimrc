@@ -176,9 +176,7 @@ function! LinterStatus() abort
   end
 endfunction
 
-function! FileType() abort
-  let l:filetype=&filetype
-  let l:icon=""
+function! FileIcon() abort
   let fileicons = [
         \ { "icon": "", "filetypes": ["vim"] },
         \ { "icon": "", "filetypes": ["sh"] },
@@ -190,20 +188,20 @@ function! FileType() abort
         \ { "icon": "", "filetypes": ["slim"] },
         \ { "icon": "", "filetypes": ["css"] },
         \ { "icon": "", "filetypes": ["sass", "scss"] },
-        \ { "icon": "", "filetypes": ["js"] },
+        \ { "icon": "", "filetypes": ["javascript"] },
         \ { "icon": "", "filetypes": ["coffee"] },
-        \ { "icon": "ﯤ", "filetypes": [""] },
+        \ { "icon": "ﯤ", "filetypes": ["typescript"] },
         \ { "icon": "", "filetypes": ["json", "yaml"] },
         \ { "icon": "縉", "filetypes": ["svg"] },
         \ { "icon": "", "filetypes": ["typescript"] } ]
 
   for fi in fileicons
-    if index(fi["filetypes"], l:filetype) != -1
-      return " " . fi["icon"] . " " .  l:filetype . " "
+    if index(fi["filetypes"], &filetype) != -1
+      return fi["icon"] . " "
     end
   endfor
 
-  return " " . l:filetype . " "
+  return ""
 
   end
 endfunction
@@ -214,6 +212,8 @@ set statusline+=\ %f                                          " path
 set statusline+=\ \ "
 set statusline+=\ %{FileType()}                               " lint status
 set statusline+=\ \ "
+set statusline+=%{FileIcon()}                               " lint status
+set statusline+=%{&filetype}                               " lint status
 set statusline+=\ %{&fileencoding?&fileencoding:&encoding}  " file encoding
 set statusline+=\ \ "
 set statusline+=\ %{LinterStatus()} " lint status

@@ -63,7 +63,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'chrisbra/Colorizer'
 Plug 'tpope/vim-eunuch'
 call plug#end()
-
+"
 " }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -120,6 +120,37 @@ end
 " Resets
 hi EndOfBuffer guifg=bg
 hi TabLineFill guibg=bg
+" hi! TabLine cterm=none guibg=bg guifg=bg
+" hi TabLineSel guibg=bg guifg=#fb4934
+
+set tabline=%!TabLine()
+
+function TabLine()
+  " let s = '  '
+  let s = '%#Identifier#'
+  let s .= ' '
+  let s .= '%#TabLine#'
+
+  let s .= '%='
+
+  let s .= '%#TabLineFill#%T'
+
+	for i in range(tabpagenr('$'))
+    if i + 1 == tabpagenr()
+      let s .= '%#TabLineSel#'
+    else
+      let s .= '%#TabLine#'
+    endif
+
+	  " set the tab page number (for mouse clicks)
+	  let s .= '%' . (i + 1) . 'T' . (i + 1) . "  "
+  endfor
+
+  let s .= '%#TabLine#'
+  let s .= "%=%999Xﮊ  "
+
+  return s
+endfunction
 
 " }}}
 

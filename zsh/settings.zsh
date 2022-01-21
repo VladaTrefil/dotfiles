@@ -11,11 +11,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Invoke TMUX on start
 if [[ -z "$TMUX" ]]; then
-    if tmux has-session 2>/dev/null; then
-        exec tmux attach
-    else
-        exec tmux
-    fi
+  exec tmux
 fi
 
 export BAT_THEME="gruvbox"

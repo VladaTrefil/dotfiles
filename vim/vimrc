@@ -169,20 +169,56 @@ function! LinterStatus() abort
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
 
-  return l:counts.total == 0 ? 'OK' : printf(
-  \   '%dW %dE',
-  \   all_non_errors,
-  \   all_errors
-  \)
+  if l:counts.total > 0
+    return "[ " . printf(' %d', all_non_errors + all_errors) . " ] "
+  else
+    return " "
+  end
+endfunction
+
+function! FileType() abort
+  let l:filetype=&filetype
+  let l:icon=""
+  let fileicons = [
+        \ { "icon": "", "filetypes": ["vim"] },
+        \ { "icon": "", "filetypes": ["sh"] },
+        \ { "icon": "", "filetypes": ["help"] },
+        \ { "icon": "", "filetypes": ["ini", "dosini", "conf", "tmux"] },
+        \ { "icon": "", "filetypes": ["gitconfig"] },
+        \ { "icon": "", "filetypes": ["ruby"] },
+        \ { "icon": "", "filetypes": ["html"] },
+        \ { "icon": "", "filetypes": ["slim"] },
+        \ { "icon": "", "filetypes": ["css"] },
+        \ { "icon": "", "filetypes": ["sass", "scss"] },
+        \ { "icon": "", "filetypes": ["js"] },
+        \ { "icon": "", "filetypes": ["coffee"] },
+        \ { "icon": "ﯤ", "filetypes": [""] },
+        \ { "icon": "", "filetypes": ["json", "yaml"] },
+        \ { "icon": "縉", "filetypes": ["svg"] },
+        \ { "icon": "", "filetypes": ["typescript"] } ]
+
+  for fi in fileicons
+    if index(fi["filetypes"], l:filetype) != -1
+      return " " . fi["icon"] . " " .  l:filetype . " "
+    end
+  endfor
+
+  return " " . l:filetype . " "
+
+  end
 endfunction
 
 set statusline=
-" set statusline+=\ %{LinterStatus()} " lint status
-set statusline+=\ %m\ %r              " modified\ read-only?
 set statusline+=\ %=
-set statusline+=\ %f\ %y              " file type\ path
-set statusline+=\ [%{&fileencoding?&fileencoding:&encoding}] " file encoding
-set statusline+=\ \ 
+set statusline+=\ %f                                          " path
+set statusline+=\ \ "
+set statusline+=\ %{FileType()}                               " lint status
+set statusline+=\ \ "
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}  " file encoding
+set statusline+=\ \ "
+set statusline+=\ %{LinterStatus()} " lint status
+set statusline+=\ %m\ %r                                      " modified\ read-only?
+set statusline+=\ \ \                                         " Spacing
 
 " }}}
 

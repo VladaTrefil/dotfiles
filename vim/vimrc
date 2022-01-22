@@ -202,22 +202,26 @@ function! FileIcon() abort
   endfor
 
   return ""
-
-  end
 endfunction
 
 set statusline=
-set statusline+=\ %=
-set statusline+=\ %f                                          " path
-set statusline+=\ \ "
-set statusline+=\ %{FileType()}                               " lint status
-set statusline+=\ \ "
+set statusline+=\  
+set statusline+=%=
+set statusline+=\  
+set statusline+=%f                                          " path
+set statusline+=\ \  
+set statusline+="
+set statusline+=\ \  
 set statusline+=%{FileIcon()}                               " lint status
 set statusline+=%{&filetype}                               " lint status
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding}  " file encoding
-set statusline+=\ \ "
-set statusline+=\ %{LinterStatus()} " lint status
-set statusline+=\ %m\ %r                                      " modified\ read-only?
+set statusline+=\ \  
+set statusline+=\ "
+set statusline+=\ \  
+set statusline+=%{&fileencoding?&fileencoding:&encoding}  " file encoding
+set statusline+=\  
+set statusline+=%{LinterStatus()} " lint status
+set statusline+=\ \  
+set statusline+=%m\ %r                                      " modified\ read-only?
 set statusline+=\ \ \                                         " Spacing
 
 " }}}

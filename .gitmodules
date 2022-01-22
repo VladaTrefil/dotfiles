@@ -7,3 +7,6 @@
 [submodule "zsh/custom/plugins/fast-syntax-highlighting"]
 	path = zsh/custom/plugins/fast-syntax-highlighting
 	url = git@github.com:zdharma-continuum/fast-syntax-highlighting.git
+[submodule "zsh/custom/themes/powerlevel10k"]
+	path = zsh/custom/themes/powerlevel10k
+	url = git@github.com:romkatv/powerlevel10k.git

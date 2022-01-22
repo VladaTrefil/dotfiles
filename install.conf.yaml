@@ -10,6 +10,10 @@
   - [mkdir -p ~/.oh-my-zsh/custom/, Creating oh-my-zsh custom forlders]
   - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins folders]
   - [mkdir -p ~/.oh-my-zsh/custom/themes, Creating oh-my-zsh custom themes folders]
+  # Fonts
+  - [mkdir -p $HOME/.local/share/fonts, Creating fonts folders]
+  - [cp -nr ./fonts/* $HOME/.local/share/fonts/, Copying fonts]
+  - [fc-cache -f, Building font cache]
 
 - link:
     ~/.dotfiles: ''

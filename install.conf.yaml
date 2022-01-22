@@ -34,3 +34,4 @@
     ~/.oh-my-zsh/custom/themes/powerlevel10k: zsh/custom/themes/powerlevel10k
     ~/.config/nvim: config/nvim
     ~/.config/i3: config/i3
+    ~/.config/polybar: config/polybar

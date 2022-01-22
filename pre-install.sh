@@ -26,6 +26,8 @@ if [ ! -d "$OMZDIR" ]; then
 fi
 
 if [ -f "`sudo cat /etc/sudoers`" ]; then
+  echo "add $USER to sudoers"
+  echo "$USER   all=(all) nopasswd: all" | tr '[:lower:]' '[:upper:]' | sudo tee -a /etc/sudoers
 fi
 
 # Change default shell

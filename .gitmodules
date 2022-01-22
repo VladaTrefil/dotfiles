@@ -1,15 +1,6 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
-[submodule "zsh/custom/plugins/zsh-syntax-highlighting"]
-	path = zsh/custom/plugins/zsh-syntax-highlighting
-	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "zsh/custom/themes/spaceship-prompt"]
-	path = zsh/custom/themes/spaceship-prompt
-	url = git@github.com:denysdovhan/spaceship-prompt.git
 [submodule "zsh/custom/plugins/zsh-autosuggestions"]
 	path = zsh/custom/plugins/zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
-[submodule "fonts"]
-	path = fonts
-	url = https://github.com/powerline/fonts

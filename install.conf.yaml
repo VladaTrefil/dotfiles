@@ -73,4 +73,5 @@
   - [bat cache --build, Building bat cache]
 
   # NodeJS
-  - [npm i -g yarn, Install yarn]
+  - [npm i -g yarn, Installing yarn]
+  - [yarn add global bower, Installing bower]

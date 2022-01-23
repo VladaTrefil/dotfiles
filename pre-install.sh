@@ -37,10 +37,3 @@ if [ -z "`echo $SHELL | grep zsh`" ]; then
 else
   echo 'Already using zsh'
 fi
-
-# Config bat
-if [ -d "$(bat --config-dir)" ]; then
-  ln -s "$HOME/development/dotfiles/config/bat" "$(bat --config-dir)"
-  bat cache --build
-  bat --list-themes
-fi

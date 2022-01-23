@@ -71,3 +71,6 @@
 
   # Bat
   - [bat cache --build, Building bat cache]
+
+  # NodeJS
+  - [npm i -g yarn, Install yarn]

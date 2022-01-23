@@ -14,8 +14,6 @@ if [[ -z "$TMUX" ]]; then
   exec tmux
 fi
 
-export BAT_THEME="gruvbox"
-
 # colorize manual pages 
 export LESS_TERMCAP_mb=$'\e[1;32m'
 export LESS_TERMCAP_md=$'\e[1;32m'

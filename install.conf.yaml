@@ -5,17 +5,6 @@
 
 - clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/', '~/.oh-my-zsh/custom/themes/']
 
-- shell:
-  - [sh pre-install.sh, Running pre installation script]
-  - [git submodule update --init --recursive, Installing submodules]
-  - [mkdir -p ~/.oh-my-zsh/custom/, Creating oh-my-zsh custom forlders]
-  - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins folders]
-  - [mkdir -p ~/.oh-my-zsh/custom/themes, Creating oh-my-zsh custom themes folders]
-  # Fonts
-  - [mkdir -p $HOME/.local/share/fonts, Creating fonts folders]
-  - [cp -nr ./fonts/* $HOME/.local/share/fonts/, Copying fonts]
-  - [fc-cache -f, Building font cache]
-
 - link:
     ~/.dotfiles: ''
     ~/.shell:
@@ -37,3 +26,16 @@
     ~/.config/nvim: config/nvim
     ~/.config/i3: config/i3
     ~/.config/polybar: config/polybar
+
+
+- shell:
+  - [sh pre-install.sh, Running pre installation script]
+  - [git submodule update --init --recursive, Installing submodules]
+  - [mkdir -p ~/.oh-my-zsh/custom/, Creating oh-my-zsh custom forlders]
+  - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins folders]
+  - [mkdir -p ~/.oh-my-zsh/custom/themes, Creating oh-my-zsh custom themes folders]
+
+  # Fonts
+  - [mkdir -p $HOME/.local/share/fonts, Creating fonts folders]
+  - [cp -nr ./fonts/* $HOME/.local/share/fonts/, Copying fonts]
+  - [fc-cache -f, Building font cache]

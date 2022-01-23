@@ -75,3 +75,7 @@
   # NodeJS
   - [npm i -g yarn, Installing yarn]
   - [yarn add global bower, Installing bower]
+
+  # Gems
+  - [gem install rails -v "6.1.4", Installing rails@6.1.4]
+  - [gem install bundler - v "2.2.32", Installing bundler@2.2.32]

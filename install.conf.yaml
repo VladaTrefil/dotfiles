@@ -35,12 +35,10 @@
   - build-essential
   - nodejs
   - npm
-
   # Desktop enviroment
   - polybar
   - rofi
   - feh
-
   # Sinfin libs
   - postgresql
   - postgresql-contrib
@@ -55,9 +53,9 @@
   - libsodium-dev
   - pdftk
   - ghostscript 
-  - libvips
-  # maybe libwebp7, libwebp, libwebp-dev, cwebp
   - redis-server
+  - libvips42
+    # maybe libwebp7, libwebp, libwebp-dev, cwebp
 
 - shell:
   - [sh pre-install.sh, Running pre installation script]

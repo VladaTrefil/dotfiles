@@ -13,14 +13,11 @@
   - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins folders]
   - [mkdir -p ~/.oh-my-zsh/custom/themes, Creating oh-my-zsh custom themes folders]
 
-  # Fonts
-  - [mkdir -p $HOME/.local/share/fonts, Creating fonts folders]
-  - [cp -nr ./fonts/* $HOME/.local/share/fonts/, Copying fonts]
-  - [fc-cache -f, Building font cache]
-
+  # Syncthing
+  - [sudo curl -s -o /usr/share/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg, Getting Syncthing GPG key]
 
 - link:
-    ~/.dotfiles: ''
+    ~/.local/share/fonts/: fonts
     ~/.shell:
     ~/.gitconfig:
     ~/.gitignore_global:
@@ -73,6 +70,8 @@
 
 # Post install
 - shell:
+  - [fc-cache -f, Building font cache]
+
   # Bat
   - [bat cache --build, Building bat cache]
 
@@ -83,6 +82,3 @@
   # Gems
   - [gem install rails -v "6.1.4", Installing rails@6.1.4]
   - [gem install bundler -v "2.2.32", Installing bundler@2.2.32]
-
-  # Syncthing
-  - [sudo curl -s -o /usr/share/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg, Getting Syncthing GPG key]

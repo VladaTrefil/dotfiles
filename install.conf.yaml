@@ -28,6 +28,36 @@
     ~/.config/i3: config/i3
     ~/.config/polybar: config/polybar
 
+- aptget: 
+  - syncthing
+  - bat
+  - python3-dev
+  - build-essential
+  - nodejs
+  - npm
+
+  # Desktop enviroment
+  - polybar
+  - rofi
+  - feh
+
+  # Sinfin libs
+  - postgresql
+  - postgresql-contrib
+  - libpq-dev
+  - imagemagick
+  - libmagick++-dev
+  - libmagickwand-dev
+  - libmagickcore-dev
+  - libimage-exiftool-perl
+  - rubber
+  - texlive-xetex
+  - libsodium-dev
+  - pdftk
+  - ghostscript 
+  - libvips
+  # maybe libwebp7, libwebp, libwebp-dev, cwebp
+  - redis-server
 
 - shell:
   - [sh pre-install.sh, Running pre installation script]

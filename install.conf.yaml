@@ -5,6 +5,20 @@
 
 - clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/', '~/.oh-my-zsh/custom/themes/']
 
+# Pre install
+- shell:
+  - [sh pre-install.sh, Running pre installation script]
+  - [git submodule update --init --recursive, Installing submodules]
+  - [mkdir -p ~/.oh-my-zsh/custom/, Creating oh-my-zsh custom forlders]
+  - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins folders]
+  - [mkdir -p ~/.oh-my-zsh/custom/themes, Creating oh-my-zsh custom themes folders]
+
+  # Fonts
+  - [mkdir -p $HOME/.local/share/fonts, Creating fonts folders]
+  - [cp -nr ./fonts/* $HOME/.local/share/fonts/, Copying fonts]
+  - [fc-cache -f, Building font cache]
+
+
 - link:
     ~/.dotfiles: ''
     ~/.shell:
@@ -57,18 +71,8 @@
   - libvips42
     # maybe libwebp7, libwebp, libwebp-dev, cwebp
 
+# Post install
 - shell:
-  - [sh pre-install.sh, Running pre installation script]
-  - [git submodule update --init --recursive, Installing submodules]
-  - [mkdir -p ~/.oh-my-zsh/custom/, Creating oh-my-zsh custom forlders]
-  - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins folders]
-  - [mkdir -p ~/.oh-my-zsh/custom/themes, Creating oh-my-zsh custom themes folders]
-
-  # Fonts
-  - [mkdir -p $HOME/.local/share/fonts, Creating fonts folders]
-  - [cp -nr ./fonts/* $HOME/.local/share/fonts/, Copying fonts]
-  - [fc-cache -f, Building font cache]
-
   # Bat
   - [bat cache --build, Building bat cache]
 
@@ -78,4 +82,7 @@
 
   # Gems
   - [gem install rails -v "6.1.4", Installing rails@6.1.4]
-  - [gem install bundler - v "2.2.32", Installing bundler@2.2.32]
+  - [gem install bundler -v "2.2.32", Installing bundler@2.2.32]
+
+  # Syncthing
+  - [sudo curl -s -o /usr/share/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg, Getting Syncthing GPG key]

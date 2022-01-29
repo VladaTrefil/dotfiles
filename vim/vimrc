@@ -201,7 +201,9 @@ set statusline+=\ "
 set statusline+=\ \  
 set statusline+=%{&fileencoding?&fileencoding:&encoding}  " file encoding
 set statusline+=\  
-set statusline+=%{LinterStatus()} " lint status
+if exists("plugs['ale']")
+  set statusline+=%{LinterStatus()} " lint status
+end
 set statusline+=\ \  
 set statusline+=%m\ %r                                      " modified\ read-only?
 set statusline+=\ \ \                                         " Spacing

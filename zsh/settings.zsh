@@ -10,9 +10,9 @@ ZSH=~/.oh-my-zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Invoke TMUX on start
-if [[ -z "$TMUX" ]]; then
-  exec tmux
-fi
+# if [[ -z "$TMUX" ]]; then
+#   exec tmux
+# fi
 
 # colorize manual pages 
 export LESS_TERMCAP_mb=$'\e[1;32m'

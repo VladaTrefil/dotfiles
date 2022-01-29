@@ -17,8 +17,6 @@ let g:skip_defaults_vim = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call plug#begin('~/.vim/plugged')
-Plug 'VladaTrefil/gruvbox'
-
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -56,6 +54,8 @@ Plug 'APZelos/blamer.nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'chrisbra/Colorizer'
 Plug 'tpope/vim-eunuch'
+
+Plug 'VladaTrefil/vim-theme'
 call plug#end()
 "
 " }}}
@@ -107,15 +107,8 @@ autocmd BufWinEnter .vimrc silent loadview
 " Theme Settings: {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-if exists("plugs['gruvbox']")
-  colorscheme gruvbox
-end
-
-" Resets
-hi EndOfBuffer guifg=bg
-hi TabLineFill guibg=bg
-" hi! TabLine cterm=none guibg=bg guifg=bg
-" hi TabLineSel guibg=bg guifg=#fb4934
+" colorscheme gruvbox
+colorscheme ayu
 
 set tabline=%!TabLine()
 

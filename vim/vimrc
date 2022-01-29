@@ -21,13 +21,12 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale' " Linter and prettify
-
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'wavded/vim-stylus'
 Plug 'jasonshell/vim-svg-indent'
 Plug 'vim-scripts/svg.vim'
 
-Plug 'ericpruitt/tmux.vim'
+" Plug 'ericpruitt/tmux.vim'
 Plug 'tpope/vim-git'
 Plug 'SirJson/fzf-gitignore'
 

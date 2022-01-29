@@ -1,11 +1,5 @@
 let g:skip_defaults_vim = 1
 
-" TODO
-" 1. create folio cell map
-" 2. better create/delete file
-" 3. create default tmux pane layout for sinfin projects
-" 4. offset tab bar
-"
 " https://github.com/wellle/targets.vim
 " https://github.com/ap/vim-css-color
 " https://github.com/nathanaelkane/vim-indent-guides

@@ -112,13 +112,8 @@ colorscheme ayu
 set tabline=%!TabLine()
 
 function TabLine()
-  " let s = '  '
-  let s = '%#Identifier#'
-  let s .= ' '
-  let s .= '%#TabLine#'
-
+  let s = '%#TabLine#'
   let s .= '%='
-
   let s .= '%#TabLineFill#%T'
 
 	for i in range(tabpagenr('$'))

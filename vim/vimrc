@@ -70,9 +70,10 @@ set number relativenumber       " Display line numbers
 set hlsearch
 " Search ignore case
 set ignorecase
-
 " search as you type
 set incsearch
+" show substitute as you type
+set inccommand=nosplit
 
 set directory^=$HOME/.vim/tmp//
 

@@ -39,9 +39,9 @@
     ~/.config/i3: config/i3
     ~/.config/polybar: config/polybar
 
-- aptget: 
+- aptget:
   - syncthing
-  - bat
+  - bat #Cat with syntax, for fzf
   - python3-dev
   - build-essential
   - nodejs

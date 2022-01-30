@@ -94,8 +94,8 @@ set mouse=a
 set backupcopy=yes
 
 " Aliases in vim interactive mode
-set shell=/bin/bash\ --rcfile\ ~/.shell/aliases.sh
-set shellcmdflag=-ic
+" set shell=/bin/bash\ --rcfile\ ~/.shell/aliases.sh
+" set shellcmdflag=-ic
 
 " Offset from end of window to start scrolling
 set scrolloff=10

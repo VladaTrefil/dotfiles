@@ -349,10 +349,12 @@ noremap <silent> <C-s>- :resize -3<CR>
 " SmoothScroll Settings: {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 3)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 3)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 3)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 3)<CR>
+if exists("plugs['vim-smooth-scroll']")
+  noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 3)<CR>
+  noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 3)<CR>
+  noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 3)<CR>
+  noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 3)<CR>
+end
 
 " }}}
 

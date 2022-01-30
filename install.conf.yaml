@@ -46,6 +46,7 @@
   - build-essential
   - nodejs
   - npm
+  - ripgrep # Command line search
   # Desktop enviroment
   - polybar
   - rofi

@@ -1,19 +1,21 @@
 let g:skip_defaults_vim = 1
 
-" https://github.com/wellle/targets.vim
-" https://github.com/ap/vim-css-color
-" https://github.com/pechorin/any-jump.vim
-" https://github.com/editorconfig/editorconfig-vim
-" Plug 'mattn/emmet-vim'
-" Plug 'tpope/vim-fugitive'
-" Plug 'christoomey/vim-conflicted'
-" Plug 'ryanoasis/vim-devicons'
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugged: {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call plug#begin('~/.vim/plugged')
+" Plug 'wellle/targets.vim'
+" Plug 'ap/vim-css-color'
+" Plug 'pechorin/any-jump.vim'
+" Plug 'editorconfig/editorconfig-vim'
+" Plug 'mattn/emmet-vim'
+" Plug 'tpope/vim-fugitive'
+" Plug 'christoomey/vim-conflicted'
+" Plug 'ryanoasis/vim-devicons'
+" Plug 'junegunn/vim-easy-align'
+" junegunn/vim-peekaboo
+
 " Tools -------
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'

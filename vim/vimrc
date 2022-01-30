@@ -54,6 +54,7 @@ Plug 'chrisbra/Colorizer'
 Plug 'tpope/vim-eunuch'                 " File commands in vim
 Plug 'terryma/vim-smooth-scroll'        " Smooth scroll
 " Plug 'psliwka/vim-smoothie'           " Smooth scroll
+Plug 'drzel/vim-repo-edit'              " Quickly clone github repo to tmp
 
 " Theme -------
 Plug 'VladaTrefil/vim-theme'

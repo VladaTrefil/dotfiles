@@ -97,6 +97,9 @@ set backupcopy=yes
 set shell=/bin/bash\ --rcfile\ ~/.shell/aliases.sh
 set shellcmdflag=-ic
 
+" Enable setting vim options in files
+set modeline
+
 " source vimrc when saving any vim file
 autocmd! BufWritePost .vimrc source $MYVIMRC
 

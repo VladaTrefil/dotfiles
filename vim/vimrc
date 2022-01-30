@@ -19,6 +19,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'BurntSushi/ripgrep'               " For CocSearch
+Plug 'brooth/far.vim'
 
 " Git -------
 Plug 'tpope/vim-git'
@@ -70,7 +71,7 @@ set number relativenumber       " Display line numbers
 " Highlight search
 set hlsearch
 " Search ignore case
-set ignorecase
+set ignorecase smartcase  " ignore case only when the pattern contains no capital letters
 " search as you type
 set incsearch
 " show substitute as you type
@@ -289,6 +290,20 @@ if exists("plugs['coc.nvim']")
   inoremap <silent><expr> <Tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<TAB>"
   nnoremap <Leader>snip :<C-u>vsp<CR>:<C-u>CocCommand snippets.editSnippets<CR>
 end
+
+" }}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Far Settings: {{{
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set lazyredraw            " improve scrolling performance when navigating through large results
+set regexpengine=1        " use old regexp engine
+
+let g:far#source='rg'
+let g:far#ignore_files=["~/.vim/farignore"]
+let g:far#preview_window_height=20
+let g:far#limit=200
 
 " }}}
 

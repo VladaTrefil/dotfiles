@@ -17,45 +17,45 @@ let g:skip_defaults_vim = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call plug#begin('~/.vim/plugged')
+" Tools -------
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'dense-analysis/ale' " Linter and prettify
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'wavded/vim-stylus'
-Plug 'jasonshell/vim-svg-indent'
-Plug 'vim-scripts/svg.vim'
+Plug 'BurntSushi/ripgrep'               " For CocSearch
 
-" Plug 'ericpruitt/tmux.vim'
+" Git -------
 Plug 'tpope/vim-git'
 Plug 'SirJson/fzf-gitignore'
+Plug 'airblade/vim-gitgutter'
+Plug 'APZelos/blamer.nvim'              " git blame
 
-Plug 'GutenYe/json5.vim'
-Plug 'elzr/vim-json'
-
-" JS
+" Syntax/Languages -------
 Plug 'posva/vim-vue'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'jelera/vim-javascript-syntax'
-
-" ruby
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'wavded/vim-stylus'
+Plug 'GutenYe/json5.vim'
+Plug 'elzr/vim-json'
+Plug 'jasonshell/vim-svg-indent'
+Plug 'vim-scripts/svg.vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-haml'
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
 
+" Enhancements -------
 Plug 'rhysd/clever-f.vim'               " Improves commands f, F, t and T
 Plug 'easymotion/vim-easymotion'        " Improves vim movement
 Plug 'tomtom/tcomment_vim'
+Plug 'dense-analysis/ale'               " Linter and prettify
 Plug 'Yggdroot/indentLine'
-Plug 'RRethy/vim-illuminate' " Highlights words that match the word under cursor
-Plug 'BurntSushi/ripgrep' " For CocSearch
-Plug 'APZelos/blamer.nvim'
-Plug 'airblade/vim-gitgutter'
+Plug 'RRethy/vim-illuminate'            " Highlights words that match the word under cursor
 Plug 'chrisbra/Colorizer'
-Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-eunuch'                 " File commands in vim
 
+" Theme -------
 Plug 'VladaTrefil/vim-theme'
 call plug#end()
 "

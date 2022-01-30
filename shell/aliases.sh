@@ -73,6 +73,9 @@ alias rr='bin/rake'
 
 alias rt='PARALLEL_WORKERS=3 bin/rails test'
 
+# Exercism
+alias exes='exercism submit'
+
 # Update dotfiles
 dfu() {
   (

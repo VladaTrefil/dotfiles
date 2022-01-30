@@ -22,6 +22,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'BurntSushi/ripgrep'               " For CocSearch
 Plug 'brooth/far.vim'
+Plug 'jez/vim-superman'                 " Man pages in vim
 
 " Git -------
 Plug 'tpope/vim-git'

@@ -45,6 +45,8 @@ Plug 'tpope/vim-haml'
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
 
+Plug 'rhysd/clever-f.vim'               " Improves commands f, F, t and T
+Plug 'easymotion/vim-easymotion'        " Improves vim movement
 Plug 'tomtom/tcomment_vim'
 Plug 'Yggdroot/indentLine'
 Plug 'RRethy/vim-illuminate' " Highlights words that match the word under cursor

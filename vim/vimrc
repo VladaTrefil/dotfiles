@@ -57,7 +57,6 @@ Plug 'tpope/vim-eunuch'                 " File commands in vim
 Plug 'terryma/vim-smooth-scroll'        " Smooth scroll
 " Plug 'psliwka/vim-smoothie'           " Smooth scroll
 Plug 'drzel/vim-repo-edit'              " Quickly clone github repo to tmp
-Plug 'TaDaa/vimade'                     " Fade unused panes
 
 " Theme -------
 Plug 'VladaTrefil/vim-theme'
@@ -363,14 +362,6 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 3)<CR>
 if exists("plugs['Colorizer']")
   nnoremap <Leader>ch :ColorToggle<CR>
 end
-
-" }}}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ViMade Settings: {{{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:vimade = { 'basegroups': ['Folded', 'Search', 'SignColumn', 'CursorLine', 'CursorLineNr', 'DiffAdd', 'DiffChange', 'DiffDelete', 'DiffText', 'FoldColumn', 'Whitespace'] }
 
 " }}}
 

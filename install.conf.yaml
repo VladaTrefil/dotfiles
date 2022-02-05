@@ -16,6 +16,9 @@
   # Syncthing
   - [sudo curl -s -o /usr/share/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg, Getting Syncthing GPG key]
 
+  # Node version manager
+  - [curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash, Installing NVM]
+
 - link:
     ~/.local/share/fonts/: fonts
     ~/.shell:

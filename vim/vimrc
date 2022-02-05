@@ -1,5 +1,3 @@
-let g:skip_defaults_vim = 1
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugged: {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -68,6 +66,8 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General Settings: {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:skip_defaults_vim = 1
 
 set path+=**					" Searches current directory recursively.
 set number relativenumber       " Display line numbers

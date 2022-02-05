@@ -55,8 +55,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'RRethy/vim-illuminate'            " Highlights words that match the word under cursor
 Plug 'chrisbra/Colorizer'
 Plug 'tpope/vim-eunuch'                 " File commands in vim
-Plug 'terryma/vim-smooth-scroll'        " Smooth scroll
-" Plug 'psliwka/vim-smoothie'           " Smooth scroll
+Plug 'psliwka/vim-smoothie'           " Smooth scroll
 Plug 'drzel/vim-repo-edit'              " Quickly clone github repo to tmp
 
 " Theme -------
@@ -342,19 +341,6 @@ nmap <silent> <c-l> :wincmd l<CR>
 
 noremap <silent> <C-s>+ :resize +3<CR>
 noremap <silent> <C-s>- :resize -3<CR>
-
-" }}}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SmoothScroll Settings: {{{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-if exists("plugs['vim-smooth-scroll']")
-  noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 3)<CR>
-  noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 3)<CR>
-  noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 3)<CR>
-  noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 3)<CR>
-end
 
 " }}}
 

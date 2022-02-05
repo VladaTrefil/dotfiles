@@ -11,7 +11,8 @@
 __pycache__/
 
 node_modules/
-
 bower_components/
-
 plugged/
+
+tmp/
+log/

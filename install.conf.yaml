@@ -70,7 +70,9 @@
   - ghostscript 
   - redis-server
   - libvips42
-    # maybe libwebp7, libwebp, libwebp-dev, cwebp
+  - gifsicle
+  - libwebp-dev
+  - webp
 
 # Post install
 - shell:

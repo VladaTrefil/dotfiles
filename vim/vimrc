@@ -97,10 +97,6 @@ set mouse=a
 "Disable safe write for webpack compilation
 set backupcopy=yes
 
-" Aliases in vim interactive mode
-" set shell=/bin/bash\ --rcfile\ ~/.shell/aliases.sh
-" set shellcmdflag=-ic
-
 " Offset from end of window to start scrolling
 set scrolloff=10
 

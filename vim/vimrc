@@ -45,6 +45,7 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-haml'
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
+Plug 'leafgarland/typescript-vim', {'for': ['typescript', 'typescript.tsx'] }
 
 " Enhancements -------
 Plug 'rhysd/clever-f.vim'               " Improves commands f, F, t and T
@@ -270,6 +271,7 @@ if exists("plugs['coc.nvim']")
     \ 'coc-pairs',
     \ 'coc-json', 
     \ 'coc-tsserver', 
+    \ 'coc-tslint-plugin', 
     \ 'coc-css', 
     \ 'coc-phpls', 
     \ ]
@@ -452,5 +454,21 @@ nnoremap <LEADER>V :<C-u>source $MYVIMRC<CR>
 
 " open new file in the same directory as the current pane in a vertical split
 nnoremap <LEADER>fv :<C-u>vsp %:h/
+
+" }}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Languages: {{{
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" TypeScript: {{{
+
+" Fix typescript redraw exceeded
+set re=0
+
+" Set typescript filetype
+au BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.typescriptreact
+
+" }}}
 
 " }}}

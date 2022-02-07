@@ -2,17 +2,10 @@
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-PATH="$HOME/.local/bin${PATH:+:${PATH}}"
-
 EDITOR="nvim"
 ZSH_DISABLE_COMPFIX=true
 ZSH=~/.oh-my-zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# Invoke TMUX on start
-# if [[ -z "$TMUX" ]]; then
-#   exec tmux
-# fi
 
 # colorize manual pages 
 export LESS_TERMCAP_mb=$'\e[1;32m'
@@ -23,17 +16,13 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-plugins=(
-  git 
-  vi-mode 
-  zsh-autosuggestions 
-  fast-syntax-highlighting
-)
+export HISTFILE=~/.histfile
+export HISTSIZE=1000000   # the number of items for the internal history list
+export SAVEHIST=1000000   # maximum number of items for the history file
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#757575,bg=none,bold,underline"
-
-# CTRL+F accept autosuggestion
-bindkey '^F' autosuggest-accept
-
-source $ZSH/oh-my-zsh.sh
+# The meaning of these options can be found in man page of `zshoptions`.
+setopt HIST_IGNORE_ALL_DUPS  # do not put duplicated command into history list
+setopt HIST_SAVE_NO_DUPS  # do not save duplicated command
+setopt HIST_REDUCE_BLANKS  # remove unnecessary blanks
+setopt INC_APPEND_HISTORY_TIME  # append command to history file immediately after execution
+setopt EXTENDED_HISTORY  # record command start time

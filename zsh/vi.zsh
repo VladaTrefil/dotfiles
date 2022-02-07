@@ -1,5 +1,6 @@
 # Vi Mode
 bindkey -v
+
 export KEYTIMEOUT=1
 
 # Edit line in Vim

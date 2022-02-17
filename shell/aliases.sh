@@ -37,6 +37,7 @@ alias gpuo="git pull origin"
 # Custom scripts
 alias clear_branches="sh ~/.zsh/scripts/clear-git-branches.sh"
 alias kill_server="sh ~/.zsh/scripts/kill-rails-server.sh"
+alias init-sinfin-project="sh ~/.zsh/scripts/kill-rails-server.sh"
 
 # Youtube-DL download music
 alias ydl="youtube-dl -x --audio-format \"mp3\" -o '%(title)s - %(uploader)s.%(ext)s'"

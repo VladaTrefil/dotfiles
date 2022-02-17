@@ -5,13 +5,15 @@
 
 - clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/', '~/.oh-my-zsh/custom/themes/']
 
+- create:
+  - ~/.oh-my-zsh/custom/
+  - ~/.oh-my-zsh/custom/plugins
+  - ~/.oh-my-zsh/custom/themes
+
 # Pre install
 - shell:
   - [sh pre-install.sh, Running pre installation script]
   - [git submodule update --init --recursive, Installing submodules]
-  - [mkdir -p ~/.oh-my-zsh/custom/, Creating oh-my-zsh custom forlders]
-  - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins folders]
-  - [mkdir -p ~/.oh-my-zsh/custom/themes, Creating oh-my-zsh custom themes folders]
 
   # Syncthing
   - [sudo curl -s -o /usr/share/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg, Getting Syncthing GPG key]

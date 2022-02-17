@@ -43,12 +43,6 @@ if [ -f "`sudo cat /etc/sudoers`" ]; then
   echo "$USER   all=(all) nopasswd: all" | tr '[:lower:]' '[:upper:]' | sudo tee -a /etc/sudoers
 fi
 
-if [ -f "`which webp`" ]; then
-  # Fixes sinfin issue `no such file or directory - "cwebp"`
-  echo 'Installing webp'
-  brew install webp
-fi
-
 # Change default shell
 if [ -z "`echo $SHELL | grep zsh`" ]; then
   echo 'Changing default shell to zsh'

@@ -60,3 +60,8 @@ if [ ! -f "`which lens`" ]; then
   sudo apt install -f
   rm -rf tmp_install
 fi
+
+# Install bat
+if [ ! -f "`which bat`" ]; then
+  brew install bat
+fi

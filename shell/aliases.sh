@@ -43,7 +43,7 @@ alias init-sinfin-project="sh ~/.zsh/scripts/kill-rails-server.sh"
 alias ydl="youtube-dl -x --audio-format \"mp3\" -o '%(title)s - %(uploader)s.%(ext)s'"
 
 # Bat on debian
-alias bat="batcat"
+# alias bat="batcat"
 
 # Aliases to protect against overwriting
 alias cp='cp -i'

@@ -1,0 +1,90 @@
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#		snippet trigger_word [ "description" [ options ] ]
+#		endsnippet
+
+priority -50
+
+###########################################################################
+#                            SnipMate Snippets                            #
+###########################################################################
+
+extends sass_props
+
+priority -49
+
+snippet $
+$${1:variable}: ${0:value}
+endsnippet
+
+snippet imp
+@import '${0}'
+endsnippet
+
+snippet mix
+=${1:name}(${2})
+	${0}
+endsnippet
+
+snippet inc
++${1:mixin}(${2})
+endsnippet
+
+snippet ext
+@extend ${0}
+endsnippet
+
+snippet fun
+@function ${1:name}(${2:args})
+	${0}
+endsnippet
+
+snippet if
+@if ${1:condition}
+	${0:${VISUAL}}
+endsnippet
+
+snippet ife
+@if ${1:condition}
+	${2:${VISUAL}}
+@else
+	${0}
+endsnippet
+
+snippet eif
+@else if ${1:condition}
+	${0:${VISUAL}}
+endsnippet
+
+snippet for
+@for ${1:$i} from ${2:1} through ${3:3}
+	${0}
+endsnippet
+
+snippet each
+@each ${1:$item} in ${2:items}
+	${0}
+endsnippet
+
+snippet while
+@while ${1:$i} ${2:>} ${3:0}
+	${0:${VISUAL}}
+endsnippet
+
+snippet @f
+@font-face
+	font-family: ${1}
+	src: url('${0}')
+endsnippet
+
+snippet @m
+@media ${1:print}
+	${0}
+endsnippet

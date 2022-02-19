@@ -1,0 +1,91 @@
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#		snippet trigger_word [ "description" [ options ] ]
+#		endsnippet
+
+priority -49
+
+###########################################################################
+#                            SnipMate Snippets                            #
+###########################################################################
+
+snippet ? "present?"
+.present?
+endsnippet
+
+snippet model[ "Cell model"
+model[${1::${2}}]
+endsnippet
+
+snippet options[ "Cell options"
+options[:${1}]
+endsnippet
+
+snippet cell "Folio Cell" b
+== cell('${1}', ${2}${3:, ${4}: ${5}})
+endsnippet
+
+snippet t "Folio Cell" b
+= t('.${1}')
+endsnippet
+
+snippet icon "Icon" b
+= icon("${1}", height: ${2}${3:, class: '${4}'})
+endsnippet
+
+snippet image "Image" b
+= image(${1:model[:cover]}, ${2:THUMB_SIZE}${3:, class: '${4}'})
+endsnippet
+
+snippet button "Button" b
+button.btn${1:.btn-lg} type="${2:button}"
+	${0}
+endsnippet
+
+snippet if "if" b
+- if ${1}
+	${0}
+endsnippet
+
+snippet ifel "if else" b
+- if ${1}
+	${2}
+- else
+	${3}
+endsnippet
+
+snippet ifelif "if else if" b
+- if ${1}
+	${2}
+- elsif ${3}
+	${4}
+endsnippet
+
+snippet unless "unless" b
+- unless ${1}
+	${0}
+endsnippet
+
+snippet unlessel "unless else" b
+- unless ${1}
+	${2}
+- else
+	${3}
+endsnippet
+
+snippet each "Each loop" b
+- ${1}.each do |${2}|
+	${0}
+endsnippet
+
+snippet eachwi "Each loop" b
+- ${1}.each_with_index do |${2}, i|
+	${0}
+endsnippet

@@ -1,0 +1,98 @@
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#		snippet trigger_word [ "description" [ options ] ]
+#		endsnippet
+
+priority -50
+
+###########################################################################
+#                            SnipMate Snippets                            #
+###########################################################################
+
+snippet frozen "frozen string literal" b
+# frozen_string_literal: true
+endsnippet
+
+snippet req "require" b
+require '${1}'
+endsnippet
+
+snippet def "def <name>..." r
+def ${1:function_name}${2:(${3:*args})}
+	$0
+end
+endsnippet
+
+snippet each "each { |i| <block> }"
+each { |${1:i}| $0 }
+endsnippet
+
+snippet eachdo "each do |i| <block>"
+each do |${1:i}|
+	$0
+end
+endsnippet
+
+snippet map "map { |i| <block> }"
+map { |${1:i}| $0 }
+endsnippet
+
+snippet mapdo "map do |i| <block>"
+map do |${1:i}|
+	$0
+end
+endsnippet
+
+snippet each_pair "each_pair { |i| <block> }"
+each_pair { |${1:i}| $0 }
+endsnippet
+
+snippet each_pairdo "each_pair do |i| <block>"
+each_pair do |${1:i}|
+	$0
+end
+endsnippet
+
+snippet until "until <expression> ... end"
+until ${1:expression}
+	$0
+end
+endsnippet
+
+snippet while "while <expression> ... end"
+while ${1:expression}
+	$0
+end
+endsnippet
+
+snippet "case" "case <variable> when <expression> ... end" r
+case ${1:variable}
+when ${2:expression}
+	$0
+end
+endsnippet
+
+snippet clas "class" b
+class ${1}
+	${0}
+end
+endsnippet
+
+snippet module "module"
+module ${1}
+	$0
+end
+endsnippet
+
+snippet ivc "instance variable" b
+@${1:variable_name} ||= ${0:cached_value}
+endsnippet
+
+extends rails

@@ -1,5 +1,7 @@
 {
-  "snippets.ultisnips.directories": ["snippets"],
+  "snippets.ultisnips.directories": [
+    "snippets"
+  ],
   "coc.preferences.formatOnSaveFiletypes": [
     "css",
     "html",
@@ -10,9 +12,5 @@
     "json"
   ],
   "coc.preferences.formatOnType": true,
-  "prettier.singleQuote": true,
-  "prettier.printWidth": 120,
-  "prettier.trailingComma": "es5",
-  "prettier.eslintIntegration": true,
   "tsserver.formatOnType": true
 }

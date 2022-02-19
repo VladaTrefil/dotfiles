@@ -1,0 +1,76 @@
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#		snippet trigger_word [ "description" [ options ] ]
+#		endsnippet
+
+priority -49
+
+###########################################################################
+#                            SnipMate Snippets                            #
+###########################################################################
+
+snippet pry "binding pry" b
+binding.pry
+endsnippet
+
+snippet form "Simple form function" b
+def form(&block)
+	opts = {
+		url: ${1}_path,
+		method: ${2::get}
+	}
+
+	simple_form_for(${0:""}, opts, &block)
+end
+endsnippet
+
+snippet cell "Folio Cell" b
+cell("${1}", ${2})
+endsnippet
+
+snippet link "link_to" b
+link_to ${1:text}, ${2:path}
+endsnippet
+
+snippet Cell "Folio Cell" b
+# frozen_string_literal: true
+
+class ${1}::${2}Cell < ApplicationCell
+	${0}
+end
+endsnippet
+
+snippet Controller "Rails controller" b
+# frozen_string_literal: true
+
+class ${1}Controller < ${2:PublicBaseController}
+	${0}
+
+	def index
+
+	end
+
+	def show
+
+	end
+end
+endsnippet
+
+snippet Model "Rails model" b
+# frozen_string_literal: true
+
+module ${1} < ${2:ApplicationRecord}
+	${0}
+end
+endsnippet
+
+snippet scope "model scope" b
+scope :${1}, ->${2:(${3})} { ${0} }
+endsnippet

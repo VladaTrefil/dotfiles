@@ -1,0 +1,43 @@
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#		snippet trigger_word [ "description" [ options ] ]
+#		endsnippet
+
+priority -50
+
+###########################################################################
+#                            SnipMate Snippets                            #
+###########################################################################
+
+extends javascript
+
+snippet int "interface"
+interface ${1} {
+	${2}
+}
+endsnippet
+
+snippet namespc "namespace"
+namespace ${1} {
+	${2}
+}
+endsnippet
+
+snippet type "type" b
+type ${1} = ${2:\{\}}
+endsnippet
+
+priority -49
+
+snippet fun "function (named)" b
+function ${1:function_name} (${2:argument}: ${3:argument_type}) {
+	${VISUAL}$0
+}
+endsnippet

@@ -1,0 +1,72 @@
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#		snippet trigger_word [ "description" [ options ] ]
+#		endsnippet
+
+priority -50
+
+###########################################################################
+#                            SnipMate Snippets                            #
+###########################################################################
+
+extends javascript
+extends javascriptreact
+extends typescript
+
+snippet Props "React component props type" b
+interface Props {
+	${1:key}: ${2:any}
+}
+endsnippet
+
+snippet reclass "React Class Component" b
+class ${1} extends React.Component<{}, AppState> {
+	constructor(${2:\{\}}: any) {
+		super(props)
+
+		${2}
+	}
+
+	render = () => (
+		${0}
+	)
+}
+endsnippet
+
+snippet refun "React Functional Component" b
+const ${1} = ({ ${2} }: ${3:Props}): ${4:any} => {
+	return (
+		${0}
+	)
+}
+endsnippet
+
+snippet refun "React Functional Component return" b
+const ${1} = ({ ${2} }: ${3:Props}): ${4:any} => (
+	${0}
+)
+endsnippet
+
+snippet reinit "Init react component" b
+import React from 'react'
+
+interface Props {
+	${1:key}: ${2:any}
+}
+
+const ${1} = ({ ${2} }: ${3:Props}): ${4:any} => {
+	return (
+		${0}
+	)
+}
+
+export default ${1}
+endsnippet
+

@@ -1,0 +1,56 @@
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#		snippet trigger_word [ "description" [ options ] ]
+#		endsnippet
+
+priority -50
+
+###########################################################################
+#                            SnipMate Snippets                            #
+###########################################################################
+
+snippet reim "Import React" b
+import React from 'react'
+endsnippet
+
+snippet useS "useState Hook" b
+const [${1}, set${1}] = useState(${3:"${4}"})
+endsnippet
+
+snippet useE "useEffect Hook" b
+useEffect(() => {
+	${1:${0}}
+		}${2})
+endsnippet
+
+snippet useC "useContext Hook" b
+const ${1:context} = useContext(${2})
+endsnippet
+
+snippet useRe "useReducer Hook" b
+const [${3:state}, ${4:dispatch}] = useReducer(${5:reducer}, ${2:initial_value})
+endsnippet
+
+snippet useCB "useCallback(fn, inputs)" b
+const ${1:callback} = useCallback((${2})) => ${3:{
+	${4}
+}}, [${5}])
+endsnippet
+
+snippet useM "useMemo(fn, inputs)" b
+const ${1:memorized} = useMemo(() => ${2:{
+	${3}
+}}, [${4}])
+endsnippet
+
+snippet useR "useRef(defaultValue)" b
+const ${1:ref} = useRef(${2:null})
+endsnippet
+

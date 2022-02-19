@@ -45,17 +45,18 @@
     ~/.config/polybar: config/polybar
 
 - aptget:
-  - syncthing
   - bat #Cat with syntax, for fzf
   - python3-dev
   - build-essential
   - nodejs
   - npm
   - ripgrep # Command line search
+
   # Desktop enviroment
   - polybar
   - rofi
   - feh
+
   # Sinfin libs
   - postgresql
   - postgresql-contrib
@@ -75,6 +76,11 @@
   - gifsicle
   - libwebp-dev
   - webp
+
+  # Apps
+  - konsole
+  - syncthing
+  - brave-browser
 
 # Post install
 - shell:

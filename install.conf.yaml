@@ -34,11 +34,11 @@
       force: true
       path: zsh/zshrc
     ~/.inputrc: inputrc
-    ~/.Xsession: x/xsession
+    ~/.xsession: x/xsession
     ~/.Xresources: x/xresources
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: zsh/custom/plugins/zsh-autosuggestions/
     ~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting: zsh/custom/plugins/fast-syntax-highlighting/
-    ~/.oh-my-zsh/custom/themes/powerlevel10k: zsh/custom/themes/powerlevel10k
+    ~/.oh-my-zsh/custom/themes/powerlevel10k: zsh/custom/themes/powerlevel10k/
     ~/.config/nvim: config/nvim
     ~/.config/bat: config/bat
     ~/.config/i3: config/i3
@@ -90,3 +90,6 @@
   # Gems
   - [gem install rails -v "6.1.4", Installing rails@6.1.4]
   - [gem install bundler -v "2.2.32", Installing bundler@2.2.32]
+
+  - [chmod +x ~/.xsession]
+  - [chmod +x ~/.Xresources]

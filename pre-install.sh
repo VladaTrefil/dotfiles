@@ -51,17 +51,34 @@ else
   echo 'Already using zsh'
 fi
 
-# Install lens
-if [ ! -f "`which lens`" ]; then
-  echo 'Install Lens'
-  mkdir tmp_install
-  wget -O tmp_install/lens.deb https://lens-binaries.s3-eu-west-1.amazonaws.com/ide/Lens-5.3.4-latest.20220120.1.amd64.deb
-  sudo dpkg -i "tmp_install/lens.deb"
-  sudo apt install -f
-  rm -rf tmp_install
-fi
-
 # Install bat
 if [ ! -f "`which bat`" ]; then
   brew install bat
 fi
+
+mkdir tmp_install
+
+# Install lens
+if [ ! -f "`which lens`" ]; then
+  echo 'Install Lens'
+  wget -O tmp_install/lens.deb https://lens-binaries.s3-eu-west-1.amazonaws.com/ide/Lens-5.3.4-latest.20220120.1.amd64.deb
+  sudo dpkg -i "tmp_install/lens.deb"
+fi
+
+# Install lens
+if [ ! -f "`which gitkraken`" ]; then
+  echo 'Install gitkraken'
+  wget -O tmp_install/gitkraken.deb https://release.gitkraken.com/linux/gitkraken-amd64.deb
+  sudo dpkg -i "tmp_install/gitkraken.deb"
+fi
+
+sudo apt install -f
+rm -rf tmp_install
+
+sudo apt install apt-transport-https curl
+curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo apt update
+
+# source ~/.zshrc
+# source ~/.zprofile

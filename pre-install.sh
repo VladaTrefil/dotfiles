@@ -50,3 +50,13 @@ if [ -z "`echo $SHELL | grep zsh`" ]; then
 else
   echo 'Already using zsh'
 fi
+
+# Install lens
+if [ ! -f "`which lens`" ]; then
+  echo 'Install Lens'
+  mkdir tmp_install
+  wget -O tmp_install/lens.deb https://lens-binaries.s3-eu-west-1.amazonaws.com/ide/Lens-5.3.4-latest.20220120.1.amd64.deb
+  sudo dpkg -i "tmp_install/lens.deb"
+  sudo apt install -f
+  rm -rf tmp_install
+fi

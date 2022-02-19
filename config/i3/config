@@ -1,4 +1,15 @@
-# vim: set ft=sh:
+#
+#  $$$$$$\  $$$$$$\         $$$$$$\   $$$$$$\  $$$$$$$\   $$$$$$\  
+#  \_$$  _|$$ ___$$\       $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ 
+#    $$ |  \_/   $$ |      $$ /  \__|$$ /  $$ |$$ |  $$ |$$ /  \__|
+#    $$ |    $$$$$ /       $$ |$$$$\ $$$$$$$$ |$$$$$$$  |\$$$$$$\  
+#    $$ |    \___$$\       $$ |\_$$ |$$  __$$ |$$  ____/  \____$$\ 
+#    $$ |  $$\   $$ |      $$ |  $$ |$$ |  $$ |$$ |      $$\   $$ |
+#  $$$$$$\ \$$$$$$  |      \$$$$$$  |$$ |  $$ |$$ |      \$$$$$$  |
+#  \______| \______/        \______/ \__|  \__|\__|       \______/ 
+# 
+
+# vim: set ft=i3config:
 # i3wm config
 
 ##################
@@ -56,7 +67,7 @@ set $ws10 "10"
 
 set $monitor1 HDMI-A-0
 set $monitor2 DisplayPort-2
- 
+
 workspace $ws1 output $monitor1
 workspace $ws2 output $monitor1
 workspace $ws3 output $monitor1
@@ -67,7 +78,7 @@ workspace $ws7 output $monitor2
 workspace $ws8 output $monitor2
 workspace $ws9 output $monitor2
 
-# client.focused #e90d48
+for_window [class = ".*"] title_format " %class | %title"
 
 ##################
 # Gaps
@@ -76,17 +87,11 @@ workspace $ws9 output $monitor2
 gaps inner 9
 gaps outer 9
 
-# smart_gaps on
-# smart_gaps inverse_outer
-# smart_borders on
-# smart_borders no_gaps
-hide_edge_borders smart_no_gaps
-new_window normal 0 px
-new_window none
-default_border none
+default_border pixel 3
 
 # No title bar in windows
-for_window [class=".*"] border pixel 0
+for_window [class = "^.*"] border pixel 4
+for_window [title = "^.*"] border pixel 4
 
 ##################
 # Dual Monitor
@@ -149,14 +154,6 @@ bindsym $mod+q layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-# TODO
-# toggle tiling / floating
-# bindsym $mod+Shift+f floating toggle
-
-# TODO
-# change focus between tiling / floating windows
-# bindsym $mod+space focus mode_toggle
-
 # focus the parent container
 bindsym $mod+a focus parent
 
@@ -173,7 +170,6 @@ bindsym $mod+6 workspace number $ws6
 bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -185,7 +181,6 @@ bindsym $mod+Shift+6 move container to workspace number $ws6
 bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -195,6 +190,23 @@ bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# Set shut down, restart and locking features
+bindsym $mod+0 mode "$mode_system"
+set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -210,3 +222,17 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+# it fails to get colors from Xresources.
+set_from_resource $fg i3wm.color7 #f0f0f0
+set_from_resource $bg i3wm.color0 #000000
+set_from_resource $ac i3wm.color8 #900738
+
+# class                 border  backgr. text indicator child_border
+client.focused          $ac     $ac     $fg  $ac       $ac
+client.focused_inactive $bg     $bg     $fg  $bg       $bg
+client.unfocused        $bg     $bg     $fg  $bg       $bg
+client.urgent           $bg     $bg     $fg  $bg       $bg
+client.placeholder      $bg     $bg     $fg  $bg       $bg
+
+client.background       $bg

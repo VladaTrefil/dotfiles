@@ -45,7 +45,6 @@
     ~/.config/polybar: config/polybar
 
 - aptget:
-  - bat #Cat with syntax, for fzf
   - python3-dev
   - build-essential
   - nodejs

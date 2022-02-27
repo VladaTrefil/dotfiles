@@ -9,6 +9,7 @@
   - ~/.oh-my-zsh/custom/
   - ~/.oh-my-zsh/custom/plugins
   - ~/.oh-my-zsh/custom/themes
+  - ~/.local/share/fonts
 
 # Pre install
 - shell:
@@ -21,7 +22,6 @@
   - [curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash, Installing NVM]
 
 - link:
-    ~/.local/share/fonts/: fonts
     ~/.background: background/
     ~/.shell:
     ~/.gitconfig:
@@ -84,6 +84,8 @@
 
 # Post install
 - shell:
+
+  - [cp ~/development/dotfiles/fonts/* ~/.local/share/fonts/, Copying fonts]
   - [fc-cache -f, Building font cache]
 
   # Bat

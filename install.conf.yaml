@@ -44,6 +44,7 @@
     ~/.config/i3: config/i3
     ~/.config/polybar: config/polybar
 
+# ./install with sudo
 - aptget:
   - python3-dev
   - build-essential
@@ -80,6 +81,7 @@
   - konsole
   - syncthing
   - brave-browser
+  - inkscape 
 
 # Post install
 - shell:

@@ -282,9 +282,11 @@ end
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " IndentLine Settings: {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if exists("plugs['indent-blankline.nvim']")
+if exists("plugs['indentLine']")
   let g:indent_blankline_buftype_exclude  = ['help', 'man']
-  let g:indent_blankline_filetype_exclude = ['dashboard']
+  let g:indentLine_bufTypeExclude  = ['help', 'man']
+  let g:indentLine_fileTypeExclude = ['dashboard']
+  let g:indentLine_char_list = ['|', '┆']
 end
 
 " }}}

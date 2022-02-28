@@ -66,6 +66,7 @@ Plug 'tpope/vim-eunuch'                 " File commands in vim
 Plug 'psliwka/vim-smoothie'           " Smooth scroll
 Plug 'drzel/vim-repo-edit'              " Quickly clone github repo to tmp
 Plug 'glepnir/dashboard-nvim'
+Plug 'ryanoasis/vim-devicons'
 
 " Theme -------
 Plug 'VladaTrefil/vim-theme'
@@ -158,14 +159,25 @@ endfunction
 " Wilder Settings: {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-call wilder#setup({'modes': [':', '/', '?']})
+call wilder#setup({
+  \ 'modes': [':', '/', '?'],
+  \ 'next_key': '<C-p>',
+  \ 'previous_key': '<C-n>'
+  \ })
 
-call wilder#set_option('renderer', , wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
+
+call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
+      \ 'highlighter': wilder#basic_highlighter(),
+      \ 'min_width': '30%',
+      \ 'max_height': '30%',
+      \ 'reverse': '1',
       \ 'highlights': {
-      \   'border': 'Normal',
+      \   'border': 'Blue',
+      \   'default': 'Normal',
+      \   'accent': 'Normal',
+      \   'selected': 'Red',
       \ },
-      \ 'border': 'rounded',
-      \ 'pumblend': 20,
+      \ 'pumblend': 10,
       \ 'left': [
       \   ' ', wilder#popupmenu_devicons(),
       \ ],
@@ -173,6 +185,7 @@ call wilder#set_option('renderer', , wilder#popupmenu_renderer(wilder#popupmenu_
       \   ' ', wilder#popupmenu_scrollbar(),
       \ ],
       \ })))
+
 
 " }}}
 

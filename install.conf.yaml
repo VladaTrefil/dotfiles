@@ -3,7 +3,12 @@
       create: true
       relink: true
 
-- clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/', '~/.oh-my-zsh/custom/themes/']
+- clean: [
+  '~',
+  '~/.oh-my-zsh/custom/',
+  '~/.oh-my-zsh/custom/plugins/',
+  '~/.oh-my-zsh/custom/themes/',
+  '~/local/share/fonts/']
 
 - create:
   - ~/.oh-my-zsh/custom/
@@ -86,7 +91,7 @@
 # Post install
 - shell:
 
-  - [cp ~/development/dotfiles/fonts/* ~/.local/share/fonts/, Copying fonts]
+  - [cp -r ~/development/dotfiles/fonts/* ~/.local/share/fonts/, Copying fonts]
   - [fc-cache -f, Building font cache]
 
   # Bat

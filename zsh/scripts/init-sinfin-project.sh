@@ -14,7 +14,7 @@ fi
 
 tar -xvf "${db_directory}/$( ls $db_directory | grep ${project} | tail -n1 )"
 
-db_sql=`ls . | grep -E ${project}.\+.sql`
+db_sql=`ls . | grep -E \+.sql`
 
 if [ -e $db_sql ]; then
   dropdb ${project}_development

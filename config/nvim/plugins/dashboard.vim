@@ -56,7 +56,7 @@ if exists("plugs['dashboard-nvim']")
   \ 'book_marks'         : ' ',
   \ }
 
-  function ExtendDashboard()
+  function! ExtendDashboard()
     hi dashboardFooter    guibg=none guifg=#516d91
     hi dashboardHeader    guibg=none guifg=#e4445a
     hi dashboardCenter    guibg=none guifg=#1f997e

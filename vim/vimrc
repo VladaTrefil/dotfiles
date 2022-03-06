@@ -127,7 +127,10 @@ autocmd BufWinEnter .vimrc silent loadview
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " colorscheme gruvbox
-colorscheme ayu
+
+if exists("plugs['vim-theme']")
+  colorscheme ayu
+end
 
 set tabline=%!TabLine()
 

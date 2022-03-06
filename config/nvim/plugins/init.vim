@@ -65,6 +65,7 @@ Plug 'drzel/vim-repo-edit'              " Quickly clone github repo to tmp
 Plug 'glepnir/dashboard-nvim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'jez/vim-superman'                 " Man pages in vim
+Plug 'nvim-lualine/lualine.nvim'
 call plug#end()
 
 source ~/.config/nvim/plugins/wilder.vim
@@ -76,3 +77,4 @@ source ~/.config/nvim/plugins/far.vim
 source ~/.config/nvim/plugins/ale.vim
 source ~/.config/nvim/plugins/colorizer.vim
 source ~/.config/nvim/plugins/gitgutter.vim
+source ~/.config/nvim/plugins/lualine.lua

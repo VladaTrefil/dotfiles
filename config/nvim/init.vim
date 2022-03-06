@@ -1,7 +1,5 @@
 source ~/.config/nvim/plugins/init.vim
 
-source ~/.config/nvim/statusline.vim
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General Settings: {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

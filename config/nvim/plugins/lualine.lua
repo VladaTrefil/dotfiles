@@ -12,6 +12,33 @@ local orange        = '#F29718'
 local aqua          = '#1f997e'
 local bright_red    = '#e23141'
 
+local function file_path()
+  local path = vim.fn.expand('%f')
+  local path_table = vim.fn.split(path, '/')
+  local result = ''
+
+  for i = 1, table.getn(path_table), 1 do
+    local r = table.getn(path_table) - i
+
+    if ( r < 6 ) then
+      if ( r > 2 ) then
+        result = result .. '.'
+
+        if (r == 3) then
+          result = result .. '/'
+        end
+      else
+        result = result .. path_table[i]
+
+        if (r > 0) then
+          result = result .. '/'
+        end
+      end
+    end
+  end
+
+  return '  ' .. result .. '  '
+end
 
 local bubbles_theme = {
   normal = {
@@ -41,7 +68,7 @@ require('lualine').setup {
     lualine_a = {
       { 'mode', separator = { left = '' }, right_padding = 4 },
     },
-    lualine_b = { 'filename', 'branch' },
+    lualine_b = { file_path, 'branch' },
     lualine_c = { 'fileformat' },
     lualine_x = {},
     lualine_y = { 'filetype', 'progress' },
@@ -50,7 +77,7 @@ require('lualine').setup {
     },
   },
   inactive_sections = {
-    lualine_a = { 'filename' },
+    lualine_a = { file_path },
     lualine_b = {},
     lualine_c = {},
     lualine_x = {},

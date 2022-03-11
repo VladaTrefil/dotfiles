@@ -1,5 +1,5 @@
 # Set theme to gruvbox
---theme="GitHub"
+--theme="ayu"
 
 # Associate sublime-syntax with YAML
 --map-syntax='*.sublime-syntax:YAML'

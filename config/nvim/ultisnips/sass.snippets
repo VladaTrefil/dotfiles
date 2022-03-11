@@ -20,6 +20,50 @@ extends sass_props
 
 priority -49
 
+# SINFIN ======================================
+
+snippet media-down "" b
++media-breakpoint-down(${1:sm})
+	${2}
+endsnippet
+
+snippet media-up "" b
++media-breakpoint-up(${1:md})
+	${2}
+endsnippet
+
+snippet media-mobile "" b
++mq-mobile-menu
+	${1}
+endsnippet
+
+snippet media-desktop "" b
++mq-desktop-menu
+	${1}
+endsnippet
+
+snippet spacers "" i
+map-get($spacers, ${1:gg})
+endsnippet
+
+snippet ggh "" i
+$grid-gutter-half
+endsnippet
+
+snippet ggw "" i
+$grid-gutter-width
+endsnippet
+
+snippet bold "" i
+$font-weight-bold
+endsnippet
+
+snippet normal "" i
+$font-weight-normal
+endsnippet
+
+# =============================================
+
 snippet $
 $${1:variable}: ${0:value}
 endsnippet

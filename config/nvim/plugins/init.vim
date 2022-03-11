@@ -45,6 +45,8 @@ Plug 'GutenYe/json5.vim'
 Plug 'elzr/vim-json'
 Plug 'jasonshell/vim-svg-indent'
 Plug 'vim-scripts/svg.vim'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
 Plug 'tpope/vim-haml'
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
@@ -66,6 +68,7 @@ Plug 'glepnir/dashboard-nvim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'jez/vim-superman'                 " Man pages in vim
 Plug 'nvim-lualine/lualine.nvim'
+
 call plug#end()
 
 source ~/.config/nvim/plugins/wilder.vim

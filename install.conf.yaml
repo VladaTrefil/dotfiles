@@ -33,8 +33,6 @@
     ~/.gitconfig:
     ~/.gitignore_global:
     ~/.tmux.conf: tmux/tmux.conf
-    ~/.vim:
-    ~/.vimrc: vim/vimrc
     ~/.zsh:
     ~/.zshrc:
       force: true
@@ -91,7 +89,6 @@
 
 # Post install
 - shell:
-
   - [cp -r ~/development/dotfiles/fonts/* ~/.local/share/fonts/, Copying fonts]
   - [fc-cache -f, Building font cache]
 

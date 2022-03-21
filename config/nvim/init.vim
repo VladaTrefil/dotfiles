@@ -147,9 +147,6 @@ noremap L $
 noremap J }
 noremap K {
 
-" Clear search
-nnoremap <C-c> :nohl<CR>:<CR>
-
 " save, quit
 noremap <C-w> :w!<CR>
 noremap <C-q> :q<CR>
@@ -188,6 +185,9 @@ nnoremap <LEADER>V :<C-u>source $MYVIMRC<CR>
 
 " open new file in the same directory as the current pane in a vertical split
 nnoremap <LEADER>fv :<C-u>vsp %:h/
+
+" Use <C-c> to clear the highlighting of :set hlsearch.
+nnoremap <silent> <C-c> :nohlsearch<C-R><CR><CR><C-c>
 
 " }}}
 

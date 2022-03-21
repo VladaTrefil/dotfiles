@@ -47,6 +47,7 @@
     ~/.config/bat: config/bat
     ~/.config/i3: config/i3
     ~/.config/polybar: config/polybar
+    ~/.config/lazygit: config/lazygit
     ~/.local/share/konsole: local/konsole
 
 # ./install with sudo

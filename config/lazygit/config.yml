@@ -1,0 +1,32 @@
+gui:
+  theme:
+    activeBorderColor:
+      - '#f67e0f'
+      - bold
+    inactiveBorderColor:
+      - '#E6E1CF'
+    optionsTextColor:
+      - '#36A3D9'
+    selectedLineBgColor:
+      - default
+    selectedRangeBgColor:
+      - '#36A3D9'
+    cherryPickedCommitBgColor:
+      - '#36A3D9'
+    cherryPickedCommitFgColor:
+      - '#70ccc4'
+    unstagedChangesColor:
+      - '#e4445a'
+
+keybinding:
+  universal:
+    nextTab: 'L'
+    prevTab: 'H'
+
+    scrollLeft: '[' # scroll left within list view
+    scrollRight: ']' # scroll right within list view
+
+    prevBlock: 'K' # goto the previous block / panel
+    nextBlock: 'J' # goto the next block / panel
+    prevBlock-alt: 'K' # goto the previous block / panel
+    nextBlock-alt: 'J' # goto the next block / panel

@@ -13,9 +13,11 @@ if [ ! -f "`which tmux`" ]; then
 fi
 
 # Check if NVIM is installed
-if [ ! -f "`which nvim`" ]; then
+if [ -f "`which brew`" ]; then
   echo 'Installing nvim'
-  brew install nvim
+  brew install -q neovim
+  brew install -q lazygit
+  brew install -q bat
 fi
 
 # Check if RVM is installed
@@ -49,11 +51,6 @@ if [ -z "`echo $SHELL | grep zsh`" ]; then
   chsh -s /bin/zsh
 else
   echo 'Already using zsh'
-fi
-
-# Install bat
-if [ ! -f "`which bat`" ]; then
-  brew install bat
 fi
 
 mkdir tmp_install

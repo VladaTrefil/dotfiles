@@ -1,9 +1,9 @@
 #!/bin/sh
 
 project=${PWD##*/}
-db_directory="$HOME/Documents"
+db_directory="$HOME/Documents/databases"
 
-git pull
+git pull --rebase
 bundle install
 
 if [ ! -e .env ]; then

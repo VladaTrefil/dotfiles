@@ -46,11 +46,26 @@ set scrolloff=10
 " Enable setting vim options in files
 set modeline
 
+" Automaticaly reload changed files
+set autoread
+
 " source vimrc when saving any vim file
 autocmd! BufWritePost .vimrc source $MYVIMRC
 
 autocmd BufWinLeave .vimrc mkview
 autocmd BufWinEnter .vimrc silent loadview 
+
+if &encoding ==# 'latin1' && has('gui_running')
+  set encoding=utf-8
+endif
+
+if &listchars ==# 'eol:$'
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+endif
+
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j " Delete comment character when joining commented lines
+endif
 
 " }}}
 

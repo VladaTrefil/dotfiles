@@ -62,13 +62,6 @@ if [ ! -f "`which lens`" ]; then
   sudo dpkg -i "tmp_install/lens.deb"
 fi
 
-# Install lens
-if [ ! -f "`which gitkraken`" ]; then
-  echo 'Install gitkraken'
-  wget -O tmp_install/gitkraken.deb https://release.gitkraken.com/linux/gitkraken-amd64.deb
-  sudo dpkg -i "tmp_install/gitkraken.deb"
-fi
-
 sudo apt install -f
 rm -rf tmp_install
 

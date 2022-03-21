@@ -27,6 +27,7 @@ Plug 'BurntSushi/ripgrep'               " For CocSearch
 Plug 'brooth/far.vim'
 Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'tpope/vim-fugitive'
 
 " Git -------
 Plug 'tpope/vim-git'

@@ -9,3 +9,6 @@ TerminalMargin=20
 
 [Keyboard]
 KeyBindings=default
+
+[Scrolling]
+ScrollBarPosition=2

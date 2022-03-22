@@ -86,9 +86,7 @@
   # Apps
   - konsole
   - syncthing
-  - brave-browser
   - inkscape 
-  - neovim
 
 # Post install
 - shell:

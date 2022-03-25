@@ -163,7 +163,7 @@ noremap J }
 noremap K {
 
 " save, quit
-noremap <C-w> :w!<CR>
+noremap <C-p> :w!<CR>
 noremap <C-q> :q<CR>
 
 " yank rest of line

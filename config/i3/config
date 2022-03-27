@@ -52,11 +52,11 @@ exec_always source ~/.config/polybar/launch.sh
 # Dual Monitor: {{{
 # _________________________________________________________________________________
 
-set $monitor1 HDMI-A-0
-set $monitor2 DisplayPort-2
+set $monitor1 primary
+set $monitor2 secondary
 
-set $monitor_left HDMI-A-0
-set $monitor_right DisplayPort-2
+set $monitor_left primary
+set $monitor_right secondary
 
 # }}}
 

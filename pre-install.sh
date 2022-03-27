@@ -6,12 +6,6 @@ if [ ! -f "`which brew`" ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# Check if TMUX is installed
-if [ ! -f "`which tmux`" ]; then
-  echo 'Installing tmux'
-  brew install tmux
-fi
-
 # Check if NVIM is installed
 if [ -f "`which brew`" ]; then
   echo 'Installing nvim'

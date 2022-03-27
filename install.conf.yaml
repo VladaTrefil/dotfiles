@@ -63,6 +63,8 @@
   - rofi
   - feh
 
+  - bc # terminal calculation function
+
   # Sinfin libs
   - postgresql
   - postgresql-contrib

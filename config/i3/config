@@ -25,9 +25,10 @@ floating_modifier $mod
 # is used in the bar {} block below.
 font pango:Meslo LG M 8
 
-##################
-# Exec on startup
-##################
+# }}}
+
+# Exec on startup: {{{
+# _________________________________________________________________________________
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -45,7 +46,7 @@ exec --no-startup-id nm-applet
 exec_always --no-startup-id picom --config $HOME/.config/i3/picom.conf
 
 # Launch polybar
-exec_always source ~/.config/polybar/launch.sh
+exec_always --no-startup-id sh $HOME/.config/polybar/launch.sh
 
 # }}}
 

@@ -13,11 +13,6 @@ alias cla="clear && ls -la"
 alias cll="clear && ls -l"
 alias cls="clear && ls"
 
-# Tmux shortcuts
-alias t="tmux"
-alias ta="tmux attach"
-alias td="tmux detach"
-
 # Git aliases
 alias gaa="git add ."
 alias gd="git --no-pager diff"

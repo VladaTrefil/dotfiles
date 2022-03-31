@@ -64,6 +64,7 @@
   - feh
 
   - bc # terminal calculation function
+  - xclip # terminal clipboard
 
   # Sinfin libs
   - postgresql

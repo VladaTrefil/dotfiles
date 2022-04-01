@@ -47,6 +47,7 @@
     ~/.config/lazygit: config/lazygit
     ~/.config/konsolerc: config/konsolerc
     ~/.local/share/konsole: local/konsole
+    ~/.local/bin/: local/bin/
 
 # ./install with sudo
 - aptget:

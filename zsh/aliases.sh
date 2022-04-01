@@ -30,11 +30,11 @@ alias gpu="git pull"
 alias gpuo="git pull origin"
 
 # Custom scripts
-alias clear-branches="sh ~/.zsh/scripts/clear-git-branches.sh"
-alias kill-server="sh ~/.zsh/scripts/kill-rails-server.sh"
-alias sinfin-init="sh ~/.zsh/scripts/init-sinfin-project.sh"
+alias clear-branches="sh ~/.locale/bin/shell/clear-git-branches.sh"
+alias kill-server="sh ~/.locale/bin/shell/kill-rails-server.sh"
+alias sinfin-init="sh ~/.locale/bin/shell/init-sinfin-project.sh"
 
-alias folio-test-account="bundle exec rails runner \"eval(File.read '$HOME/bin/folio/folio-test-account.rb')\""
+alias folio-test-account="bundle exec rails runner \"eval(File.read '$HOME/.local/bin/folio/folio-test-account.rb')\""
 
 # Youtube-DL download music
 alias ydl="youtube-dl -x --audio-format \"mp3\" -o '%(title)s - %(uploader)s.%(ext)s'"

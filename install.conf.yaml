@@ -28,7 +28,6 @@
 - link:
     ~/.git: git/
     ~/.background: background/
-    ~/.shell:
     ~/.gitconfig:
     ~/.gitignore_global:
     ~/.tmux.conf: tmux/tmux.conf

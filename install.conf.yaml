@@ -36,7 +36,7 @@
       path: zsh/zshrc
     ~/.inputrc: inputrc
     ~/.xsession: x/xsession
-    ~/.Xresources: x/xresources
+    ~/.xresources: x/xresources
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: zsh/custom/plugins/zsh-autosuggestions/
     ~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting: zsh/custom/plugins/fast-syntax-highlighting/
     ~/.oh-my-zsh/custom/themes/powerlevel10k: zsh/custom/themes/powerlevel10k/

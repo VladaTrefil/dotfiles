@@ -30,7 +30,6 @@
     ~/.background: background/
     ~/.gitconfig:
     ~/.gitignore_global:
-    ~/.tmux.conf: tmux/tmux.conf
     ~/.zsh:
     ~/.zshrc:
       force: true

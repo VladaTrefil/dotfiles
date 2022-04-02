@@ -30,9 +30,9 @@ alias gpu="git pull"
 alias gpuo="git pull origin"
 
 # Custom scripts
-alias clear-branches="sh ~/.locale/bin/shell/clear-git-branches.sh"
-alias kill-server="sh ~/.locale/bin/shell/kill-rails-server.sh"
-alias sinfin-init="sh ~/.locale/bin/shell/init-sinfin-project.sh"
+alias clear-branches="sh ~/.local/bin/shell/clear-git-branches.sh"
+alias kill-server="sh ~/.local/bin/shell/kill-rails-server.sh"
+alias sinfin-init="sh ~/.local/bin/shell/init-sinfin-project.sh"
 
 alias folio-test-account="bundle exec rails runner \"eval(File.read '$HOME/.local/bin/folio/folio-test-account.rb')\""
 

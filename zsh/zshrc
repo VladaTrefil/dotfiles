@@ -1,14 +1,16 @@
 # Aliases
 source ~/.zsh/aliases.sh
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Oh My Zsh
+source ~/.zsh/omz.zsh
 
 # Settings
 source ~/.zsh/settings.zsh
 
-source ~/.zsh/omz.zsh
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Vim
 source ~/.zsh/vi.zsh
 
 # ======= RVM =============================

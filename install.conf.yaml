@@ -63,6 +63,7 @@
   - polybar
   - rofi
   - feh
+  - picom
 
   - bc # terminal calculation function
   - xclip # terminal clipboard
@@ -91,6 +92,9 @@
   - konsole
   - syncthing
   - inkscape 
+
+  # NVIM
+  - pip # pip install pynvim
 
 # Post install
 - shell:

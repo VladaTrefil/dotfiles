@@ -25,6 +25,7 @@ if [ -z "$rvm_version" ]; then
   echo 'Installing Ruby v2.6.6 & v2.6.8'
   rvm install ruby "2.6.6"
   rvm install ruby "2.6.8"
+  rvm install ruby "3.0.0"
 fi
 
 # Check if oh-my-zsh is installed

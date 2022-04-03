@@ -4,8 +4,6 @@ export LC_CTYPE=en_US.UTF-8
 
 EDITOR="nvim"
 ZSH_DISABLE_COMPFIX=true
-ZSH=~/.oh-my-zsh
-ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # colorize manual pages 
 export LESS_TERMCAP_mb=$'\e[1;32m'

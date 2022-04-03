@@ -1,3 +1,6 @@
+ZSH=~/.oh-my-zsh
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 plugins=(
   git 

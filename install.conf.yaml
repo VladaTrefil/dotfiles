@@ -51,51 +51,6 @@
     ~/.config/konsolerc: config/konsolerc
     ~/.local/share/konsole: local/konsole
 
-# ./install with sudo
-- aptget:
-  - python3-dev
-  - build-essential
-  - nodejs
-  - npm
-  - ripgrep # Command line search
-
-  # Desktop enviroment
-  - polybar
-  - rofi
-  - feh
-  - picom
-
-  - bc # terminal calculation function
-  - xclip # terminal clipboard
-
-  # Sinfin libs
-  - postgresql
-  - postgresql-contrib
-  - libpq-dev
-  - imagemagick
-  - libmagick++-dev
-  - libmagickwand-dev
-  - libmagickcore-dev
-  - libimage-exiftool-perl
-  - rubber
-  - texlive-xetex
-  - libsodium-dev
-  - pdftk
-  - ghostscript 
-  - redis-server
-  - libvips42
-  - gifsicle
-  - libwebp-dev
-  - webp
-
-  # Apps
-  - konsole
-  - syncthing
-  - inkscape 
-
-  # NVIM
-  - pip # pip install pynvim
-
 # Post install
 - shell:
   - [cp -r ~/development/dotfiles/fonts/* ~/.local/share/fonts/, Copying fonts]
@@ -106,7 +61,6 @@
 
   # NodeJS
   - [npm i -g yarn, Installing yarn]
-  - [yarn add global bower, Installing bower]
 
   # Gems
   - [gem install rails -v "6.1.4", Installing rails@6.1.4]

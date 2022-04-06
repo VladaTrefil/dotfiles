@@ -41,6 +41,7 @@ APT_PACKAGES=(
   "konsole"
   "syncthing"
   "inkscape"
+  "ffmpeg"
 
   # NVIM
   "pip" # pip install pynvim

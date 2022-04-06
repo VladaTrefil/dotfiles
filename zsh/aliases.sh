@@ -37,7 +37,7 @@ alias sinfin-init="sh ~/.local/bin/shell/init-sinfin-project.sh"
 alias folio-test-account="bundle exec rails runner \"eval(File.read '$HOME/.local/bin/folio/folio-test-account.rb')\""
 
 # Youtube-DL download music
-alias ydl="youtube-dl -x --audio-format \"mp3\" -o '%(title)s - %(uploader)s.%(ext)s'"
+alias ydl="youtube-dl -x --audio-format \"mp3\" -o '%(title)s - %(uploader)s.%(ext)s' --embed-thumbnail"
 
 # Bat on debian
 # alias bat="batcat"

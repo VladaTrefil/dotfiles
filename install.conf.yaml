@@ -25,8 +25,6 @@
   # Node version manager
   - [curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash, Installing NVM]
 
-  - [cp -rn local/bin/* ~/.local/bin/, Move bin scripts]
-
 - link:
     ~/.git: git/
     ~/.background: background/
@@ -50,6 +48,7 @@
     ~/.config/lazygit: config/lazygit
     ~/.config/konsolerc: config/konsolerc
     ~/.local/share/konsole: local/konsole
+    ~/.local/bin: local/bin
 
 # Post install
 - shell:

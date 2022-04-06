@@ -6,6 +6,26 @@ if [ ! -f "`which brew`" ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+# Check if oh-my-zsh is installed
+OMZDIR="$HOME/.oh-my-zsh"
+if [ ! -d "$OMZDIR" ]; then
+  echo 'Installing oh-my-zsh'
+  /bin/sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+fi
+
+if [ -f "`sudo cat /etc/sudoers`" ]; then
+  echo "add $USER to sudoers"
+  echo "$USER   all=(all) nopasswd: all" | tr '[:lower:]' '[:upper:]' | sudo tee -a /etc/sudoers
+fi
+
+# Change default shell
+if [ -z "`echo $SHELL | grep zsh`" ]; then
+  echo 'Changing default shell to zsh'
+  chsh -s /bin/zsh
+else
+  echo 'Already using zsh'
+fi
+
 # Check if NVIM is installed
 if [ -f "`which brew`" ]; then
   brew install -q neovim
@@ -27,22 +47,7 @@ if [ -z "$rvm_version" ]; then
   rvm install ruby "3.0.0"
 fi
 
-# Check if oh-my-zsh is installed
-OMZDIR="$HOME/.oh-my-zsh"
-if [ ! -d "$OMZDIR" ]; then
-  echo 'Installing oh-my-zsh'
-  /bin/sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-fi
-
-if [ -f "`sudo cat /etc/sudoers`" ]; then
-  echo "add $USER to sudoers"
-  echo "$USER   all=(all) nopasswd: all" | tr '[:lower:]' '[:upper:]' | sudo tee -a /etc/sudoers
-fi
-
-# Change default shell
-if [ -z "`echo $SHELL | grep zsh`" ]; then
-  echo 'Changing default shell to zsh'
-  chsh -s /bin/zsh
-else
-  echo 'Already using zsh'
+if [ ! -f "`which youtube-dl`" ]; then
+  sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+  sudo chmod a+rx /usr/local/bin/youtube-dl
 fi

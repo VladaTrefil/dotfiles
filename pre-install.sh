@@ -31,6 +31,7 @@ if [ -f "`which brew`" ]; then
   brew install -q neovim
   brew install -q lazygit
   brew install -q bat
+  brew install -q youtube-dl
 fi
 
 # Check if RVM is installed

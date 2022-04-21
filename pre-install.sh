@@ -53,6 +53,11 @@ if [ -z "$rvm_version" ]; then
   rvm install ruby "3.0.0"
 fi
 
+if [ -f "`which nvm`" ]; then
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+  nvm install 14
+fi
+
 if [ ! -f "`which youtube-dl`" ]; then
   sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
   sudo chmod a+rx /usr/local/bin/youtube-dl

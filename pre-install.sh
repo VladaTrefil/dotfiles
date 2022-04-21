@@ -34,6 +34,11 @@ if [ -f "`which brew`" ]; then
   brew install -q youtube-dl
 fi
 
+if [ -f "`which nvim`" ]; then
+  sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+fi
+
 # Check if RVM is installed
 if [ -z "$rvm_version" ]; then
   echo 'Installing RVM'

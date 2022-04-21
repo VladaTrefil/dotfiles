@@ -75,3 +75,37 @@ end
 
 # }}}
 # ===============================================================================
+
+# ===============================================================================
+# Infocz: {{{
+
+if defined? Infocz
+  unless Infocz::User.where(email: credential).present?
+    Infocz::User.create!(email: credential, password: credential,
+                         first_name: "test", last_name: "test")
+
+    print "Created Infocz::User\n"
+  else
+    print "Infocz::User exists\n"
+  end
+end
+
+# }}}
+# ===============================================================================
+
+# ===============================================================================
+# Acbcz: {{{
+
+if defined? Acb
+  unless Acb::User.where(email: credential).present?
+    Acb::User.create!(email: credential, password: credential,
+                         first_name: "test", last_name: "test")
+
+    print "Created Acb::User\n"
+  else
+    print "Acb::User exists\n"
+  end
+end
+
+# }}}
+# ===============================================================================

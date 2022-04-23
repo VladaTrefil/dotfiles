@@ -66,9 +66,14 @@ if [ ! -f "`which rvm`" ]; then
   fi
 fi
 
-if [ -f "`which nvm`" ]; then
+
+if [ ! -d "$NVM_DIR" ]; then
+  echo 'Installing NVM...'
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+  export NVM_DIR="$HOME/.nvm" && \. "$NVM_DIR/nvm.sh"
+  echo 'Installing NodeJS versions...'
   nvm install 14
+  sudo npm install -g yarn
 fi
 
 if [ ! -f "`which youtube-dl`" ]; then

@@ -33,10 +33,20 @@ fi
 
 # Check if NVIM is installed
 if [ -f "`which brew`" ]; then
-  brew install -q neovim
-  brew install -q lazygit
-  brew install -q bat
-  brew install -q youtube-dl
+  if [ ! -f "$HOMEBREW_PREFIX/bin/nvim" ]; then
+    echo 'Installing Nvim...,'
+    brew install -q neovim
+  fi
+
+  if [ ! -f "$HOMEBREW_PREFIX/bin/lazygit" ]; then
+    echo 'Installing lazygit...,'
+    brew install -q lazygit
+  fi
+
+  if [ ! -f "$HOMEBREW_PREFIX/bin/bat" ]; then
+    echo 'Installing bat...,'
+    brew install -q bat
+  fi
 fi
 
 if [ -f "`which nvim`" ]; then

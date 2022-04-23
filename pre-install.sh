@@ -67,7 +67,6 @@ if [ ! -f "`which rvm`" ]; then
   fi
 fi
 
-
 if [ ! -d "$NVM_DIR" ]; then
   echo 'Installing NVM...'
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
@@ -85,9 +84,14 @@ fi
 
 ETCHER_URL="https://github.com/balena-io/etcher/releases/download/v1.7.9/balena-etcher-electron-1.7.9-linux-x64.zip"
 ETCHER_PATH="/home/vlada/Images/balenaEtcher.appImage"
-
 if [ ! -f $ETCHER_PATH ]; then
   curl -L $ETCHER_URL -o ./etcher.zip
   unzip ./etcher.zip '*' -d $ETCHER_PATH
   rm ./etcher.zip
+fi
+
+SYNCTHING_DIR=/usr/share/keyrings/syncthing-archive-keyring.gpg
+if [ ! -f "$SYNCTHING_DIR" ]; then
+  echo 'Adding Synthing GPG...'
+  sudo curl -s -o $SYNCTHING_DIR https://syncthing.net/release-key.gpg
 fi

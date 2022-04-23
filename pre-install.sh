@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# if [ -f "`which apt`" ]; then
+#   sudo apt install zsh curl
+# fi
+
 # Check if Homebrew is installed
 if [ ! -f "`which brew`" ]; then
   echo 'Installing homebrew'

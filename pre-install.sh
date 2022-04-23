@@ -29,6 +29,7 @@ if [ -z "`echo $SHELL | grep zsh`" ]; then
 fi
 
 # Check if NVIM is installed
+
 if [ -f "`which brew`" ]; then
   if [ ! -f "$HOMEBREW_PREFIX/bin/nvim" ]; then
     echo 'Installing Nvim...,'
@@ -77,6 +78,7 @@ if [ ! -d "$NVM_DIR" ]; then
 fi
 
 if [ ! -f "`which youtube-dl`" ]; then
+  echo 'Installing Youtube-DL...'
   sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
   sudo chmod a+rx /usr/local/bin/youtube-dl
 fi

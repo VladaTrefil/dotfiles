@@ -54,17 +54,16 @@ if [ -f "$PLUG_DIR" ]; then
 fi
 
 # Check if RVM is installed
-if [ -z "$rvm_version" ]; then
-  echo 'Installing RVM'
+if [ ! -f "`which rvm`" ]; then
+  echo 'Installing RVM...'
   gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
   curl -sSL https://get.rvm.io | bash -s stable
-fi
+  source $HOME/.rvm/scripts/rvm
 
-if [ -z "$rvm_version" ]; then
-  echo 'Installing Ruby v2.6.6 & v2.6.8'
-  rvm install ruby "2.6.6"
-  rvm install ruby "2.6.8"
-  rvm install ruby "3.0.0"
+  if [ -f "`which rvm`" ]; then
+    echo 'Installing Ruby versions...'
+    rvm install ruby "2.6.6 2.6.8 3.0.0"
+  fi
 fi
 
 if [ -f "`which nvm`" ]; then

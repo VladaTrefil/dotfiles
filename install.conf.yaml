@@ -14,6 +14,11 @@
   - ~/.oh-my-zsh/custom/plugins
   - ~/.oh-my-zsh/custom/themes
   - ~/.local/share/fonts
+  - ~/Images
+  - ~/Downloads
+  - ~/Documents
+  - ~/Pictures
+  - ~/Music
 
 # Pre install
 - shell:
@@ -22,8 +27,7 @@
   # Syncthing
   - [sudo curl -s -o /usr/share/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg, Getting Syncthing GPG key]
 
-  # Node version manager
-  - [curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash, Installing NVM]
+  - [sudo ./pre-install.sh, Running Pre-Install Script]
 
 - link:
     ~/.git: git/
@@ -67,3 +71,5 @@
 
   - [chmod +x ~/.xsession]
   - [chmod +x ~/.Xresources]
+
+  - [sudo ./install-apt.sh, Running APT Install Script]

@@ -62,3 +62,12 @@ if [ ! -f "`which youtube-dl`" ]; then
   sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
   sudo chmod a+rx /usr/local/bin/youtube-dl
 fi
+
+ETCHER_URL="https://github.com/balena-io/etcher/releases/download/v1.7.9/balena-etcher-electron-1.7.9-linux-x64.zip"
+ETCHER_PATH="/home/vlada/Images/balenaEtcher.appImage"
+
+if [ ! -f $ETCHER_PATH ]; then
+  curl -L $ETCHER_URL -o ./etcher.zip
+  unzip ./etcher.zip '*' -d $ETCHER_PATH
+  rm ./etcher.zip
+fi

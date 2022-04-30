@@ -70,3 +70,5 @@
   - [chmod +x ~/.Xresources]
 
   - [sudo ./install-apt.sh, Running APT Install Script]
+
+  - [./install-i3.sh, Running i3-gaps Install Script]

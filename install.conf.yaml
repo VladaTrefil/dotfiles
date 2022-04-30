@@ -74,3 +74,5 @@
   - [./install-apt.sh, Running APT Install Script]
 
   - [./install-i3.sh, Running i3-gaps Install Script]
+
+  - [sudo cp ~/development/dotfiles/x/plasma-i3.desktop /usr/share/xsessions/plasma-i3.desktop]

@@ -1,7 +1,13 @@
 #!/bin/bash
 
 if [ -f "`which apt`" ]; then
-  sudo apt install zsh curl
+  if [ ! -d $ZSH ]; then
+    sudo apt install zsh
+  fi
+
+  if [ ! -f "`which curl`" ]; then
+    sudo apt install curl
+  fi
 fi
 
 if [ ! -f "`which brew`" ]; then

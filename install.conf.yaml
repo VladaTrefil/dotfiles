@@ -24,11 +24,6 @@
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
 
-  # Syncthing
-  - [sudo curl -s -o /usr/share/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg, Getting Syncthing GPG key]
-
-  - [sudo ./pre-install.sh, Running Pre-Install Script]
-
 - link:
     ~/.git: git/
     ~/.background: background/
@@ -54,9 +49,11 @@
     ~/.local/share/konsole: local/konsole
     ~/.local/bin: local/bin
 
-# Post install
 - shell:
+  - [sudo ./pre-install.sh, Running Pre-Install Script]
+
   - [cp -r ~/development/dotfiles/fonts/* ~/.local/share/fonts/, Copying fonts]
+
   - [fc-cache -f, Building font cache]
 
   # Bat

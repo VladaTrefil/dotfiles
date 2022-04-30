@@ -50,7 +50,7 @@
     ~/.local/bin: local/bin
 
 - shell:
-  - [sudo ./pre-install.sh, Running Pre-Install Script]
+  - [./pre-install.sh, Running Pre-Install Script]
 
   - [cp -r ~/development/dotfiles/fonts/* ~/.local/share/fonts/, Copying fonts]
 
@@ -69,6 +69,6 @@
   - [chmod +x ~/.xsession]
   - [chmod +x ~/.Xresources]
 
-  - [sudo ./install-apt.sh, Running APT Install Script]
+  - [./install-apt.sh, Running APT Install Script]
 
   - [./install-i3.sh, Running i3-gaps Install Script]

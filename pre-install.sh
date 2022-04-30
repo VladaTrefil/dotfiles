@@ -87,12 +87,13 @@ if [ ! -f "`which youtube-dl`" ]; then
   sudo chmod a+rx /usr/local/bin/youtube-dl
 fi
 
-ETCHER_URL="https://github.com/balena-io/etcher/releases/download/v1.7.9/balena-etcher-electron-1.7.9-linux-x64.zip"
-ETCHER_PATH="/home/vlada/Images/balenaEtcher.appImage"
+ETCHER_PATH="$HOME/Images/balenaEtcher.AppImage"
 if [ ! -f $ETCHER_PATH ]; then
-  curl -L $ETCHER_URL -o ./etcher.zip
-  unzip ./etcher.zip '*' -d $ETCHER_PATH
-  rm ./etcher.zip
+  mkdir ./tmp
+  curl -L "https://github.com/balena-io/etcher/releases/download/v1.7.9/balena-etcher-electron-1.7.9-linux-x64.zip" -o ./tmp/etcher.zip
+  unzip -o ./tmp/etcher.zip '*' -d ./tmp  && mv ./tmp/balena* $ETCHER_PATH
+  chmod a+rx $ETCHER_PATH
+  rm -rf ./tmp
 fi
 
 SYNCTHING_DIR=/usr/share/keyrings/syncthing-archive-keyring.gpg

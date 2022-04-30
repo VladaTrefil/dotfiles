@@ -74,6 +74,8 @@ alias rt='PARALLEL_WORKERS=3 bin/rails test'
 # Exercism
 alias exes='exercism submit'
 
+alias etcher='sudo ~/Images/balenaEtcher.AppImage'
+
 # Update dotfiles
 dfu() {
   (

@@ -6,8 +6,6 @@ NC='\033[0m' # No Color
 APT_PACKAGES=(
   "python3-dev"
   "build-essential"
-  "nodejs"
-  "npm"
   "ripgrep" # Command line search
 
   # Desktop enviroment

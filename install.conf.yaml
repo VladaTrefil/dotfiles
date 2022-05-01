@@ -7,7 +7,7 @@
   '~/.oh-my-zsh/custom/',
   '~/.oh-my-zsh/custom/plugins/',
   '~/.oh-my-zsh/custom/themes/',
-  '~/local/share/fonts/']
+  '~/.local/share/fonts']
 
 - create:
   - ~/.oh-my-zsh/custom/
@@ -23,6 +23,8 @@
 # Pre install
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
+
+  - [./pre-install.sh, Running Pre-Install Script]
 
 - link:
     ~/.git: git/
@@ -47,13 +49,15 @@
     ~/.config/i3: config/i3
     ~/.config/polybar: config/polybar
     ~/.config/lazygit: config/lazygit
-    ~/.config/konsolerc: config/konsolerc
-    ~/.local/share/konsole: local/konsole
+    ~/.config/konsolerc:
+      force: true
+      path: config/konsolerc
+    ~/.local/share/konsole:
+      force: true
+      path: local/konsole
     ~/.local/bin: local/bin
 
 - shell:
-  - [./pre-install.sh, Running Pre-Install Script]
-
   - [cp -r ~/development/dotfiles/fonts/* ~/.local/share/fonts/, Copying fonts]
 
   - [fc-cache -f, Building font cache]
@@ -65,11 +69,11 @@
   - [npm i -g yarn, Installing yarn]
 
   # Gems
-  - [gem install rails -v "6.1.4", Installing rails@6.1.4]
-  - [gem install bundler -v "2.2.32", Installing bundler@2.2.32]
+  - [sudo gem install rails -v "6.1.4", Installing rails@6.1.4]
+  - [sudo gem install bundler -v "2.2.32", Installing bundler@2.2.32]
 
   - [chmod +x ~/.xsession]
-  - [chmod +x ~/.Xresources]
+  - [chmod +x ~/.xresources]
 
   - [./install-apt.sh, Running APT Install Script]
 

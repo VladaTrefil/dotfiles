@@ -29,11 +29,6 @@ export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
 
 export PKG_CONFIG_PATH=/usr/local/Cellar/imagemagick@6/6.9.12-6/lib/pkgconfig
 
-
-if [ -f "$HOME/.xsession" ]; then
-  source "$HOME/.xsession"
-fi
-
 # if running bash
 if [ -n "$ZSH_VERSION" ]; then
     # include .bashrc if it exists

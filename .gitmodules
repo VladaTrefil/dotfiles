@@ -1,5 +1,5 @@
 [submodule "dotbot"]
-	path = dotbot
+	path = build/dotbot
 	url = https://github.com/anishathalye/dotbot
 [submodule "zsh/custom/plugins/zsh-autosuggestions"]
 	path = zsh/custom/plugins/zsh-autosuggestions

@@ -24,10 +24,9 @@
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
 
-  - [./pre-install.sh, Running Pre-Install Script]
+  - [./build/pre-install.sh, Running Pre-Install Script]
 
 - link:
-    ~/.git: git/
     ~/.background: background/
     ~/.gitconfig:
     ~/.gitignore_global:
@@ -71,11 +70,10 @@
   - [sudo gem install rails -v "6.1.4", Installing rails@6.1.4]
   - [sudo gem install bundler -v "2.2.32", Installing bundler@2.2.32]
 
-  - [chmod +x ~/.xsession]
   - [chmod +x ~/.xresources]
 
-  - [./install-apt.sh, Running APT Install Script]
+  - [./build/install-apt.sh, Running APT Install Script]
 
-  - [./install-i3.sh, Running i3-gaps Install Script]
+  - [./build/install-i3.sh, Running i3-gaps Install Script]
 
-  - [sudo cp ~/development/dotfiles/x/plasma-i3.desktop /usr/share/xsessions/plasma-i3.desktop]
+  - [sudo cp ~/development/dotfiles/xorg/plasma-i3.desktop /usr/share/xsessions/plasma-i3.desktop]

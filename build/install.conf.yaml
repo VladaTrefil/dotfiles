@@ -53,12 +53,12 @@
     ~/.local/bin: local/bin
 
 - shell:
-  - [./build/install-zsh.sh, Running Pre-Install Script]
+  - [./build/install-zsh.sh, Running Install ZSH Script]
 
   - [./build/install-apt.sh, Running APT Install Script]
 
-  - [./build/install-brew.sh, Running Pre-Install Script]
+  - [./build/install-brew.sh, Running Brew Install Script]
 
   - [./build/pre-install.sh, Running Pre-Install Script]
 
-  - [./build/setup-env.sh, Running Pre-Install Script]
+  - [./build/setup-env.sh, Running Setup ENV Script]

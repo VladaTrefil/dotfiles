@@ -24,6 +24,10 @@
     ~/.background: background/
     ~/.gitconfig:
     ~/.gitignore_global:
+    ~/.inputrc: inputrc
+    ~/.xresources: xorg/xresources
+
+    # Zsh
     ~/.zsh:
     ~/.zshrc:
       force: true
@@ -31,26 +35,32 @@
     ~/.zlogin:
       force: true
       path: zsh/zlogin
-    ~/.inputrc: inputrc
-    ~/.xresources: xorg/xresources
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: zsh/custom/plugins/zsh-autosuggestions/
     ~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting: zsh/custom/plugins/fast-syntax-highlighting/
     ~/.oh-my-zsh/custom/themes/powerlevel10k: zsh/custom/themes/powerlevel10k/
+
+    # Config
     ~/.config/nvim: config/nvim
     ~/.config/bat: config/bat
     ~/.config/i3: config/i3
     ~/.config/polybar: config/polybar
     ~/.config/lazygit: config/lazygit
+
+    # KDE Plasma
     ~/.config/konsolerc:
       force: true
-      path: config/konsolerc
+      path: kde/konsolerc
     ~/.local/share/konsole:
       force: true
-      path: local/konsole
+      path: kde/konsole
+
+    # KDE Plasma
     ~/.local/share/fonts:
       force: true
       path: fonts
-    ~/.local/bin: local/bin
+    ~/.local/bin:
+      force: true
+      path: bin
 
 - shell:
   - [./build/install-zsh.sh, Running Install ZSH Script]

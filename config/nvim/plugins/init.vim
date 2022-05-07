@@ -29,6 +29,9 @@ Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'tpope/vim-fugitive'
 
+" LSP -------
+Plug 'prabirshrestha/vim-lsp'
+
 " Git -------
 Plug 'tpope/vim-git'
 Plug 'SirJson/fzf-gitignore'
@@ -82,3 +85,4 @@ source ~/.config/nvim/plugins/ale.vim
 source ~/.config/nvim/plugins/colorizer.vim
 source ~/.config/nvim/plugins/gitgutter.vim
 source ~/.config/nvim/plugins/lualine.lua
+source ~/.config/nvim/plugins/lsp.vim

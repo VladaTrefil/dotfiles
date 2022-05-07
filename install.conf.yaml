@@ -39,7 +39,6 @@
       force: true
       path: zsh/zlogin
     ~/.inputrc: inputrc
-    ~/.xsession: x/xsession
     ~/.xresources: x/xresources
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: zsh/custom/plugins/zsh-autosuggestions/
     ~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting: zsh/custom/plugins/fast-syntax-highlighting/

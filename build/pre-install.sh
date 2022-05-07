@@ -34,6 +34,12 @@ if [ ! -d "$NVM_DIR" ]; then
   yarn global add neovim
 fi
 
+if [ -f `which python3` ]; then
+  echo 'Installing Python extensions...'
+  pip install pynvim
+  pip install yarp
+fi
+
 if [ ! -f "`which youtube-dl`" ]; then
   echo 'Installing Youtube-DL...'
   sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl

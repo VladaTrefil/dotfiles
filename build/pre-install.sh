@@ -11,10 +11,10 @@ if [ ! -f "`which rvm`" ]; then
     echo 'Installing Ruby versions...'
     rvm install ruby "2.6.6 2.6.8 3.0.0"
 
-    echo 'Installing rails'
+    echo 'Installing rails...'
     gem install rails -v "6.1.4", 
 
-    echo 'Installing bundler'
+    echo 'Installing bundler...'
     gem install bundler -v "2.2.32"
   fi
 fi
@@ -27,10 +27,10 @@ if [ ! -d "$NVM_DIR" ]; then
   echo 'Installing NodeJS versions...'
   nvm install 14
 
-  echo 'Installing yarn'
+  echo 'Installing yarn...'
   sudo npm install -g yarn
 
-  echo 'Installing Node neovim'
+  echo 'Installing Node neovim...'
   yarn global add neovim
 fi
 

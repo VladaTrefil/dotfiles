@@ -39,7 +39,7 @@
       force: true
       path: zsh/zlogin
     ~/.inputrc: inputrc
-    ~/.xresources: x/xresources
+    ~/.xresources: xorg/xresources
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: zsh/custom/plugins/zsh-autosuggestions/
     ~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting: zsh/custom/plugins/fast-syntax-highlighting/
     ~/.oh-my-zsh/custom/themes/powerlevel10k: zsh/custom/themes/powerlevel10k/

@@ -109,3 +109,22 @@ end
 
 # }}}
 # ===============================================================================
+
+# ===============================================================================
+# Notesvilla: {{{
+
+if defined? Notesvilla
+  unless Notesvilla::User.where(email: credential).present?
+    Notesvilla::User.create!(email: credential, password: credential,
+                             first_name: "test", last_name: "test", phone: "724999999",
+                             credits_non_withdrawable: 1000, credits_withdrawable: 1000)
+
+    print "Created Notesvilla::User\n"
+  else
+    Notesvilla::User.where(email: credential).update(credits_non_withdrawable: 1000, credits_withdrawable: 1000)
+    print "Notesvilla::User exists\n"
+  end
+end
+
+# }}}
+# ===============================================================================

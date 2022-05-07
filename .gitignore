@@ -1,3 +1,5 @@
 config/nvim/plugged
 
 config/lazygit/state.yml
+
+.uuid

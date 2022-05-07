@@ -50,6 +50,9 @@
     ~/.config/konsolerc:
       force: true
       path: kde/konsolerc
+    ~/.config/kdeglobals:
+      force: true
+      path: kde/kdeglobals
     ~/.local/share/konsole:
       force: true
       path: kde/konsole

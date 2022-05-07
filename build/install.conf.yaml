@@ -20,12 +20,6 @@
   - ~/Pictures
   - ~/Music
 
-# Pre install
-- shell:
-  - [git submodule update --init --recursive, Installing submodules]
-
-  - [./build/pre-install.sh, Running Pre-Install Script]
-
 - link:
     ~/.background: background/
     ~/.gitconfig:
@@ -53,27 +47,18 @@
     ~/.local/share/konsole:
       force: true
       path: local/konsole
+    ~/.local/share/fonts:
+      force: true
+      path: fonts
     ~/.local/bin: local/bin
 
 - shell:
-  - [cp -r ~/development/dotfiles/fonts/* ~/.local/share/fonts/, Copying fonts]
-
-  - [fc-cache -f, Building font cache]
-
-  # Bat
-  - [bat cache --build, Building bat cache]
-
-  # NodeJS
-  - [npm i -g yarn, Installing yarn]
-
-  # Gems
-  - [sudo gem install rails -v "6.1.4", Installing rails@6.1.4]
-  - [sudo gem install bundler -v "2.2.32", Installing bundler@2.2.32]
-
-  - [chmod +x ~/.xresources]
+  - [./build/install-zsh.sh, Running Pre-Install Script]
 
   - [./build/install-apt.sh, Running APT Install Script]
 
-  - [./build/install-i3.sh, Running i3-gaps Install Script]
+  - [./build/install-brew.sh, Running Pre-Install Script]
 
-  - [sudo cp ~/development/dotfiles/xorg/plasma-i3.desktop /usr/share/xsessions/plasma-i3.desktop]
+  - [./build/pre-install.sh, Running Pre-Install Script]
+
+  - [./build/setup-env.sh, Running Pre-Install Script]

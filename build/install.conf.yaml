@@ -53,6 +53,9 @@
     ~/.config/kdeglobals:
       force: true
       path: kde/kdeglobals
+    ~/.config/kglobalshortcutsrc:
+      force: true
+      path: kde/kglobalshortcutsrc
     ~/.local/share/konsole:
       force: true
       path: kde/konsole

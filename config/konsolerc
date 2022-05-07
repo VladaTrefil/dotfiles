@@ -1,6 +1,7 @@
 MenuBar=Disabled
+
 [Desktop Entry]
-DefaultProfile=New Profile.profile
+DefaultProfile=Profile.profile
 
 [KonsoleWindow]
 RememberWindowSize=false
@@ -9,7 +10,6 @@ ShowMenuBarByDefault=false
 
 [MainWindow]
 MenuBar=Disabled
-RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAQAAAAAAAAAAAAAAAPwCAAAAAfsAAAAcAFMAUwBIAE0AYQBuAGEAZwBlAHIARABvAGMAawAAAAAA/////wAAANUBAAADAAACwgAAAf4AAAAEAAAABAAAAAgAAAAI/AAAAAEAAAACAAAAAgAAABYAbQBhAGkAbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAcAHMAZQBzAHMAaQBvAG4AVABvAG8AbABiAGEAcgAAAAAA/////wAAAAAAAAAA
 
 [Notification Messages]
@@ -18,3 +18,6 @@ CloseAllTabs=true
 [Open-with settings]
 CompletionMode=1
 History=
+
+[UiSettings]
+ColorScheme=Default

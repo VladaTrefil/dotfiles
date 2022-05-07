@@ -74,6 +74,9 @@ alias rr='bin/rake'
 
 alias rt='PARALLEL_WORKERS=3 bin/rails test'
 
+# Python
+alias python='python3'
+alias python2='python3'
 # Exercism
 alias exes='exercism submit'
 

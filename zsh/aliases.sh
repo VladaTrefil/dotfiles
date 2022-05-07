@@ -29,6 +29,9 @@ alias gpo="git push origin"
 alias gpu="git pull"
 alias gpuo="git pull origin"
 
+alias rgc="r g folio:cell"
+alias rgm="r g migration"
+
 # Custom scripts
 alias clear-branches="sh ~/.local/bin/shell/clear-git-branches.sh"
 alias kill-server="sh ~/.local/bin/shell/kill-rails-server.sh"

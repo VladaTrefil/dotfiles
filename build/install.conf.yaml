@@ -60,7 +60,7 @@
       force: true
       path: kde/konsole
 
-    # KDE Plasma
+    # Local
     ~/.local/share/fonts:
       force: true
       path: fonts
@@ -69,12 +69,37 @@
       path: bin
 
 - shell:
-  - [./build/install-zsh.sh, Running Install ZSH Script]
+  -
+    command: ./build/install-zsh.sh
+    stdout: true
+    stderr: true
+    description: Running Install ZSH Script
+    quiet: true
 
-  - [./build/install-apt.sh, Running APT Install Script]
+  -
+    command: ./build/install-apt.sh
+    stdout: true
+    stderr: true
+    description: Running Install APT Script
+    quiet: true
 
-  - [./build/install-brew.sh, Running Brew Install Script]
+  -
+    command: ./build/install-brew.sh
+    stdout: true
+    stderr: true
+    description: Running Install Brew Script
+    quiet: true
 
-  - [./build/pre-install.sh, Running Pre-Install Script]
+  -
+    command: ./build/pre-install.sh
+    stdout: true
+    stderr: true
+    description: Running Pre-install Script
+    quiet: true
 
-  - [./build/setup-env.sh, Running Setup ENV Script]
+  -
+    command: ./build/setup-env.sh
+    stdout: true
+    stderr: true
+    description: Running Setup ENV Script
+    quiet: true

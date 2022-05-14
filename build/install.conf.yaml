@@ -84,14 +84,7 @@
     quiet: true
 
   -
-    command: ./build/install-brew.sh
-    stdout: true
-    stderr: true
-    description: Running Install Brew Script
-    quiet: true
-
-  -
-    command: ./build/pre-install.sh
+    command: ./build/install-independent.sh
     stdout: true
     stderr: true
     description: Running Pre-install Script

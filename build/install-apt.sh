@@ -1,5 +1,10 @@
 #!/bin/zsh
 
+if [ ! -f "`which apt`" ]; then
+  echo "SKIP - Apt is not installed" >&2
+  exit  1
+fi
+
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
@@ -54,19 +59,17 @@ if [ ! -f "`which brave-browser`" ]; then
   sudo apt update
 fi
 
-if [ -f "`which apt`" ]; then
-  for p in $APT_PACKAGES; do
-    if [ $(dpkg-query -W -f='${Status}' $p 2>/dev/null | grep -c "ok installed") = "0" ]; then
-      echo "\n============================================================================="
-      echo -e "Installing ${GREEN}$p${NC}..."
-      sudo apt-get install $p -y --no-upgrade | grep -oP "^.*upgraded.*$"
-      echo -e "${GREEN}Installed $p${NC}"
-      echo "=============================================================================\n"
-    else
-      echo -e "${GREEN}$p${NC} already exists"
-    fi
-  done
-fi
+for p in $APT_PACKAGES; do
+  if [ $(dpkg-query -W -f='${Status}' $p 2>/dev/null | grep -c "ok installed") = "0" ]; then
+    echo "\n============================================================================="
+    echo -e "Installing ${GREEN}$p${NC}..."
+    sudo apt-get install $p -y --no-upgrade | grep -oP "^.*upgraded.*$"
+    echo -e "${GREEN}Installed $p${NC}"
+    echo "=============================================================================\n"
+  else
+    echo -e "${GREEN}$p${NC} already exists"
+  fi
+done
 
 # Unofficial repos
 

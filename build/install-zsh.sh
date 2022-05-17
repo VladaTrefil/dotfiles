@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -f "`which apt`" ]; then
-  if [ ! -d $ZSH ]; then
+  if [ ! -d "$ZSH" ]; then
     echo 'Installing ZSH...'
     sudo apt install zsh
   fi

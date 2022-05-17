@@ -2,6 +2,14 @@
     link:
       create: true
 
+- shell:
+  -
+    command: ./build/install-zsh.sh
+    stdout: true
+    stderr: true
+    description: Running Install ZSH Script
+    quiet: true
+
 - clean: [
   '~',
   '~/.oh-my-zsh/custom/',
@@ -19,14 +27,6 @@
   - ~/Documents
   - ~/Pictures
   - ~/Music
-
-- shell:
-  -
-    command: ./build/install-zsh.sh
-    stdout: true
-    stderr: true
-    description: Running Install ZSH Script
-    quiet: true
 
 - link:
     ~/.background: background/

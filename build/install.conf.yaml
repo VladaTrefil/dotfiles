@@ -5,6 +5,7 @@
 - shell:
   -
     command: ./build/install-zsh.sh
+    stdin: true
     stdout: true
     stderr: true
     description: Running Install ZSH Script
@@ -89,6 +90,7 @@
 
   -
     command: ./build/install-apt.sh
+    stdin: true
     stdout: true
     stderr: true
     description: Running Install APT Script
@@ -96,6 +98,7 @@
 
   -
     command: ./build/install-independent.sh
+    stdin: true
     stdout: true
     stderr: true
     description: Running Pre-install Script
@@ -103,6 +106,7 @@
 
   -
     command: ./build/setup-env.sh
+    stdin: true
     stdout: true
     stderr: true
     description: Running Setup ENV Script

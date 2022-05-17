@@ -34,7 +34,9 @@
     ~/.gitignore_global:
     ~/.inputrc: inputrc
     ~/.xresources: xorg/xresources
-    ~/.profile: xorg/profile
+    ~/.profile:
+      force: true
+      path: xorg/profile
 
     # Zsh
     ~/.zsh:

@@ -21,5 +21,5 @@ fi
 # Change default shell
 if [ -z "`echo $SHELL | grep zsh`" ]; then
   echo 'Changing default shell to zsh'
-  chsh -s /bin/zsh
+  sudo chsh -s /bin/zsh $USER
 fi

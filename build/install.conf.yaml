@@ -84,7 +84,7 @@
 
 - shell:
   - source ~/.profile
-  - $(which zsh) --login
+  - /bin/zsh --login
 
   -
     command: ./build/install-apt.sh

@@ -12,6 +12,7 @@ APT_PACKAGES=(
   "python3-dev"
   "build-essential"
   "ripgrep" # Command line search
+  "unzip"
 
   # Desktop enviroment
   "polybar"

@@ -50,6 +50,9 @@
     ~/.config/konsolerc:
       force: true
       path: kde/konsolerc
+    ~/.config/kxkbrc:
+      force: true
+      path: kde/kxkbrc
     ~/.config/kdeglobals:
       force: true
       path: kde/kdeglobals

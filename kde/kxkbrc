@@ -1,0 +1,10 @@
+[$Version]
+update_info=kxkb_variants.upd:split-variants,kxkb.upd:remove-empty-lists,kxkb.upd:add-back-resetoptions
+
+[Layout]
+DisplayNames=,
+LayoutList=us,cz
+Options=caps:escape,caps:escape_shifted_compose,grp_led:caps,grp:shift_caps_toggle
+ResetOldOptions=true
+Use=true
+VariantList=,prog

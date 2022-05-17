@@ -40,21 +40,33 @@ fi
 # Rvm: {{{
 
 # Check if RVM is installed
-if [ ! -f "`which rvm`" ]; then
+if [ ! -f "`which rvm`" ] | [ $1 == "reinstall" ]; then
   echo 'Installing RVM...'
   gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
   curl -sSL https://get.rvm.io | bash -s stable
-  source $HOME/.rvm/scripts/rvm
 
-  if [ -f "`which rvm`" ]; then
-    echo 'Installing Ruby versions...'
-    rvm install ruby "2.6.6 2.6.8 3.0.0"
+  if [[ -s "$XDG_CONFIG_HOME/.rvm/scripts/rvm" ]]; then
+    . "$XDG_CONFIG_HOME/.rvm/scripts/rvm"
 
-    echo 'Installing rails...'
-    gem install rails -v "6.1.4", 
+    export PATH="$PATH:$XDG_CONFIG_HOME/.rvm/bin"
 
-    echo 'Installing bundler...'
-    gem install bundler -v "2.2.32"
+    if [ -f "`which rvm`" ]; then
+      rvm use 3.0.0 --default --install
+
+      echo 'Installing Ruby versions...'
+      rvm install ruby "2.6.6 2.6.8"
+
+      echo 'Installing rails...'
+      gem install rails -v "6.1.4",
+
+      echo 'Installing bundler...'
+      gem install bundler -v "2.2.32"
+      gem install bundler -v "2.3.7"
+    else
+      echo "rvm command does not exist."
+    fi
+  else
+    echo "$HOME/.rvm/scripts/rvm" could not be found.
   fi
 fi
 

@@ -22,7 +22,4 @@ fi
 if [ -z "`echo $SHELL | grep zsh`" ]; then
   echo 'Changing default shell to zsh'
   chsh -s /bin/zsh
-
-  source $HOME/.zlogin
-  source $HOME/.zshrc
 fi

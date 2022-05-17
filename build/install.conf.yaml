@@ -20,12 +20,21 @@
   - ~/Pictures
   - ~/Music
 
+- shell:
+  -
+    command: ./build/install-zsh.sh
+    stdout: true
+    stderr: true
+    description: Running Install ZSH Script
+    quiet: true
+
 - link:
     ~/.background: background/
     ~/.gitconfig:
     ~/.gitignore_global:
     ~/.inputrc: inputrc
     ~/.xresources: xorg/xresources
+    ~/.profile: xorg/profile
 
     # Zsh
     ~/.zsh:
@@ -72,12 +81,8 @@
       path: bin
 
 - shell:
-  -
-    command: ./build/install-zsh.sh
-    stdout: true
-    stderr: true
-    description: Running Install ZSH Script
-    quiet: true
+  - source ~/.profile
+  - $(which zsh) --login
 
   -
     command: ./build/install-apt.sh

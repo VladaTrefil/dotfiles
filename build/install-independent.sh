@@ -8,29 +8,37 @@ if [ ! -f "`which brew`" ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-if [ -f "`which brew`" ]; then
-  if [ ! -f "$HOMEBREW_PREFIX/bin/nvim" ]; then
-    echo 'Installing Nvim...,'
-    brew install -q neovim
+if [ -s "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-    PLUG_DIR='"${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim'
-    if [ -f "$PLUG_DIR" ]; then
-      echo 'Installing Vim-plug...'
-      sh -c 'curl -fLo $PLUG_DIR --create-dirs \
-             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  if [ ! -f "`which brew`" ]; then
+    if [ ! -f "$HOMEBREW_PREFIX/bin/nvim" ]; then
+      echo 'Installing Nvim...,'
+      brew install -q neovim
+
+      PLUG_DIR='"${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim'
+      if [ -f "$PLUG_DIR" ]; then
+        echo 'Installing Vim-plug...'
+        sh -c 'curl -fLo $PLUG_DIR --create-dirs \
+               https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+      fi
     fi
-  fi
 
-  if [ ! -f "$HOMEBREW_PREFIX/bin/lazygit" ]; then
-    echo 'Installing lazygit...,'
-    brew install -q lazygit
-  fi
+    if [ ! -f "$HOMEBREW_PREFIX/bin/lazygit" ]; then
+      echo 'Installing lazygit...,'
+      brew install -q lazygit
+    fi
 
-  if [ ! -f "$HOMEBREW_PREFIX/bin/bat" ]; then
-    echo 'Installing bat...,'
-    brew install -q bat
-    bat cache --build
+    if [ ! -f "$HOMEBREW_PREFIX/bin/bat" ]; then
+      echo 'Installing bat...,'
+      brew install -q bat
+      bat cache --build
+    fi
+  else
+    echo "brew isn't a command"
   fi
+else
+  echo "/home/linuxbrew/.linuxbrew/bin/brew not found"
 fi
 
 # }}}
@@ -80,8 +88,8 @@ if [ ! -d "$NVM_DIR" ]; then
   echo 'Installing NVM...'
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 
-  if [[ -d "$XDG_CONFIG_HOME/.nvm" ]]; then
-    export NVM_DIR="$XDG_CONFIG_HOME/.nvm" && \. "$NVM_DIR/nvm.sh"
+  if [[ -d "$HOME/.nvm" ]]; then
+    export NVM_DIR="$HOME/.nvm" && \. "$NVM_DIR/nvm.sh"
 
     echo 'Installing NodeJS versions...'
     nvm install 14
@@ -92,7 +100,7 @@ if [ ! -d "$NVM_DIR" ]; then
     echo 'Installing Node neovim...'
     yarn global add neovim
   else
-    echo "rvm command does not exist."
+    echo "nvm directory does not exist."
   fi
 fi
 

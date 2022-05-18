@@ -29,6 +29,9 @@ alias gpo="git push origin"
 alias gpu="git pull"
 alias gpuo="git pull origin"
 
+# Xclip
+alias clip='xclip -sel clip <'
+
 # Custom scripts
 alias clear-branches="sh ~/.local/bin/shell/clear-git-branches.sh"
 alias kill-server="sh ~/.local/bin/shell/kill-rails-server.sh"

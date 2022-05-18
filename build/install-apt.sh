@@ -15,6 +15,8 @@ APT_PACKAGES=(
   "unzip"
 
   # Desktop enviroment
+  "i3-gaps"
+  "picom-tryone"
   "polybar"
   "rofi"
   "feh"
@@ -59,6 +61,10 @@ if [ ! -f "`which brave-browser`" ]; then
   echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
   sudo apt update
 fi
+
+echo "Adding i3-gaps and picom-tryone repository..."
+sudo add-apt-repository ppa:dennis-kruyt/ricebuilder
+sudo apt update
 
 for p in $APT_PACKAGES; do
   if [ $(dpkg-query -W -f='${Status}' $p 2>/dev/null | grep -c "ok installed") = "0" ]; then

@@ -117,7 +117,7 @@ client.unfocused        $bg     $bg     $fg  $bg       $bg
 client.urgent           $bg     $bg     $fg  $bg       $bg
 client.placeholder      $bg     $bg     $fg  $bg       $bg
 
-for_window [class=".*"] title_format "<b>%class</b>"
+for_window [class=".*"] title_format " %class"
 
 # }}}
 

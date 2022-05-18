@@ -1,21 +1,27 @@
-# Aliases
-source ~/.zsh/aliases.sh
-
 # Oh My Zsh
 source ~/.zsh/omz.zsh
-
-# Settings
-source ~/.zsh/settings.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.zsh/p10k.zsh ]] || source ~/.zsh/p10k.zsh
 
+# Settings
+source ~/.zsh/settings.zsh
+
 # Vim
 source ~/.zsh/vi.zsh
 
+# Aliases
+source ~/.zsh/aliases.sh
+
 # ======= RVM =============================
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$HOME/.rvm/bin:$PATH"
+
+PATH="$GEM_HOME/bin:$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
+[ -s $HOME/.rvm/scripts/rvm ] && source $HOME/.rvm/scripts/rvm
+
+# ======= NVM =============================
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

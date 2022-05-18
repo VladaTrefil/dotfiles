@@ -70,13 +70,6 @@ alias exes='exercism submit'
 # Etcher
 alias etcher='sudo ~/Images/balenaEtcher.AppImage'
 
-# Update dotfiles
-dfu() {
-  (
-    cd ~/.dotfiles && git pull --ff-only && ./install -q
-  )
-}
-
 # cd to git root directory
 alias cdgr='cd "$(git root)"'
 

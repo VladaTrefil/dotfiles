@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -f "`which apt`" ]; then
-  if [ ! -d "$ZSH" ]; then
+  if [ ! -f "`which zsh`" ]; then
     echo 'Installing ZSH...'
     sudo apt install zsh
   fi
@@ -12,10 +12,10 @@ if [ -f "`which apt`" ]; then
   fi
 fi
 
-OMZDIR="$HOME/.oh-my-zsh"
+OMZDIR="$HOME/.config/oh-my-zsh"
 if [ ! -d "$OMZDIR" ]; then
   echo 'Installing Oh-My-Zsh...'
-  /bin/sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  git clone https://github.com/ohmyzsh/ohmyzsh.git $OMZDIR
 fi
 
 # Change default shell

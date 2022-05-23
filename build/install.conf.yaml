@@ -12,17 +12,36 @@
     quiet: true
 
 - clean: [
-  '~',
-  '~/.oh-my-zsh/custom/',
-  '~/.oh-my-zsh/custom/plugins/',
-  '~/.oh-my-zsh/custom/themes/',
+  '~/.zsh*',
+  '~/.bash*',
+  '~/.config/oh-my-zsh/custom/',
+  '~/.config/oh-my-zsh/custom/plugins/',
+  '~/.config/oh-my-zsh/custom/themes/',
   '~/.local/share/fonts']
 
 - create:
-  - ~/.oh-my-zsh/custom/
-  - ~/.oh-my-zsh/custom/plugins
-  - ~/.oh-my-zsh/custom/themes
+  - ~/.config/pg
+  - ~/.config/x11
+  - ~/.config/yarn
+  - ~/.config/oh-my-zsh/custom/
+  - ~/.config/oh-my-zsh/custom/plugins
+  - ~/.config/oh-my-zsh/custom/themes
+
   - ~/.local/share/fonts
+  - ~/.local/share/bundle
+  - ~/.local/share/node
+  - ~/.local/share/gem
+  - ~/.local/state
+  - ~/.local/state/zsh
+  - ~/.local/state/less
+
+  - ~/.cache
+  - ~/.cache/zsh
+  - ~/.cache/bundle
+  - ~/.cache/gem
+  - ~/.cache/solargraph
+  - ~/.cache/x11
+
   - ~/Images
   - ~/Downloads
   - ~/Documents
@@ -31,28 +50,26 @@
 
 - link:
     ~/.background: background/
-    ~/.gitconfig:
-    ~/.gitignore_global:
-    ~/.inputrc: inputrc
-    ~/.xresources: xorg/xresources
-    ~/.profile:
-      force: true
-      path: xorg/profile
+
+    ~/.config/git: config/git
+
+    ~/.config/shell: config/shell
+
+    ~/.config/x11/xinitrc: config/x11/xinitrc
+    ~/.config/x11/xresources: config/x11/xresources
 
     # Zsh
-    ~/.zsh:
-    ~/.zshrc:
+    ~/.config/zsh: config/zsh
+    ~/.config/oh-my-zsh/custom/plugins/zsh-autosuggestions: config/zsh/custom/plugins/zsh-autosuggestions/
+    ~/.config/oh-my-zsh/custom/plugins/fast-syntax-highlighting: config/zsh/custom/plugins/fast-syntax-highlighting/
+    ~/.config/oh-my-zsh/custom/themes/powerlevel10k: config/zsh/custom/themes/powerlevel10k/
+    ~/.zprofile:
       force: true
-      path: zsh/zshrc
-    ~/.zlogin:
-      force: true
-      path: zsh/zlogin
-    ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: zsh/custom/plugins/zsh-autosuggestions/
-    ~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting: zsh/custom/plugins/fast-syntax-highlighting/
-    ~/.oh-my-zsh/custom/themes/powerlevel10k: zsh/custom/themes/powerlevel10k/
+      path: config/zsh/zprofile
 
     # Config
     ~/.config/nvim: config/nvim
+    ~/.config/npm: config/npm
     ~/.config/bat: config/bat
     ~/.config/i3: config/i3
     ~/.config/polybar: config/polybar
@@ -61,23 +78,21 @@
     # KDE Plasma
     ~/.config/konsolerc:
       force: true
-      path: kde/konsolerc
+      path: config/konsole
     ~/.local/share/konsole:
       force: true
-      path: kde/konsole
+      path: local/konsole
 
     # Local
     ~/.local/share/fonts:
       force: true
-      path: fonts
+      path: local/fonts
     ~/.local/bin:
       force: true
-      path: bin
+      path: local/bin
 
 - shell:
-  - source ~/.profile
-  - source ~/.zlogin
-  - source ~/.zshrc
+  - [ source $HOME/.zprofile, Source zProfile]
 
   -
     command: ./build/install-apt.sh

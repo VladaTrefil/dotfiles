@@ -11,12 +11,12 @@ fi
 if [ -s "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-  if [ ! -f "`which brew`" ]; then
+  if [ -f "`which brew`" ]; then
     if [ ! -f "$HOMEBREW_PREFIX/bin/nvim" ]; then
       echo 'Installing Nvim...,'
       brew install -q neovim
 
-      PLUG_DIR='"${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim'
+      PLUG_DIR="$XDG_DATA_HOME/nvim/site/autoload/plug.vim"
       if [ -f "$PLUG_DIR" ]; then
         echo 'Installing Vim-plug...'
         sh -c 'curl -fLo $PLUG_DIR --create-dirs \
@@ -45,7 +45,7 @@ fi
 # =====================================================================================================================================================
 
 # =====================================================================================================================================================
-# Rvm: {{{
+# RVM: {{{
 
 # Check if RVM is installed
 if [ ! -f "`which rvm`" ]; then
@@ -65,11 +65,15 @@ if [ ! -f "`which rvm`" ]; then
       rvm install ruby "2.6.6 2.6.8"
 
       echo 'Installing rails...'
-      gem install rails -v "6.1.4",
+      gem install rails:6.1.4
 
       echo 'Installing bundler...'
-      gem install bundler -v "2.2.32"
-      gem install bundler -v "2.3.7"
+      gem install bundler:2.2.32
+      gem install bundler:2.3.7
+      gem install bundler:2.3.10
+
+      echo 'Installing neovim...'
+      gem install neovim
     else
       echo "rvm command does not exist."
     fi
@@ -88,7 +92,7 @@ if [ ! -d "$NVM_DIR" ]; then
   echo 'Installing NVM...'
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 
-  if [[ -d "$HOME/.nvm" ]]; then
+  if [[ -d "$XDG_CONFIG_HOME/.nvm" ]]; then
     export NVM_DIR="$HOME/.nvm" && \. "$NVM_DIR/nvm.sh"
 
     echo 'Installing NodeJS versions...'

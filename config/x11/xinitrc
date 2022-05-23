@@ -1,0 +1,6 @@
+setxkbmap -layout us,cz -variant ,qwerty
+setxkbmap -option 'grp_led:caps'
+setxkbmap -option 'caps:escape'
+setxkbmap -option 'grp:rctrl_toggle'
+
+xrdb "$HOME/.config/x11/xresources" & xrdbpid=$!

@@ -1,12 +1,12 @@
 [submodule "dotbot"]
 	path = build/dotbot
 	url = https://github.com/anishathalye/dotbot
-[submodule "zsh/custom/plugins/zsh-autosuggestions"]
-	path = zsh/custom/plugins/zsh-autosuggestions
+[submodule "config/zsh/custom/plugins/zsh-autosuggestions"]
+	path = config/zsh/custom/plugins/zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
-[submodule "zsh/custom/plugins/fast-syntax-highlighting"]
-	path = zsh/custom/plugins/fast-syntax-highlighting
+[submodule "config/zsh/custom/plugins/fast-syntax-highlighting"]
+	path = config/zsh/custom/plugins/fast-syntax-highlighting
 	url = git@github.com:zdharma-continuum/fast-syntax-highlighting.git
-[submodule "zsh/custom/themes/powerlevel10k"]
-	path = zsh/custom/themes/powerlevel10k
+[submodule "config/zsh/custom/themes/powerlevel10k"]
+	path = config/zsh/custom/themes/powerlevel10k
 	url = git@github.com:romkatv/powerlevel10k.git

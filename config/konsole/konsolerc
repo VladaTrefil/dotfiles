@@ -1,0 +1,28 @@
+MenuBar=Disabled
+
+[Desktop Entry]
+DefaultProfile=Profile.profile
+
+[Favorite Profiles]
+Favorites=
+
+[KonsoleWindow]
+RememberWindowSize=false
+RemoveWindowTitleBarAndFrame=true
+ShowMenuBarByDefault=false
+
+[MainWindow]
+Height 1080=508
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAQAAAAAAAAAAAAAAAPwCAAAAAfsAAAAcAFMAUwBIAE0AYQBuAGEAZwBlAHIARABvAGMAawAAAAAA/////wAAANUBAAADAAACwgAAAf4AAAAEAAAABAAAAAgAAAAI/AAAAAEAAAACAAAAAgAAABYAbQBhAGkAbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAcAHMAZQBzAHMAaQBvAG4AVABvAG8AbABiAGEAcgAAAAAA/////wAAAAAAAAAA
+Width 1920=1882
+
+[Notification Messages]
+CloseAllTabs=true
+
+[Open-with settings]
+CompletionMode=1
+History=
+
+[UiSettings]
+ColorScheme=Default

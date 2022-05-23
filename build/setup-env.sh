@@ -27,7 +27,9 @@ rm $HOME/.zsh*
 rm $HOME/.bash*
 rm $HOME/.profile
 rm $HOME/.mkshrc
+rm $HOME/.xsession-errors
 
 rm -rf $HOME/Desktop
 rm -rf $HOME/Templates
 rm -rf $HOME/Pictures
+rm -rf $HOME/Public

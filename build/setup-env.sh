@@ -6,6 +6,11 @@ if [ -z "$(sudo cat /etc/sudoers | grep -o "`echo $PERMISSION`")" ]; then
   echo $PERMISSION | sudo tee -a /etc/sudoers
 fi
 
+# Disable ipv6
+if [ -z "$(sudo cat /etc/sysctl.conf | grep -o "net.ipv6.conf.all.disable_ipv6 = 1")" ]; then
+  echo "net.ipv6.conf.all.disable_ipv6 = 1" | sudo tee -a /etc/sysctl.conf
+  echo "net.ipv6.conf.default.disable_ipv6 = 1" | sudo tee -a /etc/sysctl.conf
+fi
 
 # Build font cache
 fc-cache -f

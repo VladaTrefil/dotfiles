@@ -42,13 +42,15 @@ export ERRFILE="$XDG_CACHE_HOME/x11/xsession-errors"
 # ===========================================================================================
 #  ZSH {{{
 
-export ZDIR="$XDG_CONFIG_HOME/zsh"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
 export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump-${ZSH_VERSION}"
+export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh/"
 
-[ -s "$ZDIR/zshrc" ] && source "$ZDIR/zshrc"
+export ZSH="$XDG_CONFIG_HOME/oh-my-zsh"
+export ZSH_CUSTOM="$XDG_CONFIG_HOME/oh-my-zsh/custom"
 
-compinit -d $ZSH_COMPDUMP
+[ -s "$ZDOTDIR/zshrc" ] && source "$ZDOTDIR/zshrc"
 
 # }}}
 # ===========================================================================================

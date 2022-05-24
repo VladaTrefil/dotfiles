@@ -12,10 +12,10 @@ if [ -f "`which apt`" ]; then
   fi
 fi
 
-OMZDIR="$HOME/.config/oh-my-zsh"
-if [ ! -d "$OMZDIR" ]; then
+export ZSH="$HOME/.config/oh-my-zsh"
+if [ ! -d "$ZSH" ]; then
   echo 'Installing Oh-My-Zsh...'
-  git clone https://github.com/ohmyzsh/ohmyzsh.git $OMZDIR
+  git clone https://github.com/ohmyzsh/ohmyzsh.git $ZSH
 fi
 
 # Change default shell

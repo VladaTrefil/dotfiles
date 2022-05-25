@@ -12,17 +12,26 @@ if [ -z "$(sudo cat /etc/sysctl.conf | grep -o "net.ipv6.conf.all.disable_ipv6 =
   echo "net.ipv6.conf.default.disable_ipv6 = 1" | sudo tee -a /etc/sysctl.conf
 fi
 
+# Add hosts
+if [ -z "$(cat /etc/hosts | grep -of "$DOTFILES_PATH/config/hosts")" ]; then
+  cat "$DOTFILES_PATH/config/hosts" | sudo tee -a /etc/hosts
+fi
+
+if [ ! -f "/usr/share/xsessions/plasma-i3.desktop" ]; then
+  sudo cp $DOTFILES_PATH/config/x11/plasma-i3.desktop /usr/share/xsessions/plasma-i3.desktop
+fi
+
+if [ ! -f "$XDG_CONFIG_HOME/x11/xresources" ]; then
+  chmod +x $XDG_CONFIG_HOME/x11/xresources
+fi
+
 # Build font cache
 fc-cache -f
 
 # Reload Sysctl config
 sudo sysctl -p
 
-chmod +x $XDG_CONFIG_HOME/x11/xresources
-
-echo $DOTFILES_PATH
-sudo cp $DOTFILES_PATH/config/x11/plasma-i3.desktop /usr/share/xsessions/plasma-i3.desktop
-
+# Cleanup
 rm $HOME/.zsh*
 rm $HOME/.bash*
 rm $HOME/.profile

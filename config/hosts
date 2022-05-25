@@ -1,0 +1,34 @@
+255.255.255.255	broadcasthost
+::1             localhost
+
+# Added by Docker Desktop
+# To allow the same kube context to work on the host and the container:
+127.0.0.1 kubernetes.docker.internal
+# End of section
+
+# Fixes Postgres `could not translate host name "postgres" to address: Name or service not known (PG::ConnectionBad)`
+127.0.0.1      postgres
+
+127.0.0.1      dev-www.vyvolej.to
+127.0.0.1      dev-www.squared.one
+127.0.0.1      dev-de.squared.one
+127.0.0.1      dev-pl.squared.one
+127.0.0.1      dev-eu.squared.one
+127.0.0.1      dev-fuji.vyvolej.to
+127.0.0.1      dev-pelikan-cz.vyvolej.to
+127.0.0.1      dev-pelikan-sk.vyvolej.to
+127.0.0.1      dev-mimibazar.vyvolej.to
+127.0.0.1      dev-fotolab.invia.cz
+127.0.0.1      dev-www.fujilab.cz
+
+127.0.0.1      dev-api.vyvolej.to
+127.0.0.1      dev-api.www.squared.one
+127.0.0.1      dev-api.de.squared.one
+127.0.0.1      dev-api.pl.squared.one
+127.0.0.1      dev-api.eu.squared.one
+
+46.101.147.55  test-www.vyvolej.to
+46.101.147.55  test-de.squared.one
+46.101.147.55  test-pl.squared.one
+46.101.147.55  test-en.squared.one
+46.101.147.55  test-eu.squared.one

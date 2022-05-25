@@ -10,6 +10,7 @@ NC='\033[0m' # No Color
 
 APT_PACKAGES=(
   "python3-dev"
+  "python-is-python3"
   "build-essential"
   "ripgrep" # Command line search
   "unzip"

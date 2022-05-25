@@ -78,7 +78,7 @@
     # KDE Plasma
     ~/.config/konsolerc:
       force: true
-      path: config/konsole
+      path: config/konsole/konsolerc
     ~/.local/share/konsole:
       force: true
       path: local/konsole

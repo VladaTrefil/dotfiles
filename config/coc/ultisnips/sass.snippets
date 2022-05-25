@@ -1,0 +1,652 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+# Values
+
+snippet a "auto"
+auto
+endsnippet
+
+snippet inh "inherit"
+inherit
+endsnippet
+
+snippet c "center"
+center
+endsnippet
+
+snippet n "none"
+none
+endsnippet
+
+# Variables
+
+snippet spacers "spacers map"
+map-get($spacers, ${1})
+endsnippet
+
+snippet ggw "grid-gutter-width"
+$grid-gutter-width
+endsnippet
+
+snippet ggh "grid-gutter-half"
+$grid-gutter-half
+endsnippet
+
+# Pseudo
+
+snippet :c "checked"
+:checked
+  ${1}
+endsnippet
+
+snippet :h "hover"
+:hover
+  ${1}
+endsnippet
+
+snippet :f "first-child"
+:first-child
+  ${1}
+endsnippet
+
+snippet :n "nth-child"
+:nth-child(${1})
+  ${2}
+endsnippet
+
+snippet :l "last-child"
+:last-child
+  ${1}
+endsnippet
+
+snippet :b "before"
+::before
+  content: ''
+  display: block
+  ${1}
+endsnippet
+
+snippet :a "after"
+::after
+  content: ''
+  display: block
+  ${1}
+endsnippet
+
+snippet :spacer "before spacer"
+::before
+  content: ''
+  display: block
+  width: 100%
+  padding-bottom: ${1:100%}
+endsnippet
+
+# Display
+
+snippet d "display: ___"
+display: ${1:none|inline|block}
+endsnippet
+
+snippet di "display: inline"
+display: inline
+endsnippet
+
+snippet dn "display: none"
+display: none
+endsnippet
+
+snippet db "display: block"
+display: block
+endsnippet
+
+snippet dib "display: inline-block"
+display: inline-block
+endsnippet
+
+snippet dt "display: table"
+display: table
+endsnippet
+
+snippet dtc "display: table-cell"
+display: table-cell
+endsnippet
+
+snippet dtr "display: table-row"
+display: table-row
+endsnippet
+
+snippet df "display: flex"
+display: flex
+endsnippet
+
+snippet dfi "display: inline-flex"
+display: inline-flex
+endsnippet
+
+# Flex
+
+snippet sb "space-between"
+space-between
+endsnippet
+
+snippet fxs "flex-start"
+flex-start
+endsnippet
+
+snippet fxe "flex-end"
+flex-end
+endsnippet
+
+snippet str "stretch"
+stretch
+endsnippet
+
+snippet jc "justify-content: ___"
+justify-content: ${1}
+endsnippet
+
+snippet jc:sb "justify-content: space-between"
+justify-content: space-between
+endsnippet
+
+snippet jc:fs "justify-content: flex-start"
+justify-content: flex-start
+endsnippet
+
+snippet jc:fe "justify-content: flex-end"
+justify-content: flex-end
+endsnippet
+
+snippet jc:c "justify-content: center"
+justify-content: center
+endsnippet
+
+snippet ai "align-items: ___"
+align-items: ${1}
+endsnippet
+
+snippet ai:sb "align-items: space-between"
+align-items: space-between
+endsnippet
+
+snippet ai:fs "align-items: flex-start"
+align-items: flex-start
+endsnippet
+
+snippet ai:fe "align-items: flex-end"
+align-items: flex-end
+endsnippet
+
+snippet ai:c "align-items: center"
+align-items: center
+endsnippet
+
+snippet ai:s "align-items: stretch"
+align-items: stretch
+endsnippet
+
+snippet fx "flex: ___"
+flex: ${1:0 0 auto}
+endsnippet
+
+snippet fw "flex-wrap: ___"
+flex-wrap: ${1}
+endsnippet
+
+snippet fw:w "flex-wrap: wrap"
+flex-wrap: wrap
+endsnippet
+
+snippet fw:n "flex-wrap: nowrap"
+flex-wrap: nowrap
+endsnippet
+
+# Dimensions
+
+snippet w "width: ___"
+width: ${1:0}
+endsnippet
+
+snippet wa "width: auto"
+width: auto
+endsnippet
+
+snippet w50 "width: 50%"
+width: 50%
+endsnippet
+
+snippet w100 "width: 100%"
+width: 100%
+endsnippet
+
+snippet h "height: ___"
+height: ${1:0}
+endsnippet
+
+snippet ha "height: auto"
+height: auto
+endsnippet
+
+snippet h50 "height: 50%"
+height: 50%
+endsnippet
+
+snippet h100 "height: 100%"
+height: 100%
+endsnippet
+
+# Margin
+
+snippet m "margin: ___"
+margin: ${1:0}
+endsnippet
+
+snippet mt "margin-top: ___"
+margin-top: ${1:0}
+endsnippet
+
+snippet mb "margin-bottom: ___"
+margin-bottom: ${1:0}
+endsnippet
+
+snippet ml "margin-left: ___"
+margin-left: ${1:0}
+endsnippet
+
+snippet mr "margin-right: ___"
+margin-right: ${1:0}
+endsnippet
+
+snippet moa "margin: 0 auto"
+margin: 0 auto
+endsnippet
+
+snippet moa- "margin-left/right: auto "
+margin-left: auto
+margin-right: auto
+endsnippet
+
+# Padding
+
+snippet p "padding: ___"
+padding: ${1:0}
+endsnippet
+
+snippet pt "padding-top: ___"
+padding-top: ${1:0}
+endsnippet
+
+snippet pb "padding-bottom: ___"
+padding-bottom: ${1:0}
+endsnippet
+
+snippet pl "padding-left: ___"
+padding-left: ${1:0}
+endsnippet
+
+snippet pr "padding-right: ___"
+padding-right: ${1:0}
+endsnippet
+
+# Position
+
+snippet pos "position: ___"
+posititon: ${1}
+endsnippet
+
+snippet posa "position: absolute"
+posititon: absolute
+endsnippet
+
+snippet posr "position: relative"
+posititon: relative
+endsnippet
+
+snippet poss "position: static"
+posititon: static
+endsnippet
+
+snippet abs "absolute"
+absolute
+endsnippet
+
+snippet rel "relative"
+relative
+endsnippet
+
+snippet stat "static"
+static
+endsnippet
+
+snippet fix "fixed"
+fixed
+endsnippet
+
+snippet t "top: ___"
+top: ${1:0}
+endsnippet
+
+snippet b "bottom: ___"
+bottom: ${1:0}
+endsnippet
+
+snippet r "right: ___"
+right: ${1:0}
+endsnippet
+
+snippet l "left: ___"
+left: ${1:0}
+endsnippet
+
+snippet zi "z-index: ___"
+z-index: ${1:1}
+endsnippet
+
+# Border
+
+snippet brt "border-top: ___"
+border-top: ${1:solid 1px #333}
+endsnippet
+
+snippet brb "border-bottom: ___"
+border-bottom: ${1:solid 1px #333}
+endsnippet
+
+snippet brl "border-left: ___"
+border-left: ${1:solid 1px #333}
+endsnippet
+
+snippet brr "border-right: ___"
+border-right: ${1:solid 1px #333}
+endsnippet
+
+snippet brcc "border-collapse: collapse"
+border-collapse: collapse
+endsnippet
+
+snippet brr "border-radius: ___"
+border-radius: ${1}
+endsnippet
+
+# Shadow
+
+snippet bs "box-shadow: ___"
+box-shadow: ${1:x y blur spead color}
+endsnippet
+
+# Font
+
+snippet ff "font-family: ___"
+font-family: ${1:sans-serif}
+endsnippet
+
+snippet fs "font-size: ___"
+font-size: ${1:1em}
+endsnippet
+
+snippet lh "line-height: ___"
+line-height: ${1:1.5}
+endsnippet
+
+snippet ls "letter-spacing: ___"
+letter-spacing: ${1:0}
+endsnippet
+
+snippet fw "font-weight: ___"
+font-weight: ${1:normal}
+endsnippet
+
+snippet large "font-weight-bold"
+$font-size-large
+endsnippet
+
+snippet bold "font-weight-bold"
+$font-weight-bold
+endsnippet
+
+snippet normal "font-weight-normal"
+$font-weight-normal
+endsnippet
+
+snippet medium "font-weight-medium"
+$font-weight-medium
+endsnippet
+
+snippet light "font-weight-light"
+$font-weight-light
+endsnippet
+
+snippet fi "font-style: italic"
+font-style: italic
+endsnippet
+
+# Float
+
+snippet fl "float: left"
+float: left
+endsnippet
+
+snippet fr "float: right"
+float: right
+endsnippet
+
+# Color
+
+snippet bg "background: ___"
+background: ${1:#fff url(image.png) no-repeat left top fixed}
+endsnippet
+
+snippet rgb "color rgb"
+rgb(${1:255}, ${2:255}, ${3:255})$0
+endsnippet
+
+snippet rgba "color rgba"
+rgba(${1:255}, ${2:255}, ${3:255}, ${4:0.5})$0
+endsnippet
+
+# Visibility
+
+snippet v "visibility: ___"
+visibility: ${1:visible|hidden|collapse}
+endsnippet
+
+snippet vh "visibility: hidden"
+visibility: hidden
+endsnippet
+
+snippet vv "visibility: visible"
+visibility: visible
+endsnippet
+
+snippet vc "visibility: collapse"
+visibility: collapse
+endsnippet
+
+# Text
+
+snippet tt "text-transform: ___"
+text-transform: ${1:capitalize|uppercase|lowercase}
+endsnippet
+
+snippet ttu "text-transform: uppercase"
+text-transform: uppercase
+endsnippet
+
+snippet ttl "text-transform: lowercase"
+text-transform: lowercase
+endsnippet
+
+snippet ttc "text-transform: capitalize"
+text-transform: capitalize
+endsnippet
+
+snippet td "text-decoration: ___"
+text-decoration: ${1:none|underline|strikethrough}
+endsnippet
+
+snippet tdu "text-decoration: underline"
+text-decoration: underline
+endsnippet
+
+snippet tdn "text-decoration: none"
+text-decoration: none
+endsnippet
+
+snippet tdlt "text-decoration: line-through"
+text-decoration: line-through
+endsnippet
+
+snippet ti "text-indent: ___"
+text-indent: ${1:0}
+endsnippet
+
+snippet ts "text-shadow: ___"
+text-shadow: ${1:0 1px 0 #333}
+endsnippet
+
+snippet ta "text-align: ___"
+text-align: ${1:left|right|center|justify}
+endsnippet
+
+snippet tar "text-align: right"
+text-align: right
+endsnippet
+
+snippet tal "text-align: left"
+text-align: left
+endsnippet
+
+snippet tac "text-align: center"
+text-align: center
+endsnippet
+
+snippet taj "text-align: justify"
+text-align: justify
+endsnippet
+
+# Overflow
+
+snippet o "overflow: ___"
+overflow: ${1:hidden|auto|scroll}
+endsnippet
+
+snippet os "overflow: scroll"
+overflow: scroll
+endsnippet
+
+snippet oh "overflow: hidden"
+overflow: hidden
+endsnippet
+
+snippet oa "overflow: auto"
+overflow: auto
+endsnippet
+
+snippet oxs "overflow-x: scroll"
+overflow-x: scroll
+endsnippet
+
+snippet oxh "overflow-x: hidden"
+overflow-x: hidden
+endsnippet
+
+snippet oxa "overflow-x: auto"
+overflow-x: auto
+endsnippet
+
+snippet oys "overflow-y: scroll"
+overflow-y: scroll
+endsnippet
+
+snippet oyh "overflow-y: hidden"
+overflow-y: hidden
+endsnippet
+
+snippet oya "overflow-y: auto"
+overflow-y: auto
+endsnippet
+
+# Media
+
+snippet mq:down "media down"
++media-breakpoint-down(${1})
+  ${2}
+endsnippet
+
+snippet mq:up "media up"
++media-breakpoint-up(${1})
+  ${2}
+endsnippet
+
+snippet mq:desktop "media desktop"
++mq-mobile-menu
+  ${1}
+endsnippet
+
+snippet mq:mobile "media mobile"
++mq-mobile-menu
+  ${1}
+endsnippet
+
+snippet mq:screen "@media screen"
+@media screen and (max-width: ${1})
+	${2}
+endsnippet
+
+# Misc
+
+snippet tst "transition: ___"
+transition: ${1:all 300ms ease}
+endsnippet
+
+snippet tf "transform: ___"
+transform: ${1:scale(1.0)}
+endsnippet
+
+snippet op "opacity: ___"
+opacity: ${1:0}
+endsnippet
+
+snippet pen "pointer-events: none"
+pointer-events: none
+endsnippet
+
+snippet pea "pointer-events: auto"
+pointer-events: auto
+endsnippet
+
+snippet cal "calc"
+calc(${1})
+endsnippet
+
+snippet per "percentage"
+percentage(${1}/${2})
+endsnippet
+
+snippet ! "important"
+!importnant
+endsnippet

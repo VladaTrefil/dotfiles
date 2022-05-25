@@ -24,5 +24,8 @@ CloseAllTabs=true
 CompletionMode=1
 History=
 
+[TabBar]
+TabBarVisibility=AlwaysHideTabBar
+
 [UiSettings]
 ColorScheme=Default

@@ -4,9 +4,9 @@
 [submodule "config/zsh/custom/plugins/zsh-autosuggestions"]
 	path = config/zsh/custom/plugins/zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
-[submodule "config/zsh/custom/plugins/fast-syntax-highlighting"]
-	path = config/zsh/custom/plugins/fast-syntax-highlighting
-	url = git@github.com:zdharma-continuum/fast-syntax-highlighting.git
 [submodule "config/zsh/custom/themes/powerlevel10k"]
 	path = config/zsh/custom/themes/powerlevel10k
 	url = git@github.com:romkatv/powerlevel10k.git
+[submodule "config/zsh/custom/plugins/fast-syntax-highlighting"]
+	path = config/zsh/custom/plugins/fast-syntax-highlighting
+	url = git@github.com:zdharma-continuum/fast-syntax-highlighting.git

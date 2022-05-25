@@ -61,7 +61,7 @@ alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"' # move config
 
 # Ruby
 alias r='bin/rails'
-alias rs='r s -p 3000'
+alias rs='r s -p 3333'
 alias rr='bin/rake'
 alias rt='PARALLEL_WORKERS=3 r test'
 

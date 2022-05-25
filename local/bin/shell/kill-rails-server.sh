@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ $# -eq 0 ]; then
-  port=3000
+  port=3333
 else
   port=$1
 fi

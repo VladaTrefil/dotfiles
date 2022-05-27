@@ -45,15 +45,15 @@ endsnippet
 # Variables
 
 snippet spacers "spacers map"
-map-get($spacers, ${1})
+map-get(\$spacers, ${1})
 endsnippet
 
 snippet ggw "grid-gutter-width"
-$grid-gutter-width
+\$grid-gutter-width
 endsnippet
 
 snippet ggh "grid-gutter-half"
-$grid-gutter-half
+\$grid-gutter-half
 endsnippet
 
 # Pseudo
@@ -315,19 +315,19 @@ endsnippet
 # Position
 
 snippet pos "position: ___"
-posititon: ${1}
+position: ${1}
 endsnippet
 
 snippet posa "position: absolute"
-posititon: absolute
+position: absolute
 endsnippet
 
 snippet posr "position: relative"
-posititon: relative
+position: relative
 endsnippet
 
 snippet poss "position: static"
-posititon: static
+position: static
 endsnippet
 
 snippet abs "absolute"
@@ -592,27 +592,27 @@ endsnippet
 
 # Media
 
-snippet mq:down "media down"
+snippet media:down "media down"
 +media-breakpoint-down(${1})
   ${2}
 endsnippet
 
-snippet mq:up "media up"
+snippet media:up "media up"
 +media-breakpoint-up(${1})
   ${2}
 endsnippet
 
-snippet mq:desktop "media desktop"
+snippet media:desktop "media desktop"
++mq-desktop-menu
+  ${1}
+endsnippet
+
+snippet media:mobile "media mobile"
 +mq-mobile-menu
   ${1}
 endsnippet
 
-snippet mq:mobile "media mobile"
-+mq-mobile-menu
-  ${1}
-endsnippet
-
-snippet mq:screen "@media screen"
+snippet media:screen "@media screen"
 @media screen and (max-width: ${1})
 	${2}
 endsnippet

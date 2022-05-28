@@ -1,0 +1,156 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+# Ruby
+
+snippet class "class" b
+class ${1}
+	${0}
+end
+endsnippet
+
+snippet class:child "class child" b
+class ${1} < ${2:Application}
+	${0}
+end
+endsnippet
+
+snippet def "function"
+def ${1}
+	${0}
+end
+endsnippet
+
+snippet def:args "function with args"
+def ${1}(${2})
+	${0}
+end
+endsnippet
+
+snippet if "if"
+if ${1}
+	${0}
+end
+endsnippet
+
+snippet ife "if, else"
+if ${1}
+	${2}
+else
+	${0}
+end
+endsnippet
+
+snippet ifei "if, else if, else"
+if ${1}
+	${2}
+elsif ${3}
+	${4}
+else
+	${0}
+end
+endsnippet
+
+snippet elif "else if" b
+elsif ${1}
+	${0}
+endsnippet
+
+snippet include "include" b
+include ${1}
+endsnippet
+
+snippet case "case when" b
+case ${1}
+when ${2}
+  ${3}
+else
+  ${0}
+end
+endsnippet
+
+snippet when "when" b
+when ${1}
+  ${0}
+endsnippet
+
+# Rails
+
+snippet scope "scope" b
+scope :${1}, -> { ${0} }
+endsnippet
+
+snippet scope:block "scope block" b
+scope :{1}, -> do
+  ${0}
+end
+endsnippet
+
+snippet pg_search_scope "Postgres search scope" b
+pg_search_scope :${1:by_query},
+                ${2:against: { title: "A", },}
+                ${3:associated_against: { articles: %i[code title] },}
+                ${4:ignoring: :accents,}
+                ${5:using: { tsearch: { prefix: true } }}
+endsnippet
+
+snippet title "Title transformation"
+${1/\w+\s*/\u$0/}
+endsnippet
+
+snippet has_many "has many dependent" b
+has_many :${1}, -> { ${2} }, ${3}, class_name: "${0}"
+endsnippet
+
+snippet has_and_belongs_to_many "has many" b
+has_and_belongs_to_many :${1}, -> { ${2} }, ${3}
+endsnippet
+
+snippet dependent "has many dependent"
+dependent: destroy
+endsnippet
+
+snippet validates "validates" b
+validates :${1}, ${0},
+          presence: true
+endsnippet
+
+snippet validates:presence "validates presence" b
+validates_presence_of :${1}
+endsnippet
+
+snippet validates:uniqueness "validates uniqueness" b
+validates_uniqueness_of :${1}, scope: :${0}
+endsnippet
+
+snippet "(\S+)\ inclusion" "validates inclusion" r
+inclusion: { in: ${1} }
+endsnippet
+
+priority -1
+snippet "\S" "validates inclusion" r
+test
+endsnippet

@@ -17,6 +17,8 @@ endfunction
 
 call plug#begin('~/.config/nvim/plugged')
 " Theme -------
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'glepnir/dashboard-nvim'
 
 " Tools -------
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -25,7 +27,7 @@ Plug 'BurntSushi/ripgrep'
 Plug 'brooth/far.vim'
 Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'tpope/vim-fugitive'
+Plug 'dense-analysis/ale'               " Linter and prettify
 Plug 'SirVer/ultisnips'
 
 " LSP -------
@@ -42,6 +44,7 @@ Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 " Git -------
 Plug 'tpope/vim-git'
+Plug 'tpope/vim-fugitive'
 Plug 'SirJson/fzf-gitignore'
 Plug 'airblade/vim-gitgutter'
 Plug 'APZelos/blamer.nvim'              " git blame
@@ -69,17 +72,14 @@ Plug 'mboughaba/i3config.vim'
 Plug 'rhysd/clever-f.vim'               " Improves commands f, F, t and T
 Plug 'easymotion/vim-easymotion'        " Improves vim movement
 Plug 'tomtom/tcomment_vim'
-Plug 'dense-analysis/ale'               " Linter and prettify
 Plug 'Yggdroot/indentLine'
 Plug 'RRethy/vim-illuminate'            " Highlights words that match the word under cursor
 Plug 'chrisbra/Colorizer'
 Plug 'tpope/vim-eunuch'                 " File commands in vim
-Plug 'psliwka/vim-smoothie'           " Smooth scroll
+Plug 'psliwka/vim-smoothie'             " Smooth scroll
 Plug 'drzel/vim-repo-edit'              " Quickly clone github repo to tmp
-Plug 'glepnir/dashboard-nvim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'jez/vim-superman'                 " Man pages in vim
-Plug 'nvim-lualine/lualine.nvim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'onsails/lspkind.nvim'             " VSCode like pictograms for menus, powered by Nvim LSP
 

@@ -13,18 +13,22 @@
 priority -50
 
 ###########################################################################
-#                            SnipMate Snippets                            #
+#                            UltiSnips Snippets                           #
 ###########################################################################
 
 snippet frozen "frozen string literal" b
 # frozen_string_literal: true
 endsnippet
 
-snippet req "require" b
+snippet require "require" b
 require '${1}'
 endsnippet
 
-snippet def "def <name>..." r
+snippet include "include" b
+include ${1}
+endsnippet
+
+snippet def "def <name>..." b
 def ${1:function_name}${2:(${3:*args})}
 	$0
 end
@@ -34,7 +38,7 @@ snippet each "each { |i| <block> }"
 each { |${1:i}| $0 }
 endsnippet
 
-snippet eachdo "each do |i| <block>"
+snippet each:do "each do |i| <block>"
 each do |${1:i}|
 	$0
 end
@@ -44,7 +48,7 @@ snippet map "map { |i| <block> }"
 map { |${1:i}| $0 }
 endsnippet
 
-snippet mapdo "map do |i| <block>"
+snippet map:do "map do |i| <block>"
 map do |${1:i}|
 	$0
 end
@@ -60,29 +64,64 @@ each_pair do |${1:i}|
 end
 endsnippet
 
-snippet until "until <expression> ... end"
+snippet until "until <expression> ... end" b
 until ${1:expression}
 	$0
 end
 endsnippet
 
-snippet while "while <expression> ... end"
+snippet while "while <expression> ... end" b
 while ${1:expression}
 	$0
 end
 endsnippet
 
-snippet "case" "case <variable> when <expression> ... end" r
+snippet case "case <variable> when <expression> ... end" b
 case ${1:variable}
 when ${2:expression}
 	$0
 end
 endsnippet
 
-snippet clas "class" b
+snippet class "class" b
 class ${1}
 	${0}
 end
+endsnippet
+
+snippet class:child "class child" b
+class ${1} < ${2:Application}
+	${0}
+end
+endsnippet
+
+snippet if "if"
+if ${1}
+	${0}
+end
+endsnippet
+
+snippet ife "if, else"
+if ${1}
+	${2}
+else
+	${0}
+end
+endsnippet
+
+snippet ifei "if, else if, else"
+if ${1}
+	${2}
+elsif ${3}
+	${4}
+else
+	${0}
+end
+endsnippet
+
+snippet elif "else if" b
+elsif ${1}
+	${0}
 endsnippet
 
 snippet module "module"

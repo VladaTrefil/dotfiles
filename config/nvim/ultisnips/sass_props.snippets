@@ -4,6 +4,80 @@ snippet !
 !important
 endsnippet
 
+snippet d "display: ___"
+display: ${1:none|inline|block}
+endsnippet
+
+snippet di "display: inline"
+display: inline
+endsnippet
+
+snippet dn "display: none"
+display: none
+endsnippet
+
+snippet db "display: block"
+display: block
+endsnippet
+
+snippet dib "display: inline-block"
+display: inline-block
+endsnippet
+
+snippet dt "display: table"
+display: table
+endsnippet
+
+snippet dtc "display: table-cell"
+display: table-cell
+endsnippet
+
+snippet dtr "display: table-row"
+display: table-row
+endsnippet
+
+snippet df "display: flex"
+display: flex
+endsnippet
+
+snippet dfi "display: inline-flex"
+display: inline-flex
+endsnippet
+
+# Flex
+
+snippet sb "space-between"
+space-between
+endsnippet
+
+snippet fxs "flex-start"
+flex-start
+endsnippet
+
+snippet fxe "flex-end"
+flex-end
+endsnippet
+
+snippet str "stretch"
+stretch
+endsnippet
+
+snippet fx "flex: ___"
+flex: ${1:0 0 auto}
+endsnippet
+
+snippet fw "flex-wrap: ___"
+flex-wrap: ${1}
+endsnippet
+
+snippet fw:w "flex-wrap: wrap"
+flex-wrap: wrap
+endsnippet
+
+snippet fw:n "flex-wrap: nowrap"
+flex-wrap: nowrap
+endsnippet
+
 snippet ac
 align-content: ${0}
 endsnippet
@@ -2388,14 +2462,6 @@ snippet :oc
 :only-child
 endsnippet
 
-snippet :a
-:after
-endsnippet
-
-snippet :b
-:before
-endsnippet
-
 snippet ::a
 ::after
 endsnippet
@@ -2404,3 +2470,89 @@ snippet ::b
 ::before
 endsnippet
 
+snippet tst "transition: ___" b
+transition: ${1:all 300ms ease}
+endsnippet
+
+snippet tf "transform: ___" b
+transform: ${1:scale(1.0)}
+endsnippet
+
+snippet pen "pointer-events: none"
+pointer-events: none
+endsnippet
+
+snippet pea "pointer-events: auto"
+pointer-events: auto
+endsnippet
+
+snippet cal "calc"
+calc(${1})
+endsnippet
+
+snippet rgb "color rgb"
+rgb(${1:255}, ${2:255}, ${3:255})$0
+endsnippet
+
+snippet rgba "color rgba"
+rgba(${1:255}, ${2:255}, ${3:255}, ${4:0.5})$0
+endsnippet
+
+snippet abs "absolute"
+absolute
+endsnippet
+
+snippet rel "relative"
+relative
+endsnippet
+
+snippet stat "static"
+static
+endsnippet
+
+snippet fix "fixed"
+fixed
+endsnippet
+
+snippet :c "checked"
+:checked
+  ${1}
+endsnippet
+
+snippet :h "hover"
+:hover
+  ${1}
+endsnippet
+
+snippet :f "first-child"
+:first-child
+  ${1}
+endsnippet
+
+snippet :n "nth-child"
+:nth-child(${1})
+  ${2}
+endsnippet
+
+snippet :l "last-child"
+:last-child
+  ${1}
+endsnippet
+
+snippet :b "before"
+::before
+  content: ''
+  display: block
+  ${1}
+endsnippet
+
+snippet :a "after"
+::after
+  content: ''
+  display: block
+  ${1}
+endsnippet
+
+snippet per "percentage"
+percentage(${1}/${2})
+endsnippet

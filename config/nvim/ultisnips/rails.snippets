@@ -13,7 +13,7 @@
 priority -49
 
 ###########################################################################
-#                            SnipMate Snippets                            #
+#                            UltiSnips Snippets                           #
 ###########################################################################
 
 snippet pry "binding pry" b
@@ -71,6 +71,53 @@ module ${1} < ${2:ApplicationRecord}
 end
 endsnippet
 
-snippet scope "model scope" b
-scope :${1}, ->${2:(${3})} { ${0} }
+snippet scope "scope" b
+scope :${1}, -> { ${0} }
+endsnippet
+
+snippet scope:block "scope block" b
+scope :{1}, -> do
+  ${0}
+end
+endsnippet
+
+snippet pg_search_scope "Postgres search scope" b
+pg_search_scope :${1:by_query},
+                ${2:against: { title: "A", },}
+                ${3:associated_against: { articles: %i[code title] },}
+                ${4:ignoring: :accents,}
+                ${5:using: { tsearch: { prefix: true } }}
+endsnippet
+
+snippet title "Title transformation"
+${1/\w+\s*/\u$0/}
+endsnippet
+
+snippet has_many "has many dependent" b
+has_many :${1}, -> { ${2} }, ${3}, class_name: "${0}"
+endsnippet
+
+snippet has_and_belongs_to_many "has many" b
+has_and_belongs_to_many :${1}, -> { ${2} }, ${3}
+endsnippet
+
+snippet dependent "has many dependent"
+dependent: destroy
+endsnippet
+
+snippet validates "validates" b
+validates :${1}, ${0},
+          presence: true
+endsnippet
+
+snippet validates:presence "validates presence" b
+validates_presence_of :${1}
+endsnippet
+
+snippet validates:uniqueness "validates uniqueness" b
+validates_uniqueness_of :${1}, scope: :${0}
+endsnippet
+
+snippet "(\S+)?\ in[clusion]?" "validates inclusion" r
+inclusion: { in: ${1} }
 endsnippet

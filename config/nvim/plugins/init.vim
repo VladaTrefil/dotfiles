@@ -21,8 +21,7 @@ call plug#begin('~/.config/nvim/plugged')
 " Tools -------
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'BurntSushi/ripgrep'               " For CocSearch
+Plug 'BurntSushi/ripgrep'
 Plug 'brooth/far.vim'
 Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -83,7 +82,6 @@ source ~/.config/nvim/plugins/wilder.vim
 source ~/.config/nvim/plugins/dashboard.vim
 source ~/.config/nvim/plugins/indentline.vim
 source ~/.config/nvim/plugins/fzf.vim
-source ~/.config/nvim/plugins/coc.vim
 source ~/.config/nvim/plugins/far.vim
 source ~/.config/nvim/plugins/ale.vim
 source ~/.config/nvim/plugins/colorizer.vim

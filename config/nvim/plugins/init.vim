@@ -2,7 +2,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Install Vim-Plug
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+let data_dir = has('nvim') ? stdpath('data') . '/site' : "$XDG_CONFIG_HOME/nvim"
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
@@ -95,18 +95,46 @@ if exists("plugs['nvim-cmp']")
   source ~/.config/nvim/plugins/cmp.vim
 end
 
-source ~/.config/nvim/plugins/wilder.vim
-source ~/.config/nvim/plugins/dashboard.vim
-source ~/.config/nvim/plugins/indentline.vim
-source ~/.config/nvim/plugins/fzf.vim
-source ~/.config/nvim/plugins/far.vim
-source ~/.config/nvim/plugins/ale.vim
-source ~/.config/nvim/plugins/colorizer.vim
-source ~/.config/nvim/plugins/gitgutter.vim
-source ~/.config/nvim/plugins/lualine.lua
+if exists("plugs['wilder.nvim']")
+  source ~/.config/nvim/plugins/wilder.vim
+end
+
+if exists("plugs['dashboard-nvim']")
+  source ~/.config/nvim/plugins/dashboard.vim
+end
+
+if exists("plugs['indentLine']")
+  source ~/.config/nvim/plugins/indentline.vim
+end
+
+if exists("plugs['fzf.vim']")
+  source ~/.config/nvim/plugins/fzf.vim
+end
+
+if exists("plugs['far.vim']")
+  source ~/.config/nvim/plugins/far.vim
+end
+
+if exists("plugs['ale']")
+  source ~/.config/nvim/plugins/ale.vim
+end
+
+if exists("plugs['colorizer']")
+  source ~/.config/nvim/plugins/colorizer.vim
+end
+
+if exists("plugs['vim-gitgutter']")
+  source ~/.config/nvim/plugins/gitgutter.vim
+end
+
+if exists("plugs['lualine.nvim']")
+  source ~/.config/nvim/plugins/lualine.lua
+end
 
 if exists("plugs['ultisnips']")
   source ~/.config/nvim/plugins/ultisnips.vim
 end
 
-source ~/.config/nvim/plugins/lsp.vim
+if exists("plugs['vim-lsp']")
+  source ~/.config/nvim/plugins/lsp.vim
+end

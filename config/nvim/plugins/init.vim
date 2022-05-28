@@ -17,7 +17,6 @@ endfunction
 
 call plug#begin('~/.config/nvim/plugged')
 " Theme -------
-Plug 'VladaTrefil/vim-theme'
 
 " Tools -------
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -75,6 +74,11 @@ Plug 'nvim-lualine/lualine.nvim'
 
 call plug#end()
 
+source ~/.config/nvim/plugins/palette.vim
+
+if exists("g:palette")
+  source ~/.config/nvim/plugins/theme.vim
+end
 source ~/.config/nvim/plugins/wilder.vim
 source ~/.config/nvim/plugins/dashboard.vim
 source ~/.config/nvim/plugins/indentline.vim

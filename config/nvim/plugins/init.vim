@@ -26,9 +26,19 @@ Plug 'brooth/far.vim'
 Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'tpope/vim-fugitive'
+Plug 'SirVer/ultisnips'
 
 " LSP -------
 Plug 'prabirshrestha/vim-lsp'
+Plug 'neovim/nvim-lspconfig'
+
+" LSP -------
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 " Git -------
 Plug 'tpope/vim-git'
@@ -70,6 +80,8 @@ Plug 'glepnir/dashboard-nvim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'jez/vim-superman'                 " Man pages in vim
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'onsails/lspkind.nvim'             " VSCode like pictograms for menus, powered by Nvim LSP
 
 call plug#end()
 
@@ -78,6 +90,11 @@ source ~/.config/nvim/plugins/palette.vim
 if exists("g:palette")
   source ~/.config/nvim/plugins/theme.vim
 end
+
+if exists("plugs['nvim-cmp']")
+  source ~/.config/nvim/plugins/cmp.vim
+end
+
 source ~/.config/nvim/plugins/wilder.vim
 source ~/.config/nvim/plugins/dashboard.vim
 source ~/.config/nvim/plugins/indentline.vim
@@ -87,4 +104,9 @@ source ~/.config/nvim/plugins/ale.vim
 source ~/.config/nvim/plugins/colorizer.vim
 source ~/.config/nvim/plugins/gitgutter.vim
 source ~/.config/nvim/plugins/lualine.lua
+
+if exists("plugs['ultisnips']")
+  source ~/.config/nvim/plugins/ultisnips.vim
+end
+
 source ~/.config/nvim/plugins/lsp.vim

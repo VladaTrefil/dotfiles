@@ -16,6 +16,9 @@ set background=dark
 
 set background=dark
 
+" Enable popup transparency
+set pumblend=15
+
 let s:vim_bg  = 'bg'
 let s:vim_fg  = 'fg'
 let s:none    = 'NONE'
@@ -327,6 +330,30 @@ call s:HL('ALEInfo', s:none, s:none, s:undercurl, s:bright_blue)
 hi! link ALEErrorSign RedSign
 hi! link ALEWarningSign YellowSign
 hi! link ALEInfoSign BlueSign
+
+" }}}
+" CMP: {{{
+
+" The menu field's highlight group.
+call s:HL('CmpPmenu', s:fg1, s:none)
+call s:HL('CmpPmenuBorder', s:bright_blue, s:none)
+call s:HL('PmenuSel', s:fg0, s:bg4)
+
+highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
+" blue
+highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
+highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#569CD6
+" light blue
+highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
+highlight! CmpItemKindInterface guibg=NONE guifg=#9CDCFE
+highlight! CmpItemKindText guibg=NONE guifg=#9CDCFE
+" pink
+highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0
+highlight! CmpItemKindMethod guibg=NONE guifg=#C586C0
+" front
+highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
+highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
+highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
 
 " }}}
 " EasyMotion: {{{
@@ -655,4 +682,3 @@ hi! link jsonBraces Fg1
 hi! link jsonString Fg1
 
 " }}}
-

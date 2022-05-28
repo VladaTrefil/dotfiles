@@ -1,0 +1,64 @@
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#		snippet trigger_word [ "description" [ options ] ]
+#		endsnippet
+
+priority -49
+
+###########################################################################
+#                            UltiSnips Snippets                           #
+###########################################################################
+
+snippet class_name "Folio Cell class name" b
+class_name "${1}", :${0}
+endsnippet
+
+snippet show "Cell show method" b
+def show
+	render if model.present? ${0:&& ${1}}
+end
+endsnippet
+
+snippet FormHelper "SimpleForm FormHelper"
+include SimpleForm::ActionViewExtensions::FormHelper
+endsnippet
+
+snippet form "Simple form function" b
+def form(&block)
+	opts = {
+		url: ${1}_path,
+		method: ${2::get}
+	}
+
+	simple_form_for(${0:""}, opts, &block)
+end
+endsnippet
+
+snippet cell "Folio Cell" b
+cell("${1}", ${2})
+endsnippet
+
+snippet Cell "Folio Cell" b
+# frozen_string_literal: true
+
+class ${1}::${2}Cell < ApplicationCell
+	${0}
+end
+endsnippet
+
+snippet t "I18n Translate"
+t(".${1}")
+endsnippet
+
+snippet i "Image"
+image(${1},
+			${2:THUMB_SIZE}
+			${3:, class: ${4}})
+endsnippet

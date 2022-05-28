@@ -20,31 +20,8 @@ snippet pry "binding pry" b
 binding.pry
 endsnippet
 
-snippet form "Simple form function" b
-def form(&block)
-	opts = {
-		url: ${1}_path,
-		method: ${2::get}
-	}
-
-	simple_form_for(${0:""}, opts, &block)
-end
-endsnippet
-
-snippet cell "Folio Cell" b
-cell("${1}", ${2})
-endsnippet
-
 snippet link "link_to" b
 link_to ${1:text}, ${2:path}
-endsnippet
-
-snippet Cell "Folio Cell" b
-# frozen_string_literal: true
-
-class ${1}::${2}Cell < ApplicationCell
-	${0}
-end
 endsnippet
 
 snippet Controller "Rails controller" b
@@ -93,6 +70,10 @@ snippet title "Title transformation"
 ${1/\w+\s*/\u$0/}
 endsnippet
 
+snippet anaf "accepts_nested_attributes_for"
+accepts_nested_attributes_for :${1:association_name}${2:${3:, allow_destroy: true}${4:, reject_if: proc \{ |obj| ${5:obj.blank?} \}}}
+endsnippet
+
 snippet has_many "has many dependent" b
 has_many :${1}, -> { ${2} }, ${3}, class_name: "${0}"
 endsnippet
@@ -120,4 +101,20 @@ endsnippet
 
 snippet "(\S+)?\ in[clusion]?" "validates inclusion" r
 inclusion: { in: ${1} }
+endsnippet
+
+snippet add_column "Migration Add Column"
+add_column :${1:table}, :${2:column}
+endsnippet
+
+snippet remove_column "Migration Remove Column"
+remove_column :${1:table}, :${2:column}
+endsnippet
+
+snippet try "try"
+try(:${0})
+endsnippet
+
+snippet map "try"
+try(:${0})
 endsnippet

@@ -34,9 +34,6 @@ set clipboard=unnamedplus
 
 set noswapfile
 
-" Folding on marker
-set foldmethod=marker
-
 " Enable mouse control for resizing panes
 set mouse=a
 
@@ -224,3 +221,19 @@ au BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.typescriptreact
 " }}}
 
 " }}}
+
+
+" Folds
+function FoldText()
+  let line = getline(v:foldstart)
+  let sub = substitute(line, '\#\|"\|{{{', '', 'g')
+  return ' ' .. sub
+endfunction
+
+set foldtext=FoldText()
+
+" Folding on marker
+set foldmethod=marker
+set foldmarker={{{,}}}
+
+autocmd BufWinEnter *.snippets silent set foldmethod=marker

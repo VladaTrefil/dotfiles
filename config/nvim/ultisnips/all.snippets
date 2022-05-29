@@ -30,29 +30,31 @@
 #   }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
-#
-#             __                
-#     __  __ /\_\    ___ ___    
-#    /\ \/\ \\/\ \ /' __` __`\  
-#    \ \ \_/ |\ \ \/\ \/\ \/\ \ 
-#     \ \___/  \ \_\ \_\ \_\ \_\
-#      \/__/    \/_/\/_/\/_/\/_/
+#     ______  __       __        
+#    /\  _  \/\ \     /\ \       
+#    \ \ \L\ \ \ \    \ \ \      
+#     \ \  __ \ \ \  __\ \ \  __ 
+#      \ \ \/\ \ \ \L\ \\ \ \L\ \
+#       \ \_\ \_\ \____/ \ \____/
+#        \/_/\/_/\/___/   \/___/ 
 
 
-priority -50
+priority -49
 
-snippet plug "Plugin" b
-Plug '${1:name}' " ${2:comment}
-endsnippet
+global !p
+def comment_char(ft):
+	if ft == 'snippets':
+		return '#' 
+	else:
+		return '"'
+endglobal
 
-snippet for "for loop" b
-for ${1:item} in ${2:array}
-	${3:block}
-endfor
-endsnippet
+snippet fold "Vim Fold" b
+`!p snip.rv = comment_char(snip.ft) + (" " * 1) + ("─" * 100)`
+`!p snip.rv = comment_char(snip.ft) + (" " * 2)` ${1}: {{{
 
-snippet func "function" b
-fun ${1:function_name}($2)
-	${3:" code}
-endf
+${0}
+
+`!p snip.rv = comment_char(snip.ft) + (" " * 2)` }}}
+`!p snip.rv = comment_char(snip.ft) + (" " * 1) + ("─" * 100)`
 endsnippet

@@ -1,20 +1,47 @@
-#
-# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+#   Reference: {{{
 
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
 #		b - Beginning of line.
 #		i - In-word expansion.
 #		w - Word boundary.
 #		r - Regular expression
 #		e - Custom context snippet
 #		A - Snippet will be triggered automatically, when condition matches.
-#		snippet trigger_word [ "description" [ options ] ]
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
 #		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
 
-priority -49
+#   }}}
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
 
-###########################################################################
-#                            UltiSnips Snippets                           #
-###########################################################################
+#                   __                                           ___             
+#                  /\ \                                      __ /\_ \            
+#     _ __   __  __\ \ \____  __  __           _ __    __   /\_\\//\ \     ____  
+#    /\`'__\/\ \/\ \\ \ '__`\/\ \/\ \  _______/\`'__\/'__`\ \/\ \ \ \ \   /',__\ 
+#    \ \ \/ \ \ \_\ \\ \ \L\ \ \ \_\ \/\______\ \ \//\ \L\.\_\ \ \ \_\ \_/\__, `\
+#     \ \_\  \ \____/ \ \_,__/\/`____ \/______/\ \_\\ \__/.\_\\ \_\/\____\/\____/
+#      \/_/   \/___/   \/___/  `/___/> \        \/_/ \/__/\/_/ \/_/\/____/\/___/ 
+#                                 /\___/                                         
+#                                 \/__/      
+
+
+priority -50
 
 snippet pry "binding pry" b
 binding.pry
@@ -64,10 +91,6 @@ pg_search_scope :${1:by_query},
                 ${3:associated_against: { articles: %i[code title] },}
                 ${4:ignoring: :accents,}
                 ${5:using: { tsearch: { prefix: true } }}
-endsnippet
-
-snippet title "Title transformation"
-${1/\w+\s*/\u$0/}
 endsnippet
 
 snippet anaf "accepts_nested_attributes_for"

@@ -1,5 +1,11 @@
-" CMP Settings:
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"      ___    ___ ___   _____   
+"     /'___\/' __` __`\/\ '__`\ 
+"    /\ \__//\ \/\ \/\ \ \ \L\ \
+"    \ \____\ \_\ \_\ \_\ \ ,__/
+"     \/____/\/_/\/_/\/_/\ \ \/ 
+"                         \ \_\ 
+"                          \/_/ 
+
 
 set completeopt=menu,menuone,noselect
 
@@ -8,6 +14,7 @@ autocmd! BufWritePost *.snippets CmpUltisnipsReloadSnippets
 lua <<EOF
   local cmp = require'cmp'
   local lspkind = require('lspkind')
+  local nvim_lsp = require('lspconfig')
 
   cmp.setup({
     snippet = {
@@ -56,10 +63,15 @@ lua <<EOF
     })
   })
 
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+
   -- Setup lspconfig.
   -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  -- require('lspconfig')['vim-lsp'].setup {
-  --   capabilities = capabilities
-  -- }
+  nvim_lsp['solargraph'].setup{
+    cmd = {'solargraph'},
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
 EOF

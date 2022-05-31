@@ -29,6 +29,8 @@ alias gpo="git push origin"
 alias gpu="git pull"
 alias gpuo="git pull origin"
 
+alias lgit="lazygit"
+
 alias cdd="cd $DEV_PATH"
 alias cd.="cd $DOTFILES_PATH"
 

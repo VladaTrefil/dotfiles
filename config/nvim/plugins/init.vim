@@ -1,5 +1,13 @@
-" Plugins:
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                                     ___                        
+"                     __                             /\_ \                       
+"       ___   __  __ /\_\    ___ ___            _____\//\ \    __  __     __     
+"     /' _ `\/\ \/\ \\/\ \ /' __` __`\  _______/\ '__`\\ \ \  /\ \/\ \  /'_ `\   
+"     /\ \/\ \ \ \_/ |\ \ \/\ \/\ \/\ \/\______\ \ \L\ \\_\ \_\ \ \_\ \/\ \L\ \  
+"     \ \_\ \_\ \___/  \ \_\ \_\ \_\ \_\/______/\ \ ,__//\____\\ \____/\ \____ \ 
+"      \/_/\/_/\/__/    \/_/\/_/\/_/\/_/         \ \ \/ \/____/ \/___/  \/___L\ \
+"                                                 \ \_\                   /\____/
+"                                                  \/_/                   \_/__/ 
+
 
 " Install Vim-Plug
 let data_dir = has('nvim') ? stdpath('data') . '/site' : "$XDG_CONFIG_HOME/nvim"
@@ -15,12 +23,16 @@ function! UpdateRemotePlugins(...)
   UpdateRemotePlugins
 endfunction
 
+" ────────────────────────────────────────────────────────────────────────────────────────────────────
+" Plug: {{{
+
 call plug#begin('~/.config/nvim/plugged')
-" Theme -------
+
+" Theme: -------
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'glepnir/dashboard-nvim'
 
-" Tools -------
+" Tools: -------
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'BurntSushi/ripgrep'
@@ -30,11 +42,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'dense-analysis/ale'               " Linter and prettify
 Plug 'SirVer/ultisnips'
 
-" LSP -------
-Plug 'prabirshrestha/vim-lsp'
-Plug 'neovim/nvim-lspconfig'
-
-" LSP -------
+" Completion: -------
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -42,14 +50,19 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
-" Git -------
+" LSP: -------
+" Plug 'prabirshrestha/vim-lsp'
+Plug 'neovim/nvim-lspconfig'
+Plug 'onsails/lspkind.nvim'             " VSCode like pictograms for menus, powered by Nvim LSP
+
+" Git: -------
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 Plug 'SirJson/fzf-gitignore'
 Plug 'airblade/vim-gitgutter'
 Plug 'APZelos/blamer.nvim'              " git blame
 
-" Syntax/Languages -------
+" Syntax And Languages: -------
 Plug 'posva/vim-vue'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'HerringtonDarkholme/yats.vim'
@@ -62,13 +75,12 @@ Plug 'jasonshell/vim-svg-indent'
 Plug 'vim-scripts/svg.vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
-Plug 'tpope/vim-haml'
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
 Plug 'leafgarland/typescript-vim', {'for': ['typescript', 'typescript.tsx'] }
 Plug 'mboughaba/i3config.vim'
 
-" Enhancements -------
+" Enhancements: -------
 Plug 'rhysd/clever-f.vim'               " Improves commands f, F, t and T
 Plug 'easymotion/vim-easymotion'        " Improves vim movement
 Plug 'tomtom/tcomment_vim'
@@ -81,9 +93,14 @@ Plug 'drzel/vim-repo-edit'              " Quickly clone github repo to tmp
 Plug 'ryanoasis/vim-devicons'
 Plug 'jez/vim-superman'                 " Man pages in vim
 Plug 'jiangmiao/auto-pairs'
-Plug 'onsails/lspkind.nvim'             " VSCode like pictograms for menus, powered by Nvim LSP
 
 call plug#end()
+
+" }}}
+" ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+" ────────────────────────────────────────────────────────────────────────────────────────────────────
+" Plug Config: {{{
 
 source ~/.config/nvim/plugins/palette.vim
 
@@ -138,3 +155,6 @@ end
 if exists("plugs['vim-lsp']")
   source ~/.config/nvim/plugins/lsp.vim
 end
+
+" }}}
+" ────────────────────────────────────────────────────────────────────────────────────────────────────

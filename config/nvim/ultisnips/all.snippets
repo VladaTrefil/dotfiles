@@ -43,7 +43,9 @@ priority -49
 
 global !p
 def comment_char(ft):
-	if ft == 'snippets':
+	hash = ['snippets', 'zsh', 'i3config', 'sh', 'conf']
+
+	if ft in hash:
 		return '#' 
 	else:
 		return '"'
@@ -51,10 +53,18 @@ endglobal
 
 snippet fold "Vim Fold" b
 `!p snip.rv = comment_char(snip.ft) + (" " * 1) + ("─" * 100)`
-`!p snip.rv = comment_char(snip.ft) + (" " * 2)` ${1}: {{{
+`!p snip.rv = comment_char(snip.ft)` ${1}: {{{
 
 ${0}
 
-`!p snip.rv = comment_char(snip.ft) + (" " * 2)` }}}
+`!p snip.rv = comment_char(snip.ft)` }}}
 `!p snip.rv = comment_char(snip.ft) + (" " * 1) + ("─" * 100)`
+endsnippet
+
+snippet fold:second "Vim Fold second" b
+`!p snip.rv = comment_char(snip.ft)` ${1}: {{{
+
+${0}
+
+`!p snip.rv = comment_char(snip.ft)` }}}
 endsnippet

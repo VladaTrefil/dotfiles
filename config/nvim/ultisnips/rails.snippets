@@ -47,8 +47,24 @@ snippet pry "binding pry" b
 binding.pry
 endsnippet
 
-snippet link "link_to" b
+snippet link "link_to"
 link_to ${1:text}, ${2:path}
+endsnippet
+
+snippet i18t "I18n Translate"
+I18n.t('${1:type.key}')${2}
+endsnippet
+
+snippet order "order"
+order("${1:field}")
+endsnippet
+
+snippet order:desc "order DESC"
+order("${1:field} DESC")
+endsnippet
+
+snippet parmas "params"
+params[:${1:id}]${0}
 endsnippet
 
 snippet Controller "Rails controller" b
@@ -93,16 +109,28 @@ pg_search_scope :${1:by_query},
                 ${5:using: { tsearch: { prefix: true } }}
 endsnippet
 
-snippet anaf "accepts_nested_attributes_for"
+snippet anaf "accepts_nested_attributes_for" b
 accepts_nested_attributes_for :${1:association_name}${2:${3:, allow_destroy: true}${4:, reject_if: proc \{ |obj| ${5:obj.blank?} \}}}
-endsnippet
-
-snippet has_many "has many dependent" b
-has_many :${1}, -> { ${2} }, ${3}, class_name: "${0}"
 endsnippet
 
 snippet has_and_belongs_to_many "has many" b
 has_and_belongs_to_many :${1}, -> { ${2} }, ${3}
+endsnippet
+
+snippet has_many "has_many" b
+has_many :${1:object}
+endsnippet
+
+snippet has_many:dependent "has_many dependent" b
+has_many :${1:other}s, class_name: "${2:$1}", foreign_key: "${3:$1}_id", dependent: :destroy${4}
+endsnippet
+
+snippet has_many:through "has_many through" b
+has_many :${1:object}, through: :${2:object}
+endsnippet
+
+snippet has_one "has_one" b
+has_one :${1:object}
 endsnippet
 
 snippet dependent "has many dependent"
@@ -122,22 +150,100 @@ snippet validates:uniqueness "validates uniqueness" b
 validates_uniqueness_of :${1}, scope: :${0}
 endsnippet
 
+snippet delegate "delegate .. to" b
+delegate :${1:methods}, :to => :${2:object}
+endsnippet
+
+snippet delegate:to "delegate .. to .. prefix .. allow_nil" b
+delegate :${1:methods}, :to => :${2:object}, :prefix => :${3:prefix}, :allow_nil => ${4:allow_nil}
+endsnippet
+
 snippet "(\S+)?\ in[clusion]?" "validates inclusion" r
 inclusion: { in: ${1} }
 endsnippet
 
-snippet add_column "Migration Add Column"
+snippet add_column "Migration Add Column" b
 add_column :${1:table}, :${2:column}
 endsnippet
 
-snippet remove_column "Migration Remove Column"
+snippet remove_column "Migration Remove Column" b
 remove_column :${1:table}, :${2:column}
+endsnippet
+
+snippet change_column "change_column" b
+change_column :${1:table}, :${2:column}, :${3:type}
 endsnippet
 
 snippet try "try"
 try(:${0})
 endsnippet
 
-snippet map "try"
-try(:${0})
+snippet before_save "before_save" b
+before_save :${1:method}
+endsnippet
+
+snippet after_save "after_save" b
+after_save :${1:method}
+endsnippet
+
+snippet before_validation "before_validation" b
+before_validation :${1:method}
+endsnippet
+
+snippet after_validation "after_validation" b
+after_validation :${1:method}
+endsnippet
+
+snippet def:index "REST Index" b
+def index
+	@${1:model_class_name} = ${2:ModelClassName}.all
+	${0}
+end
+endsnippet
+
+snippet def:show "REST Show" b
+def show
+	@${1:model_class_name} = ${2:ModelClassName}.find(params[:id])
+	${0}
+end
+endsnippet
+
+snippet def:new "REST New" b
+def new
+	@${1:model_class_name} = ${2:ModelClassName}.new
+	${0}
+end
+endsnippet
+
+snippet def:create "REST Create" b
+def create
+	@${1:model_class_name} = ${2:ModelClassName}.new(params[:$1])
+
+	if @$1.save
+		${3}
+	else
+		${0}
+	end
+end
+endsnippet
+
+snippet def:edit "REST Edit" b
+def edit
+	@${1:model_class_name} = ${2:ModelClassName}.find(params[:id])
+end
+endsnippet
+
+snippet def:update "REST Update" b
+def update
+	@${1:model_class_name} = ${2:ModelClassName}.find(params[:id])
+	${0}
+end
+endsnippet
+
+snippet def:destroy "REST Destroy"
+def destroy
+	@${1:model_class_name} = ${2:ModelClassName}.find(params[:id])
+	@$1.destroy
+	${0}
+end
 endsnippet

@@ -26,6 +26,8 @@ let g:fzf_colors =
 " position window
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8, 'yoffset': -5 } }
 
+noremap <C-w> :Rg 
+
 " let s:sf_options = ['--preview', 'width': 0.6, 'height': 0.8, 'yoffset': 0 ]
 " command! -bang SinfinFiles call fzf#run({'source': 'find app -name "*.slim" | grep -E "\/cells\/|\/views\/"', 'sink': 'e', 'options': s:f_options})
 

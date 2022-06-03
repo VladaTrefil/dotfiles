@@ -4,3 +4,4 @@
 - Fix solargraph startup issue
 - Nicer vim command-line output
 - Find linux music player
+- Fix XDG for npm cache

@@ -75,6 +75,8 @@ if v:version > 703 || v:version == 703 && has("patch541")
   set formatoptions+=j " Delete comment character when joining commented lines
 endif
 
+" Disable perl provider
+let g:loaded_perl_provider = 0
 
 " }}}
 " ────────────────────────────────────────────────────────────────────────────────────────────────────

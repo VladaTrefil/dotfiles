@@ -93,6 +93,7 @@ Plug 'drzel/vim-repo-edit'              " Quickly clone github repo to tmp
 Plug 'ryanoasis/vim-devicons'
 Plug 'jez/vim-superman'                 " Man pages in vim
 Plug 'jiangmiao/auto-pairs'
+Plug 'mattn/emmet-vim'
 
 call plug#end()
 
@@ -154,6 +155,10 @@ end
 
 if exists("plugs['vim-lsp']")
   source ~/.config/nvim/plugins/lsp.vim
+end
+
+if exists("plugs['emmet-vim']")
+  source ~/.config/nvim/plugins/emmet.vim
 end
 
 " }}}

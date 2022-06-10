@@ -59,18 +59,17 @@ if [ ! -f "`which rvm`" ]; then
     export PATH="$PATH:$HOME/.rvm/bin"
 
     if [ -f "`which rvm`" ]; then
-      rvm use 3.0.0 --default --install
 
       echo 'Installing Ruby versions...'
-      rvm install ruby "2.6.6 2.6.8"
+      rvm use 3.0.0 --default --install
+      # rvm use 2.6.6 --default --install
+      # rvm use 2.6.8 --default --install
 
       echo 'Installing rails...'
       gem install rails:6.1.4
 
       echo 'Installing bundler...'
       gem install bundler:2.2.32
-      gem install bundler:2.3.7
-      gem install bundler:2.3.10
 
       echo 'Installing neovim...'
       gem install neovim

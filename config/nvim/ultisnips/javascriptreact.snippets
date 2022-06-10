@@ -41,15 +41,23 @@
 
 priority -50
 
-snippet reim "Import React" b
+global !p
+# Capitalize the first letter without affecting the rest of the letters
+def capitalize_first(word):
+	if(word):
+		word = word[0].upper() + word[1:]
+	return word
+endglobal
+
+snippet rim "Import React" b
 import React from 'react'
 endsnippet
 
 snippet useS "useState Hook" b
-const [${1}, set${1}] = useState(${3:"${4}"})
+const [${1}, set`!p snip.rv=capitalize_first(t[1])`] = useState(${3:"${4}"})
 endsnippet
 
-snippet useE "useEffect Hook" b
+snippet useEf "useEffect Hook" b
 useEffect(() => {
 	${1:${0}}
 		}${2})
@@ -79,3 +87,46 @@ snippet useR "useRef(defaultValue)" b
 const ${1:ref} = useRef(${2:null})
 endsnippet
 
+snippet rfc "react functional component" b
+import React, {useState} from "react"
+
+function ${1:`!p snip.rv = snip.basename`}(${2}){
+	return(
+		${3:<p>Body</p>}
+	)
+}
+
+export default $4`!p snip.rv = snip.basename`
+endsnippet
+
+snippet rcc "react functional component" b
+import React from "react"
+
+class ${1:`!p snip.rv = snip.basename`} extends React.Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			${2}
+		}
+	}
+
+	render = () => (
+		${0}
+	)
+}
+
+export default ${1:`!p snip.rv = snip.basename`}
+endsnippet
+
+snippet cmdm "componentDidMount" b
+componentDidMount() {
+	${0}
+}
+endsnippet
+
+snippet Fragment "React Fragment" b
+<React.Fragment>
+	${0}
+</React.Fragment>
+endsnippet

@@ -2521,6 +2521,26 @@ snippet tf "transform: ___" b
 transform: ${1:scale(1.0)}
 endsnippet
 
+snippet tf:t "transform: translate" b
+transform: translate(${1:scale(1.0)})
+endsnippet
+
+snippet tf:ty "transform: translateY" b
+transform: translateY(${0:-50%})
+endsnippet
+
+snippet tf:tx "transform: translateX" b
+transform: translateX(${0:-50%})
+endsnippet
+
+snippet tf:s "transform: scale" b
+transform: scale(${0:1})
+endsnippet
+
+snippet tf:r "transform: rotate" b
+transform: rotate(${0:180}deg)
+endsnippet
+
 snippet pen "pointer-events: none"
 pointer-events: none
 endsnippet

@@ -43,38 +43,38 @@
 
 priority -50
 
-snippet proto
-${1:class_name}.prototype.${2:method_name} = function(${3}) {
+snippet prototype
+prototype.${1:method_name} = function(${3}) {
 	${0:${VISUAL}}
-};
+}
 endsnippet
 
 # Function
-snippet fun "function"
+snippet function "function"
 function ${1:function_name}(${2}) {
 	${0:${VISUAL}}
 }
 endsnippet
 
 # Anonymous Function assigned to variable
-snippet vaf
+snippet vat
 var ${1:function_name} = function(${2}) {
 	${0:${VISUAL}}
-};
+}
 endsnippet
 
 # Function assigned to variable
-snippet vf
+snippet var:function
 var ${1:function_name} = function $1(${2}) {
 	${0:${VISUAL}}
-};
+}
 endsnippet
 
 # Immediate function
-snippet (f
+snippet (function
 (function(${1}) {
 	${0:${VISUAL}}
-}(${2}));
+}(${2}))
 endsnippet
 
 # if
@@ -85,7 +85,7 @@ if (${1:true}) {
 endsnippet
 
 # if ... else
-snippet ife "if (condition) { ... } else { ... }"
+snippet if:else "if (condition) { ... } else { ... }"
 if (${1:true}) {
 	${0:${VISUAL}}
 } else {
@@ -94,7 +94,7 @@ if (${1:true}) {
 endsnippet
 
 # tertiary conditional
-snippet ter
+snippet ternary
 ${1:/* condition */} ? ${2:/* if true */} : ${0:/* if false */}
 endsnippet
 
@@ -103,7 +103,7 @@ snippet switch
 switch (${1:expression}) {
 	case '${3:case}':
 		${4}
-		break;
+		break
 	${0}
 	default:
 		${2}
@@ -113,7 +113,7 @@ endsnippet
 snippet case "case 'xyz': ... break"
 case '${1:case}':
 	${0:${VISUAL}}
-	break;
+	break
 endsnippet
 
 snippet try "try { ... } catch(e) { ... }"
@@ -141,11 +141,11 @@ endsnippet
 
 # return
 snippet ret
-return ${0:result};
+return ${0:result}
 endsnippet
 
 snippet for "for (...) {...}"
-for (let ${1:i} = 0, ${2:len} = ${3:Things.length}; $1 < $2; $1++) {
+for (let ${1:i} = 0, ${2:len} = ${3:Things.length} $1 < $2 $1++) {
 	${0:${VISUAL}}
 }
 endsnippet
@@ -163,7 +163,7 @@ for (let ${1:prop} in ${2:object}) {
 endsnippet
 
 snippet forr "reversed for (...) {...}"
-for (let ${2:i} = ${1:Things.length} - 1; $2 >= 0; $2--) {
+for (let ${2:i} = ${1:Things.length} - 1 $2 >= 0 $2--) {
 	${0:${VISUAL}}
 }
 endsnippet
@@ -177,7 +177,8 @@ endsnippet
 snippet do "do { ... } while (condition)"
 do {
 	${0:${VISUAL}}
-} while (${1:/* condition */});
+} while (${1:/* condition */})
+endsnippet
 # For in loop
 
 snippet fori
@@ -202,25 +203,25 @@ endsnippet
 snippet sing
 function ${1:Singleton} (${2:argument}) {
 // the cached instance
-var instance;
+var instance
 
 // rewrite the constructor
 $1 = function $1($2) {
-	return instance;
-};
+	return instance
+}
 
 // carry over the prototype properties
-$1.prototype = this;
+$1.prototype = this
 
 // the instance
-instance = new $1();
+instance = new $1()
 
 // reset the constructor pointer
-instance.constructor = $1;
+instance.constructor = $1
 
 ${0}
 
-return instance;
+return instance
 }
 endsnippet
 
@@ -233,108 +234,107 @@ snippet /**
 */
 endsnippet
 
-snippet @par
+snippet @param
 @param {${1:type}} ${2:name} ${0:description}
 endsnippet
 
-snippet @ret
+snippet @return
 @return {${1:type}} ${0:description}
 endsnippet
 
 # JSON.parse
-snippet jsonp
-JSON.parse(${0:jstr});
+snippet json:parse
+JSON.parse(${0:jstr})
 endsnippet
 
 # JSON.stringify
-snippet jsons
-JSON.stringify(${0:object});
-endsnippet
-
-# Get elements
-snippet get
-getElementsBy${1:TagName}('${0}')
-endsnippet
-
-# Get element
-snippet gett
-getElementBy${1:Id}('${0}')
+snippet json:stringify
+JSON.stringify(${0:object})
 endsnippet
 
 # Elements by class
-snippet by.
-${1:document}.getElementsByClassName('${0:class}')
+snippet getElementsByClassName
+getElementsByClassName('${0:class}')
 endsnippet
 
 # Element by ID
-snippet by#
-${1:document}.getElementById('${0:element ID}')
+snippet getElementById
+getElementById('${0:element ID}')
 endsnippet
 
 # Query selector
-snippet qs
-${1:document}.querySelector('${0:CSS selector}')
+snippet querySelector
+querySelector('${0:CSS selector}')
 endsnippet
 
 # Query selector all
-snippet qsa
-${1:document}.querySelectorAll('${0:CSS selector}')
+snippet querySelectorAll
+.querySelectorAll('${0:CSS selector}')
 endsnippet
 
-snippet cl "console.log"
-console.log(${0});
+snippet console "console.log"
+console.log(${0})
 endsnippet
-snippet cd "console.debug"
-console.debug(${0});
+
+snippet console:debug "console.debug"
+console.debug(${0})
 endsnippet
-snippet ce "console.error"
-console.error(${0});
+
+snippet console:error "console.error"
+console.error(${0})
 endsnippet
-snippet cw "console.warn"
-console.warn(${0});
+
+snippet console:warn "console.warn"
+console.warn(${0})
 endsnippet
-snippet ci "console.info"
-console.info(${0});
+
+snippet console:info "console.info"
+console.info(${0})
 endsnippet
-snippet clstr "console.log stringified"
-console.log(JSON.stringify(${0}, null, 2));
+
+snippet console:json "console.log stringified"
+console.log(JSON.stringify(${0}, null, 2))
 endsnippet
 
 # Misc
-snippet us
-'use strict';
+snippet strict
+'use strict'
 endsnippet
 
 # setTimeout function
-snippet timeout
-setTimeout(function () {${0}}${2}, ${1:10});
+snippet setTimeout
+setTimeout(function () {${0}}${2}, ${1:10})
 endsnippet
 
 snippet const
-const ${1} = ${0};
+const ${1} = ${0}
 endsnippet
 
-snippet constn
-const ${1} = new ${0};
+snippet const:new
+const ${1} = new ${0}
 endsnippet
 
 snippet let
-let ${1} = ${0};
+let ${1} = ${0}
 endsnippet
 
-snippet im "import xyz from 'xyz'"
-import ${1} from '${2:$1}';
+snippet import "import xyz from 'xyz'"
+import ${1} from './${0:$1}'
 endsnippet
 
-snippet imas "import * as xyz from 'xyz'"
-import * as ${1} from '${2:$1}';
+snippet import:module "import xyz from 'xyz'"
+import ${1} from '${1/\w+/\l$0/}'
 endsnippet
 
-snippet imm "import { member } from 'xyz'"
-import { ${1} } from '${2}';
+snippet import:as "import * as xyz from 'xyz'"
+import * as ${1} from '${0:$1}'
 endsnippet
 
-snippet cla
+snippet import:member "import { member } from 'xyz'"
+import { ${1} } from '${2}'
+endsnippet
+
+snippet class
 class ${1} {
 	${0:${VISUAL}}
 }
@@ -377,7 +377,7 @@ snippet afb "() => {}"
 endsnippet
 
 snippet sym
-const ${1} = Symbol('${0}');
+const ${1} = Symbol('${0}')
 endsnippet
 
 snippet expdef

@@ -97,9 +97,13 @@ end
 # Acbcz: {{{
 
 if defined? Acb
-  unless Acb::User.where(email: credential).present?
-    Acb::User.create!(email: credential, password: credential,
-                         first_name: "test", last_name: "test")
+  if Acb::User.where(email: credential).blank?
+    Acb::User.create!(email: credential,
+                      password: credential,
+                      first_name: 'test',
+                      last_name: 'test',
+                      confirmed_at: DateTime.current,
+                      confirmation_sent_at: DateTime.current - 1.hour)
 
     print "Created Acb::User\n"
   else

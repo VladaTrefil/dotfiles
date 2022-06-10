@@ -1,5 +1,4 @@
-# vim: set ft=sh:
-#
+#                  vim: set ft=sh:
 #     ________                          ___      ___             
 #    /\_____  \                       /'___\ __ /\_ \            
 #    \/____//'/'  _____   _ __   ___ /\ \__//\_\\//\ \      __   
@@ -60,7 +59,9 @@ export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh/"
 export ZSH="$XDG_CONFIG_HOME/oh-my-zsh"
 export ZSH_CUSTOM="$XDG_CONFIG_HOME/oh-my-zsh/custom"
 
-[ -s "$ZDOTDIR/zshrc" ] && source "$ZDOTDIR/zshrc"
+if [ -f "$ZDOTDIR/.zshrc" ]; then
+  source "$ZDOTDIR/.zshrc"
+fi
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────

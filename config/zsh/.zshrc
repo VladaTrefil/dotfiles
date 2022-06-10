@@ -56,9 +56,6 @@ setopt HIST_REDUCE_BLANKS  # remove unnecessary blanks
 setopt INC_APPEND_HISTORY_TIME  # append command to history file immediately after execution
 setopt EXTENDED_HISTORY  # record command start time
 
-# Aliases
-source "$XDG_CONFIG_HOME/shell/aliases.sh"
-
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -121,6 +118,9 @@ function vim() {
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+# ======= Aliases =========================
+source "$XDG_CONFIG_HOME/shell/aliases.sh"
 
 # ======= RVM =============================
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.

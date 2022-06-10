@@ -100,6 +100,7 @@ if [ ! -d "$NVM_DIR" ]; then
 
     echo 'Installing NodeJS versions...'
     nvm install 14
+    nvm install 16
 
     echo 'Installing yarn...'
     sudo npm install -g yarn

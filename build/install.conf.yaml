@@ -23,6 +23,10 @@
   - ~/.config/pg
   - ~/.config/x11
   - ~/.config/yarn
+  - ~/.config/gnupg
+  - ~/.config/npm
+  - ~/.config/gtk-2.0
+  - ~/.config/kde
   - ~/.config/oh-my-zsh/custom/
   - ~/.config/oh-my-zsh/custom/plugins
   - ~/.config/oh-my-zsh/custom/themes

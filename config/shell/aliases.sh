@@ -5,7 +5,7 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
 alias l="ls -l"
-alias la="ls -la"
+alias la="ls -la --group-directories-first"
 
 # Aliases to protect against overwriting
 alias cp='cp -i'

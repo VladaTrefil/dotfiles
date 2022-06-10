@@ -59,7 +59,6 @@ if [ ! -f "`which rvm`" ]; then
     export PATH="$PATH:$HOME/.rvm/bin"
 
     if [ -f "`which rvm`" ]; then
-
       echo 'Installing Ruby versions...'
       rvm use 3.0.0 --default --install
       # rvm use 2.6.6 --default --install
@@ -73,6 +72,9 @@ if [ ! -f "`which rvm`" ]; then
 
       echo 'Installing neovim...'
       gem install neovim
+
+      echo 'Installing solargraph...'
+      gem install --user-install solargraph
     else
       echo "rvm command does not exist."
     fi

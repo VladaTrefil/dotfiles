@@ -1,7 +1,18 @@
-- Automatically change ruby version when entering ruby directory
-- Add LSP
-- Tweak KDE Panel
-- Fix solargraph startup issue
-- Nicer vim command-line output
-- Find linux music player
-- Fix XDG for npm cache
+General
+  - Find linux music player
+
+NODE
+  - Fix XDG for npm cache
+  - Fix XDG for global .yarn and .yarn.lock
+
+RUBY
+  - Automatically change ruby version when entering ruby directory based on Gemfile
+  - Fix solargraph startup issue
+
+KDE
+  - Tweak KDE Panel
+
+NVIM
+  - Add toggle between :GFiles and :Files based on .git
+  - Add LSP
+  - Nicer command-line output

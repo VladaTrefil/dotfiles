@@ -43,6 +43,7 @@ Plug 'dense-analysis/ale'               " Linter and prettify
 Plug 'SirVer/ultisnips'
 
 " Completion: -------
+Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -51,9 +52,10 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 " LSP: -------
-" Plug 'prabirshrestha/vim-lsp'
 Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
 Plug 'onsails/lspkind.nvim'             " VSCode like pictograms for menus, powered by Nvim LSP
+Plug 'jose-elias-alvarez/typescript.nvim'
 
 " Git: -------
 Plug 'tpope/vim-git'

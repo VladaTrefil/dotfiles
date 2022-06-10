@@ -7,10 +7,11 @@
 "     \/_/\/_/\/__/    \/_/\/_/\/_/\/_/
 "                                      
 
-
 " ASCII: https://textkool.com/en/ascii-art-generator?hl=default&vl=default&font=Larry%203D
 
 source ~/.config/nvim/plugins/init.vim
+
+source ~/.config/nvim/lua/lsp/setup.lua
 
 " ────────────────────────────────────────────────────────────────────────────────────────────────────
 " General: {{{

@@ -109,7 +109,7 @@ if exists("g:palette")
 end
 
 if exists("plugs['nvim-cmp']")
-  source ~/.config/nvim/plugins/cmp.vim
+  source ~/.config/nvim/plugins/cmp.lua
 end
 
 if exists("plugs['wilder.nvim']")

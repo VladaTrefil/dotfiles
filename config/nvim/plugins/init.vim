@@ -39,7 +39,6 @@ Plug 'BurntSushi/ripgrep'
 Plug 'brooth/far.vim'
 Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'dense-analysis/ale'               " Linter and prettify
 Plug 'SirVer/ultisnips'
 Plug 'prettier/vim-prettier'
 
@@ -55,6 +54,7 @@ Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 " LSP: -------
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
+
 Plug 'onsails/lspkind.nvim'             " VSCode like pictograms for menus, powered by Nvim LSP
 Plug 'jose-elias-alvarez/typescript.nvim'
 
@@ -66,11 +66,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'APZelos/blamer.nvim'              " git blame
 
 " Syntax And Languages: -------
-Plug 'posva/vim-vue'
-Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'jelera/vim-javascript-syntax'
-Plug 'cakebaker/scss-syntax.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'wavded/vim-stylus'
 Plug 'GutenYe/json5.vim'
 Plug 'elzr/vim-json'
@@ -97,6 +95,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'jez/vim-superman'                 " Man pages in vim
 Plug 'jiangmiao/auto-pairs'
 Plug 'mattn/emmet-vim'
+Plug 'mxw/vim-jsx'
 
 call plug#end()
 

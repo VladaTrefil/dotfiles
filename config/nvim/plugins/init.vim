@@ -41,6 +41,7 @@ Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'dense-analysis/ale'               " Linter and prettify
 Plug 'SirVer/ultisnips'
+Plug 'prettier/vim-prettier'
 
 " Completion: -------
 Plug 'hrsh7th/cmp-nvim-lua'
@@ -161,6 +162,10 @@ end
 
 if exists("plugs['emmet-vim']")
   source ~/.config/nvim/plugins/emmet.vim
+end
+
+if exists("plugs['vim-prettier']")
+  source ~/.config/nvim/plugins/prettier.vim
 end
 
 " }}}

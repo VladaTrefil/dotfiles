@@ -93,40 +93,20 @@ fi
 
 if [ ! -d "$NVM_DIR" ]; then
   echo 'Installing NVM...'
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash | grep -G "\d*"
 
-  if [[ -d "$XDG_CONFIG_HOME/.nvm" ]]; then
-    export NVM_DIR="$HOME/.nvm" && \. "$NVM_DIR/nvm.sh"
+  if [[ -d "$XDG_CONFIG_HOME/nvm" ]]; then
+    export NVM_DIR="$XDG_CONFIG_HOME/nvm" && \. "$NVM_DIR/nvm.sh"
 
     echo 'Installing NodeJS versions...'
+    nvm install 16 --default
     nvm install 14
-    nvm install 16
 
-    echo 'Installing yarn...'
-    sudo npm install -g yarn
-
-    echo 'Installing Node neovim...'
-    yarn global add neovim
+    echo 'Installing npm packages...'
+    npm install --location=global yarn neovim prettier
   else
     echo "nvm directory does not exist."
   fi
-fi
-
-# }}}
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
-
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
-# Etcher: {{{
-
-ETCHER_PATH="$HOME/Images/balenaEtcher.AppImage"
-ETCHER_URL="https://github.com/balena-io/etcher/releases/download/v1.7.9/balena-etcher-electron-1.7.9-linux-x64.zip"
-if [ ! -f $ETCHER_PATH ]; then
-  echo "Installing Etcher..."
-  mkdir ./tmp
-  curl -L $ETCHER_URL -o ./tmp/etcher.zip
-  unzip -o ./tmp/etcher.zip '*' -d ./tmp  && mv ./tmp/balena* $ETCHER_PATH
-  chmod a+rx $ETCHER_PATH
-  rm -rf ./tmp
 fi
 
 # }}}
@@ -151,6 +131,23 @@ if [ ! -f "`which youtube-dl`" ]; then
   echo 'Installing Youtube-DL...'
   sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
   sudo chmod a+rx /usr/local/bin/youtube-dl
+fi
+
+# }}}
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+# Etcher: {{{
+
+ETCHER_PATH="$HOME/Images/balenaEtcher.AppImage"
+ETCHER_URL="https://github.com/balena-io/etcher/releases/download/v1.7.9/balena-etcher-electron-1.7.9-linux-x64.zip"
+if [ ! -f $ETCHER_PATH ]; then
+  echo "Installing Etcher..."
+  mkdir ./tmp
+  curl -L $ETCHER_URL -o ./tmp/etcher.zip
+  unzip -o ./tmp/etcher.zip '*' -d ./tmp  && mv ./tmp/balena* $ETCHER_PATH
+  chmod a+rx $ETCHER_PATH
+  rm -rf ./tmp
 fi
 
 # }}}

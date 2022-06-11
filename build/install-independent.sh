@@ -103,7 +103,7 @@ if [ ! -d "$NVM_DIR" ]; then
     nvm install 14
 
     echo 'Installing npm packages...'
-    npm install --location=global yarn neovim prettier
+    # npm install --location=global yarn neovim prettier
   else
     echo "nvm directory does not exist."
   fi

@@ -44,6 +44,33 @@ priority -50
 extends typescript
 extends javascriptreact
 
+snippet rcc "react functional component" b
+import React from "react"
+
+type ${1:`!p snip.rv = snip.basename`}Props = {}
+
+type ${1:`!p snip.rv = snip.basename`}State = {}
+
+class ${1:`!p snip.rv = snip.basename`} extends React.Component<${1:`!p snip.rv = snip.basename`}Props, ${1:`!p snip.rv = snip.basename`}State> {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			${2}
+		}
+	}
+
+	render = () => (
+		<${3}>
+			${0}
+		</${3}>
+	)
+}
+
+export default ${1:`!p snip.rv = snip.basename`}
+endsnippet
+
+
 snippet Props "React component props type" b
 interface Props {
 	${1:key}: ${2:any}

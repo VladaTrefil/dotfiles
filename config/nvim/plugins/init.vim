@@ -41,6 +41,7 @@ Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'SirVer/ultisnips'
 Plug 'prettier/vim-prettier'
+Plug 'dense-analysis/ale'
 
 " Completion: -------
 Plug 'hrsh7th/cmp-nvim-lua'

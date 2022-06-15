@@ -167,5 +167,9 @@ if exists("plugs['vim-prettier']")
   source ~/.config/nvim/plugins/prettier.vim
 end
 
+if exists("plugs['vim-ruby']")
+  source ~/.config/nvim/plugins/ruby.vim
+end
+
 " }}}
 " ────────────────────────────────────────────────────────────────────────────────────────────────────

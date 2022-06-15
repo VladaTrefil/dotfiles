@@ -38,7 +38,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'BurntSushi/ripgrep'
 Plug 'brooth/far.vim'
 Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'SirVer/ultisnips'
 Plug 'prettier/vim-prettier'
 Plug 'dense-analysis/ale'
@@ -59,6 +59,7 @@ Plug 'williamboman/nvim-lsp-installer'
 
 Plug 'onsails/lspkind.nvim'             " VSCode like pictograms for menus, powered by Nvim LSP
 Plug 'jose-elias-alvarez/typescript.nvim'
+" Plug 'folke/trouble.nvim'
 
 " Git: -------
 Plug 'tpope/vim-git'
@@ -66,22 +67,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'SirJson/fzf-gitignore'
 Plug 'airblade/vim-gitgutter'
 Plug 'APZelos/blamer.nvim'              " git blame
-
-" Syntax And Languages: -------
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'wavded/vim-stylus'
-Plug 'GutenYe/json5.vim'
-Plug 'elzr/vim-json'
-Plug 'jasonshell/vim-svg-indent'
-Plug 'vim-scripts/svg.vim'
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
-Plug 'kchmck/vim-coffee-script'
-Plug 'slim-template/vim-slim'
-Plug 'leafgarland/typescript-vim', {'for': ['typescript', 'typescript.tsx'] }
-Plug 'mboughaba/i3config.vim'
 
 " Enhancements: -------
 Plug 'rhysd/clever-f.vim'               " Improves commands f, F, t and T
@@ -97,7 +82,29 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'jez/vim-superman'                 " Man pages in vim
 Plug 'jiangmiao/auto-pairs'
 Plug 'mattn/emmet-vim'
+Plug 'nvim-lua/plenary.nvim'
+
+" Languages: -------
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'wavded/vim-stylus'
+Plug 'GutenYe/json5.vim'
+Plug 'elzr/vim-json'
+Plug 'jasonshell/vim-svg-indent'
+Plug 'vim-scripts/svg.vim'
+Plug 'slim-template/vim-slim'
+Plug 'mboughaba/i3config.vim'
+
+" Javascript: -------
+Plug 'pangloss/vim-javascript'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'kchmck/vim-coffee-script'
+Plug 'leafgarland/typescript-vim', {'for': ['typescript', 'typescript.tsx'] }
 Plug 'mxw/vim-jsx'
+
+" Ruby: -------
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+Plug 'skalnik/vim-vroom'
 
 call plug#end()
 
@@ -171,6 +178,10 @@ end
 
 if exists("plugs['vim-ruby']")
   source ~/.config/nvim/plugins/ruby.vim
+end
+
+if exists("plugs['trouble.nvim']")
+  source ~/.config/nvim/plugins/trouble.lua
 end
 
 " }}}

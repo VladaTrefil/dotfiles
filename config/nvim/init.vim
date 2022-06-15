@@ -9,7 +9,7 @@
 
 " ASCII: https://textkool.com/en/ascii-art-generator?hl=default&vl=default&font=Larry%203D
 
-source ~/.config/nvim/plugins/init.vim
+source ~/.config/nvim/plugins.vim
 
 source ~/.config/nvim/lua/lsp/setup.lua
 

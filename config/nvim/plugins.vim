@@ -59,7 +59,6 @@ Plug 'williamboman/nvim-lsp-installer'
 
 Plug 'onsails/lspkind.nvim'             " VSCode like pictograms for menus, powered by Nvim LSP
 Plug 'jose-elias-alvarez/typescript.nvim'
-" Plug 'folke/trouble.nvim'
 
 " Git: -------
 Plug 'tpope/vim-git'
@@ -178,10 +177,6 @@ end
 
 if exists("plugs['vim-ruby']")
   source ~/.config/nvim/plugins/ruby.vim
-end
-
-if exists("plugs['trouble.nvim']")
-  source ~/.config/nvim/plugins/trouble.lua
 end
 
 " }}}

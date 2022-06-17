@@ -32,11 +32,10 @@ fc-cache -f
 sudo sysctl -p
 
 # Cleanup
-rm $HOME/.zsh*
-rm $HOME/.bash*
-rm $HOME/.profile
-rm $HOME/.mkshrc
-rm $HOME/.xsession-errors
+[[ -s "$HOME/.zshrc" ]] && rm $HOME/.zsh*
+[[ -s "$HOME/.bashrc" ]] && rm $HOME/.bash*
+[[ -s "$HOME/.profile" ]] && rm $HOME/.profile
+[[ -s "$HOME/.mkshrc" ]] && rm $HOME/.mkshrc
 
 rm -rf $HOME/Desktop
 rm -rf $HOME/Templates

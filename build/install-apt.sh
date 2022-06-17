@@ -21,6 +21,8 @@ APT_PACKAGES=(
   "polybar"
   "rofi"
   "feh"
+  "dunst"
+
   "bc" # terminal calculation function
 
   # Sinfin libs

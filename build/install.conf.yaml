@@ -78,6 +78,7 @@
     ~/.config/i3: config/i3
     ~/.config/polybar: config/polybar
     ~/.config/lazygit: config/lazygit
+    ~/.config/dunst: config/dunst
 
     # KDE Plasma
     ~/.config/konsolerc:

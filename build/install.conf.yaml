@@ -8,7 +8,7 @@
     stdin: true
     stdout: true
     stderr: true
-    description: Running Install ZSH Script
+    description: Installing ZSH
     quiet: true
 
 - clean: [
@@ -79,6 +79,7 @@
     ~/.config/polybar: config/polybar
     ~/.config/lazygit: config/lazygit
     ~/.config/dunst: config/dunst
+    ~/.config/pry: config/pry
 
     # KDE Plasma
     ~/.config/konsolerc:
@@ -104,7 +105,7 @@
     stdin: true
     stdout: true
     stderr: true
-    description: Running Install APT Script
+    description: Installing APT Packages
     quiet: true
 
   -
@@ -112,7 +113,7 @@
     stdin: true
     stdout: true
     stderr: true
-    description: Running Pre-install Script
+    description: Installing Independent Software
     quiet: true
 
   -

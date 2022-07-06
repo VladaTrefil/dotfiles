@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir ./tmp
+
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Brew: {{{
 
@@ -137,17 +139,29 @@ fi
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
+# Dunst: {{{
+
+if [ ! -f "`which dunst`" ]; then
+  git clone https://github.com/dunst-project/dunst.git tmp/dunst
+  cd tmp/dunst
+  make
+  sudo make install
+  cd ../..
+fi
+
+# }}}
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Etcher: {{{
 
 ETCHER_PATH="$HOME/Images/balenaEtcher.AppImage"
 ETCHER_URL="https://github.com/balena-io/etcher/releases/download/v1.7.9/balena-etcher-electron-1.7.9-linux-x64.zip"
 if [ ! -f $ETCHER_PATH ]; then
   echo "Installing Etcher..."
-  mkdir ./tmp
   curl -L $ETCHER_URL -o ./tmp/etcher.zip
   unzip -o ./tmp/etcher.zip '*' -d ./tmp  && mv ./tmp/balena* $ETCHER_PATH
   chmod a+rx $ETCHER_PATH
-  rm -rf ./tmp
 fi
 
 # }}}
@@ -165,3 +179,5 @@ fi
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+rm -rf ./tmp

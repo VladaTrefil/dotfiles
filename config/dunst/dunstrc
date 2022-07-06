@@ -1,3 +1,5 @@
+# vim set ft=i3config
+
 [global]
 
     # --- Display --- #
@@ -9,16 +11,16 @@
     follow = mouse
 
     width = 300
-    # height = 260
     origin = top-right
-    offset = 35x85
+    # geometry = "0x5-35+35"
+
+    transparency = 10
 
     progress_bar = true
     progress_bar_height = 10
     progress_bar_frame_width = 1
     progress_bar_min_width = 150
     progress_bar_max_width = 300
-
 
     # Show how many messages are hidden
     indicate_hidden = yes
@@ -32,11 +34,11 @@
     # Draw a line between multiple notifications
     separator_height = 4
 
-    separator_color = "#1e2137aa"
+    separator_color = "#0B0E14"
 
     # Set notification padding
-    padding = 16
-    horizontal_padding = 16
+    padding = 12
+    horizontal_padding = 12
 
     # Disable frame (border)
     frame_width = 0
@@ -46,13 +48,11 @@
 
     # Disable idle time
     idle_threshold = 0
-
    
     # --- Text --- #
-
     # Set the font
     # font = "Noto Sans 11"
-    font = "Hack Nerd Font 11"
+    font = "Iosevka 9"
 
     # Set line height to font height
     line_height = 0
@@ -73,7 +73,7 @@
     #  %% Literal %
 
     markup = full
-    format = "<b>%a</b>\n%s"
+    format = "<small>%b</small>"
 
     # Left align the text
     alignment = left
@@ -102,9 +102,7 @@
     # Display indicators for URLs (U) and actions (A).
     show_indicators = yes
 
-    
     # ---- Icons ---- #
-
     # Align icons left/right/off
     icon_position = left
 
@@ -117,18 +115,14 @@
     # Paths to default icons.
     icon_path = /home/kai/.icons/Reversal-blue/apps/scalable:/usr/share/icons/Adwaita/256x256/legacy/
 
-
     # --- History --- #
-
     # Avoid timing out hidden notifications
     sticky_history = yes
 
     # Maximum amount of notifications kept in history
     history_length = 100
 
-
     # --- Misc/Advanced --- #
-
     dmenu = /usr/bin/dmenu -p dunst:
 
     # Browser for opening urls in context menu.
@@ -149,37 +143,33 @@
     # Don't gnore the dbus closeNotification message.
     ignore_dbusclose = false
 
-
     # --- Legacy --- #
-
     # Use the Xinerama extension instead of RandR for multi-monitor support.
     force_xinerama = false
-
 
     # --- Mouse --- #
     mouse_left_click = close_current
     mouse_middle_click = do_action, close_current
     mouse_right_click = close_all
 
-
 [experimental]
     per_monitor_dpi = false
 
 [urgency_low]
-    background = "#1e2137fa"
+    background = "#0B0E14"
     highlight = "#fe6c5a"
     frame_color = "#52426e"
-    
+
     foreground = "#ffffff"
     timeout = 8
 
 [urgency_normal]
-    background = "#1e2137fa"
+    background = "#0B0E14"
     foreground = "#ffffffff"
     timeout = 8
 
 [urgency_critical]
-    background = "#dd130ddd"
+    background = "#0B0E14"
     foreground = "#ffffff"
     timeout = 0
     icon = abrt

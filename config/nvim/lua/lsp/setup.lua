@@ -69,7 +69,7 @@ lspconfig.sumneko_lua.setup {
   settings = lua_config.settings,
 }
 
-for _, server in ipairs { "bashls", "cssls", "vimls", "solargraph" } do
+for _, server in ipairs { "bashls", "vimls", "solargraph" } do
   lspconfig[server].setup {
     on_attach = on_attach,
     capabilities = capabilities,

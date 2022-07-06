@@ -9,18 +9,14 @@
 
 " ASCII: https://textkool.com/en/ascii-art-generator?hl=default&vl=default&font=Larry%203D
 
+" Plugins
 source ~/.config/nvim/plugins.vim
 
+" LSP
 source ~/.config/nvim/lua/lsp/setup.lua
 
 " ────────────────────────────────────────────────────────────────────────────────────────────────────
 " General: {{{
-
-" colorscheme gruvbox
-
-if exists("plugs['vim-theme']")
-  colorscheme ayu
-end
 
 " let g:skip_defaults_vim = 1
 

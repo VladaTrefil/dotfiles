@@ -9,6 +9,10 @@
 "                                                  \/_/                   \_/__/ 
 
 
+
+" ────────────────────────────────────────────────────────────────────────────────────────────────────
+" Install VimPlug: {{{
+
 " Install Vim-Plug
 let data_dir = has('nvim') ? stdpath('data') . '/site' : "$XDG_CONFIG_HOME/nvim"
 if empty(glob(data_dir . '/autoload/plug.vim'))
@@ -16,15 +20,15 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" }}}
+" ────────────────────────────────────────────────────────────────────────────────────────────────────
+
 " Wilder
 function! UpdateRemotePlugins(...)
   " Needed to refresh runtime files
   let &rtp=&rtp
   UpdateRemotePlugins
 endfunction
-
-" ────────────────────────────────────────────────────────────────────────────────────────────────────
-" Plug: {{{
 
 call plug#begin('~/.config/nvim/plugged')
 
@@ -95,10 +99,10 @@ Plug 'mboughaba/i3config.vim'
 
 " Javascript: -------
 Plug 'pangloss/vim-javascript'
-Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'kchmck/vim-coffee-script'
-Plug 'leafgarland/typescript-vim', {'for': ['typescript', 'typescript.tsx'] }
-Plug 'mxw/vim-jsx'
+" Plug 'MaxMEllon/vim-jsx-pretty'
+" Plug 'leafgarland/typescript-vim', {'for': ['typescript', 'typescript.tsx'] }
+" Plug 'mxw/vim-jsx'
 
 " Ruby: -------
 Plug 'vim-ruby/vim-ruby'
@@ -106,9 +110,6 @@ Plug 'tpope/vim-rails'
 Plug 'skalnik/vim-vroom'
 
 call plug#end()
-
-" }}}
-" ────────────────────────────────────────────────────────────────────────────────────────────────────
 
 " ────────────────────────────────────────────────────────────────────────────────────────────────────
 " Plug Config: {{{

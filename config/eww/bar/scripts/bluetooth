@@ -144,7 +144,7 @@ function make_literal() {
             :height 300 \
             :orientation "vertical" \
             :space-evenly "false" \
-            (label :vexpand true :valign "start" :wrap true :class "bluetooth-menu__no-results-label" :text "No Devices :("))' \
+            (label :vexpand true :valign "start" :wrap true :class "bluetooth-menu__no-results-label" :text "No Devices :("))'
   else
     echo "$cache"
   fi
@@ -167,6 +167,7 @@ function subscribe() {
         make_literal
         letter_count=$new_letter_count
         cache="$(compile_cache)"
+
         echo $cache
       fi
     done

@@ -41,6 +41,7 @@ APT_PACKAGES=(
   "ghostscript"
   "redis-server"
   "libvips42"
+  "libvips-dev"
   "gifsicle"
   "libwebp-dev"
   "webp"

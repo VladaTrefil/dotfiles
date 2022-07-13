@@ -57,6 +57,13 @@ APT_PACKAGES=(
   "libxdg-basedir-dev"
   "libnotify-dev"
 
+  "libgtk-3-dev"
+  "libpango-1.0-0"
+  "libgdk-pixbuf2.0-dev"
+  "libpangocairo-1.0-0"
+  "libglib2.0-dev"
+  "glibc"
+
   # Apps
   "konsole"
   "syncthing"

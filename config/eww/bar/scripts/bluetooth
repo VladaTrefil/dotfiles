@@ -1,0 +1,187 @@
+#!/usr/bin/env bash
+
+EWW_BIN="$HOME/eww/target/release/eww"
+
+EWW_CACHE_DIR="$XDG_CACHE_HOME/eww"
+BLUETOOTH_DEVICE_CACHE="$EWW_CACHE_DIR/bluetooth.txt"
+LOCK_FILE_BLUETOOTH="$HOME/.cache/eww-bluetooth.lock"
+
+DEVICE_CONNECTING=""
+DEVICE_DISCONNECTING=""
+
+function create_cache() {
+  if [ -f "$BLUETOOTH_DEVICE_CACHE" ]; then
+    rm "$BLUETOOTH_DEVICE_CACHE" 2>/dev/null
+  fi
+
+  if [ ! -f "$BLUETOOTH_DEVICE_CACHE" ]; then
+    mkdir "$EWW_CACHE_DIR" 2>/dev/null
+    touch "$BLUETOOTH_DEVICE_CACHE" 2>/dev/null
+  fi
+
+  if [ -f "$BLUETOOTH_DEVICE_CACHE" ]; then
+    devices=$(devices)
+    echo $devices
+    echo "(box :class 'bluetooth-menu__devices' :orientation 'v' $devices)" \
+      | cat - "$BLUETOOTH_DEVICE_CACHE" \
+      | sponge "$BLUETOOTH_DEVICE_CACHE"
+  fi
+}
+
+function compile_cache() {
+  if [ -f "$BLUETOOTH_DEVICE_CACHE" ]; then
+    tr '\n' ' ' < "$BLUETOOTH_DEVICE_CACHE"
+  fi
+}
+
+function device_status() {
+  info=$(bluetoothctl info $1)
+
+  if [[ $key = $DEVICE_CONNECTING ]]; then
+    echo "connecting"
+  elif [[ $key = $DEVICE_DISCONNECTING ]]; then
+    echo "disconnecting"
+  elif [[ -n "$(echo $info | grep -o "Connected: yes")" ]]; then
+    echo "connected"
+  elif [[ -n "$(echo $info | grep -o "Paired: yes")" ]]; then
+    echo "paired"
+  elif [[ -n "$(echo $info | grep -o "Trusted: yes")" ]]; then
+    echo "trusted"
+  else
+    echo "untrusted"
+  fi
+}
+
+function devices() {
+  local devices=""
+
+  while IFS= read -r line; do
+    local key="$(echo $line | cut -b 8-24 | grep "\S")"
+    local name="$(echo $line | cut -b 26-50 | grep "\S")"
+    local d_status=$(device_status $key)
+    local icon=""
+    local icon_class=""
+
+    if [[ $d_status = "connected" ]]; then
+      button_class="bluetooth-menu__button--disconnect"
+      button_text="disconnect"
+      icon=""
+      icon_class="bluetooth-menu__icon--connected"
+    elif [[ $d_status = "connecting" ]] || [[ $d_status = "disconnecting" ]]; then
+      button_class="bluetooth-menu__button--loading"
+      icon=""
+      icon_class="bluetooth-menu__icon--loading"
+
+      if [[ $d_status = "connecting" ]]; then
+        button_text="connecting..."
+      else
+        button_text="disconnecting..."
+      fi
+    else
+      button_class="bluetooth-menu__button--connect"
+      button_text="connect"
+
+      if [[ $d_status = "paired" ]]; then
+        icon=""
+        icon_class="bluetooth-menu__icon--paired"
+      elif [[ $d_status = "untrusted" ]]; then
+        icon=""
+        icon_class="bluetooth-menu__icon--untrusted"
+      else
+        icon=""
+        icon_class="bluetooth-menu__icon--trusted"
+      fi
+    fi
+
+    local device="(bluetooth_menu_device \
+                  :class '$class' \
+                  :key '$key' \
+                  :icon '$icon' \
+                  :icon_class '$icon_class' \
+                  :name '$name' \
+                  :button_class '$button_class' \
+                  :button_text '$button_text')"
+
+    if [[ $d_status = "trusted" ]] || [[ $d_status = "paired" ]] || [[ $d_status = "connected" ]]; then
+      devices="$device $devices"
+    else
+      devices="$devices $device"
+    fi
+  done < <(bluetoothctl devices)
+
+  echo $devices
+}
+
+function device_button_click() {
+  local key=$1
+  local d_status=$(device_status $key)
+
+  if [[ $d_status = "paired" ]]; then
+    coproc (bluetoothctl connect $key)
+    DEVICE_CONNECTING=$key
+  elif [[ $d_status = "connected" ]]; then
+    coproc (bluetoothctl disconnect $key)
+    DEVICE_DISCONNECTING=$key
+  else
+    echo "missing device key"
+  fi
+
+  if [ -n $COPROC_PID ]; then
+    create_cache
+    wait $COPROC_PID
+    DEVICE_CONNECTING=""
+    DEVICE_DISCONNECTING=""
+    create_cache
+  fi
+}
+
+function make_literal() {
+  local cache="$(compile_cache)"
+
+  if [[ "$cache" == "" ]]; then
+    echo '(box \
+            :class "bluetooth-menu__no-results" \
+            :height 300 \
+            :orientation "vertical" \
+            :space-evenly "false" \
+            (label :vexpand true :valign "start" :wrap true :class "bluetooth-menu__no-results-label" :text "No Devices :("))' \
+  else
+    echo "$cache"
+  fi
+}
+
+function subscribe() {
+  if [ -f $LOCK_FILE_BLUETOOTH ]; then
+    create_cache
+
+    local cache="$(compile_cache)"
+
+    letter_count=0
+
+    while sleep 0.3; do
+      [ -f $LOCK_FILE_BLUETOOTH ] || break
+
+      new_letter_count=$(echo "$(compile_cache)" | wc -m)
+
+      if [ $letter_count -ne $new_letter_count ]; then
+        make_literal
+        letter_count=$new_letter_count
+        cache="$(compile_cache)"
+        echo $cache
+      fi
+    done
+  else
+    rm $BLUETOOTH_DEVICE_CACHE 2>/dev/null
+  fi
+}
+
+case "$1" in
+  "pop") pop;;
+  "drop") drop;;
+  "devices") devices;;
+  "connected") connected;;
+  "open_window") open_window;;
+  "subscribe") subscribe;;
+  "device_button_click") device_button_click $2;;
+  *) create_cache;;
+esac

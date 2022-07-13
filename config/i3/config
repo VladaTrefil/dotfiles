@@ -46,10 +46,17 @@ exec_always --no-startup-id feh --bg-scale -g 1920x1080 ~/.background/mountains.
 exec_always --no-startup-id pkill dunst; dunst
 
 # Launch picom
-exec_always --no-startup-id picom --config $HOME/.config/i3/picom.conf
+exec_always --no-startup-id killall picom; picom --experimental-backends --config $HOME/.config/i3/picom.conf
+
+exec --no-startup-id $HOME/.config/eww/bar/launch_bar
 
 # Launch polybar
 # exec_always --no-startup-id sh $HOME/.config/polybar/launch.sh
+
+exec --no-startup-id i3-msg 'workspace 1; exec konsole'
+exec --no-startup-id i3-msg 'workspace 2; exec konsole'
+exec --no-startup-id i3-msg 'workspace 4; exec brave'
+exec --no-startup-id i3-msg 'workspace 5; exec konsole'
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -57,11 +64,8 @@ exec_always --no-startup-id picom --config $HOME/.config/i3/picom.conf
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Dual Monitor: {{{
 
-set $monitor1 primary
-set $monitor2 secondary
-
-set $monitor_left primary
-set $monitor_right secondary
+set $monitor1 HDMI-A-0
+set $monitor2 DisplayPort-2
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -83,12 +87,9 @@ set $ws10 "10"
 workspace $ws1 output $monitor1
 workspace $ws2 output $monitor1
 workspace $ws3 output $monitor1
-workspace $ws4 output $monitor1
-workspace $ws5 output $monitor1
+workspace $ws4 output $monitor2
+workspace $ws5 output $monitor2
 workspace $ws6 output $monitor2
-workspace $ws7 output $monitor2
-workspace $ws8 output $monitor2
-workspace $ws9 output $monitor2
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -102,8 +103,8 @@ gaps outer 9
 # No title bar in windows
 new_window pixel 0
 hide_edge_borders vertical
-for_window [class = "^.*"] border pixel 2
-for_window [title = "^.*"] border pixel 2
+for_window [class = "^.*"] border pixel 0
+for_window [title = "^.*"] border pixel 0
 
 # it fails to get colors from Xresources.
 set_from_resource $fg i3wm.color7 #bdbdbd
@@ -276,10 +277,11 @@ for_window [class="krunner"] floating enable; border none
 for_window [class="Kmix"] floating enable; border none
 for_window [class="ksysguard"] floating enable; border none width 600px height 600px
 for_window [class="Klipper"] floating enable; border none
+for_window [class="Dolphin"] floating enable; border none
 for_window [class="Plasmoidviewer"] floating enable; border none
 for_window [class="(?i)*nextcloud*"] floating disable
 no_focus [class="plasmashell" window_type="notification"]
 
-for_window [class="plasmashell" window_type="notification"] floating enable, border none, move right 700px, move down 450px, no_focus
+# for_window [class="plasmashell" window_type="notification"] floating enable, border none, move right 700px, move down 450px, no_focus
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────

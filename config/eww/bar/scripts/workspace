@@ -1,0 +1,11 @@
+#!/bin/sh
+
+workspace() {
+  echo $(ruby $XDG_CONFIG_HOME/eww/bar/scripts/workspace.rb)
+}
+
+workspace
+
+i3-msg -t subscribe -m '[ "window" ]' | while read line ; do
+  workspace
+done

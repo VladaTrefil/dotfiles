@@ -32,6 +32,9 @@ export KDEHOME="$XDG_CONFIG_HOME/kde"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
 
+export RUSTUP_HOME="$XDG_CONFIG_HOME/rustup"
+export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
+
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -162,6 +165,14 @@ export SOLARGRAPH_CACHE=$XDG_CACHE_HOME/solargraph
 
 # Rails test fix
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+# }}}
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+#  Rust {{{
+
+. "$CARGO_HOME/env"
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────

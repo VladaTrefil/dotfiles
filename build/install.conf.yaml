@@ -27,6 +27,8 @@
   - ~/.config/npm
   - ~/.config/gtk-2.0
   - ~/.config/kde
+  - ~/.config/cargo
+  - ~/.config/rustup
   - ~/.config/oh-my-zsh/custom/
   - ~/.config/oh-my-zsh/custom/plugins
   - ~/.config/oh-my-zsh/custom/themes
@@ -80,6 +82,7 @@
     ~/.config/lazygit: config/lazygit
     ~/.config/dunst: config/dunst
     ~/.config/pry: config/pry
+    ~/.config/eww: config/eww
 
     # KDE Plasma
     ~/.config/konsolerc:

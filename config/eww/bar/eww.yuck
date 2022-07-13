@@ -1,0 +1,369 @@
+; (defpoll battery :interval "15s" "./scripts/battery --bat")
+; (defpoll battery_status :interval "1m" "./scripts/battery --bat-st")
+; (defpoll brightness_percent :interval "5s" "brightnessctl -m -d intel_backlight | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+(defpoll clock_time :interval "5m" "date +\%I")
+(defpoll clock_minute :interval "5s" "date +\%M")
+; (defpoll clock_second :interval "1s" "date +\%S")
+(defpoll clock_date :interval "10h" "date '+%d/%m'")
+
+(defpoll volume_percent :interval "3s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defpoll mic_percent :interval "3s" "amixer -D pulse sget Capture | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+
+(defpoll cpu :interval "1s" "$XDG_CONFIG_HOME/eww/bar/scripts/cpu")
+
+(defpoll memory :interval "1s" "$XDG_CONFIG_HOME/eww/bar/scripts/memory")
+(defpoll memory_used_mb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/mem-ad used")
+(defpoll memory_total_mb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/mem-ad total")
+(defpoll memory_free_mb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/mem-ad free")
+
+(defpoll disk_user_perc :interval "1s" 10)
+(defpoll disk_used_gb :interval "2m" 10)
+; (defpoll memory_total_mb :interval "2m" "scripts/mem-ad total")
+; (defpoll memory_free_mb :interval "2m" "scripts/mem-ad free")
+
+(defvar vol_reveal false)
+(defvar br_reveal false)
+(defvar music_reveal false)
+(defvar time_rev false)
+
+(deflisten bluetooth_devices "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth subscribe")
+(deflisten bluetooth_connected "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth connected")
+
+(deflisten workspace "$XDG_CONFIG_HOME/eww/bar/scripts/workspace")
+
+; (defvar eww "$HOME/.local/bin/eww/eww -c $HOME/.config/eww/bar")
+(defvar eww "$HOME/eww/target/release/eww -c $HOME/.config/eww")
+
+(defpoll calendar_day :interval "20h" "date '+%d'")
+(defpoll calendar_year :interval "20h" "date '+%Y'")
+
+
+; ────────────────────────────────────────────────────────────────────────────────────────────────────
+; Widgets: {{{
+
+
+(defwidget workspaces []
+  (literal :content workspace))
+
+
+(defwidget sep []
+  (box :class "module-2" :vexpand "false" :hexpand "false"
+    (label :class "separator" :text "|")))
+
+
+(defwidget volume []
+  (eventbox :onhover "${eww} update vol_reveal=true"
+            :onhoverlost "${eww} update vol_reveal=false"
+    (box :class "volume"
+         :space-evenly "false"
+         :orientation "h"
+         :spacing "3" 
+      (button :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop audio"
+              :class "volume__icon" "")
+      (revealer :transition "slideleft"
+                :reveal vol_reveal
+                :duration "200ms"
+        (scale :class "volume__bar"
+               :value volume_percent
+               :orientation "h"
+               :tooltip "${volume_percent}%"
+               :min 0
+               :max 100
+               :onchange "amixer -D pulse sset Master {}%" )))))
+
+
+(defwidget bluetooth []
+  (box :class "bluetooth"
+       :space-evenly "false"
+       :orientation "h"
+       :spacing "3" 
+    (button :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop bluetooth"
+            :class "bluetooth__icon" "")))
+
+
+(defwidget network []
+  (box :class "network"
+       :space-evenly "false"
+       :orientation "h"
+       :spacing "3" 
+    (box :class "network__up"
+      (label :text ""
+             :class "network__icon" )
+      (label :text {EWW_NET['up']}
+             :class "network__label" ))
+    (box :class "network__down"
+      (label :text ""
+             :class "network__icon" )
+      (label :text {EWW_NET['down']}
+             :class "network__label" ))))
+
+
+(defwidget cpu []
+  (box :class "cpu"
+       :vexpand "false"
+       :hexpand "false" 
+    (circular-progress :value cpu
+                       :class "cpu__bar"
+                       :thickness 4
+      (button :class "cpu__icon"
+              :limit-width 2
+              :tooltip "using ${cpu}% CPU"
+              :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop system"
+              :show_truncated false
+              :wrap false
+        "" ))))
+
+
+(defwidget mem []
+  (box :class "memory"
+       :vexpand "false"
+       :hexpand "false" 
+    (circular-progress :value memory
+                       :class "memory__bar"
+                       :thickness 4
+      (button :class "memory__icon"
+              :limit-width 2
+              :tooltip "using ${memory}% RAM"
+              :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop system"
+              :show_truncated false
+              :wrap false
+        "" ))))
+
+
+(defwidget disk []
+  (box :class "disk"
+       :vexpand "false"
+       :hexpand "false" 
+    (circular-progress :value {EWW_DISK["/"]["used_perc"]}
+                       :class "disk__bar"
+                       :thickness 4
+      (button :class "disk__icon"
+              :limit-width 2
+              :tooltip "${round(EWW_DISK["/"]["used"]/1000000000, 0)}/${round(EWW_DISK["/"]["total"]/1000000000, 0)} GB"
+              :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop system"
+              :show_truncated false
+              :wrap false
+        "" ))))
+
+
+(defwidget clock []
+  (eventbox :onhover "${eww} update time_rev=true"
+            :onhoverlost "${eww} update time_rev=false"
+    (box :class "module clock"
+         :space-evenly "false"
+         :orientation "h"
+         :spacing "3" 
+      (label :text clock_time
+             :class "clock__time" )
+      (label :text ""
+             :class "clock__sep" )
+      (label :text clock_minute
+             :class "clock__minute")
+      ; (label :text ""
+      ;        :class "clock__sep" )
+      ; (label :text clock_second
+      ;        :class "clock__minute")
+      (revealer :transition "slideleft"
+                :reveal time_rev
+                :duration "350ms"
+        (button :class "clock__date"
+                :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop calendar"
+          clock_date)))))
+
+
+; }}}
+; ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+; ────────────────────────────────────────────────────────────────────────────────────────────────────
+; Layout {{{
+
+
+(defwidget left []
+  (box :orientation "h" 
+       :space-evenly false  
+       :halign "end"
+       :class "left_modules"
+    (volume)
+    (sep)
+    (bluetooth)
+    (sep)
+    (network)
+    (sep)
+    (cpu)
+    (mem)
+    (disk)
+    (sep)
+    (clock)))
+
+; (defwidget center []
+;   (box
+;     :orientation "h" 
+;     :space-evenly false  
+;     :halign "center"
+;     :class "center_modules"
+;     (music)))
+
+(defwidget right []
+  (box :orientation "h" 
+       :space-evenly false  
+       :halign "start"
+       :class "right_modules"
+    (workspaces)))
+
+(defwindow bar
+  :geometry (geometry :x "0%" :y "9px" :width "98%" :height "30px" :anchor "top center")
+  :stacking "fg"
+  :windowtype "dock"
+  (box :class "bar"
+       :orientation "h"
+    (box :class "bar__inner"
+         :orientation "h"
+      (right)
+      ; (center)
+      (left))))
+
+
+; }}}
+; ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+; ────────────────────────────────────────────────────────────────────────────────────────────────────
+; Floating windows: {{{
+
+(defwindow system
+  :geometry (geometry :x "-20px" 
+  :y "4%" 
+  :anchor "top right"
+  :width "290px" 
+  :height "120px")
+  (box :class "system" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false" :spacing 0
+    (box :class "system__box system__cpu" :orientation "h" :space-evenly "false"
+      (circular-progress :value cpu
+                         :class "system__circle"
+                         :thickness 9
+        (label :text ""
+               :class "system__icon"
+               :limit-width 2
+               :show_truncated false
+               :wrap false))
+      (box :orientation "v" :space-evenly "false" :spacing 0 :hexpand "false" :vexpand "false"
+        (label :text "CPU"
+               :halign "start"
+               :class "system__text"
+               :limit-width 9
+               :show_truncated false
+               :wrap false)
+        (label :text "${cpu}% used"
+               :halign "start"
+               :class "system__text-sub"
+               :limit-width 22
+               :show_truncated false
+               :wrap false)))
+    (label :text "" :class "system__sep" :halign "center")
+    (box :class "system__box system__memory" :orientation "h" :space-evenly "false" :halign "start"
+      (circular-progress :value memory
+                         :class "system__circle"
+                         :thickness 9
+        (label :text ""
+               :class "system__icon"
+               :limit-width 2
+               :show_truncated false
+               :wrap false
+               :angle 0.0))
+      (box :orientation "v" :space-evenly "false" :spacing 0 :hexpand "false" :vexpand "false"
+        (label :text "Memory"
+               :halign "start"
+               :class "system__text"
+               :limit-width 9
+               :show_truncated false
+               :wrap false)
+        (label :text "${memory_used_mb} | ${memory_total_mb}mb "
+               :halign "start"
+               :class "system__text-sub"
+               :limit-width 22
+               :show_truncated false
+               :wrap false)
+        (label :text "${memory_free_mb}mb free"
+               :halign "start"
+               :class "system__text-sub"
+               :limit-width 22
+               :show_truncated false
+               :wrap false)))))
+
+
+(defwidget cal []
+  (box :class "cal" :orientation "v"
+    (box :class "cal-in"
+      (calendar :class "cal" 
+                :day calendar_day 
+                :year calendar_year))))
+
+
+(defwindow calendar
+  :geometry (geometry :x "-20px" 
+  :y "7%" 
+  :anchor "top right"
+  :width "270px" 
+  :height "60px")
+  (cal))
+
+
+(defwidget audio []
+  (box :class "audio-box" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
+    (box :halign "v" :space-evenly "false" :hexpand "false" :vexpand "false"
+      (box :class "speaker_icon" :orientation "v")
+      (box :orientation "v" :halign "center" :vexpand "false" :hexpand "false"
+        (label :class "speaker_text" :text "speaker" :valign "center" :halign "left" )
+        (box :class "speaker_bar" :halign "center" :vexpand "false" :hexpand "false"
+          (scale    :value volume_percent
+                    :space-evenly "false"
+                    :orientation "h"
+                    :onchange "amixer -D pulse sset Master {}%" 
+                    :tooltip "volume on ${volume_percent}%"
+                    :max 100
+                    :min 0))))
+    (label :text "" :class "audio_sep" :halign "center")
+    (box :halign "v" :space-evenly "false" :hexpand "false" :vexpand "false"
+      (box :class "mic_icon" :orientation "v")
+      (box :orientation "v" :halign "center" :vexpand "false" :hexpand "false"
+        (label :class "mic_text" :text "mic" :valign "center" :halign "left" )
+        (box :class "mic_bar" :halign "center" :vexpand "false" :hexpand "false"
+          (scale    :value mic_percent
+                    :space-evenly "false"
+                    :orientation "h"
+                    :tooltip "mic on ${mic_percent}%"
+                    :onchange "amixer -D pulse sset Capture {}%" 
+                    :max 100
+                    :min 0))))))
+
+(defwindow audio_ctl
+  :geometry (geometry :x "-20px" 
+  :y "4%" 
+  :anchor "top right"
+  :width "280px" 
+  :height "60px")
+  (audio))
+
+(defwindow bluetooth_menu
+  :geometry (geometry
+  :x "-270px" 
+  :y "4%" 
+  :anchor "top right"
+  :width "280px" 
+  :height "100px")
+  (box :class "bluetooth-menu" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
+    (box :class "bluetooth-menu__inner" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
+      (literal :content bluetooth_devices))))
+
+(defwidget bluetooth_menu_device [?class key icon icon_class name button_class button_text]
+  (box :orientation 'h' :class 'bluetooth-menu__device ${class}'
+    (box :space-evenly 'false'
+      (label :class 'bluetooth-menu__icon ${icon_class}' :text '${icon}')
+      (label :class 'bluetooth-menu__name' :text '${name}'))
+    (box :space-evenly 'false' :halign 'end' 
+      (button
+        :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth device_button_click ${key}"
+        :class 'bluetooth-menu__button ${button_class}' '${button_text}'))))
+
+
+; }}}
+; ────────────────────────────────────────────────────────────────────────────────────────────────────

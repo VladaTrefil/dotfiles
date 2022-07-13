@@ -96,6 +96,7 @@ Plug 'jasonshell/vim-svg-indent'
 Plug 'vim-scripts/svg.vim'
 Plug 'slim-template/vim-slim'
 Plug 'mboughaba/i3config.vim'
+Plug 'elkowar/yuck.vim'
 
 " Javascript: -------
 Plug 'pangloss/vim-javascript'

@@ -11,10 +11,10 @@
 
 (defpoll cpu :interval "1s" "$XDG_CONFIG_HOME/eww/bar/scripts/cpu")
 
-(defpoll memory :interval "1s" "$XDG_CONFIG_HOME/eww/bar/scripts/memory")
-(defpoll memory_used_mb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/mem-ad used")
-(defpoll memory_total_mb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/mem-ad total")
-(defpoll memory_free_mb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/mem-ad free")
+(defpoll memory :interval "1s" "$XDG_CONFIG_HOME/eww/bar/scripts/memory used_perc")
+(defpoll memory_used_gb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/memory used")
+(defpoll memory_total_gb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/memory total")
+(defpoll memory_free_gb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/memory free")
 
 (defpoll disk_user_perc :interval "1s" 10)
 (defpoll disk_used_gb :interval "2m" 10)
@@ -276,13 +276,13 @@
                :limit-width 9
                :show_truncated false
                :wrap false)
-        (label :text "${memory_used_mb} | ${memory_total_mb}mb "
+        (label :text "${memory_used_gb} | ${memory_total_gb} GB"
                :halign "start"
                :class "system__text-sub"
                :limit-width 22
                :show_truncated false
                :wrap false)
-        (label :text "${memory_free_mb}mb free"
+        (label :text "Free: ${memory_free_gb} GB"
                :halign "start"
                :class "system__text-sub"
                :limit-width 22

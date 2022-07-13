@@ -1,3 +1,38 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-printf "%.0f\n" $(free -m | grep Mem | awk '{print ($3/$2)*100}')
+export LC_NUMERIC="en_US.UTF-8"
+
+function total() {
+  echo $(cat /proc/meminfo | grep MemTotal | awk '{ print $2 }')
+}
+
+function free() {
+  echo $(cat /proc/meminfo | grep MemFree | awk '{ print $2 }')
+}
+
+function used() {
+  echo "$(total) - $(free)" | bc -l
+}
+
+function used_gb() {
+  printf "%.2f\n" "$(echo "$(used) / 1000000" | bc -l)"
+}
+
+function free_gb() {
+  printf "%.2f\n" $(echo "$(free) / 1000000" | bc -l)
+}
+
+function total_gb() {
+  printf "%.2f\n" $(echo "$(total) / 1000000" | bc -l)
+}
+
+function used_perc() {
+  printf "%.0f\n" "$(echo "$(used) / $(total) * 100" | bc -l)"
+}
+
+case "$1" in
+  'used') used_gb;;
+  'total') total_gb;;
+  'free') free_gb;;
+  *) used_perc;;
+esac

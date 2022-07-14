@@ -40,6 +40,7 @@
   - ~/.local/state
   - ~/.local/state/zsh
   - ~/.local/state/less
+  - ~/.local/state/eww
 
   - ~/.cache
   - ~/.cache/zsh

@@ -47,6 +47,7 @@ APT_PACKAGES=(
   "gifsicle"
   "libwebp-dev"
   "webp"
+  "jq" # json parser
 
   # Dunst
   "libdbus-1-dev"

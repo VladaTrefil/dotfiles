@@ -29,7 +29,7 @@
 (deflisten bluetooth_devices "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth subscribe")
 (deflisten bluetooth_connected "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth connected")
 
-(deflisten workspace "$XDG_CONFIG_HOME/eww/bar/scripts/workspace")
+(defpoll workspace :interval ".1s" "$XDG_CONFIG_HOME/eww/bar/scripts/workspace")
 
 ; (defvar eww "$HOME/.local/bin/eww/eww -c $HOME/.config/eww/bar")
 (defvar eww "$HOME/eww/target/release/eww -c $HOME/.config/eww")

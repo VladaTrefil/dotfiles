@@ -1,11 +1,37 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-workspace() {
-  echo $(ruby $XDG_CONFIG_HOME/eww/bar/scripts/workspace.rb)
+workspaces() {
+  json="$(i3-msg -t get_workspaces)"
+  output=""
+
+  for i in {1..6}; do
+    workspace=$(jq  -r ".[] | select(.num==$i) | .name, .focused, .output" <<< $json)
+
+    name=$(echo $workspace | awk '{ print $1 }')
+    focused=""
+    occupied=""
+    icon=""
+
+    if [[ -z $name ]]; then
+      name=$i
+    else
+      occupied="workspace__button--occupied"
+
+      if [[ -n "$(echo $workspace | awk '{ print $2 }' | grep -o 'true')" ]]; then
+        focused="workspace__button--focused"
+        icon=""
+      fi
+    fi
+
+    onclick="i3-msg 'workspace $i'"
+    btn_class="workspace__button $occupied $focused"
+
+    button="(button :onclick \"$onclick\" :class \"$btn_class\" \"$icon\")"
+
+    output="$output $button"
+  done
+
+  echo "(box :class \"workspace\" :orientation \"h\" :spacing 5 :space-evenly \"false\" $output)"
 }
 
-workspace
-
-i3-msg -t subscribe -m '[ "window" ]' | while read line ; do
-  workspace
-done
+workspaces

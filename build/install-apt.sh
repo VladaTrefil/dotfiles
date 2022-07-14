@@ -12,8 +12,6 @@ APT_PACKAGES=(
   "python3-dev"
   "python-is-python3"
   "build-essential"
-  "ripgrep" # Command line search
-  "unzip"
 
   # Desktop enviroment
   "i3-gaps"
@@ -23,7 +21,11 @@ APT_PACKAGES=(
   "feh"
   "dunst"
 
-  "bc" # terminal calculation function
+  # Terminal functions
+  "bc" # calculation function
+  "ripgrep" # Command line search
+  "unzip"
+  "xclip" # Clipboard
 
   # Sinfin libs
   "postgresql"
@@ -58,6 +60,7 @@ APT_PACKAGES=(
   "libxdg-basedir-dev"
   "libnotify-dev"
 
+  # Eww
   "libgtk-3-dev"
   "libpango-1.0-0"
   "libgdk-pixbuf2.0-dev"
@@ -74,7 +77,6 @@ APT_PACKAGES=(
 
   # NVIM
   "pip" # pip install pynvim
-  "xclip" # terminal clipboard
 )
 
 if [ ! -f "`which brave-browser`" ]; then

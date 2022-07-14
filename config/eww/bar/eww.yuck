@@ -18,8 +18,6 @@
 
 (defpoll disk_user_perc :interval "1s" 10)
 (defpoll disk_used_gb :interval "2m" 10)
-; (defpoll memory_total_mb :interval "2m" "scripts/mem-ad total")
-; (defpoll memory_free_mb :interval "2m" "scripts/mem-ad free")
 
 (defvar vol_reveal false)
 (defvar br_reveal false)

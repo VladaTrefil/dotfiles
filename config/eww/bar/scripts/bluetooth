@@ -164,7 +164,6 @@ function subscribe() {
       new_letter_count=$(echo "$(compile_cache)" | wc -m)
 
       if [ $letter_count -ne $new_letter_count ]; then
-        make_literal
         letter_count=$new_letter_count
         cache="$(compile_cache)"
 

@@ -24,6 +24,12 @@
 (defvar music_reveal false)
 (defvar time_rev false)
 
+(defpoll network_down :interval "1m" "$XDG_CONFIG_HOME/eww/bar/scripts/network down")
+(defpoll network_up :interval "1m" "$XDG_CONFIG_HOME/eww/bar/scripts/network up")
+
+; (defpoll network_down :interval "1m" 10)
+; (defpoll network_up :interval "1m" 10)
+
 (deflisten bluetooth_devices "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth subscribe")
 (deflisten bluetooth_connected "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth connected")
 
@@ -78,21 +84,22 @@
     (button :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop bluetooth"
             :class "bluetooth__icon" "")))
 
-
 (defwidget network []
   (box :class "network"
        :space-evenly "false"
        :orientation "h"
        :spacing "3" 
     (box :class "network__up"
+       :space-evenly "false"
       (label :text ""
              :class "network__icon" )
-      (label :text {EWW_NET['up']}
+      (label :text "${network_up} Mb/s"
              :class "network__label" ))
     (box :class "network__down"
+       :space-evenly "false"
       (label :text ""
              :class "network__icon" )
-      (label :text {EWW_NET['down']}
+      (label :text "${network_down} Mb/s"
              :class "network__label" ))))
 
 

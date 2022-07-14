@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+export LC_NUMERIC="en_US.UTF-8"
+
+network=$(speedtest --json)
+
+while sleep 0.3; do
+  [ -z "$network" ] || break
+done
+
+up() {
+  b=$(echo $network | jq -r '.upload')
+  printf "%.2f" $(echo "$b/1000000" | bc -l)
+}
+
+down() {
+  b=$(echo $network | jq -r '.download')
+  printf "%.2f" $(echo "$b/1000000" | bc -l)
+}
+
+case "$1" in
+  "up") up;;
+  "down") down;;
+esac

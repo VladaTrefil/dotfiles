@@ -206,9 +206,10 @@ scale trough {
 
 .network {
   margin-right: 7px;
+  margin-left: 10px;
 
   &__up {
-    margin-right: 5px;
+    margin-right: 15px;
     color: #88bde5;
   }
 
@@ -218,7 +219,7 @@ scale trough {
 
   &__icon {
     font-family: $awesome;
-    margin-right: 3px;
+    margin-right: 10px;
   }
 }
 

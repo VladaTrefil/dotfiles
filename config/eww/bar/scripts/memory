@@ -7,7 +7,7 @@ function total() {
 }
 
 function free() {
-  echo $(cat /proc/meminfo | grep MemFree | awk '{ print $2 }')
+  echo $(cat /proc/meminfo | grep MemAvail | awk '{ print $2 }')
 }
 
 function used() {

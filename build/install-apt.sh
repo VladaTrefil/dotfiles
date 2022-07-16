@@ -26,6 +26,7 @@ APT_PACKAGES=(
   "ripgrep" # Command line search
   "unzip"
   "xclip" # Clipboard
+  "speedtest-cli" #Network speedtest
 
   # Sinfin libs
   "postgresql"

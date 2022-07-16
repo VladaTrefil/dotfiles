@@ -1,0 +1,1787 @@
+: 1653419834:0;git submoduless update --init --recursive
+: 1653419834:0;la /usr/share/session
+: 1653419834:0;la /usr/share/
+: 1653419834:0;la /usr/share/xsessions
+: 1653419834:0;ls
+: 1653420666:0;clip ~/.ssh/id_ed25519.pub
+: 1653420845:0;rm -rf ~/.nvm
+: 1653421652:0;nvm install 12
+: 1653468999:0;vim .gitignore
+: 1653469335:0;rm -rf .git/index.lock
+: 1653469804:0;vim .local/share/konsole/default.keytab
+: 1653469811:0;vim .local/share/konsole/Profile.profile
+: 1653469854:0;vim .kde/share/config/kdeglobals
+: 1653469867:0;vim .config/konsolerc/konsolerc
+: 1653470623:0;la ~/.config/kde
+: 1653470626:0;la ~/.config/kde/share
+: 1653470628:0;la ~/.config/kde/share/config
+: 1653470662:0;rm -rf ~/.config/konsolerc
+: 1653470699:0;git submodules update --init --recursive
+: 1653470722:0;git submodule rm config/zsh/custom/plugins/fast-syntax-highlighting
+: 1653470732:0;git rm config/zsh/custom/plugins/fast-syntax-highlighting
+: 1653470736:0;git submodule add git@github.com:zdharma-continuum/fast-syntax-highlighting.git config/zsh/custom/plugins/fast-syntax-highlighting
+: 1653470747:0;git submodule add --force git@github.com:zdharma-continuum/fast-syntax-highlighting.git config/zsh/custom/plugins/fast-syntax-highlighting
+: 1653470756:0;git submodule update --init --recursive
+: 1653471238:0;git config --list
+: 1653471258:0;la config/zsh/custom
+: 1653471261:0;la config/zsh/custom/plugins
+: 1653471264:0;la config/zsh/custom/plugins/fast-syntax-highlighting
+: 1653471270:0;./instsall
+: 1653471283:0;vim build/install.conf.yaml
+: 1653471716:0;vim config/hosts
+: 1653472223:0;cat /etc/hosts | grep -f ./config/hosts
+: 1653472340:0;cat /etc/hosts | grep -fo ./config/hosts
+: 1653472369:0;cat /etc/hosts | grep -of ./config/hosts
+: 1653472649:0;./build/setup-env.sh
+: 1653472707:0;rm -rf squared_production-2022-01-31-03-03-44.sql
+: 1653473604:0;dotfiles
+: 1653474940:0;rm -rf config/kde
+: 1653476113:0;mkdir new
+: 1653476148:0;ydl
+: 1653476155:0;sudo apt install python
+: 1653476189:0;vim config/shell/aliases.sh
+: 1653476203:0;python
+: 1653476304:0;sudo apt-get install python3
+: 1653476310:0;whereis python3
+: 1653476320:0;sudo apt install python-is-python3
+: 1653476360:0;ydl https://www.youtube.com/watch\?v\=Zk405nQ1Sv8
+: 1653476481:0;ydl https://www.youtube.com/watch\?v\=j9SOauBSt9Q
+: 1653476916:0;sudo python3 manage.py migrate
+: 1653476973:0;sudo service start psql
+: 1653476976:0;psql start
+: 1653476986:0;sudo service start postgres
+: 1653477071:0;sinfin/squared
+: 1653477507:0;ydl https://www.youtube.com/watch\?v\=a6LD9ZiO8aQ
+: 1653478564:0;cdd
+: 1653478574:0;rvm install 2.6.6
+: 1653481798:0;ydl https://www.youtube.com/watch\?v\=WyxArQbN5Hw
+: 1653482961:0;qdbus-qt5 org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
+: 1653484065:0;ydl https://www.youtube.com/watch\?v\=WF3S8iM_6Zc
+: 1653485284:0;rails test test/controllers/api/facebook/albums_controller_test.rb:58
+: 1653485288:0;r test test/controllers/api/facebook/albums_controller_test.rb:58
+: 1653488420:0;brew services start redis
+: 1653488435:0;sudo apt install redis-server
+: 1653488518:0;kill -9 153853
+: 1653488536:0;kill -9 119729
+: 1653488561:0;kill -9 761
+: 1653488645:0;sudo kill -9 761
+: 1653488662:0;sudo kill -9 154582
+: 1653488673:0;sudo kill -9 155130
+: 1653488685:0;sudo kill -9 155190
+: 1653488691:0;sudo kill -9 155196
+: 1653488713:0;redis-cli ping
+: 1653488750:0;ps -ef | grep -i redis
+: 1653488759:0;kill -9 155565
+: 1653488766:0;sudo kill -9 155565
+: 1653488770:0;service redis restart
+: 1653488817:0;sudo service redis-server stop
+: 1653488913:0;redis-server
+: 1653489009:0;service redis start
+: 1653489021:0;service redis status
+: 1653489610:0;rvm us
+: 1653490779:0;dscacheutil -flushcache
+: 1653490789:0;rs -p 3333
+: 1653490875:0;sudo apt-get install nscd
+: 1653491034:0;sudo service nscd restart
+: 1653491040:0;sudo service dns-clean start
+: 1653491221:0;sudo systemd-resolve --flush-caches
+: 1653491948:0;sudo nano /etc/hosts
+: 1653492019:0;https://askubuntu.com/questions/1040595/dns-at-systemds-127-0-0-53-is-ignoring-some-lookups
+: 1653492024:0;sudo unlink /etc/resolv.conf
+: 1653492029:0;sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+: 1653492035:0;ls -l /etc/resolv.conf
+: 1653493204:0;r t test/cells/squared/currency_converter/menu_cell_test.rb\
+: 1653493205:0;r t test/cells/squared/currency_converter/menu_cell_test.rb
+: 1653493213:0;r t test/cells/squared/currency_converter/price_cell_test.rb
+: 1653496306:0;ydl https://www.youtube.com/watch\?v\=KtQEQy7OG_0
+: 1653502193:0;kill-server
+: 1653503993:0;mkdir ~/.config/coc
+: 1653503997:0;la ~/.config/coc
+: 1653504003:0;la ~/.config/coc/ultisnips
+: 1653504012:0;la ~/.config/coc/extensions
+: 1653504021:0;rm -rf ~/.config/coc/
+: 1653504078:0;vim local/bin/shell/kill-rails-server.sh
+: 1653504134:0;mkdir config/coc
+: 1653508058:0;mv ~/.config/coc/ultisnips config/coc/
+: 1653508072:0;ln -s config/coc/ultisnips ~/.config/coc/ultisnips
+: 1653508130:0;vim config/coc/ultisnips
+: 1653508140:0;la config/coc/ultisnips
+: 1653508146:0;la config/coc
+: 1653508158:0;rm ~/.config/coc/ultisnips
+: 1653508176:0;ln -s $DOTFILES_PATH/config/coc/ultisnips ~/.config/coc/ultisnips
+: 1653508179:0;la ~/.config/coc/
+: 1653508184:0;vim k.sass
+: 1653510934:0;rgc faq/accordeon
+: 1653510939:0;rgc faq/accordion
+: 1653557173:0;rails test test/cells/squared/molecule/faq/accordion_cell_test.rb:6
+: 1653557177:0;r test test/cells/squared/molecule/faq/accordion_cell_test.rb:6
+: 1653562497:0;ydl https://www.youtube.com/watch\?v\=CwaNwjHoOmQ
+: 1653569244:0;sudo apt install picard
+: 1653643911:0;cd ~/Documents/\
+mkdir ssl-cert\
+cd ssl-cert/\
+openssl req -x509 -sha256 -nodes -newkey rsa:2048 -days 365 -keyout localhost.key -out localhost.crt
+: 1653643983:0;FORCE_SSL=1 r s -b 'ssl://localhost:3333?key=/home/petr/Documents/ssl-cert/localhost.key&cert=/home/petr/Documents/ssl-cert/localhost.crt'
+: 1653644005:0;FORCE_SSL=1 r s -b 'ssl://localhost:3333?key=/home/petr/Documents/ssl-cert/localhost.key&cert=/home/vlada/Documents/ssl-cert/localhost.crt'
+: 1653645000:0;exec kubectl exec -i -t -n squared-25245350-review-vlada-nejf-q9ni1e backend-squared-59597c77b5-9hffj -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1653648733:0;convert
+: 1653648740:0;gem install rmagick
+: 1653648791:0;ydl https://www.youtube.com/watch\?v\=kcha32pkkm0
+: 1653648890:0;sudo apt list | grep image
+: 1653648896:0;sudo apt list | grep magick
+: 1653648927:0;rm -rf UPGRADE\ -\ OFFL1NX\ -\ Topic.jpg
+: 1653650160:0;bundle reinstall
+: 1653734338:0;git clone git@github.com:VladaTrefil/vim-theme.git
+: 1653734343:0;cd vim-theme
+: 1653735475:0;Development/vim-theme
+: 1653736153:0;../dotfiles
+: 1653738943:0;dotfILES
+: 1653750021:0;../vim-theme
+: 1653750435:0;la ultisnips
+: 1653754159:0;la ~/.config/nvim
+: 1653773953:0;la ~/Development/dotfiles/config/coc
+: 1653773960:0;rm -rf ~/Development/dotfiles/config/coc
+: 1653822377:0;vim ~/.config/nvim/init.vim
+: 1653832966:0;vim ~/.config/nvim/ultisnips/slim.snippets
+: 1653834189:0;~/Development/dotfiles/config/nvim
+: 1653850921:0;~/Development/dotfiles/config/nvim/ultisnips/all.snippets
+: 1653852836:0;Development
+: 1653854333:0;vim ~/Development/dotfiles/config/nvim/ultisnips/all.snippets
+: 1653855668:0;vim k.slim
+: 1653855672:0;rm k.slim
+: 1653855679:0;rm -rf Screenshot_20220527_1*
+: 1653862596:0;vim ~/Development/dotfiles/config/nvim/init.vim
+: 1653863259:0;vim ~/Development/dotfiles/config/zsh/.zshrc
+: 1653863290:0;vim ~/Development/dotfiles/config/i3/config
+: 1653863962:0;vim ~/Development/dotfiles/config/zsh/zprofile
+: 1653867162:0;gem install solargraph global
+: 1653867175:0;vim Gemfile
+: 1653908444:0;ydl https://www.youtube.com/watch\?v\=isGl0Wzd5Uk\&list\=RDGMEMYH9CUrFO7CfLJpaD7UR85w\&index\=40
+: 1653908457:0;ydl https://www.youtube.com/watch\?v\=isGl0Wzd5Uk
+: 1653908702:0;ydl https://www.youtube.com/watch\?v\=u-YUeotCAVw
+: 1653909069:0;ydl https://www.youtube.com/watch\?v\=le2Fgp2CRXI
+: 1653909355:0;ydl https://www.youtube.com/watch\?v\=7HKiAJMx084
+: 1653917794:0;ydl https://www.youtube.com/watch\?v\=mJ-lr555tjg
+: 1653917819:0;,,
+: 1653917846:0;mkdir Phonk
+: 1653917852:0;mv AVOID\ ME\ -\ KUTE\ -\ Topic.mp3 Phonk
+: 1653917856:0;nv ka
+: 1653917869:0;mv Phonk AVOID\ ME\ -\ KUTE\ -\ Topic.mp3
+: 1653917871:0;ka
+: 1653917889:0;mv AVOID\ ME\ -\ KUTE\ -\ Topic.mp3 ../Phonk
+: 1653917908:0;mv ELVEN\ DIOR\ -\ HELL\ STATION\ -\ HommeDeCulture.mp3 ../Phonk
+: 1653917918:0;mv TOPS\ * ../TOPS
+: 1653917925:0;mv The\ Perfect\ Girl\ \(Retro\)\ -\ KuTaKi\ -\ Topic.mp3 ../DoomerWave
+: 1653918214:0;mv * ../Phonk
+: 1653918478:0;ydl https://www.youtube.com/watch\?v\=r-tpR2OQrUc
+: 1653918957:0;mv * ../DoomerWave
+: 1653928274:0;Development/sinfin/folio
+: 1653938089:0;~/Development/sinfin/squared
+: 1653940950:0;cd cyberghostvpn-ubuntu-20.04-1.3.4
+: 1653940956:0;./install.sh
+: 1653940961:0;sudo ./install.sh
+: 1653940965:0;.a
+: 1653940972:0;sh install.sh
+: 1653941195:0;sudo apt install pythonÅ
+: 1653941198:0;sudo apt install python3
+: 1653941483:0;rm -rf ~/.cyberghost
+: 1653941495:0;sudo bash install.sh
+: 1653941990:0;sudo rm -rf ~/.cyberghost
+: 1653984865:0;lg
+: 1653989307:0;rr update_rates
+: 1653989438:0;rr c
+: 1653989546:0;rr finance:currency:update_rates
+: 1653990442:0;rr devel
+: 1653990455:0;rr developer_tools:fix_finance_currency_rates
+: 1653992371:0;rails test test/cells/saas/circled_features_cell_test.rb:6
+: 1653992381:0;rails test test/cells/squared/products/detail/form_cell_test.rb:6\
+
+: 1653994139:0;r test test/cells/squared/products/detail/form_cell_test.rb:6\
+
+: 1654000224:0;rails test test/cells/squared/products/detail/form_cell_test.rb:6
+: 1654000518:0;r test
+: 1654000819:0;r test test/cells/squared/products/detail/form_cell_test.rb:6
+: 1654001223:0;rails test test/cells/squared/currency_converter/menu_cell_test.rb:11
+: 1654002240:0;rails test test/cells/squared/currency_converter/price_cell_test.rb:11
+: 1654002252:0;r test test/cells/squared/currency_converter/menu_cell_test.rb:11
+: 1654002290:0;r test test/cells/squared/currency_converter/price_cell_test.rb:11
+: 1654002879:0;vim todo
+: 1654005674:0;exec kubectl exec -i -t -n squared-25245350-review-vlada-nejf-q9ni1e backend-squared-59597c77b5-b47nz -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1654006236:0;exec kubectl exec -i -t -n squared-25245350-review-vlada-nejf-q9ni1e backend-squared-59597c77b5-xdxwz -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1654006367:0;exec kubectl exec -i -t -n squared-25245350-staging backend-squared-6c4bcd7db7-7hjhp -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1654026259:0;git push gitlab master\
+
+: 1654026558:0;exec kubectl exec -i -t -n squared-25245350-production sidekiq-squared-64766695bf-dqhlw -c sidekiq-app -- sh -c "clear; (bash || ash || sh)"
+: 1654028555:0;exec kubectl exec -i -t -n squared-25245350-production sidekiq-squared-7ccc598c84-2t6c2 -c sidekiq-app -- sh -c "clear; (bash || ash || sh)"
+: 1654072961:0;git push gitlab vlada/nejfoto2022
+: 1654074412:0;gem install tiny_tds 2.1.5
+: 1654074447:0;gem install tiny_tds -v 2.1.5
+: 1654074471:0;gem install tiny_ids -v 2.1.5
+: 1654074531:0;gem install tiny_tds -- --disable-openssl
+: 1654074565:0;gem install tiny_tds -v '2.1.5' --source 'https://rubygems.org/'
+: 1654074647:0;sudo apt install freetds
+: 1654075702:0;sudo apt install freetds-dev freetds-bin
+: 1654121580:0;../Development/sinfin/squared
+: 1654121634:0;git checkout master
+: 1654162193:0;ydl https://www.youtube.com/watch\?v\=rK-iTJq9ArE
+: 1654162903:0;git push --force gitlab vlada/nejfoto2022
+: 1654162922:0;gp gitlab master
+: 1654164229:0;sinfi
+: 1654165651:0;exec kubectl exec -i -t -n squared-25245350-production backend-squared-5c58547d6b-qfwpj -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1654165665:0;exec kubectl exec -i -t -n squared-25245350-staging backend-squared-65dfb5c668-qp52h -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1654169478:0;npm install -g neovim
+: 1654170097:0;rg --no-heading --column --no-messages --max-count=1000 --smart-case --ignore-case --glob=test.txt a
+: 1654170244:0;rg
+: 1654173929:0;exec kubectl exec -i -t -n squared-25245350-production backend-squared-7c788b75b4-2m7rz -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1654176370:0;exec kubectl exec -i -t -n squared-25245350-production backend-squared-5cf59cd776-p9d25 -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1654177745:0;rr to
+: 1654177770:0;rr top_photo:idp_seed_nejfoto2022
+: 1654177926:0;rr top_photo:idp_seed_dummy_nominations
+: 1654191019:0;vim ~/.config/i3/config
+: 1654191145:0;i3 --list-monitors
+: 1654191153:0;i3 --listmonitors
+: 1654195039:0;cd ../folio
+: 1654195104:0;Rails.application.assets
+: 1654195367:0;cat /home/vlada/Development/sinfin/squared/app/assets/config
+: 1654195371:0;la /home/vlada/Development/sinfin/squared/app/assets/config
+: 1654197887:0;ydl https://www.youtube.com/watch\?v\=sZSiwXdAxRY
+: 1654198154:0;rm ~/Screenshot_20220*
+: 1654198162:0;la ~ | wc -;
+: 1654198165:0;la ~ | wc -l
+: 1654202104:0;exec kubectl exec -i -t -n squared-25245350-production backend-squared-6b77755d4-b8kvb -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1654245830:0;\vim
+: 1654249451:0;rvm use 2.6.Å¾
+: 1654249740:0;gem install bundler 2.3.10
+: 1654249757:0;gem install folio-bootstrap
+: 1654250090:0;rm -rf app/assets
+: 1654250433:0;bundle open folio
+: 1654250745:0;gem remove folio
+: 1654250775:0;gem install folio
+: 1654250811:0;gem uninstall folio
+: 1654250935:0;rm -rf ~/.gem
+: 1654250976:0;rm -rf notesvilla
+: 1654251012:0;git@github.com:sinfin/notesvilla.git
+: 1654251016:0;git clone git@github.com:sinfin/notesvilla.git
+: 1654251133:0;ydl https://www.youtube.com/watch\?v\=4MEounjbTdE
+: 1654251358:0;j..
+: 1654251363:0;notesvilla
+: 1654251368:0;vim .env
+: 1654251524:0;rvm implode
+: 1654251548:0;sudo rm -rf /etc/rvmrc
+: 1654251733:0;dotFILES
+: 1654254575:0;bat squared/Gemfile
+: 1654254752:0;mv -f ~/.gnupg ~/.config/gnupg
+: 1654255165:0;rm -rf ~/Screenshot_20220603_1*
+: 1654255198:0;la ~/.config/git
+: 1654255284:0;mv ~/.npm ~/.config/npm
+: 1654255319:0;rm -rf '$XDG_CACHE_HOME\
+'
+: 1654255361:0;rm -rf '$XDG_CACHE_HOME
+: 1654255364:0;rm -rf '$XDG_CACHE_HOME'
+: 1654255611:0;cd notesvilla
+: 1654255619:0;rsr
+: 1654255626:0;rvm list
+: 1654257260:0;gem install postit
+: 1654257263:0;postit install
+: 1654258229:0;rgm AddNoteFeatured
+: 1654260503:0;git remote add gitlab git@gitlab.com:sinfin1/notesvilla.git
+: 1654263158:0;rgm AddNoteMeta
+: 1654271281:0;vim ~/.local/bin/shell/update_sitemap.sh
+: 1654271317:0;mv ~/.local/bin/shell/update_sitemap.sh ./
+: 1654271694:0;chmod +x ./update_sitemap.sh
+: 1654272187:0;bin/rake sitemap:create
+: 1654272205:0;bat public/sitemaps/sitemap.xml.gz
+: 1654273159:0;vim update_sitemap.sh
+: 1654273172:0;sudo apt install xmllint
+: 1654273211:0;./update_sitemap.sh
+: 1654277795:0;../sinfin/notesvilla
+: 1654278827:0;ydl https://www.youtube.com/watch\?v\=_5-An-I8feU
+: 1654278910:0;ydl https://www.youtube.com/watch\?v\=shtjeVywJNA
+: 1654278945:0;rrs
+: 1654278969:0;ydl https://www.youtube.com/watch\?v\=BDDx7t4f0JU
+: 1654278996:0;ydl https://www.youtube.com/watch\?v\=1hd_m9j3898
+: 1654279016:0;ydl https://www.youtube.com/watch\?v\=dLKTkC6TpF4
+: 1654279042:0;ydl https://www.youtube.com/watch\?v\=zI383uEwA6Q
+: 1654279057:0;ydl https://www.youtube.com/watch\?v\=f9uYZEyLofY
+: 1654279220:0;ydl https://www.youtube.com/watch\?v\=-guzZwYCb_8
+: 1654279246:0;ydl https://www.youtube.com/watch\?v\=LDrZI-pNdSM
+: 1654279295:0;ydl https://www.youtube.com/watch\?v\=R6uvgAwF6CQ
+: 1654279371:0;ydl https://www.youtube.com/watch\?v\=BTizbCVzHq4
+: 1654279537:0;ydl https://www.youtube.com/watch\?v\=bQs4newxizg
+: 1654279666:0;ydl https://www.youtube.com/watch\?v\=-Skd-EzqNfg
+: 1654279746:0;ydl https://www.youtube.com/watch\?v\=7IBllZNVb-E
+: 1654279761:0;ydl https://www.youtube.com/watch\?v\=baSIi3OWs9Y
+: 1654279984:0;la | grep vend
+: 1654279989:0;ydl https://www.youtube.com/watch\?v\=oLU8-2PJ3XI\&list\=RDEMN-oDEybhjvEqnK7haVR8mw\&index\=31
+: 1654279994:0;ydl https://www.youtube.com/watch\?v\=oLU8-2PJ3XI
+: 1654280733:0;mkdir ../Falconshield
+: 1654280744:0;mkdir ../LxstCxntury
+: 1654280757:0;mkdir ../JOINTMANE
+: 1654280853:0;mkdir ../Ð¼Ð¾Ð»Ñ§Ð°ÑÐ´Ð¾Ð¼Ð°
+: 1654280859:0;la ../
+: 1654280890:0;mkdir ../MÐ¾Ð»Ñ§Ð°ÑÐ´Ð¾Ð¼Ð°
+: 1654280927:0;rm -rf ../Ð¼Ð¾Ð»Ñ§Ð°ÑÐ´Ð¾Ð¼Ð°
+: 1654280934:0;mkdir ../MoÐ»Ñ§Ð°ÑÐ´Ð¾Ð¼Ð°
+: 1654280948:0;mv *molch* ../MoÐ»Ñ§Ð°ÑÐ´Ð¾Ð¼Ð°
+: 1654280965:0;mv *Lx* ../LxstCxntury
+: 1654280980:0;mv *LX* ../LxstCxntury
+: 1654280993:0;mv crystal\ castles-transgender\ \[muffled-slowed-reverb\]\ -\ stargirl.mp3 ../CrystalCastles
+: 1654281001:0;mv Falco* ../Falconshield
+: 1654281014:0;mv *JOIN* ../JOINTMANE
+: 1654281025:0;mkdir ../NBHD
+: 1654281043:0;mv *peace* ../NBHD
+: 1654281085:0;mv *lowed* ../DoomerWave
+: 1654281102:0;mv *Topic* ../Phonk
+: 1654281116:0;ydl https://www.youtube.com/watch\?v\=sUFCbrPMKo0
+: 1654281141:0;mv *This* ../Phonk
+: 1654281154:0;mkdir ../KLamar
+: 1654281161:0;mv Kendrick\ Lamar\ -\ N95\ -\ KendrickLamarVEVO.mp3 ../KLamar
+: 1654281170:0;mv THIS\ IS\ WAR\ 7\ -\ Ionia\ \(League\ of\ Legends\ rap\ battle\)\ -\ Falconshield.mp3 ../Falconshield
+: 1654340119:0;mkdir react
+: 1654340129:0;cd react
+: 1654340199:0;npx create-react-app math-quiz --template typescript
+: 1654340213:0;nvm install 16
+: 1654340229:0;.
+: 1654340297:0;la ~/.
+: 1654340305:0;mkdir ~/.config/yarn
+: 1654340317:0;vim ~/.config/yarn/config
+: 1654340322:0;yarn create react-app math-quiz --template typescript
+: 1654340397:0;math
+: 1654340441:0;git init
+: 1654340500:0;yarn run react
+: 1654361204:0;yarn add @mui/material @emotion/react @emotion/styled
+: 1654363899:0;yarn add @fontsource/roboto
+: 1654364987:0;yarn add normalize.css
+: 1654373369:0;cd nvim
+: 1654373372:0;cd ultisnips
+: 1654377988:0;yarn remove normalize
+: 1654377994:0;yarn remove normalize.css
+: 1654381119:0;ydl https://www.youtube.com/watch\?v\=a2tsngY9ccs
+: 1654459138:0;ydl https://www.youtube.com/watch\?v\=w4feQgiiXic
+: 1654459153:0;ydl https://www.youtube.com/watch\?v\=id5POmGywXE
+: 1654459227:0;ydl https://www.youtube.com/watch\?v\=Qep7zYMylvk
+: 1654459277:0;rm -rf vendetta\!\ -\ MUPP\ -\ Topic.mp3
+: 1654459282:0;rm -rf THUNDERSTORM\ -\ ditro\ -\ Topic.mp3
+: 1654459305:0;ydl https://www.youtube.com/watch\?v\=EIJnrcmKt0o
+: 1654459374:0;rm UPGRADE\ \(Slowed\ +\ Reverb\)\ -\ OFFL1NX\ -\ Topic.mp3
+: 1654459400:0;cd ../DoomerWave
+: 1654459429:0;rm -rf seekae\ -\ test\ \&\ recognize\ \[\ flume\ re\ -\ work\ \]\ slowed\ -\ moth.mp3
+: 1654459440:0;rm -rf IKIRU,\ DVRST\ -\ Behelit\ \(slowed\ \&\ reverb\)\ -\ SlowMusic.mp3
+: 1654459515:0;ydl https://www.youtube.com/watch\?v\=5uZc0Lcfct4
+: 1654459539:0;ydl https://www.youtube.com/watch\?v\=LlN8V084pK0
+: 1654459774:0;ydl https://www.youtube.com/watch\?v\=HjYSBGkC8FU
+: 1654459940:0;ydl https://www.youtube.com/watch\?v\=pGFs7havwo0
+: 1654460152:0;ydl https://www.youtube.com/watch\?v\=9AOmAa96Fb4
+: 1654460396:0;ydl https://www.youtube.com/watch\?v\=wPQ_B2TbDDQ
+: 1654461714:0;rm -rf ../LxstCxntury
+: 1654461724:0;ydl https://www.youtube.com/watch\?v\=qXW8ll1z4VQ
+: 1654461932:0;ydl https://www.youtube.com/watch\?v\=Fjq-fDErc7s
+: 1654462538:0;mv *Jake* ../Rap
+: 1654462543:0;mv *Dredd* ../Rap
+: 1654462559:0;mv *DREDD* ../Rap
+: 1654462570:0;mv *HAARPER* ../Rap
+: 1654462594:0;mv *Molch* ../DoomerWave
+: 1654462602:0;mv plenka\ -\ Nightmare\ \(s* ../DoomerWave
+: 1654462626:0;mv *Haarper* ../Rap
+: 1654462640:0;mv n\ i\ g\ h\ t\ m\ a\ r\ e\ -\ trvp.mp3 ../DoomerWave
+: 1654462648:0;mv plenka\ -\ nightmare\ \(sped\ up\)\ -\ KKRASNIY.mp3 ../DoomerWave
+: 1654509794:0;vim ~/.local/bin/shell/icomoon_zip.sh
+: 1654509843:0;mv ~/.local/bin/shell/icomoon_zip.sh ~/.local/bin/folio/icomoon_zip
+: 1654509854:0;la ~/.local/bin/folio
+: 1654511630:0;vim ~/.local/bin/folio/icomoon_zip
+: 1654512671:0;vrs
+: 1654520286:0;rgc item_placements/filters
+: 1654525778:0;r t test/cells/acb/item_placements/filters_cell_test.rb
+: 1654545612:0;yarn run start
+: 1654549675:0;ydl https://www.youtube.com/watch\?v\=IsuQEHLNAxE\&list\=RDMM\&index\=23
+: 1654549687:0;ydl https://www.youtube.com/watch\?v\=IsuQEHLNAxE
+: 1654549856:0;ydl https://www.youtube.com/watch\?v\=rhPpWHYzd_g
+: 1654550013:0;ydl https://www.youtube.com/watch\?v\=EaNgb5NZ3z8
+: 1654550106:0;ydl https://www.youtube.com/watch\?v\=VIxRoiI-2z0
+: 1654550275:0;ydl https://www.youtube.com/watch\?v\=LQArLobRrt8
+: 1654550421:0;ydl https://www.youtube.com/watch\?v\=jBRaHThyyKc
+: 1654550861:0;ydl https://www.youtube.com/watch\?v\=62XrRfT2ScU
+: 1654551025:0;ydl https://www.youtube.com/watch\?v\=ftoATT9ZRwQ
+: 1654551274:0;ydl https://www.youtube.com/watch\?v\=ssnWo46axmc
+: 1654551309:0;ydl https://www.youtube.com/watch\?v\=WBbbieKNTos\&list\=RDGMEMQ1dJ7wXfLlqCjwV0xfSNbA\&index\=7
+: 1654551396:0;ydl https://www.youtube.com/watch\?v\=WBbbieKNTos
+: 1654551470:0;ydl https://www.youtube.com/watch\?v\=2XAFacFLmrc\&list\=RDGMEMQ1dJ7wXfLlqCjwV0xfSNbA\&index\=25
+: 1654551476:0;ydl https://www.youtube.com/watch\?v\=2XAFacFLmrc
+: 1654551500:0;ydl https://www.youtube.com/watch\?v\=XdBR-SrP6uU\&list\=RDGMEMQ1dJ7wXfLlqCjwV0xfSNbA\&index\=30
+: 1654551632:0;rm Kygo\ \&\ Whitney\ Houston\ -\ Higher\ Love\ \(Official\ Video\)\ -\ KygoOfficialVEVO.
+: 1654551636:0;mr -rf Kygo\ \&\ Whitney\ Houston\ -\ Higher\ Love\ \(Official\ Video\)\ -\ KygoOfficialVEVO.
+: 1654551651:0;rm 0rf Dua\ Lipa\ -\ Hallucinate\ \(Bass\ Cover\)\ -\ juliaplaysgroove.mp3
+: 1654551657:0;rm -rf Dua\ Lipa\ -\ Hallucinate\ \(Bass\ Cover\)\ -\ juliaplaysgroove.mp3
+: 1654551670:0;rm -rf Kygo\ \&\ Whitney\ Houston\ -\ Higher\ Love\ \(Official\ Video\)\ -\ KygoOfficialVEVO.*
+: 1654551980:0;ydl https://www.youtube.com/watch\?v\=RgFaK6ZQifE
+: 1654556509:0;vvim
+: 1654556613:0;nvim
+: 1654587421:0;rvm use 2.6.8
+: 1654590259:0;git log app/controllers/microsites/top_photo/years_controller.rb
+: 1654590275:0;git log help
+: 1654590316:0;git log --follow app/controllers/microsites/top_photo/years_controller.rb
+: 1654590520:0;git log ==help
+: 1654590533:0;git log --full-diff app/controllers/microsites/top_photo/years_controller.rb
+: 1654590537:0;git log --help
+: 1654590611:0;git log --full-history app/controllers/microsites/top_photo/years_controller.rb
+: 1654590764:0;git log -p app/controllers/microsites/top_photo/years_controller.rb
+: 1654590884:0;clip git log -p app/controllers/microsites/top_photo/years_controller.rb
+: 1654590892:0;clip `git log -p app/controllers/microsites/top_photo/years_controller.rb`
+: 1654590896:0;xclip `git log -p app/controllers/microsites/top_photo/years_controller.rb`
+: 1654590900:0;xclip
+: 1654590902:0;xclip ok
+: 1654590905:0;ok
+: 1654590909:0;clip ok
+: 1654590923:0;vim ~/.config/shell/aliases.sh
+: 1654590954:0;clip $(git log -p app/controllers/microsites/top_photo/years_controller.rb)
+: 1654590959:0;echo $(git log -p app/controllers/microsites/top_photo/years_controller.rb)
+: 1654590979:0;bat $(git log -p app/controllers/microsites/top_photo/years_controller.rb)
+: 1654591001:0;echo $(git log -p app/controllers/microsites/top_photo/years_controller.rb) > log
+: 1654591006:0;echo $(git log -p app/controllers/microsites/top_photo/years_controller.rb) > log.txt
+: 1654591042:0;echo "$(git log -p app/controllers/microsites/top_photo/years_controller.rb)" > log.txt
+: 1654591044:0;vim log.txt
+: 1654591063:0;dolphin
+: 1654609068:0;rails test test/cells/acb/item_placements/hammer/list_cell_test.rb:6
+: 1654615182:0;rgc item_placements/filters/category
+: 1654629383:0;~/Development/react/math-quiz
+: 1654633462:0;echo LUA_PATH
+: 1654633465:0;echo $LUA_PATH
+: 1654633979:0;config/nvim
+: 1654633998:0;mkdir lua/lsp
+: 1654633999:0;mv lua/* lua/lsp
+: 1654634008:0;rmdir lua/lsp
+: 1654634014:0;la lua
+: 1654635262:0;gem install solargraph
+: 1654635277:0;vim +PlugInstall +UpdateRemotePlugins +qa
+: 1654635282:0;vim +PlugInstall +UpdateRemotePlugins
+: 1654635382:0;gem install --user-install solargraph
+: 1654679585:0;va
+: 1654683271:0;../acbcz/
+: 1654707532:0;la --group-directories-first -X (later --sort=extension)
+: 1654707545:0;ls -p -1v -x --group-directories-first
+: 1654707556:0;$ ls --group-directories-first
+: 1654707561:0;la --group-directories-first
+: 1654707786:0;source ~/.config/shell/aliases.sh
+: 1654707897:0;echo ?
+: 1654707899:0;echo $
+: 1654707902:0;echo $0
+: 1654707904:0;echo $/
+: 1654707911:0;test -f /home/vlada/.config/zsh/zshrc
+: 1654708572:0;r routes
+: 1654708581:0;r routes | grep item_placement
+: 1654708614:0;r routes | bat | grep item_placement
+: 1654708620:0;r routes | grep item_placement | bat
+: 1654708776:0;r routes | grep -E "acb/item_placements_(online|retail)" | bat
+: 1654708792:0;r routes | grep -E "acb/item_placements_[online|retail]" | bat
+: 1654708806:0;r routes | grep -r "acb/item_placements_[online|retail]" | bat
+: 1654708816:0;r routes | grep -E "acb/item_placements_" | bat
+: 1654708824:0;r routes | grep -e "acb/item_placements_" | bat
+: 1654708833:0;grep -h
+: 1654708862:0;bat -h
+: 1654708899:0;r routes | grep -G "acb/item_placements_" | bat
+: 1654708916:0;r routes | grep -E "acb\/item_placements_" | bat
+: 1654708930:0;r routes | grep acb/item_placements | bat
+: 1654708989:0;r routes | grep acb/item_placements/online | bat
+: 1654709009:0;r routes | grep by_category | bat
+: 1654709088:0;r routes | grep acb_item_placements_online_index | bat
+: 1654711897:0;1
+: 1654711901:0;o
+: 1654716691:0;rails test test/controllers/acb/item_placements/online_controller_test.rb:73\
+
+: 1654716826:0;rails test test/controllers/acb/item_placements/online_controller_test.rb\
+
+: 1654718409:0;r test test/controllers/acb/item_placements/online_controller_test.rb\
+
+: 1654718448:0;r test test/controllers/acb/item_placements/online_controller_test.rb:73
+: 1654720413:0;r test test/controllers/acb/item_placements/online_controller_test.rb:73\
+
+: 1654720979:0;rails test test/cells/acb/item_placements/filters/category_cell_test.rb:6
+: 1654720989:0;rails test test/controllers/acb/artists/hammers_controller_test.rb:6
+: 1654720994:0;r test test/controllers/acb/artists/hammers_controller_test.rb:6
+: 1654721002:0;r test test/cells/acb/item_placements/filters/category_cell_test.rb:6
+: 1654722653:0;ydl https://www.youtube.com/watch\?v\=itsxWFckHZE
+: 1654763065:0;rm -rf Crys*
+: 1654768355:0;rgc item_placements/heading
+: 1654771368:0;rgm AddItemCategoryMetaAndPerex
+: 1654774860:0;rails test test/cells/acb/item_placements/heading_cell_test.rb:6\
+
+: 1654775207:0;rails test test/controllers/acb/artists/online_controller_test.rb:6\
+
+: 1654775322:0;r test test/controllers/acb/item_placements/online_controller_test.rb:60
+: 1654786199:0;exec kubectl exec -i -t -n acbcz-28340759-staging app-staging-8595989f77-6z56d -c app-staging -- sh -c "clear; (bash || ash || sh)"
+: 1654791567:0;r test test/cells/acb/item_placements/filters/select_cell_test.rb:6
+: 1654793420:0;exec kubectl exec -i -t -n acbcz-28340759-staging app-staging-b964ff5fb-xdjr5 -c app-staging -- sh -c "clear; (bash || ash || sh)"
+: 1654809346:0;kjla
+: 1654809362:0;ydl https://www.youtube.com/watch\?v\=Qvw9c1tD0Ng
+: 1654809414:0;ydl https://www.youtube.com/watch\?v\=beoNy4MMHTc
+: 1654809517:0;ydl https://www.youtube.com/watch\?v\=Dgk5T3unDf0
+: 1654809602:0;ydl https://www.youtube.com/watch\?v\=dHID5Yv-Z0s
+: 1654809810:0;ydl https://www.youtube.com/watch\?v\=D_5_ueDrkeo
+: 1654810533:0;ydl https://www.youtube.com/watch\?v\=q8VO4Rm3ulw
+: 1654857160:0;sinfin/acbcz
+: 1654861911:0;ydl https://www.youtube.com/watch\?v\=7fh3yQ46TUw
+: 1654862812:0;rm -rf lÃ­ue\ -\ Suffer\ With\ Me\ -\ Slowed\ +\ Reverb\ \#phonk\ -\ PhonkJDM\ \#phonk.mp3
+: 1654863078:0;mkdir ../Sewerslvt
+: 1654863089:0;mv *Sewer* ../Sewerslvt
+: 1654863117:0;mkdir ../DenzelCurry
+: 1654863127:0;mv *Denz* ../DenzelCurry
+: 1654863166:0;rm -rf ../zxmrd-4er2d
+: 1654863186:0;la ../DoomerWave
+: 1654863225:0;mv *Molch* ../MoÐ»Ñ§Ð°ÑÐ´Ð¾Ð¼Ð°
+: 1654863247:0;rm -rf plenka\ -\ Nightmare\ \(s*
+: 1654863251:0;rm plenka\ -\ nightmare\ \(sped\ up\)\ -\ KKRASNIY.mp3 *
+: 1654863267:0;rm plenka\ -\ nightmare\ \(sped\ up\)\ -\ KKRASNIY.mp3
+: 1654863296:0;la MoÐ»Ñ§Ð°ÑÐ´Ð¾Ð¼Ð°
+: 1654863319:0;la MÐ¾Ð»Ñ§Ð°ÑÐ´Ð¾Ð¼Ð°
+: 1654863322:0;rmdir MÐ¾Ð»Ñ§Ð°ÑÐ´Ð¾Ð¼Ð°
+: 1654863381:0;mkdir ../Mareux
+: 1654863466:0;mv 'ð½°¬ð½°ºð½°«ð½°¾ð½°®ð½°± â³ The Perfect Girl {speed up & bass} - make me a lobotomy.mp3' perfect-girl_sped-up.mp3
+: 1654863472:0;mv *reux* ../Mareux
+: 1654863483:0;mv perfect-girl_sped-up.mp3 ../Mareux
+: 1654863505:0;../Rap
+: 1654863519:0;mkdir ../GHOSTEMANE
+: 1654863526:0;mv *GHOSTE* ../GHOSTEMANE
+: 1654863570:0;mkdir FreddieDredd
+: 1654863597:0;mv -f FreddieDredd ../
+: 1654863608:0;mv *redd* ../FreddieDredd
+: 1654863620:0;mv *Curry* ../DenzelCurry
+: 1654863666:0;mkdir XXXTentacion
+: 1654863681:0;mv *XXXT* ../XXXTentacion
+: 1654863695:0;mv *DREDD* ../FreddieDredd
+: 1654863710:0;mkdir Haarper
+: 1654863722:0;mv *HAAR* ../Haarper
+: 1654863729:0;mkdir JakeHill
+: 1654863740:0;mv *Hill* ../JakeHill
+: 1654863748:0;mkdir Bones
+: 1654863756:0;mv *Bones* ../Bones
+: 1654863765:0;mv BONES\ -\ TakingOutTheTrash\ -\ TeamSESH.mp3 ../Bones
+: 1654863776:0;mkdir ../Fukkit
+: 1654863801:0;mv *\(Prod.* ../Fukkit
+: 1654863819:0;mv *Haar* ../Haarper
+: 1654863836:0;mv BORUTO\ MOMOSHIKI\ Å¬TSUTSUKI_\$UICIDEBOY\$\ -\ CARROLLTON\ AMV\ -\ LeTysmey\ æ¨±ã¥vzy.mp3 ../SuicideBoys
+: 1654863953:0;mv -f Bones DeathGrips DenzelCurry FreddieDredd Fukkit GHOSTEMANE Haarper JakeHill KLamar Scarlxrd SuicideBoys XXXTentacion Rap/
+: 1654863956:0;la Rap
+: 1654863973:0;mv -f Falconshield Rap/
+: 1654863987:0;la JOINTMANE
+: 1654863996:0;rm -rf JOINTMANE/Ignored\ -\ JOINTMANE\ -\ Topic.mp3
+: 1654864068:0;mv *No\ Vac* ../NoVacation
+: 1654864073:0;la ../NoVacation
+: 1654864091:0;mv *Men\ I* ../MenITrust
+: 1654864200:0;mv 21Pilots ArcticMonkeys Concorde LykkeLi M83 MoÐ»Ñ§Ð°ÑÐ´Ð¾Ð¼Ð° MenITrust NBHD RosemaryFairweather TOPS VACATIONS Indie/
+: 1654864214:0;Pop
+: 1654864225:0;mv Higher\ -\ Carly\ Rae\ Jepsen\ -\ Topic.mp3 ../CarlyRaeJepsen
+: 1654864258:0;mv CarlyRaeJepsen Paramore YearsAndYears Pop
+: 1654864263:0;mv NoVacation Indie/
+: 1654864294:0;DoomerWave
+: 1654864347:0;mv CrystalCastles JOINTMANE Mareux Sewerslvt DoomerWave
+: 1654864362:0;mv young\ but\ itâ¹s\ sped\ up\ -\ sped\ up\ audios.mp3 ../Indie/VACATIONS
+: 1654864377:0;mv The\ Perfect\ Girl\ \(Retro\)\ -\ KuTaKi\ -\ Topic.mp3 ./Mareux
+: 1654864384:0;mv summertime\ -\ Maruex\ \(sped\ up\ +\ reverb\)\ -\ verse.mp3 Mareux
+: 1654864400:0;lla
+: 1654864420:0;mv *Chip* ../Chipzel
+: 1654864433:0;mv *Pocky* ../Indie
+: 1654864488:0;mv DisasterPeace Disclosure ClamsCasino COCAINEJESUS Eveningland
+: 1654864504:0;mv Eveningland Chipzel Electronic
+: 1654864520:0;la Eveningland
+: 1654864533:0;mv Eveningland/* .
+: 1654864543:0;mv Hyperspeed\ -\ Eveningland\ \(Extended\ Mix\)\ -\ \[\[\[\ ICARUS\ \]\]\].mp3 ./Eveningland
+: 1654864547:0;lala
+: 1654864557:0;mkdir Metal
+: 1654864562:0;mv Gojira Metal
+: 1654864567:0;mv BMTH Metal
+: 1654864580:0;mkdir OTHERS
+: 1654864594:0;mv Polyphia LeagueOfLegends MadisonRising BillyTalent OTHERS
+: 1654864598:0;mv ODESZA Electronic
+: 1654864608:0;la Phonk
+: 1654864614:0;../Phonk
+: 1654864631:0;cd new
+: 1654864643:0;mkdir ../DoomerWave/Ezekiel
+: 1654864651:0;mv help_urself-Ezekiel\ \(bass\ boosted\)\ -\ Skey00.mp3 ../DoomerWave/Ezekiel
+: 1654864670:0;mv *RIP* ../Electronic
+: 1654864683:0;mkdir ../Covers
+: 1654864700:0;mv *julia* ../Covers
+: 1654864721:0;mkdir ../DoomerWave/Portwave
+: 1654864723:0;mv *Portw* ../DoomerWave/Portwave
+: 1654864770:0;mkdir Guitar
+: 1654864797:0;mv playing\ a\ guitar\ -\ Tim\ Henson.mp3 ../Guitar
+: 1654864803:0;mv help\ urself-\ ezekiel\ \[sped\ up\]\ -\ 222glorified.mp3 ../DoomerWave/Ezekiel
+: 1654864814:0;rm -rf Mareux\ -\ The\ Perfect\ Girl\ \(sped\ up\)\ -\ Cheri\ Daddy.mp3
+: 1654864821:0;mv IVOXYGEN\ -\ LOVE\ _\ Slowed\ x\ Reverb\ -\ Nocturnal\ X.mp3 ../DoomerWave
+: 1654864828:0;mv Polozhenie\ -\ MEREF\ -\ Topic.mp3 ../DoomerWave
+: 1654864837:0;mv The\ Notorious\ B.I.G.\ -\ Ready\ to\ Die\ \(Official\ Audio\)\ -\ The\ Notorious\ B.I.G..mp3 ../Rap
+: 1654864843:0;mv what\ we\ did\ in\ the\ desert\ -\ eightiesheadachetape\ -\ Topic.mp3 ../DoomerWave
+: 1654864848:0;mv ATTACK\ ON\ TITAN\ SEASON\ 1\ OP\ \(Guren-No-Yumiya\ é²æ²£ã®å·¨äºº\)\ -\ Piano\ Tutorial\ -\ Sheet\ Music\ Boss.mp3 ../Piano
+: 1654864856:0;mv OutsiderX\ -\ Paranoid\ -\ m1tul.mp3 ../DoomerWave
+: 1654869497:0;rgm item_placements/ribbon
+: 1654869506:0;rm -rf db/migrate/20220610135818_ribbon.rb
+: 1654869512:0;rgc item_placements/ribbon
+: 1654896605:0;npm install -g yarn
+: 1654896626:0;la ~/.cache/npm
+: 1654897069:0;vim README.md
+: 1654965117:0;yarn global add prettier
+: 1654965133:0;yarn remove prettier
+: 1654965138:0;yarn remove global prettier
+: 1654965147:0;yarn global remove prettier
+: 1654965267:0;rmdir ~/Mareux
+: 1654965853:0;rm -rf ~/.npm*
+: 1654966323:0;~/.config/nvm/alias
+: 1654967003:0;rm -rf ~/.yarn
+: 1654967006:0;rm -rf ~/.yarn*
+: 1654968494:0;sinfin
+: 1654968895:0;../react
+: 1654968900:0;math-quiz
+: 1654969047:0;yran prettier --check .
+: 1654969051:0;yarn prettier --check .
+: 1654969100:0;la ~/.config
+: 1654969104:0;la ~/.config/nvm
+: 1654969549:0;nvm use 16
+: 1654969565:0;rm -rf yarn.lock
+: 1654969634:0;nvm -v
+: 1654969636:0;node -v
+: 1654971372:0;npm
+: 1654971396:0;npm help npm
+: 1654971480:0;yarn
+: 1654971498:0;sudo yarn -v
+: 1654971504:0;npm i -g yarn
+: 1654971510:0;npm list
+: 1654971517:0;yarn -v
+: 1654972947:0;rm -rf ~/.config/nvm
+: 1654973010:0;rm -rf node_modules
+: 1654973015:0;rm -rf package-lock.json
+: 1654974276:0;la ~/.local
+: 1654974281:0;la ~/.local/lb
+: 1654974283:0;la ~/.local/lib
+: 1654974287:0;la ~/.local/share
+: 1654976072:0;rm -rf .config/nvm
+: 1654976073:0;./Development/dotfiles/build/install-independent.sh
+: 1654976090:0;node
+: 1654976095:0;npm install --location=global yarn neovim prettier
+: 1654978025:0;pulseaudio
+: 1654978091:0;pulseaudio-equalizer
+: 1654978100:0;sudo apt install pulseaudio-equalizer
+: 1654978152:0;sudo nano /etc/pulse/default.pa
+: 1654978173:0;sudo apt install neovim
+: 1654978183:0;sudo vim /etc/pulse/default.pa
+: 1654978242:0;pulseaudio --kill && pulseaudio --start
+: 1654978257:0;qpaeq
+: 1654981998:0;npx prettier --check .
+: 1654982283:0;npx run start
+: 1655069329:0;[A
+: 1655111886:0;kj:GFiles
+: 1655111930:0;.../
+: 1655111932:0;....
+: 1655111941:0;Documents/dukelskÃ
+: 1655111946:0;vim Harmonogram.txt
+: 1655113873:0;convert "~/Downloads/facebook-share.png" "~/Downloads/facebook-share.jpg"
+: 1655113884:0;convert ~/Downloads/facebook-share.png ~/Downloads/facebook-share.jpg
+: 1655116234:0;rgm AddBlogTopicTopphotoArchiveCheckbox
+: 1655122390:0;mv ~/Downloads/facebook-share.jpg ./public/images/microsites/top_photo/facebook-share.jpg
+: 1655123675:0;git status
+: 1655128448:0;rgc notes/review_button
+: 1655130438:0;@
+: 1655130732:0;~/Music
+: 1655130736:0;ydl https://www.youtube.com/watch\?v\=OgmMJGEhwxw
+: 1655139169:0;rails test test/cells/notesvilla/notes/review_button_cell_test.rb:6
+: 1655139544:0;rgm notes/reviews
+: 1655139556:0;rgc notes/reviews
+: 1655139814:0;rgm notes/content/accordion
+: 1655139834:0;rm -rf db/migrate/20220613170335_accordion.rb
+: 1655139837:0;rgc notes/content/accordion
+: 1655141203:0;rr db/seed/reviews.rb
+: 1655141471:0;rr --tasks
+: 1655141523:0;rr db:seed:reviews
+: 1655141544:0;rr --help
+: 1655141567:0;rr -e db/seed/reviews.rb
+: 1655141650:0;rr developer_tools:seed_reviews
+: 1655147806:0;rails test test/models/notesvilla/note_test.rb:8
+: 1655153520:0;r test test/cells/notesvilla/notes/reviews_cell_test.rb:6
+: 1655203936:0;lazygit
+: 1655204015:0;../liastone
+: 1655213059:0;rvm install 2.6.9
+: 1655213090:0;gem install bundler:2.3.6
+: 1655213123:0;../re
+: 1655237788:0;../rekonstrukcestatu
+: 1655265742:0;gem install neovim
+: 1655268933:0;gem update --system
+: 1655269034:0;solargraph
+: 1655269037:0;solargraph -v
+: 1655269099:0;gem pristine gem-wrappers --version 1.4.0
+: 1655269109:0;solargraph typecheck app/controllers/errors_controller.rb
+: 1655269123:0;which solargraph
+: 1655272948:0;exec kubectl exec -i -t -n notesvilla-24876169-staging app-staging-5cd655447d-f64fv -c app-staging -- sh -c "clear; (bash || ash || sh)"
+: 1655273368:0;acbcz
+: 1655280287:0;rvm use 2.6.6
+: 1655280289:0;rgc item_placements/notification_modal
+: 1655294915:0;ydl https://www.youtube.com/watch\?v\=cFJxvWwwR64
+: 1655320429:0;./build/install-independent.sh
+: 1655320436:0;./build/install-apt.sh
+: 1655321123:0;systemctl start --user dunst.service
+: 1655321134:0;systemctl --user status dunst.service
+: 1655321276:0;wmctrl -l
+: 1655327848:0;man plasma
+: 1655327861:0;kcmshell5 kcm_notificationhelper
+: 1655328003:0;sudo apt list
+: 1655328009:0;sudo apt list | plasma
+: 1655328013:0;sudo apt list | grep plasma
+: 1655328020:0;sudo apt list | grep noti
+: 1655328024:0;sudo apt list | grep notifi
+: 1655328158:0;lsof
+: 1655328168:0;lsof | grep Plasma
+: 1655328191:0;lsof | grep noti
+: 1655328207:0;lsof | grep notifi
+: 1655328259:0;kill -9 688270
+: 1655328271:0;kill -9 2107
+: 1655328542:0;vim ~/.zshkdfj
+: 1655328578:0;test [[ -s "$HOME/.zsh*" ]]
+: 1655328581:0;test [ -s "$HOME/.zsh*" ]
+: 1655328586:0;test -s "$HOME/.zsh*"
+: 1655328589:0;echo $?
+: 1655328658:0;[[ -s "$HOME/.zsh*" ]] && rm $HOME/.zsh*
+: 1655328674:0;[[ ! -s "$HOME/.zsh*" ]] && echo 'bruh'
+: 1655328683:0;[[ -s "$HOME/.zshkdfj" ]] && echo 'bruh'
+: 1655328694:0;[[ -s "$HOME/.zsh*" ]] && echo 'bruh'
+: 1655328714:0;[[ -s "$HOME/.zsh\*" ]] && echo 'bruh'
+: 1655328730:0;[[ -s "$HOME/.zsh\w*" ]] && echo 'bruh'
+: 1655328738:0;[[ -s "$HOME/.zsh\w\*" ]] && echo 'bruh'
+: 1655328804:0;rm -rf ~/.zshkdfj
+: 1655328808:0;vim ~/.zshrc
+: 1655328979:0;sudo apt install polybar
+: 1655329095:0;systemctl --help
+: 1655371327:0;systemctl exit
+: 1655371364:0;systemctl hibernate
+: 1655371381:0;kde
+: 1655371384:0;kdeplasma
+: 1655371392:0;plasma
+: 1655371396:0;plasmashell
+: 1655371413:0;sudo service plasmashell
+: 1655371417:0;sudo service plasma
+: 1655371907:0;systemctl reboot
+: 1655373654:0;Development/sinfin/rekonstrukcestatu
+: 1655373671:0;rvm use 2.6.9
+: 1655374324:0;../acu
+: 1655386420:0;exec kubectl exec -i -t -n ivigee-29486703-production app-production-76dc9d9c94-rlv49 -c app-production -- sh -c "clear; (bash || ash || sh)"
+: 1655386582:0;exec kubectl exec -i -t -n ivigee-29486703-production app-production-76dc9d9c94-hsxd8 -c app-production -- sh -c "clear; (bash || ash || sh)"
+: 1655388139:0;exec kubectl exec -i -t -n ivigee-29486703-production sidekiq-production-5f9d44df7b-svr5m -c sidekiq-production -- sh -c "clear; (bash || ash || sh)"
+: 1655414971:0;react/math-quiz
+: 1655461727:0;exec kubectl exec -i -t -n notesvilla-24876169-staging sidekiq-staging-66f97bc9cb-t4tx4 -c sidekiq-staging -- sh -c "clear; (bash || ash || sh)"
+: 1655461843:0;Development/sinfin/notesvilla
+: 1655461975:0;exec kubectl exec -i -t -n notesvilla-24876169-production sidekiq-production-676f4784c6-2v2d6 -c sidekiq-production -- sh -c "clear; (bash || ash || sh)"
+: 1655464448:0;laqq
+: 1655465324:0;rvm install 3.1.2
+: 1655466182:0;exec kubectl exec -i -t -n ivigee-29486703-production sidekiq-production-7496f9c8dd-2nflb -c sidekiq-production -- sh -c "clear; (bash || ash || sh)"
+: 1655466263:0;vim ~/.local/bin/folio/folio-test-account.rb
+: 1655467267:0;bundle instll
+: 1655472225:0;folio
+: 1655472489:0;rgm addIviregLeadModel
+: 1655472633:0;rgm CreateIviregLeads
+: 1655475993:0;rvm install 2.7.6
+: 1655475995:0;rvm install 2.7.5
+: 1655476730:0;rgm CreateRedsideFundGroups
+: 1655501390:0;git remote add origin git@github.com:VladaTrefil/MathQuiz.git
+: 1655501398:0;git push -u origin master
+: 1655503328:0;~/Music/new
+: 1655503330:0;ydl https://www.youtube.com/watch\?v\=j53YDo_ngYU
+: 1655710009:0;sinfin/redside
+: 1655710811:0;echo $VISUAL
+: 1655710815:0;echo $TERMINAL
+: 1655711020:0;vim .pryrc
+: 1655711072:0;mkdir ~/Development/dotfiles/config/pry
+: 1655711073:0;mv .pryrc ~/Development/dotfiles/config/pry/pryrc
+: 1655718585:0;sudo apt install libvips
+: 1655718608:0;rails db:migrate
+: 1655718772:0;sudo apt install libvips-dev
+: 1655723998:0;sudo apt install mpv
+: 1655724106:0;mpv ~/Pictures/gifs/squirel-eating.gif
+: 1655724150:0;mpv --help
+: 1655724159:0;mpv --fs ~/Pictures/gifs/squirel-eating.gif
+: 1655724180:0;mpv --list-options
+: 1655724199:0;mpv --loop --fs ~/Pictures/gifs/squirel-eating.gif
+: 1655735721:0;sudo apt install libreoffice
+: 1655741877:0;rgc fund_groups/show
+: 1655747650:0;man picom
+: 1655748188:0;kill picom
+: 1655748348:0;killall picom
+: 1655799244:0;gem install bundler:2.3.5
+: 1655823484:0;rgc funds/table
+: 1655840738:0;dunst -v
+: 1655840770:0;sudo apt remove dunst
+: 1655840779:0;git clone https://github.com/dunst-project/dunst.git
+: 1655840784:0;cd dunst
+: 1655840827:0;sudo apt libnotify
+: 1655840832:0;sudo apt install libnotify
+: 1655840878:0;sudo apt install libdbus-1-dev libx11-dev libxinerama-dev libxrandr-dev libxss-dev liblib2.0-dev libpano1.0-dev libtk-3-dev libxd-basedir-dev
+: 1655840894:0;sudo apt install libdbus-1-dev libx11-dev libxinerama-dev libxrandr-dev libxss-dev libglib2.0-dev libpango1.0-dev libgtk-3-dev libxdg-basedir-dev
+: 1655840923:0;sudo apt install libnotify-dev
+: 1655841203:0;sudo make
+: 1655841205:0;make
+: 1655841208:0;sudo make install
+: 1655841218:0;cd ..
+: 1655841232:0;dunstify
+: 1655841494:0;pkill dunst
+: 1655841637:0;dunst
+: 1655842848:0;:GFiles
+: 1655843106:0;sudo rm -rf dunst
+: 1655851888:0;git add .
+: 1655885763:0;rgm AddRedsideFundSubscription
+: 1655887823:0;rvm use 2.7.5
+: 1655889058:0;r t test/cells/redside/fund_groups/show_cell_test.rb
+: 1655892025:0;r t test/cells/redside/atom/fund_groups/fund_table_cell_test.rb
+: 1655892865:0;exec kubectl exec -i -t -n redside-33911641-staging sidekiq-redside-bb8f87cf5-xj8gp -c sidekiq-app -- sh -c "clear; (bash || ash || sh)"
+: 1655893271:0;exec kubectl exec -i -t -n redside-33911641-staging backend-redside-6f6ddc64-9ngm9 -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1655896042:0;exec kubectl attach -i -t -n redside-33911641-staging backend-redside-6f6ddc64-9ngm9 -c backend-app
+: 1655896052:0;exec kubectl attach -i -t -n redside-33911641-staging sidekiq-redside-bb8f87cf5-xj8gp -c sidekiq-app
+: 1655898615:0;ydl https://www.youtube.com/watch\?v\=ougoEKXu6pc\
+: 1655898629:0;ydl https://www.youtube.com/watch\?v\=ougoEKXu6pc
+: 1655898687:0;youtube-dl --update
+: 1655898707:0;sudo apt remove youtube-dl
+: 1655898742:0;sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+: 1655898747:0;sudo chmod a+rx /usr/local/bin/youtube-dl
+: 1655898757:0;ydl https://www.youtube.com/watch\?v\=ougoEKXu6pc
+: 1655898762:0;ydl https://www.youtube.com/watch\?v\=4sF0IWrG0iM
+: 1655898883:0;ydl https://www.youtube.com/watch\?v\=mK6uANkwyW4
+: 1655898973:0;ydl https://www.youtube.com/watch\?v\=uypRRRpq3EQ
+: 1655899042:0;ydl https://www.youtube.com/watch\?v\=U3P_icvTPtI
+: 1655899056:0;ydl https://www.youtube.com/watch\?v\=ut9Nr7ze99U\&list\=RDMM
+: 1655899118:0;ydl https://www.youtube.com/watch\?v\=-ifgCODthLI
+: 1655899201:0;ydl https://www.youtube.com/watch\?v\=1vgmwlYlmUw
+: 1655905502:0;rgm CreateIvigeeLeadsAndIviregLeads
+: 1655905581:0;rgm CreateFolioLeadsSTI
+: 1655905612:0;rgm AddFolioLeadsSTI
+: 1655924437:0;rc
+: 1655925136:0;~/.zprofile
+: 1655969830:0;r t test/cells/folio/leads/form_cell_test.rb
+: 1655969991:0;r t test/cells/ivigee/leads/form_cell_test.rb
+: 1655971212:0;r t test/cells/ivigee/leads/ivireg_form_cell_test.rb
+: 1655972317:0;la ~/Downloads
+: 1655972374:0;project=${PWD##*/}\
+
+: 1655972390:0;psql ${project}_development < ~/Downloads/development_foton-202206221634.sql
+: 1656002225:0;bundle update folio
+: 1656003442:0;psql
+: 1656003448:0;sudo -u postgres psql
+: 1656003930:0;rails test test/cells/ivigee/leads/ivireg_form_cell_test.rb:6
+: 1656012666:0;la /
+: 1656012677:0;la tmp
+: 1656012679:0;la /tmp
+: 1656012735:0;la config/polybar
+: 1656012792:0;cat config/polybar/modules/*
+: 1656012811:0;cat config/polybar/modules/* > config/polybar/config.ini
+: 1656013538:0;cat config/polybar/modules/* > config/polybar/config.ini | grep inherit
+: 1656013745:0;sh $HOME/.config/polybar/launch.sh
+: 1656014150:0;polybar -v
+: 1656014605:0;sudo apt edit-sources
+: 1656014693:0;man polybar
+: 1656014779:0;i3-msg 'workspace 1; exec konsole'
+: 1656014926:0;exec kubectl exec -i -t -n ivigee-29486703-staging sidekiq-staging-f8cc7b565-2rpx8 -c sidekiq-staging -- sh -c "clear; (bash || ash || sh)"
+: 1656019030:0;r t test/cells/ivireg/answers/list_cell_test.rb
+: 1656022646:0;test/cells/ivigee/article/list_cell_test.rb
+: 1656022650:0;r t test/cells/ivigee/article/list_cell_test.rb
+: 1656022762:0;bin/rails db:migrate RAILS_ENV=test\
+
+: 1656022833:0;r db:drop "ivigee_test"
+: 1656022893:0;r test test/cells/ivireg/answers/list_cell_test.rb:6
+: 1656064654:0;r db:drop
+: 1656064669:0;vim ~/.local/bin/shell/init-sinfin-project.sh
+: 1656064693:0;r db:create
+: 1656064706:0;dropdb ivigee_test
+: 1656064708:0;dropdb ivigee_development
+: 1656064729:0;createdb ivigee_development
+: 1656064739:0;createdb ivigee_test
+: 1656064745:0;la ~/Documents/databases
+: 1656064799:0;bin/rails db:migrate RAILS_ENV=test
+: 1656065028:0;rvm use 3.1.2
+: 1656065056:0;bin/rails db:migrate RAILS_ENV=test\
+: 1656065060:0;bin/rails db:migrate RAILS_ENV=test
+: 1656066758:0;rake time:zones
+: 1656066822:0;../sq
+: 1656066825:0;../squared/
+: 1656066954:0;../sinfin/ivigee
+: 1656073569:0;rgm AddTopPhotoYearStartsAtAndEndsAt
+: 1656074576:0;la ~/Documents/ssl-cert/localhost.key
+: 1656074594:0;vim ~/Documents/ssl-cert/localhost.crt
+: 1656317120:0;Development/sinfin/ivigee
+: 1656317812:0;rm Phil\ Collins\ -\ In\ The\ Air\ Tonight\ \(\'Panski\ \&\ John\ Skyfield\ Remix\)\ \[Deep\ House\]\ -\ Beyond\ Radio.webp
+: 1656317928:0;ydl https://www.youtube.com/watch\?v\=ut9Nr7ze99U
+: 1656318216:0;bundle update
+: 1656318234:0;rake spec
+: 1656318362:0;bundle
+: 1656318378:0;gem install bundler
+: 1656318423:0;bundler install
+: 1656318497:0;gem install spring
+: 1656318523:0;echo
+: 1656318526:0;ivigee
+: 1656318527:0;spring
+: 1656318536:0;rs -p 3000
+: 1656320399:0;../ivigee
+: 1656320775:0;git db:rollback STEP=2
+: 1656322431:0;rgm ChangeTopPhotoYearType
+: 1656324520:0;Development/sinfin/acbcz
+: 1656335002:0;exec kubectl exec -i -t -n acbcz-28340759-staging sidekiq-staging-848bbbdcdd-8mh2s -c sidekiq-staging -- sh -c "clear; (bash || ash || sh)"
+: 1656336845:0;rgm AddTopPhotoYearSlug
+: 1656340913:0;r db:rollback STEP=2
+: 1656354458:0;rgm FixTopPhotoYearType
+: 1656356040:0;kj
+: 1656363346:0;r test test/controllers/microsites/top_photo/nominations_controller_test.rb:38
+: 1656363397:0;r test test/controllers/microsites/top_photo/nominations_controller_test.rb:38\
+: 1656363399:0;r test test/controllers/microsites/top_photo/nominations_controller_test.rb:38
+: 1656364138:0;rails test test/controllers/microsites/top_photo/nominations_controller_test.rb:103
+: 1656364174:0;rails test test/controllers/microsites/top_photo/current_users_controller_test.rb:31\
+
+: 1656368043:0;rails test test/controllers/microsites/top_photo/current_users_controller_test.rb
+: 1656368580:0;r t rails test test/controllers/microsites/top_photo/votes_controller_test.rb
+: 1656368628:0;r test test/controllers/microsites/top_photo/votes_controller_test.rb
+: 1656368672:0;r t test/controllers/microsites/top_photo/votes_controller_test
+: 1656368676:0;r t test/controllers/microsites/top_photo/votes_controller_test.rb
+: 1656368683:0;kr r t
+: 1656368956:0;openssl
+: 1656369917:0;rm -rf ~/Documents/ssl-cert/localhost.*
+: 1656369958:0;openssl req -x509 -sha256 -nodes -newkey rsa:2048 -days 365 -keyout ~/Documents/ssl-cert/localhost.key -out ~/Documents/ssl-cert/localhost.crt
+: 1656370320:0;la ~/Documents/ssl-cert/
+: 1656370328:0;pwd
+: 1656373808:0;rails test test/models/finance/currency_test.rb:26
+: 1656377133:0;exec kubectl exec -i -t -n squared-25245350-staging sidekiq-squared-6846bd8844-jtjws -c sidekiq-app -- sh -c "clear; (bash || ash || sh)"
+: 1656378433:0;rgm AddTopPhotoYearShareStripText
+: 1656405974:0;sq
+: 1656406127:0;rails test test/cells/microsites/top_photo/years/footer_cell_test.rb
+: 1656406360:0;rails test test/cells/microsites/top_photo/share_strip_cell_test.rb
+: 1656408406:0;exec kubectl exec -i -t -n squared-25245350-staging sidekiq-squared-55bf8b87f4-t7n6v -c sidekiq-app -- sh -c "clear; (bash || ash || sh)"
+: 1656410652:0;exec kubectl exec -i -t -n squared-25245350-staging sidekiq-squared-55bf8b87f4-t7n6v -c vault-agent -- sh -c "clear; (bash || ash || sh)"
+: 1656410670:0;exec kubectl exec -i -t -n squared-25245350-staging backend-squared-585cc696c5-mkll2 -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1656414381:0;rails test test/cells/microsites/top_photo/years/categories_cell_test.rb:6\
+
+: 1656414440:0;r test test/cells/microsites/top_photo/years/categories_cell_test.rb\
+
+: 1656416729:0;convert public/images/microsites/top_photo/2022/nominations/photo-placement-landscape@2x.jpg -resize 555x555\! public/images/microsites/top_photo/2022/nominations/photo-placement-landscape.jpg
+: 1656416776:0;convert public/images/microsites/top_photo/2022/nominations/photo-placement-squared@2x.jpg -resize 555x555\! public/images/microsites/top_photo/2022/nominations/photo-placement-squared.jpg
+: 1656416787:0;convert public/images/microsites/top_photo/2022/nominations/photo-placement-vertical@2x.jpg -resize 555x555\! public/images/microsites/top_photo/2022/nominations/photo-placement-vertical.jpg
+: 1656421538:0;ydl https://www.youtube.com/watch\?v\=JWHAs8sqOI0
+: 1656423829:0;r t | grep top_photo
+: 1656496469:0;rm -rf Great\ America\ -\ Cris\ Walden\ -\ Topic.mp3
+: 1656496490:0;rm -rf doppelfinger\ -\ quite\ alright\ -\ Indie\ \&\ Folk\ Radio.mp3
+: 1656496513:0;rm -rf Earth\ -\ Mogli\ -\ Topic.mp3
+: 1656496526:0;rm -rf Empire\ Of\ The\ Sun\ -\ We\ Are\ The\ People\ \(Official\ Music\ Video\)\ -\ empireofthesunvevo.mp3
+: 1656496529:0;rm -rf Kygo,\ Tina\ Turner\ -\ What\'s\ Love\ Got\ to\ Do\ with\ It\ -\ KygoOfficialVEVO.mp3
+: 1656496534:0;rm -rf Lucid\ -\ Sly\ Mike\ -\ Topic.mp3
+: 1656496538:0;rm -rf Sultans\ Of\ Swing\ -\ Dire\ Straits\ -\ Topic.mp3
+: 1656496543:0;rm -rf The\ Passenger\ -\ Iggy\ Pop\ -\ Topic.mp3
+: 1656496549:0;rm -rf Vatra\ \'\'Bilo\ je\ dobro\ dok\ je\ trajalo\ \(EP\ version\)\'\'\ -\ DallasRecordsTV.mp3
+: 1656496552:0;rm -rf Wonders\ Never\ Cease\ \(Edit\)\ -\ Morcheeba\ -\ Topic.mp3
+: 1656496564:0;rm -rf Robin\ Schulz\ \&\ David\ Guetta\ -\ On\ Repeat\ \[Official\ Lyric\ Video\]\ -\ David\ Guetta.mp3
+: 1656496571:0;rm -rf Somewhere\ Else\ Before\ -\ EsbjÃ¶rn\ Svensson\ Trio\ -\ Topic.mp3
+: 1656496590:0;rm -rf The\ Truth\ -\ Kygo\ -\ Topic.mp3
+: 1656499917:0;rm -rf Purple\ Disco\ Machine\ -\ *
+: 1656499935:0;rm -rf Bicicleta\ -\ Eyedrops\ -\ Topic.mp3
+: 1656500097:0;mv Ezekiel\ -\ help_urself\ * ../DoomerWave/Ezekiel
+: 1656500156:0;mkdir ../Electronic/plenka
+: 1656500167:0;mv *plenka* ../Electronic/plenka
+: 1656500181:0;mv *slvt* ../DoomerWave/Sewerslvt
+: 1656500190:0;mv Suffer\ With\ Me\ -\ lÃ­ue\ -\ Topic.mp3 ../Electronic
+: 1656500200:0;mv vacations\ -\ telephones\ \(sped\ up\)\ -\ queze.mp3 ../Indie/VACATIONS
+: 1656500211:0;mv Consumane\ -\ Phonk\ House\ 2\ -\ boss\ of\ this\ gym.mp3 ../Phonk
+: 1656500226:0;mv ./*.mp3 ../Electronic
+: 1656500229:0;la .
+: 1656500231:0;la ..
+: 1656500237:0;../Electronic
+: 1656500259:0;mv Crystal\ Castles\ -\ Violent\ Dreams\ \(Sidewalks\ and\ Skeletons\ REMIX\)\ -\ Sidewalks\ and\ Skeletons.mp3 ../DoomerWave/CrystalCastles
+: 1656500274:0;mkdir Portwave
+: 1656500287:0;mv Portwave\ -\ NIGHTMARE\ \(slowed\)\ -\ The\ memory\ comets.mp3 Portwave
+: 1656588772:0;rails generate email_templates Microsites::TopPhotoMailer
+: 1656588797:0;rails generate email_template Microsites::TopPhotoMailer
+: 1656588810:0;r generate --help
+: 1656610188:0;Music/new
+: 1656610218:0;ydl https://www.youtube.com/watch\?v\=ICt8Z2vGTTY
+: 1656619708:0;rgm AddTopPhotoNominationEmailedAt
+: 1656621712:0;r generate folio:email_templates Microsites::TopPhotoMailer
+: 1656622038:0;new
+: 1656622043:0;ydl https://www.youtube.com/watch\?v\=AKOZ0BO1nJg
+: 1656622856:0;ydl https://www.youtube.com/watch\?v\=y7AqNJDU3FQ
+: 1656622998:0;polybar
+: 1656624234:0;bundle exec guard
+: 1656624472:0;r t test/mailers/squared/top_photo_mailer_test.rb
+: 1656624494:0;r t test/mailers/microsites/top_photo_mailer_test.rb
+: 1656627504:0;rt
+: 1656627733:0;r t test/cells/microsites/top_photo/years/categories_cell_test.rb
+: 1656628077:0;../DoomerWave
+: 1656628082:0;cd Mareux
+: 1656628084:0;ydl https://www.youtube.com/watch\?v\=WzWSIvxEBrA
+: 1656629022:0;cd Electronic
+: 1656629032:0;mkdir SidewalksAndSkeletons
+: 1656629034:0;cd SidewalksAndSkeletons
+: 1656629677:0;r routes | grep vote
+: 1656629760:0;r t app/cells/microsites/top_photo/login_modal_cell.rb
+: 1656632020:0;git pull
+: 1656632033:0;git pull gitlab master
+: 1656632295:0;ydl https://www.youtube.com/watch\?v\=KETzfQNW85A
+: 1656632308:0;ydl https://www.youtube.com/watch\?v\=qLcqj6FsB-0
+: 1656666850:0;ydl https://www.youtube.com/watch\?v\=w_T5WX9mY6s
+: 1656667537:0;exec kubectl exec -i -t -n squared-25245350-staging backend-squared-7b474f4878-fd94g -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1656667549:0;exec kubectl exec -i -t -n squared-25245350-production backend-squared-6555c86c6d-llxzb -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1656673321:0;rails test test/controllers/microsites/top_photo/nominations_controller_test.rb:88
+: 1656673327:0;rails test test/controllers/microsites/top_photo/nominations_controller_test.rb
+: 1656673588:0;xrandr --listmonitors
+: 1656673712:0;xrandr --set-primary HDMI-A-0 --left-of DisplayPort-2
+: 1656673718:0;xrandr --help
+: 1656673801:0;M\
+xrandr --listmonitors
+: 1656673820:0;xrandr --output --primary HDMI-A-0 --left-of DisplayPort-2
+: 1656673878:0;xrandr --output HDMI-A-0 --primary --left-of DisplayPort-2
+: 1656673935:0;vim ~/.xsession
+: 1656674054:0;source ~/.xsession
+: 1656674082:0;polybar --reload large &
+: 1656674791:0;[ -f /vault/secrets/dotenv ] && source /vault/secrets/dotenv; RACK_ENV=production bundle exec rails console
+: 1656674807:0;exec kubectl exec -i -t -n squared-25245350-production backend-squared-7b64858c84-qn7mt -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1656706073:0;~/Downloads
+: 1656706099:0;dpkg --help
+: 1656706129:0;sudo dpkg -i steam_latest.deb
+: 1656706281:0;sudo apt install libc6:amd64 libc6:i386 libegl1:amd64 libegl1:i386 libgbm1:amd64 libgbm1:i386 libgl1-mesa-dri:amd64 libgl1-mesa-dri:i386 libgl1:amd64 libgl1:i386 xdg-desktop-portal-gtk xterm zenity\
+
+: 1656706285:0;sudo apt install libc6:amd64 libc6:i386 libegl1:amd64 libegl1:i386 libgbm1:amd64 libgbm1:i386 libgl1-mesa-dri:amd64 libgl1-mesa-dri:i386 libgl1:amd64 libgl1:i386 xdg-desktop-portal-gtk xterm zenity
+: 1656706295:0;sudo apt --fix-broken install libc6:amd64 libc6:i386 libegl1:amd64 libegl1:i386 libgbm1:amd64 libgbm1:i386 libgl1-mesa-dri:amd64 libgl1-mesa-dri:i386 libgl1:amd64 libgl1:i386 xdg-desktop-portal-gtk xterm zenity
+: 1656706327:0;sudo apt --fix-broken install aptitude
+: 1656706683:0;/bin/sh -c 'apt-get install -y aptitude'
+: 1656706694:0;sudo apt-get update
+: 1656706701:0;sudo apt-get install aptitude
+: 1656706751:0;sudo apt-et install aptitude
+: 1656706757:0;apt --fix-broken install
+: 1656706762:0;sudo apt --fix-broken install
+: 1656706798:0;sudo apt install aptitude
+: 1656707103:0;steam
+: 1656707127:0;sudo steam
+: 1656707136:0;sudo aptitude install steam
+: 1656853475:0;Development/dotfiles
+: 1656922375:0;devel
+: 1656922474:0;Development/sinfin
+: 1656922813:0;kstart plasmashell
+: 1656922824:0;kstart5 plasmashell
+: 1656922844:0;kinfocenter --version
+: 1656922867:0;kwin --replace
+: 1656923523:0;plasmashell &
+: 1656923646:0;wmctrl -c Plasma
+: 1656924622:0;SidewalksAndSkeletons
+: 1656924625:0;ydl https://www.youtube.com/watch\?v\=ZERl1FDzClQ
+: 1656927637:0;ydl https://www.youtube.com/watch\?v\=EWES7Uqbc9A
+: 1656927847:0;ydl https://www.youtube.com/watch\?v\=FKB4Y2DS-U8
+: 1656931506:0;syncthing
+: 1656938126:0;rgm AddTopPhotoYearMeta
+: 1656958521:0;sudo apt install eww
+: 1656958529:0;sudo aptitude
+: 1656958735:0;vim ~/.local/state/zsh/history
+: 1656958764:0;vim build/install-independent.sh
+: 1656959343:0;sudo apt install libgtk-3-dev
+: 1656959496:0;sudo apt install libpango
+: 1656959502:0;sudo apt install libpango-1.0-0
+: 1656959570:0;sudo apt install libgdk-pixbuf2.0-dev
+: 1656959625:0;sudo apt-get install libpangocairo-1.0-0
+: 1656959670:0;sudo apt install libglib2.0-dev
+: 1656959748:0;git clone https://github.com/elkowar/eww
+: 1656959757:0;caro build --release
+: 1656959767:0;sudo apt install cargo
+: 1656959823:0;sudo apt remove rust
+: 1656959824:0;sudo apt remove rustc
+: 1656959888:0;mkdir ~/.config/rust
+: 1656959899:0;mkdir ~/.config/rustup
+: 1656959954:0;sudo apt remove cargo
+: 1656959974:0;source ~/.zprofile
+: 1656959977:0;curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+: 1656960019:0;source /home/vlada/.config/cargo/env
+: 1656960026:0;vim ~/.profile
+: 1656960108:0;cargo build --release
+: 1656960651:0;chmod +x ./eww
+: 1656960681:0;mkdir config/eww
+: 1656960772:0;mkdir tmp
+: 1656960775:0;cd tmp
+: 1656960778:0;git clone https://github.com/rxyhn/bspdots
+: 1656960783:0;cd bspdots
+: 1656960822:0;cp -f config/eww/bar ~/Development/dotfiles/config/eww
+: 1656960826:0;cp -r config/eww/bar ~/Development/dotfiles/config/eww
+: 1656960845:0;rm -rf ~/Development/dotfiles/config/eww/bar
+: 1656960852:0;cp -r config/eww/bar/* ~/Development/dotfiles/config/eww
+: 1656960859:0;la ~/.config/eww
+: 1656960872:0;la ~/Development/dotfiles/config/eww
+: 1656960883:0;rm -rf tmp
+: 1656961005:0;sudo apt remove thunderbird
+: 1656961021:0;rm -rf .thunderbird
+: 1656961032:0;eww/
+: 1656961052:0;cd target/release
+: 1656961058:0;./eww daemon
+: 1656961067:0;./eww open
+: 1656961447:0;cd eww
+: 1656961811:0;git clone https://github.com/saimoomedits/eww-widgets
+: 1656961831:0;rm -rf ~/Development/dotfiles/config/eww/*
+: 1656961867:0;cp eww-widgets/eww/bar/* ~/Development/dotfiles/config/eww
+: 1656961872:0;cp -rf eww-widgets/eww/bar/* ~/Development/dotfiles/config/eww
+: 1656961881:0;./eww open bar
+: 1656967286:0;amixer
+: 1656967299:0;amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'
+: 1656967343:0;./scripts/battery --bat
+: 1656967408:0;~/.config/eww
+: 1656967411:0;scripts/mem-ad used
+: 1656967543:0;scripts/pop
+: 1656967547:0;scripts/pop audio
+: 1656967913:0;mkdir ./bar
+: 1656967937:0;la ~/Development/dotfiles/config/eww/bar
+: 1656967945:0;rmdir ~/Development/dotfiles/config/eww/bar
+: 1656967966:0;rm bar
+: 1656967972:0;mkdir bar
+: 1656967976:0;mv -f ~/Development/dotfiles/config/eww/* ./bar
+: 1656967999:0;la bar
+: 1656968016:0;rm -rf ~/Development/dotfiles/config/eww
+: 1656968034:0;mv -f ./eww ~/Development/dotfiles/config/eww
+: 1656968076:0;la config
+: 1656968121:0;config
+: 1656968128:0;git clohttps://github.com/Saimoomedits/eww-widgets
+: 1656968155:0;mv -f eww-widgets eww
+: 1656968165:0;la eww
+: 1656968173:0;rm eww/eww.gif
+: 1656968180:0;rm -rf eww/.git
+: 1656968191:0;rm -rf eww
+: 1656968194:0;git clone https://github.com/Saimoomedits/eww-widgets
+: 1656968203:0;mv -f eww-widgets/eww ./
+: 1656968212:0;./install
+: 1656968655:0;which rustc
+: 1656969364:0;mv ~/eww/target/release/eww ~/.local/bin/
+: 1656969370:0;la ~/.local/bin
+: 1656969410:0;~/.local/bin/eww
+: 1656969416:0;~/.local/bin/eww deamon
+: 1656969421:0;~/.local/bin/eww daemon
+: 1656969735:0;~/eww
+: 1656969740:0;la target/release
+: 1656970119:0;mv ~/.local/bin/ ~/eww/target/release/eww
+: 1656970128:0;mv ~/.local/bin/eww ~/eww/target/release/
+: 1656970216:0;la ~/.config/eww/bar
+: 1656970261:0;./target/release/eww open bar
+: 1656970274:0;./target/release/eww daemon
+: 1656972596:0;~/
+: 1656972613:0;./eww/target/release/eww open bar
+: 1656972619:0;./eww/target/release/eww deamon
+: 1656972624:0;./eww/target/release/eww daemon
+: 1656973542:0;i3 config
+: 1656973657:0;pidof eww
+: 1656973696:0;./.config/eww/bar/launch_bar
+: 1656973769:0;i3 bspc
+: 1656973772:0;i3 query
+: 1656973775:0;i3 help
+: 1656973778:0;man i3
+: 1656973779:0;man i3wm
+: 1656973783:0;i3 --help
+: 1656973795:0;i3 -d query
+: 1656973857:0;i3-msg -- workspace
+: 1656973866:0;i3-msg -- workspace number
+: 1656973873:0;i3-msg -- workspace number '3'
+: 1656973985:0;vim bruh.sh
+: 1656974259:0;i3-msg -t workspaces
+: 1656974617:0;Development/dotfiles/config/eww/bar/scripts/workspace
+: 1656974949:0;ruby -e "print ok"
+: 1656974955:0;ruby -e "print 'ok'"
+: 1656974977:0;ruby -e "JSON.parse($(i3-msg -t get_workspaces))"
+: 1656975033:0;ruby -e "\
+require 'json'\
+JSON.parse($(i3-msg -t get_workspaces))\
+"
+: 1656975091:0;ruby -e "require 'open-uri'; eval open('http:// or local file').read"
+: 1656975110:0;ruby -e "require 'json'; JSON.parse($(i3-msg -t get_workspaces))"
+: 1656975146:0;workspaces=$(i3-msg -t get_workspaces)
+: 1656975166:0;ruby -e "require 'json'; JSON.parse('$(i3-msg -t get_workspaces)')"
+: 1656975178:0;ok=$(ruby -e "require 'json'; JSON.parse('$(i3-msg -t get_workspaces)')")
+: 1656975180:0;echo $ok
+: 1656975193:0;ok=$(ruby -e "require 'json'; print JSON.parse('$(i3-msg -t get_workspaces)')")
+: 1656975201:0;ruby -e "require 'json'; puts JSON.parse('$(i3-msg -t get_workspaces)')"
+: 1656976366:0;./Development/dotfiles/config/eww/bar/scripts/workspace
+: 1656977701:0;ruby ~/Development/dotfiles/config/eww/bar/scripts/workspace
+: 1656978394:0;ruby -h
+: 1656978432:0;ruby ~/Development/dotfiles/config/eww/bar/scripts/workspace.rb
+: 1656978497:0;echo $XDG_CONFIG_HOME
+: 1656980062:0;Jkj
+: 1656980317:0;i3-msg -t get_workspac
+: 1656980324:0;i3-msg -t send_tick
+: 1656980373:0;i3-msg subscribe window
+: 1656980397:0;i3-msg subscribe workspace
+: 1656980421:0;i3-msg subscribe 'workspace'
+: 1656980434:0;i3-msg -- subscribe 'workspace'
+: 1656980438:0;i3-msg -- subscribe "workspace"
+: 1656980452:0;i3-msg -- subscribe
+: 1656980458:0;i3-msg subscribe
+: 1656980461:0;i3-msg -t subscribe
+: 1656980465:0;i3-msg -t subscribe desktop
+: 1656980483:0;i3 subscribe desktop node_transfer | while read -r _ ; do\
+echo 'nigga'\
+done
+: 1656980491:0;i3 subscribe workspace node_transfer | while read -r _ ; do\
+echo 'nigga'\
+done
+: 1656980497:0;i3 subscribe workspace | while read -r _ ; do\
+echo 'nigga'\
+done
+: 1656980530:0;i3 subscribe
+: 1656980730:0;i3-msg -t subscribe -m '[ "window" ]' | while read line ; do echo $line; done
+: 1656982282:0;!
+: 1656982823:0;i3-msg -t get_workspa
+: 1656982836:0;i3-msg -t get_config
+: 1656982838:0;i3-msg -t get_conf
+: 1656982843:0;i3-msg -t get_outputs
+: 1656982850:0;i3-msg -t get_marks
+: 1656983791:0;i3-msg subscribe workspace | while read -r _ ; do\
+echo 'nigga'\
+done
+: 1656983815:0;i3-msg -t subscribe -m '[ "window" ]' | while read line ; do\
+ echo $line\
+done
+: 1656984106:0;i3-msg -t get_tree
+: 1656984199:0;i3-msg -t get_workspaces | jq '.[] | select(.focused==true).name' | cut -d"\"" -f2
+: 1656984308:0;man i3-msg
+: 1656984974:0;systemctl sleep
+: 1657014493:0;$HOME/.config/eww/bar/launch_bar
+: 1657026102:0;date +\%I
+: 1657026120:0;date +\%M
+: 1657062418:0;cd Indie
+: 1657062422:0;ydl https://www.youtube.com/watch\?v\=icJOkfS7ImA
+: 1657116302:0;cd,
+: 1657116675:0;$HOME/.config/eww/bar/scripts/pop calendar
+: 1657117174:0;time
+: 1657117191:0;date +\%s
+: 1657117193:0;date +\%S
+: 1657119781:0;EWW="$HOME/eww/target/release/eww -c $HOME/.config/eww/bar"
+: 1657119806:0;$EWW open-many system
+: 1657119824:0;${EWW} open-many system
+: 1657120099:0;sudo apt install brightnessctl
+: 1657120147:0;brightnessctl -m -d intel_backlight | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'
+: 1657121985:0;free
+: 1657122017:0;cat /proc/stat\
+\
+
+: 1657122024:0;cat /proc/stat\
+grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}'
+: 1657122194:0;~/Development/dotfiles/config/eww/bar/scripts/memory
+: 1657122197:0;grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}'
+: 1657122200:0;grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage ""}'
+: 1657122421:0;grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {printf "%.0f", $usage}'}'
+: 1657122425:0;grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {printf "%.0f", $usage}'
+: 1657122439:0;grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {printf $usage}'
+: 1657122442:0;grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print $usage}'
+: 1657122445:0;grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}'
+: 1657123123:0;grep 'cpu' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}}'
+: 1657123145:0;grep 'cpu' /proc/stat | awk '{usage=($2+$4+$5)*100/($2+$4+$5)} END {print usage}'
+: 1657123157:0;grep 'cpu' /proc/stat
+: 1657123180:0;grep 'cpu' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}'
+: 1657123759:0;pkill eww
+: 1657123767:0;eww
+: 1657123771:0;target/release
+: 1657124051:0;top
+: 1657124083:0;sar
+: 1657124089:0;sar 4
+: 1657150083:0;du
+: 1657150097:0;df
+: 1657150483:0;du -xh / |grep â¸^\S*[0-9\.]\+Gâ¹|sort -rn
+: 1657150488:0;du -xh / |grep â¸^\S*[0-9\.]\+Gâ¹| sort -rn
+: 1657150492:0;du -xh / | grep â¸^\S*[0-9\.]\+Gâ¹| sort -rn
+: 1657150601:0;df /dev/sda5 | grep '[0-9]'
+: 1657150609:0;df /dev/sda5 | grep '\D'
+: 1657150612:0;df /dev/sda5 | grep '\d'
+: 1657150618:0;df /dev/sda5 | grep 'd'
+: 1657150625:0;df /dev/sda5 | grep '\d*'
+: 1657150630:0;df /dev/sda5 | grep -E '\d*'
+: 1657150639:0;df /dev/sda5 | grep -O 'd*'
+: 1657150641:0;df /dev/sda5 | grep -O '\d*'
+: 1657150644:0;df /dev/sda5 | grep -o '\d*'
+: 1657150649:0;df /dev/sda5 | grep -oR '\d*'
+: 1657150653:0;df /dev/sda5 | grep -Eo '\d*'
+: 1657150656:0;df /dev/sda5 | grep -Eo '\d'
+: 1657150758:0;echo $drive
+: 1657150760:0;echo $drive[0]
+: 1657150763:0;echo $drive[1]
+: 1657150765:0;echo $drive[3]
+: 1657150767:0;echo $drive[4]
+: 1657150769:0;echo $drive[5]
+: 1657150775:0;echo $drive[6]
+: 1657150871:0;echo $drive[5] | cut -f 3
+: 1657150882:0;echo $drive | cut -f 3
+: 1657150885:0;echo $drive | cut -f 2
+: 1657150889:0;drive=`df /dev/sda5 | grep -o '[0-9]*'`
+: 1657150896:0;df /dev/sda5 | grep -o '[0-9]'
+: 1657150905:0;df /dev/sda5 | grep -o '[0-9]*'
+: 1657150936:0;df /dev/sda5 | cut -d ' ' -f 2
+: 1657150937:0;df /dev/sda5 | cut -d ' ' -f 3
+: 1657150939:0;df /dev/sda5 | cut -d ' '
+: 1657150941:0;df /dev/sda5 | cut -d ' ' -f
+: 1657150943:0;df /dev/sda5 | cut -d ' ' -f 0
+: 1657150944:0;df /dev/sda5 | cut -d ' ' -f 1
+: 1657150946:0;df /dev/sda5 | cut -d ' ' -f 6
+: 1657150950:0;df /dev/sda5 | cut -d ' ' -f 8
+: 1657150952:0;df /dev/sda5 | cut -d ' ' -f 7
+: 1657150956:0;df /dev/sda5
+: 1657150996:0;~/Development/dotfiles/config/eww/bar/scripts/cpu
+: 1657192034:0;rvm
+: 1657192038:0;squared
+: 1657206146:0;[ -f /vault/secrets/dotenv ] && source /vault/secrets/dotenv; RACK_ENV=staging bundle exec rails console
+: 1657206154:0;exec kubectl exec -i -t -n squared-25245350-production backend-squared-58cb87db44-ckvc6 -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1657206406:0;bin/rails
+: 1657228315:0;bluetoothctl
+: 1657228322:0;bluetoothctl --help
+: 1657228497:0;bluetoothctl disconnect BeatsX
+: 1657228945:0;~/Development/dotfiles/config/eww/bar/scripts/workspace
+: 1657229302:0;exec kubectl exec -i -t -n squared-25245350-production backend-squared-754856d466-mnd2s -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1657230283:0;bluetoothctl devices | cut -d
+: 1657230290:0;bluetoothctl devices | cut -d 1-
+: 1657230294:0;bluetoothctl devices | cut -b 1-
+: 1657230300:0;bluetoothctl devices | cut -b 1-3
+: 1657230304:0;bluetoothctl devices | cut -b 6
+: 1657230310:0;bluetoothctl devices | cut -b 9-10
+: 1657230315:0;bluetoothctl devices | cut -b 8-10
+: 1657230327:0;bluetoothctl devices | cut -b 8-20
+: 1657230332:0;bluetoothctl devices | cut -b 8-25
+: 1657230603:0;bluetoothctl scan
+: 1657230649:0;bluetoothctl devices | cut -b 8-24
+: 1657231935:0;cut --help
+: 1657232950:0;bluetoothctl info BeatsX
+: 1657232960:0;bluetoothctl info EC:2C:E2:EB:FA:74
+: 1657234131:0;rm -rf ~/.cache/eww-*
+: 1657234273:0;rm -rf ~/.cache/.bluetoothctl_history
+: 1657234351:0;bluetoothctl scan on
+: 1657234471:0;~/Development/dotfiles/config/eww/bar/launch_bar
+: 1657234552:0;la ~/eww/target/release
+: 1657236731:0;$HOME/.config/eww/bar open bluetooth_menu
+: 1657236760:0;${EWW_BIN} -c $HOME/.config/eww/bar close bluetooth_menu
+: 1657236765:0;${EWW_BIN} -c $HOME/.config/eww/bar open bluetooth_menu
+: 1657237234:0;~/eww/target/release/eww reaload
+: 1657238332:0;bluetoothctl disconnect EC:2C:E2:EB:FA:74
+: 1657238340:0;bluetoothctl connect EC:2C:E2:EB:FA:74
+: 1657269220:0;r dev:cache
+: 1657269963:0;\
+spring stop
+: 1657269966:0;rm -rf tmp/cache
+: 1657272760:0;exec kubectl exec -i -t -n squared-25245350-production backend-squared-756b764bb4-bs8xq -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1657300936:0;i3 reload
+: 1657302056:0;EWW_BIN="$HOME/eww/target/release/eww"
+: 1657302080:0;$EWW_BIN reload
+: 1657302486:0;~/Development/dotfiles/config/eww/bar/scripts/bluetooth 'change_connection'
+: 1657302748:0;picom --help
+: 1657302815:0;$EWW_BIN help
+: 1657302873:0;$EWW_BIN help reload
+: 1657306433:0;$EWW_BIN reload bar
+: 1657309447:0;~/Development/dotfiles/config/eww/bar/scripts/pop bluetooth\\
+~/Development/dotfiles/config/eww/bar/scripts/pop bluetooth
+: 1657312277:0;~/Development/dotfiles/config/eww/bar/scripts/bluetooth change_connection connect 2
+: 1657312337:0;~/Development/dotfiles/config/eww/bar/scripts/bluetooth 'change_connection' 'connect' '2'
+: 1657313062:0;upower
+: 1657313064:0;upower -e
+: 1657313067:0;systemctl status bluetooth
+: 1657315995:0;~/Development/dotfiles/config/eww/bar/scripts/bluetooth
+: 1657316003:0;sudo apt install sponge
+: 1657316040:0;sudo apt install moreutils
+: 1657316062:0;sponge
+: 1657316240:0;~/Development/dotfiles/config/eww/bar/scripts/pop system
+: 1657323343:0;~/Development/dotfiles/config/eww/bar/scripts/bluetooth device_button_click
+: 1657323365:0;bluetoothctl list
+: 1657323379:0;~/Development/dotfiles/config/eww/bar/scripts/bluetooth device_button_click EC:2C:E2:EB:FA:74
+: 1657323529:0;~/Development/dotfiles/config/eww/bar/scripts/bluetooth devices
+: 1657323543:0;bluetoothctl connect E0:DC:FF:13:78:1C
+: 1657323601:0;bluetoothctl trust E0:DC:FF:13:78:1C
+: 1657323639:0;bluetoothctl pair E0:DC:FF:13:78:1C
+: 1657359571:0;Music/
+: 1657359574:0;Indie
+: 1657359581:0;mkdir GusDapperton
+: 1657359583:0;GusDapperton
+: 1657359585:0;ydl https://www.youtube.com/watch\?v\=Jelu2v-oUKg
+: 1657359607:0;../../DoomerWave/CrystalCastles
+: 1657359609:0;ydl https://www.youtube.com/watch\?v\=cjaM5xvVEEE
+: 1657359634:0;ydl https://www.youtube.com/watch\?v\=tv2t8YFagqs\&list\=RDMM\&index\=17
+: 1657359804:0;rm *Morch*
+: 1657359816:0;rm Sadza*
+: 1657360061:0;~/Development/dotfiles/config/eww/bar/scripts/pop bluetooth
+: 1657360094:0;~/eww/target/release/eww reload
+: 1657360099:0;~/eww/target/release/eww daemon
+: 1657360114:0;~/eww/target/release/eww close-all
+: 1657402338:0;M[200~while true\
+M\
+
+: 1657402803:0;cat -h
+: 1657402806:0;cat --help
+: 1657402826:0;cat - todo
+: 1657402844:0;cat
+: 1657414338:0;~/Development/dotfiles/config/eww/bar/scripts/bluetooth subscribe
+: 1657517827:0;../sinfin/squared
+: 1657518659:0;git pull --rebase
+: 1657525909:0;Development/react/math-quiz
+: 1657525911:0;npm run start
+: 1657526106:0;npm install
+: 1657526117:0;npm audit fix
+: 1657526125:0;npm audit fix --force
+: 1657538247:0;exec kubectl exec -i -t -n squared-25245350-production backend-squared-5686d748cc-bcdr4 -c backend-app -- sh -c "clear; (bash || ash || sh)"
+: 1657553498:0;../notesvilla
+: 1657553540:0;../acbcz
+: 1657614426:0;Development/sinfin/squared/
+: 1657614991:0;rails test test/controllers/microsites/top_photo/votes_controller_test.rb:19
+: 1657619778:0;FORCE_SSL=1 r s -b 'ssl://localhost:3333?key=/home/vlada/Documents/ssl-cert/localhost.key&cert=/home/vlada/Documents/ssl-cert/localhost.crt'
+: 1657620941:0;r s
+: 1657623952:0;rails test test/controllers/pelikan/products_controller_test.rb
+: 1657624383:0;rails test test/controllers/api/facebook/albums_controller_test.rb:24
+: 1657627596:0;rails test test/mailers/squared/faq/leads_mailer_test.rb
+: 1657627608:0;rails test test/mailers/squared/faq/leads_mailer_test.rb:11
+: 1657636599:0;grep 'header_vi' '#<ActionController::Parameters {"title_cs"=>"NOVA Green Energy", "title_en"=>"NOVA Green Energy", "subtitle_cs"=>"investiÄ­nÃ­ fond s promÄ»nnÃ½m zÃkladnÃ­m kapitÃlem, a.s.", "subtitle_en"=>"Investment fund with variable basic capital, a.s.", "slug_cs"=>"nova-green-energy", "slug_en"=>"nova-green-energy", "code"=>"nge-pf2", "investment_strategy_cs"=>"MajetkovÃ© ÃºÄ­asti a podÅ¹Ã­zenÃ© pohledÃvky ve stÅ¹ednÄ» velkÃ½ch spoleÄ­nostech pÅ¯sobÃ­cÃ­ch v oblasti obnovitelnÃ½ch zdrojÅ¯.", "investment_strategy_en"=>"Equity investments and subordinated debt in medium-sized companies operating in the renewable energy sector.", "description_cs"=>"NOVA Green Energy, SICAV, a.s. je investiÄ­nÃ­ fond pro kvalifikovanÃ© investory, kterÃ½ investuje do spoleÄ­nostÃ­ vyrÃbÄ»jÃ­cÃ­ch energii z obnovitelnÃ½ch zdrojÅ¯ energie v regionu stÅ¹ednÃ­ a vÃ½chodnÃ­ Evropa - zejmÃ©na Ä¬eskÃ republika a Slovensko.", "description_en"=>"NOVA Green Energy is an open-end mutual fund of qualified investors that invests in companies generating power from renewable sources of energy in the Central and Eastern Europe, particularly in the Czech Republic and Slovakia.", "client_text_cs"=>"<p>NOVA Green Energy je fondem kvalifikovanÃ½ch investorÅ¯ (dÃle â¾Fondâ¼), kterÃ½ investuje do majetkovÃ½ch ÃºÄ­astÃ­ ve spoleÄ­nostech provozujÃ­cÃ­ malÃ© a stÅ¹ednÄ» velkÃ© zaÅ¹Ã­zenÃ­ (1-4 MW) vyrÃbÄ»jÃ­cÃ­ch energii z obnovitelnÃ½ch zdrojÅ¯ energie v regionu stÅ¹ednÃ­ a vÃ½chodnÃ­ Evropy, zejmÃ©na pak v Ä¬eskÃ© republice a na Slovensku. VÃ½nosy Fondu jsou stabilizovanÃ©, jelikoÅ¾ se opÃ­rajÃ­ o zÃkonem garantovanÃ© vÃ½kupnÃ­ ceny elektrickÃ© energie na obdobÃ­ 15 aÅ¾ 20 let, pÅ¹iÄ­emÅ¾ tyto vÃ½kupnÃ­ ceny vÃ½raznÄ» pÅ¹evyÅujÃ­ bÄ»Å¾nÃ© trÅ¾nÃ­ ceny elektrickÃ© energie. Spolu s efektivnÃ­m Å¹Ã­zenÃ­m aktiv pod sprÃvou Fondu se tyto faktory nÃslednÄ» promÃ­tajÃ­ do vÃ½sledkÅ¯ hospodaÅ¹enÃ­ Fondu. Investice je tak svÃ½m charakterem z hlediska rizikovosti podobnÃ investicÃ­m do stÃtnÃ­ch dluhopisÅ¯ se splatnostÃ­ 10 aÅ¾ 15 let, ale s vÃ½znamnÄ» vyÅÅÃ­m oÄ­ekÃvanÃ½m vÃ½nosem nad 6 % p. a. CÃ­lem Fondu je bÃ½t nejlepÅÃ­ volbou pro konzervativnÃ­ investory oÄ­ekÃvajÃ­cÃ­ stabilnÃ­, zÃkonem garantovanÃ½ pÅ¹Ã­jem a pÅ¹imÄ»Å¹enÃ© zhodnocenÃ­ kapitÃlu v oblasti obnovitelnÃ½ch zdrojÅ¯ energie. PÅ¹Ã­snÃ½ regulaÄ­nÃ­ rÃmec, pÅ¹ehlednÄ» nastavenÃ motivace manaÅ¾erÅ¯, renomovanÃ½ sprÃvce, znalec a auditor Ä­i dalÅÃ­ institucionÃlnÃ­ a projektovÃ© zÃruky zabezpeÄ­ujÃ­ maximÃlnÃ­ transparentnost NOVA Green Energy podle vzoru investiÄ­nÃ­ch fondÅ¯ v zÃpadnÃ­ EvropÄ».</p>", "client_text_en"=>"<p>NOVA Green Energy is a fund of qualified investors (hereinafter only â¼Fundâ½) investing in equity of companies operating small and medium facilities (1-4 MW) that generate power from renewable sources of energy in the Central and Eastern Europe, particularly in the Czech Republic and Slovakia. The yield of the Fund is steady because itâ¹s based on feed-in tariffs of electricity for a period of 15 â³ 20 years; moreover these prices exceed a common market electricity price. Those factors together with effective asset management reflect in economic result of the Fund. Thus, this type of investment resembles in terms of risk government bonds with 10 â³ 15 year maturity; however the yield is significantly higher than 6% p.a. The Fund aims to be the best option for conservative investors expecting stable government guaranteed income and adequate capital appreciation in the area of renewable sources. Strict regulation framework, clearly set management motivation, a respected fund manager, expert and auditor as well as other institutional and project guarantees ensure maximum transparency of NOVA Green Energy following the model of Western Europe investment funds.</p>", "founded_cs"=>"leden 2013", "founded_en"=>"Feb 2013", "nav_cs"=>"70 mil. EUR", "nav_en"=>"70 M EUR", "currency_cs"=>"CZK, EUR", "currency_en"=>"CZK, EUR", "assets"=>"120.0", "assets_unit"=>"mil. EUR", "category_cs"=>"Fond kvalifikovanÃ½ch investorÅ¯ ve formÄ» SICAV", "category_en"=>" Investment Fund of Qualified Investors (SICAV)", "featured"=>"1", "published"=>"1", "bloomberg_url"=>"https://www.bloomberg.com/quote/NGEFCZK:CP", "header_text_cs"=>"<ul>\r\n  <li class=\"ms-hover\">Ä¬istÃ½ prÅ¯mÄ»rnÃ½ vÃ½nos nad&nbsp;6 % roÄ­nÄ»</li>\r\n  <li class=\"ms-hover\">OdpovÄ»dnÃ© investovÃnÃ­ do reÃlnÃ½ch aktiv&nbsp;</li>\r\n  <li class=\"ms-hover\">ZÃkonem garantovanÃ© vÃ½kupnÃ­ ceny energiÃ­ z obnovitelnÃ½ch zdrojÅ¯</li>\r\n</ul>", "header_text_en"=>"<ul><li class=\"ms-hover\">Net average return over 6 %&nbsp;per year<br></li><li class=\"ms-hover\">Suitable for conservative investors</li><li class=\"ms-hover\">Guaranteed Feed-in Tariffs for renewable energy</li></ul>", "sidebar_stats_cs"=>"<p>RoÄ­nÃ­ vÃ½roba elektrickÃ© energie <strong>77 GWh</strong></p>\r\n<p>DokÃÅ¾e na rok zÃsobit energiÃ­ <strong>21&nbsp;</strong><strong>000 domÃcnostÃ­</strong></p>\r\n<p>RoÄ­nÃ­ Ãºspora emisÃ­ CO2 <strong>92</strong><strong>&nbsp;tis. tun</strong></p>\r\n<p>KaÅ¾dÃ½ investovanÃ½ milion korun do fondu uspoÅ¹Ã­ <strong>100 tun</strong> uhlÃ­ roÄ­nÄ»</p>\r\n<p>RoÄ­nÃ­ trÅ¾by <strong>300 mil. KÄ­</strong></p>\r\n<p>Aktiva pod sprÃvou <strong>3</strong><strong>&nbsp;mld. KÄ­</strong></p>\r\n<p><strong>BroÅ¾ura NGE <a href=\"https://www.redsidefunds.com/media/W1siZiIsIjIwMjAvMTIvMTYvMDkvMzMvMTYvY2E1NjliMWQtZDBlNS00ZDFkLTk4M2UtYTAzODQwYjA3MGU3L2Jyb3p1cmEtZm9uZHUtbm92YS1ncmVlbi1lbmVyZ3kucGRmIl1d/a7fd99919a08f6c2/brozura-fondu-nova-green-energy.pdf\" target=\"_blank\">ke staÅ¾enÃ­&nbsp;</a><br></strong></p>", "sidebar_stats_en"=>"<p>Annual electricity production:<strong> 77&nbsp;GWh</strong></p>\r\n<p>Annual electricity supply: <strong>21 500 households</strong></p>\r\n<p>Annual CO2 savings: <strong>92 000 tonnes</strong></p>\r\n<p>Every 40 thousand EUR invested in the Fund saves:  <strong>100 tonnes</strong> of coal every year</p>\r\n<p>Annual sales: <strong>12 million EUR</strong></p>\r\n<p>Assets under management: <strong>120 million EUR</strong></p>", "cta_button_label_cs"=>"MÃm zÃjem o investici ", "cta_button_label_en"=>"I want to invest ", "cta_button_url_cs"=>"https://www.redsidefunds.com/cs/kontakty", "cta_button_url_en"=>"https://www.redsidefunds.com/en/kontakty", "cta_button_scroll_to_contact"=>"1", "rediside_fund_group_id"=>"1", "subscription"=>"yes", "cover_placement_attributes"=>#<ActionController::Parameters {"id"=>"393", "alt"=>"", "file_id"=>"140", "_destroy"=>"0"} permitted: true>, "client_fund_attachments_attributes"=>#<ActionController::Parameters {"0"=>#<ActionController::Parameters {"id"=>"1112", "title"=>"KID - NGE CZK", "position"=>"1", "_destroy"=>"0"} permitted: true>, "1"=>#<ActionController::Parameters {"id"=>"1113", "title"=>"KID - NGE - EUR", "position"=>"2", "_destroy"=>"0"} permitted: true>, "2"=>#<ActionController::Parameters {"id"=>"1114", "title"=>"VZ 2018 NOVA_Green_Energy CZ", "position"=>"3", "_destroy"=>"0"} permitted: true>, "3"=>#<ActionController::Parameters {"id"=>"1115", "title"=>"NGE statut CZ", "position"=>"4", "_destroy"=>"0"} permitted: true>, "4"=>#<ActionController::Parameters {"id"=>"1116", "title"=>"NGE statut EN", "position"=>"5", "_destroy"=>"0"} permitted: true>, "5"=>#<ActionController::Parameters {"id"=>"1158", "title"=>"2021_1 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"32", "_destroy"=>"0"} permitted: true>, "6"=>#<ActionController::Parameters {"id"=>"1159", "title"=>"2021_1 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"33", "_destroy"=>"0"} permitted: true>, "7"=>#<ActionController::Parameters {"id"=>"1160", "title"=>"2021_1 NGE reporting EN - Dividend Class", "position"=>"34", "_destroy"=>"0"} permitted: true>, "8"=>#<ActionController::Parameters {"id"=>"1161", "title"=>"2021_1 NGE reporting EN - Growth Class", "position"=>"35", "_destroy"=>"0"} permitted: true>, "9"=>#<ActionController::Parameters {"id"=>"1168", "title"=>"2021_2 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"42", "_destroy"=>"0"} permitted: true>, "10"=>#<ActionController::Parameters {"id"=>"1169", "title"=>"2021_2 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"43", "_destroy"=>"0"} permitted: true>, "11"=>#<ActionController::Parameters {"id"=>"1170", "title"=>"2021_2 NGE reporting EN - Dividend Class", "position"=>"44", "_destroy"=>"0"} permitted: true>, "12"=>#<ActionController::Parameters {"id"=>"1171", "title"=>"2021_2 NGE reporting EN - Growth Class", "position"=>"45", "_destroy"=>"0"} permitted: true>, "13"=>#<ActionController::Parameters {"id"=>"1178", "title"=>"2021_3 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"52", "_destroy"=>"0"} permitted: true>, "14"=>#<ActionController::Parameters {"id"=>"1179", "title"=>"2021_3 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"53", "_destroy"=>"0"} permitted: true>, "15"=>#<ActionController::Parameters {"id"=>"1180", "title"=>"2021_3 NGE reporting EN - Dividend Class", "position"=>"54", "_destroy"=>"0"} permitted: true>, "16"=>#<ActionController::Parameters {"id"=>"1181", "title"=>"2021_3 NGE reporting EN - Growth Class", "position"=>"55", "_destroy"=>"0"} permitted: true>, "17"=>#<ActionController::Parameters {"id"=>"1188", "title"=>"2021_4 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"62", "_destroy"=>"0"} permitted: true>, "18"=>#<ActionController::Parameters {"id"=>"1189", "title"=>"2021_4 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"63", "_destroy"=>"0"} permitted: true>, "19"=>#<ActionController::Parameters {"id"=>"1190", "title"=>"2021_4 NGE reporting EN - Dividend Class", "position"=>"64", "_destroy"=>"0"} permitted: true>, "20"=>#<ActionController::Parameters {"id"=>"1191", "title"=>"2021_4 NGE reporting EN - Growth Class", "position"=>"65", "_destroy"=>"0"} permitted: true>, "21"=>#<ActionController::Parameters {"id"=>"1198", "title"=>"2020_05_NGE Statut_CZ", "position"=>"72", "_destroy"=>"0"} permitted: true>, "22"=>#<ActionController::Parameters {"id"=>"1199", "title"=>"2021_02_NGE Statut_CZ", "position"=>"73", "_destroy"=>"0"} permitted: true>, "23"=>#<ActionController::Parameters {"id"=>"1200", "title"=>"2021_06_NGE Statut_CZ", "position"=>"74", "_destroy"=>"0"} permitted: true>, "24"=>#<ActionController::Parameters {"id"=>"1201", "title"=>"2021_5 NGE reporting EN - Dividend Class", "position"=>"75", "_destroy"=>"0"} permitted: true>, "25"=>#<ActionController::Parameters {"id"=>"1202", "title"=>"2021_5 NGE reporting EN - Growth Class", "position"=>"76", "_destroy"=>"0"} permitted: true>, "26"=>#<ActionController::Parameters {"id"=>"1205", "title"=>"2021_5 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"79", "_destroy"=>"0"} permitted: true>, "27"=>#<ActionController::Parameters {"id"=>"1206", "title"=>"2021_5 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"80", "_destroy"=>"0"} permitted: true>, "28"=>#<ActionController::Parameters {"id"=>"1209", "title"=>"2021_6 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"83", "_destroy"=>"0"} permitted: true>, "29"=>#<ActionController::Parameters {"id"=>"1210", "title"=>"2021_6 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"84", "_destroy"=>"0"} permitted: true>, "30"=>#<ActionController::Parameters {"id"=>"1211", "title"=>"2021_6 NGE reporting EN - Dividend Class", "position"=>"85", "_destroy"=>"0"} permitted: true>, "31"=>#<ActionController::Parameters {"id"=>"1212", "title"=>"2021_6 NGE reporting EN - Growth Class", "position"=>"86", "_destroy"=>"0"} permitted: true>, "32"=>#<ActionController::Parameters {"id"=>"1221", "title"=>"2021_7 NGE reporting EN - Dividend Class", "position"=>"95", "_destroy"=>"0"} permitted: true>, "33"=>#<ActionController::Parameters {"id"=>"1222", "title"=>"2021_7 NGE reporting EN - Growth Class", "position"=>"96", "_destroy"=>"0"} permitted: true>, "34"=>#<ActionController::Parameters {"id"=>"1227", "title"=>"2021_7 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"101", "_destroy"=>"0"} permitted: true>, "35"=>#<ActionController::Parameters {"id"=>"1228", "title"=>"2021_7 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"102", "_destroy"=>"0"} permitted: true>, "36"=>#<ActionController::Parameters {"id"=>"1230", "title"=>"2021_8 NGE reporting EN - Dividend Class", "position"=>"104", "_destroy"=>"0"} permitted: true>, "37"=>#<ActionController::Parameters {"id"=>"1231", "title"=>"2021_8 NGE reporting EN - Growth Class", "position"=>"105", "_destroy"=>"0"} permitted: true>, "38"=>#<ActionController::Parameters {"id"=>"1232", "title"=>"2021_8 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"106", "_destroy"=>"0"} permitted: true>, "39"=>#<ActionController::Parameters {"id"=>"1233", "title"=>"2021_8 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"107", "_destroy"=>"0"} permitted: true>, "40"=>#<ActionController::Parameters {"id"=>"1239", "title"=>"2021_9 NGE reporting EN - Dividend Class", "position"=>"113", "_destroy"=>"0"} permitted: true>, "41"=>#<ActionController::Parameters {"id"=>"1240", "title"=>"2021_9 NGE reporting EN - Growth Class", "position"=>"114", "_destroy"=>"0"} permitted: true>, "42"=>#<ActionController::Parameters {"id"=>"1241", "title"=>"2021_9 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"115", "_destroy"=>"0"} permitted: true>, "43"=>#<ActionController::Parameters {"id"=>"1242", "title"=>"2021_9 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"116", "_destroy"=>"0"} permitted: true>, "44"=>#<ActionController::Parameters {"id"=>"1248", "title"=>"2021_10 NGE reporting EN - Dividend Class", "position"=>"122", "_destroy"=>"0"} permitted: true>, "45"=>#<ActionController::Parameters {"id"=>"1249", "title"=>"2021_10 NGE reporting EN - Growth Class", "position"=>"123", "_destroy"=>"0"} permitted: true>, "46"=>#<ActionController::Parameters {"id"=>"1250", "title"=>"2021_10 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"124", "_destroy"=>"0"} permitted: true>, "47"=>#<ActionController::Parameters {"id"=>"1251", "title"=>"2021_10 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"125", "_destroy"=>"0"} permitted: true>, "48"=>#<ActionController::Parameters {"id"=>"1255", "title"=>"2021_11 NGE reporting EN - Dividend Class", "position"=>"129", "_destroy"=>"0"} permitted: true>, "49"=>#<ActionController::Parameters {"id"=>"1256", "title"=>"2021_11 NGE reporting EN - Growth Class", "position"=>"130", "_destroy"=>"0"} permitted: true>, "50"=>#<ActionController::Parameters {"id"=>"1257", "title"=>"2021_11 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"131", "_destroy"=>"0"} permitted: true>, "51"=>#<ActionController::Parameters {"id"=>"1258", "title"=>"2021_11 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"132", "_destroy"=>"0"} permitted: true>, "52"=>#<ActionController::Parameters {"id"=>"1261", "title"=>"2021_12 NGE reporting EN - Dividend Class", "position"=>"135", "_destroy"=>"0"} permitted: true>, "53"=>#<ActionController::Parameters {"id"=>"1262", "title"=>"2021_12 NGE reporting EN - Growth Class", "position"=>"136", "_destroy"=>"0"} permitted: true>, "54"=>#<ActionController::Parameters {"id"=>"1263", "title"=>"2021_12 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"137", "_destroy"=>"0"} permitted: true>, "55"=>#<ActionController::Parameters {"id"=>"1264", "title"=>"2021_12 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"138", "_destroy"=>"0"} permitted: true>, "56"=>#<ActionController::Parameters {"id"=>"1269", "title"=>"2022_1 NGE reporting EN - Dividend Class", "position"=>"143", "_destroy"=>"0"} permitted: true>, "57"=>#<ActionController::Parameters {"id"=>"1270", "title"=>"2022_1 NGE reporting EN - Growth Class", "position"=>"144", "_destroy"=>"0"} permitted: true>, "58"=>#<ActionController::Parameters {"id"=>"1271", "title"=>"2022_1 NGE reporting CZ - DividendovÃ tÅ¹Ã­da", "position"=>"145", "_destroy"=>"0"} permitted: true>, "59"=>#<ActionController::Parameters {"id"=>"1272", "title"=>"2022_1 NGE reporting CZ - RÅ¯stovÃ tÅ¹Ã­da", "position"=>"146", "_destroy"=>"0"} permitted: true>} permitted: true>, "person_fund_links_attributes"=>#<ActionController::Parameters {"1"=>#<ActionController::Parameters {"id"=>"5", "position"=>"1", "redside_person_id"=>"14"} permitted: true>} permitted: true>} permitted: true>'
+: 1657664901:0;typeset --elp
+: 1657664903:0;typeset --help
+: 1657664909:0;typeset -H
+: 1657665107:0;declare --help
+: 1657665110:0;declare -H
+: 1657665112:0;declare -h
+: 1657666383:0;wc --help
+: 1657666398:0;cat ~/.cache/eww/bluetooth.txt | wc -m
+: 1657666779:0;config/eww
+: 1657666781:0;bar
+: 1657667071:0;sed --help
+: 1657667075:0;man sed
+: 1657667148:0;echo {0..1000} >> test
+: 1657667161:0;sed "d1" test
+: 1657667170:0;sed test
+: 1657667183:0;sed -e "d1" test
+: 1657667237:0;sed "1d" test
+: 1657667239:0;sed "Nd" test
+: 1657667243:0;sed "10d" test
+: 1657667267:0;sed "$d" test
+: 1657667286:0;sed 'Nd;$d' test
+: 1657667294:0;sed 'Nd;$d'
+: 1657667297:0;rm -rf test
+: 1657667437:0;rm -rf ~/.cache/eww/bluetooth.txt
+: 1657667452:0;~/.config/eww/bar/scripts/bluetooth button_click
+: 1657667902:0;~/eww/target/release/eww help
+: 1657667942:0;~/eww/target/release/eww --debug open bar
+: 1657668029:0;echo $LOCK_FILE_BLUETOOTH
+: 1657668059:0;rm -rf ~/.cache/eww-bluetooth.lock
+: 1657668083:0;cat $LOCK_FILE_BLUETOOTH
+: 1657668248:0;~/eww/target/release/eww inspector
+: 1657668624:0;rm ~/.cache/eww-*
+: 1657668628:0;la ~/.cache
+: 1657668672:0;la ~/.cache/eww
+: 1657668882:0;~/.config/eww/bar/scripts/pop bluetooth
+: 1657669042:0;rm ~/.cache/eww-bluetooth.lock
+: 1657670103:0;rm -rf ~/test
+: 1657670110:0;la ~
+: 1657670412:0;tr --help
+: 1657671224:0;exec 8< <(bluetoothctl disconnect)); pid8=$!
+: 1657671228:0;exec 8< <(bluetoothctl disconnect); pid8=$!
+: 1657671272:0;man exec
+: 1657671425:0;exec < <(bluetoothctl disconnect); pid=$!
+: 1657671440:0;echo $pid1
+: 1657671442:0;echo $pid2
+: 1657671444:0;echo $pid8
+: 1657671445:0;echo $pid
+: 1657671963:0;bluetoothctl disconnect
+: 1657671964:0;process_id=$!
+: 1657671971:0;echo $process_id
+: 1657671985:0;bluetoothctl help
+: 1657672009:0;bluetoothctl export
+: 1657672209:0;~/.config/eww/bar/scripts/bluetooth device_button_click
+: 1657672271:0;bluetoothctl devices
+: 1657672277:0;bluetoothctl info E0:DC:FF:13:78:1C
+: 1657707267:0;~/eww/target/release/eww kill
+: 1657710332:0;cd vendor/assets
+: 1657710336:0;...
+: 1657710351:0;cd vendor
+: 1657710355:0;la assets
+: 1657710359:0;cd assets
+: 1657710371:0;yarn add global bower
+: 1657710428:0;bower
+: 1657710432:0;npm i -g bower
+: 1657710531:0;assets
+: 1657710565:0;bower install swiper
+: 1657711034:0;mkdir swiper
+: 1657711044:0;mv -f swiper bower_components
+: 1657711069:0;touch swiper/index.js
+: 1657711074:0;touch swiper/index.css
+: 1657711164:0;rm -rf bower_components/swiper
+: 1657711166:0;mv -f swiper bower_components/
+: 1657721207:0;rgm AddRedsidePersonSidebarInfo
+: 1657721917:0;r db:rollback
+: 1657722002:0;r db:migrate
+: 1657739767:0;grep 'ok' o
+: 1657739773:0;grep o 'ok'
+: 1657740909:0;~/.config/eww/bar/scripts/bluetooth devices
+: 1657741284:0;rm ~/.cache/eww/bluetooth.txt
+: 1657741290:0;cat ~/.cache/eww/bluetooth.txt
+: 1657742568:0;kdeconnect-cli
+: 1657742573:0;kdeconnect-cli -l
+: 1657742644:0;rm -rf config/eww/leftbar
+: 1657742646:0;rm -rf config/eww/leftbar_old_pls_dont_use
+: 1657743191:0;rm -rf config/eww/leftbar_old_pls_dont_usllall ewwe
+: 1657746052:0;la ~/.cache/
+: 1657746959:0;cd/
+: 1657746967:0;~
+: 1657746970:0;la .loca
+: 1657746972:0;la .local
+: 1657746977:0;la .local/state
+: 1657746981:0;la .local/state/zsh
+: 1657747007:0;rm -rf ~/.yarnrc
+: 1657747014:0;rm .steampath
+: 1657747024:0;vim ~/far.vim.log
+: 1657747043:0;rm -rf eww-widgets
+: 1657747057:0;la Images
+: 1657747105:0;mkdir .local/state/eww
+: 1657747281:0;free -m | grep Mem: | awk '{ print $2 }'
+: 1657747311:0;echo $(free -m | grep Mem: | awk '{ print $3 }')
+: 1657747431:0;~/.config/eww/bar/scripts/memory 'used'
+: 1657747755:0;jcat /proc/meminfo | grep MemFr
+: 1657747756:0;cat /proc/meminfo | grep MemFr
+: 1657747762:0;cat /proc/meminfo | grep MemFr | awk '{ print ($3/$2)*100 }'
+: 1657747767:0;cat /proc/meminfo | grep MemFr | awk '{ print ($3)*100 }'
+: 1657747771:0;cat /proc/meminfo | grep MemFr | awk '{ print ($2)*100 }'
+: 1657747863:0;~/.config/eww/bar/scripts/memory "used"
+: 1657747971:0;free -m
+: 1657748332:0;~/.config/eww/bar/scripts/memory free
+: 1657748495:0;printf
+: 1657748497:0;printf --help
+: 1657748512:0;printf -H
+: 1657748516:0;printf -help
+: 1657748521:0;man printf
+: 1657748550:0;~/.config/eww/bar/scripts/memory used_perc
+: 1657748700:0;bc --help
+: 1657748817:0;cd Music
+: 1657748825:0;ydl https://www.youtube.com/watch\?v\=S_olCpQWNDM
+: 1657748940:0;rm crystal castles _ leni (espaÃ±ol) - coexist subs.mp3
+: 1657748954:0;rm crystal\ castles\ _\ leni\ \(espaÃ±ol\)\ -\ coexist\ subs.mp3
+: 1657749076:0;ydl https://www.youtube.com/watch\?v\=WhpT7Klunl0
+: 1657749420:0;..
+: 1657749429:0;Electronic
+: 1657749431:0;ydl https://www.youtube.com/watch\?v\=ugW1fGpPGvc
+: 1657749545:0;echo $LC_NUMERIC
+: 1657749704:0;~/.config/eww/bar/launch_bar
+: 1657750357:0;bc
+: 1657750402:0;bc "8038900 / 16271364 * 100"
+: 1657750411:0;echo "8038900 / 16271364 * 100" | bc
+: 1657750461:0;echo "scale=0;8038900 / 16271364 * 100" | bc -l
+: 1657750508:0;echo "scale=0; 8038900 / 16271364 * 100" | bc -l
+: 1657750540:0;echo "scale=10; 8038900 / 16271364 * 100" | bc -l
+: 1657750546:0;echo "scale=1; 8038900 / 16271364 * 100" | bc -l
+: 1657750555:0;echo "scale=2; 8038900 / 16271364 * 100" | bc -l
+: 1657750565:0;man bc
+: 1657750615:0;echo "8038900 / 16271364 * 100" | bc -l | grep -oE "\D"
+: 1657750618:0;echo "8038900 / 16271364 * 100" | bc -l | grep -o "\D"
+: 1657750620:0;echo "8038900 / 16271364 * 100" | bc -l | grep -o "\."
+: 1657750626:0;echo "8038900 / 16271364 * 100" | bc -l | grep -oR "\d"
+: 1657750629:0;echo "8038900 / 16271364 * 100" | bc -l | grep -oe "\d"
+: 1657750632:0;echo "8038900 / 16271364 * 100" | bc -l | grep -o "\d"
+: 1657750775:0;echo "8038900 / 16271364 * 100" | bc -l | grep -Eo "\d"
+: 1657750780:0;echo "8038900 / 16271364 * 100" | bc -l | grep -Eo "\E"
+: 1657750786:0;echo "8038900 / 16271364 * 100" | bc -l | grep -Eo "\D"
+: 1657750792:0;echo "8038900 / 16271364 * 100" | bc -l
+: 1657750854:0;echo "8038900 / 16271364 * 100" | bc -l | grep -Eo "[[:digit::]]"
+: 1657750865:0;echo "8038900 / 16271364 * 100" | bc -l | grep -Eo '[[:digit:]]'
+: 1657750871:0;echo "8038900 / 16271364 * 100" | bc -l | grep -Eo '[[:digit:]]{2}'
+: 1657750885:0;echo "8038900 / 16271364 * 100" | bc -l | grep -Eo '^[[:digit:]]{2}'
+: 1657751037:0;echo "$(used) / $(total) * 100" | bc -l | grep -Eo '^[[:digit:]]{1,3}'
+: 1657751063:0;echo "8038900 / 16271364 * 100" | bc -l | grep -Eo '^[[:digit:]]{1,3}'
+: 1657751340:0;echo "8038900 / 16271364 * 100" | bc -l | awk "\."
+: 1657751343:0;echo "8038900 / 16271364 * 100" | bc -l | awk "."
+: 1657751348:0;echo "8038900 / 16271364 * 100" | bc -l | awk '.'
+: 1657751361:0;echo "8038900 / 16271364 * 100" | bc -l | awk -b '.'
+: 1657751451:0;~/.config/eww/bar/scripts/memory total
+: 1657751741:0;~/.config/eww/bar/scripts/memory used
+: 1657751898:0;~/.config/eww/bar/scripts/memory
+: 1657752326:0;~/.config/eww/bar/scripts/bluetooth subscribe
+: 1657752414:0;date
+: 1657752435:0;printf -v date '%(%Y-%m-%d)T\n' -1
+: 1657752444:0;printf -v date '%(%Y-%m-%d %H:%M:%S)T\n' -1
+: 1657752453:0;bash -v
+: 1657752460:0;bash --version
+: 1657752481:0;date +%d-%m-%Y" "%H:%M:%S
+: 1657752517:0;date +%d-%m-%Y
+: 1657752536:0;date +%H:%M:%S" "%d-%m-%Y
+: 1657752893:0;man sh
+: 1657753652:0;sudo apt install jq
+: 1657753663:0;jq
+: 1657753682:0;i3-msg -t get_workspaces
+: 1657753685:0;i3-msg -t get_workspaces | jq
+: 1657753704:0;workspaces=$(i3-msg -t get_workspaces | jq)
+: 1657753717:0;echo $workspaces[0]
+: 1657753753:0;echo $workspaces[[],"id"]
+: 1657753762:0;echo $workspaces[[],{}]
+: 1657753768:0;echo $workspaces[[[]]]
+: 1657753772:0;echo $workspaces[[0]]
+: 1657753844:0;echo i3-msg -t get_workspaces | jq -c '.[]'
+: 1657753892:0;i3-msg -t get_workspaces | jq -c '.[] | .id'
+: 1657753905:0;i3-msg -t get_workspaces | jq -c '.[] | .id & .num'
+: 1657753934:0;i3-msg -t get_workspaces | jq -c '.[] | .id ,.[] .num'
+: 1657753944:0;i3-msg -t get_workspaces | jq -c '.[] | .id ,.[] | .num'
+: 1657754039:0;i3-msg -t get_workspaces | jq -c '.[] | (.id | .num)'
+: 1657754045:0;i3-msg -t get_workspaces | jq -c '.[] | ".id | .num"'
+: 1657754049:0;i3-msg -t get_workspaces | jq -c '.[] | .id | .num'
+: 1657754055:0;i3-msg -t get_workspaces | jq -c '.[] | ".id , .num"'
+: 1657754058:0;i3-msg -t get_workspaces | jq -c '.[] | .id , .num'
+: 1657754087:0;i3-msg -t get_workspaces | jq -c '.[].id , .num'
+: 1657754093:0;i3-msg -t get_workspaces | jq -c '.[].id , .[].num'
+: 1657754103:0;i3-msg -t get_workspaces | jq -c '.[] | .id, ..num'
+: 1657754124:0;i3-msg -t get_workspaces | jq -c '.[] | .id, .num' | awk '{ print $1}'
+: 1657754127:0;i3-msg -t get_workspaces | jq -c '.[] | .id, .num' | awk '{ print $2}'
+: 1657754130:0;i3-msg -t get_workspaces | jq -c '.[] | .id, .num'
+: 1657754190:0;i3-msg -t get_workspaces | jq -c '.[] | .id, .num | @tsv'
+: 1657754199:0;i3-msg -t get_workspaces | jq -c '.[] | @tsv'
+: 1657754477:0;i3-msg -t get_workspaces | jq -c '.[]'
+: 1657754594:0;i3-msg -t get_workspaces | jq -c '.[] | .id + .num'
+: 1657754653:0;i3-msg -t get_workspaces | jq -C '.[] | .id + .num'
+: 1657754681:0;i3-msg -t get_workspaces | jq -j -C '.[] | .id + .num'
+: 1657754706:0;i3-msg -t get_workspaces | jq -j -C '.[] | .id, .num'
+: 1657754713:0;i3-msg -t get_workspaces | jq -j -C '.[] | .id, " " .num'
+: 1657754734:0;i3-msg -t get_workspaces | jq -j -C '.[] | .id, " " + .num'
+: 1657754737:0;i3-msg -t get_workspaces | jq -j -C '.[] | .id, " ", .num'
+: 1657754751:0;i3-msg -t get_workspaces | jq -j -C '.[] | .id, " ", .num' | awk
+: 1657754772:0;i3-msg -t get_workspaces | jq -j -C '.[] | .id, " ", .num' | awk '{ print: $1} \
+'
+: 1657754913:0;arr=( $(jq -r '.[].item2' $(i3-msg -t get_workspaces) )
+: 1657754921:0;arr=( $(jq -r '.[].item2' $(i3-msg -t get_workspaces)) )
+: 1657754927:0;arr=( $(jq '.[].item2' $(i3-msg -t get_workspaces)) )
+: 1657754966:0;arr=($(i3-msg -t get_workspaces | jq -j -C '.[]'))
+: 1657755087:0;echo $workspaces[@]
+: 1657755115:0;echo $arr
+: 1657755123:0;arr=($(i3-msg -t get_workspaces | jq -j -C '.[].id'))
+: 1657755274:0;arr=($(i3-msg -t get_workspaces | jq -j -C 'keys | .[]'))
+: 1657755281:0;i3-msg -t get_workspaces | jq -j -C 'keys | .[]'
+: 1657755295:0;i3-msg -t get_workspaces | jq -j -C 'keys, .[]'
+: 1657755332:0;i3-msg -t get_workspaces | jq -j -C '.[]'
+: 1657755366:0;echo $workspaces
+: 1657755415:0;jq -C '.[]' <<< $(i3-msg -t get_workspaces)
+: 1657756004:0;jq -C '.[], .id==94198623082272' <<< $(i3-msg -t get_workspaces)
+: 1657756025:0;jq -C '.[], ".id == 94198623082272"' <<< $(i3-msg -t get_workspaces)
+: 1657756041:0;jq -C ".[], '.id == 94198623082272'" <<< $(i3-msg -t get_workspaces)
+: 1657756061:0;jq -C ".[] | '.id'" <<< $(i3-msg -t get_workspaces)
+: 1657756067:0;jq -C ".[] | .id" <<< $(i3-msg -t get_workspaces)
+: 1657756069:0;jq -C ".[] | '.id == 94198623082272'" <<< $(i3-msg -t get_workspaces)
+: 1657756104:0;jq -C ".[] | .id | '. == 94198623082272'" <<< $(i3-msg -t get_workspaces)
+: 1657756113:0;jq -C ".[] | .id , '. == 94198623082272'" <<< $(i3-msg -t get_workspaces)
+: 1657756147:0;jq -C ".[] | .id | 94198623082272" <<< $(i3-msg -t get_workspaces)
+: 1657756217:0;jq -C '.[] | select(.id=="94198623082272")' <<< $(i3-msg -t get_workspaces)
+: 1657756222:0;jq -C '.[] | select(.id==94198623082272)' <<< $(i3-msg -t get_workspaces)
+: 1657756298:0;echo b
+: 1657756337:0;jq -C '.id' <<< $b
+: 1657756353:0;jq -C '.num' <<< $b
+: 1657756425:0;b=$(jq -C '.[] | select(.id==94198623082272)' <<< $(i3-msg -t get_workspaces))
+: 1657756427:0;echo $b
+: 1657756450:0;echo $b | jq '.id'
+: 1657756459:0;echo "$b" | jq '.id'
+: 1657756463:0;echo "$b | jq '.id'
+: 1657756471:0;echo '$b' | jq '.id'
+: 1657756485:0;echo "{\"foo\":\"bar\"}" | jq .foo
+: 1657756789:0;grep --help
+: 1657756907:0;awk --help
+: 1657756938:0;awk -v "ok"
+: 1657756948:0;awk -v="ok"
+: 1657758161:0;vim .local/state/eww/bluetooth-log
+: 1657758315:0;:e
+: 1657758381:0;~/.config/eww/bar/scripts/workspace
+: 1657760491:0;$XDG_CONFIG_HOME/eww/bar/scripts/workspace
+: 1657760869:0;cat /proc/meminfo
+: 1657761467:0;sudo apt install ifstat
+: 1657761748:0;touch --help
+: 1657761755:0;touch test
+: 1657761764:0;touch -f test
+: 1657761766:0;vim test
+: 1657761793:0;rm test
+: 1657761992:0;nmcli
+: 1657762016:0;STATUS=$(nmcli | grep ethernet | awk 'FNR == 1 {print $2}')
+: 1657762022:0;STATUS=$(nmcli | awk 'FNR == 1 {print $2}')
+: 1657762041:0;nmcli | grep ethernet | awk 'FNR == 1 {print $2}'
+: 1657762114:0;ifstat
+: 1657762140:0;ifstat | awk '{print $1}'
+: 1657762331:0;~/.config/eww/bar/scripts/network
+: 1657762417:0;la config/eww/bar/scripts
+: 1657762438:0;chmod +x config/eww/bar/scripts/network
+: 1657762442:0;sudo ~/.config/eww/bar/scripts/network down
+: 1657762690:0;~/.config/eww/bar/scripts/network down
+: 1657763160:0;sudo apt-get install speedtest
+: 1657763306:0;sudo vim /etc/apt/sources.list.d/ookla_speedtest-cli.list
+: 1657763356:0;curl -s https://install.speedtest.net/app/cli/install.deb.sh | sudo bash
+: 1657763398:0;sudo apt install speedtest
+: 1657763403:0;sudo apt update
+: 1657763417:0;sudo apt install speedtest-cli
+: 1657763422:0;speedtest
+: 1657763588:0;speedtest --help
+: 1657763615:0;speedtest --json
+: 1657763661:0;test=$(speedtest --json)
+: 1657763705:0;jq -C '.download' <<< $test
+: 1657763744:0;coproc (speedtest --json)
+: 1657763761:0;test=$(coproc (speedtest --json))
+: 1657763835:0;echo $COPROC_PID
+: 1657763849:0;test=""
+: 1657763852:0;coproc (test=$(speedtest --json))
+: 1657763896:0;echo $test
+: 1657764562:0;killall eww
+: 1657764640:0;~/eww/target/release/eww open bar
+: 1657764883:0;echo 25958927.753361046 | bc
+: 1657764893:0;printf "%.0f" 25958927.753361046
+: 1657764924:0;echo "25958927.753361046/1000000" | bc
+: 1657764930:0;echo "25958927.753361046/1000000" | bc -l
+: 1657765066:0;~/.config/eww/bar/scripts/network up
+: 1657765310:0;printf "%.2f" $(echo "25958927.75336104/1000000" | bc -l) | tr " "
+: 1657765316:0;printf "%.2f" $(echo "25958927.75336104/1000000" | bc -l) | tr " " ''
+: 1657765322:0;printf "%.2f" $(echo "25958927.75336104/1000000" | bc -l) | tr " " 'as'
+: 1657789778:0;vim /etc/hosts
+: 1657789795:0;sudo vim /etc/hosts
+: 1657793815:0;:Files
+: 1657793853:0;rails test test/controllers/pelikan/products_controller_test.rb:6
+: 1657793958:0;Music
+: 1657793961:0;cd DoomerWave
+: 1657793963:0;cd CrystalCastles
+: 1657793965:0;ydl https://www.youtube.com/watch\?v\=s9hq07u6Vqw
+: 1657805565:0;vun
+: 1657806522:0;Development/sinfin/redside
+: 1657806536:0;../redside
+: 1657806537:0;clear
+: 1657808491:0;vim tmp/caching-dev.txt
+: 1657808497:0;rm tmp/caching-dev.txt
+: 1657808602:0;ydl https://www.youtube.com/watch\?v\=SuyLDtepJRA
+: 1657809063:0;../folio
+: 1657832012:0;RAILS_ENV=test rails test test/cells/redside/ui/footer/form_cell_test.rb:6
+: 1657832030:0;r db:enviroment:set RAILS_ENV=test
+: 1657832048:0;r db:environment:set RAILS_ENV=test
+: 1657832052:0;rails test test/cells/redside/ui/footer/form_cell_test.rb:6
+: 1657832077:0;r db:environment:set RAILS_ENV=development
+: 1657832153:0;bundle install
+: 1657832175:0;bin/rails db:environment:set RAILS_ENV=test
+: 1657832332:0;bin/rails db:environment:set RAILS_ENV=development
+: 1657832359:0;sinfin-init
+: 1657832372:0;folio-test-account
+: 1657842667:0;lgit
+: 1657848489:0;Development/sinfin/squared
+: 1657849688:0;sysctl suspend
+: 1657885100:0;git push gitlab master
+: 1657885127:0;r t
+: 1657887950:0;../aukceaukci
+: 1657891553:0;fg
+: 1657891720:0;r c
+: 1657908936:0;../squared
+: 1657917936:0;kill-server 3333
+: 1657917937:0;_zypper
+: 1657924173:0;spring stop && rm -rf tmp/cache
+: 1657924175:0;rs
+: 1657924178:0;kill brave
+: 1657938208:0;systemctl suspend
+: 1657957440:0;killall brave
+: 1657958770:0;cd ~/eww/target/release
+: 1657958772:0;vim eww
+: 1657958794:0;cd .
+: 1657958813:0;la
+: 1657958816:0;la local
+: 1657958829:0;vim
+: 1657959098:0;cd.
+: 1657959161:0;cp ./eww ~/Development/dotfiles/local/bin
+: 1657959168:0;la local/bin
+: 1657959189:0;eww
+: 1657965247:0;~/Music
+: 1657965251:0;cd DoomerWave/Mareux
+: 1657965253:0;ydl https://www.youtube.com/watch\?v\=O8HoxNlt2Ds
+: 1657965736:0;cd ~
+: 1657965739:0;la ~
+: 1657965757:0;vim .local/state/zsh/history
+: 1657965946:0;..
+: 1657965950:0;la
+: 1657965952:0;la Indie
+: 1657965958:0;cd Indie
+: 1657965971:0;la new
+: 1657965973:0;..
+: 1657965974:0;la new
+: 1657965980:0;vim
+: 1657966016:0;la
+: 1657966018:0;la Indie
+: 1657966022:0;Indie
+: 1657966049:0;..
+: 1657966049:0;vim
+: 1657966181:0;syncthing
+

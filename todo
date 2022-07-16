@@ -6,8 +6,9 @@ NODE
   - Fix XDG for global .yarn and .yarn.lock
 
 RUBY
-  - Automatically change ruby version when entering ruby directory based on Gemfile
+  /* - Automatically change ruby version when entering ruby directory based on Gemfile */
   - Fix solargraph startup issue
+  - Check ruby version in zprofile
 
 KDE
   - Tweak KDE Panel

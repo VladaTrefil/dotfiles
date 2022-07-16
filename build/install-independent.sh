@@ -183,15 +183,15 @@ fi
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # EWW: {{{
 
-if [ ! -f "which rustc" ]; then
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-fi
-
-if [ -f "which cargo" ] && [ ! -f "which eww" ]; then
-  git clone https://github.com/elkowar/eww tmp/eww
-  cd tmp/eww
-  cargo build --release
-fi
+# if [ ! -f "which rustc" ]; then
+#   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# fi
+#
+# if [ -f "which cargo" ] && [ ! -f "which eww" ]; then
+#   git clone https://github.com/elkowar/eww tmp/eww
+#   cd tmp/eww
+#   cargo build --release
+# fi
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────

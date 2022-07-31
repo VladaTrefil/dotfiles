@@ -140,10 +140,6 @@
              :class "clock__sep" )
       (label :text clock_minute
              :class "clock__minute")
-      ; (label :text ""
-      ;        :class "clock__sep" )
-      ; (label :text clock_second
-      ;        :class "clock__minute")
       (revealer :transition "slideleft"
                 :reveal time_rev
                 :duration "350ms"
@@ -208,6 +204,16 @@
 ; ────────────────────────────────────────────────────────────────────────────────────────────────────
 ; Floating windows: {{{
 
+(defwidget bluetooth_menu_device [?class key icon icon_class name button_class button_text]
+  (box :orientation 'h' :class 'bluetooth-menu__device ${class}'
+    (box :space-evenly 'false'
+      (label :class 'bluetooth-menu__icon ${icon_class}' :text '${icon}')
+      (label :class 'bluetooth-menu__name' :text '${name}'))
+    (box :space-evenly 'false' :halign 'end'
+      (button
+        :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth device_button_click ${key}"
+        :class 'bluetooth-menu__button ${button_class}' '${button_text}'))))
+
 (defwindow bluetooth_menu
   :geometry (geometry
   :x "-270px"
@@ -219,15 +225,6 @@
     (box :class "bluetooth-menu__inner" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
       (literal :content bluetooth_devices))))
 
-(defwidget bluetooth_menu_device [?class key icon icon_class name button_class button_text]
-  (box :orientation 'h' :class 'bluetooth-menu__device ${class}'
-    (box :space-evenly 'false'
-      (label :class 'bluetooth-menu__icon ${icon_class}' :text '${icon}')
-      (label :class 'bluetooth-menu__name' :text '${name}'))
-    (box :space-evenly 'false' :halign 'end'
-      (button
-        :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth device_button_click ${key}"
-        :class 'bluetooth-menu__button ${button_class}' '${button_text}'))))
 
 (defwidget system_cpu []
   (label :text "${cpu}% used"
@@ -292,33 +289,19 @@
   (cal))
 
 
-(defwidget audio []
-  (box :class "audio-box" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
-    (box :halign "v" :space-evenly "false" :hexpand "false" :vexpand "false"
-      (box :class "speaker_icon" :orientation "v")
-      (box :orientation "v" :halign "center" :vexpand "false" :hexpand "false"
-        (label :class "speaker_text" :text "speaker" :valign "center" :halign "left" )
-        (box :class "speaker_bar" :halign "center" :vexpand "false" :hexpand "false"
-          (scale    :value volume_percent
-                    :space-evenly "false"
-                    :orientation "h"
-                    :onchange "amixer -D pulse sset Master {}%" 
-                    :tooltip "volume on ${volume_percent}%"
-                    :max 100
-                    :min 0))))
-    (label :text "" :class "audio_sep" :halign "center")
-    (box :halign "v" :space-evenly "false" :hexpand "false" :vexpand "false"
-      (box :class "mic_icon" :orientation "v")
-      (box :orientation "v" :halign "center" :vexpand "false" :hexpand "false"
-        (label :class "mic_text" :text "mic" :valign "center" :halign "left" )
-        (box :class "mic_bar" :halign "center" :vexpand "false" :hexpand "false"
-          (scale    :value mic_percent
-                    :space-evenly "false"
-                    :orientation "h"
-                    :tooltip "mic on ${mic_percent}%"
-                    :onchange "amixer -D pulse sset Capture {}%" 
-                    :max 100
-                    :min 0))))))
+(defwidget audio_item [key percent script tooltip]
+  (box :class "audio__item audio-${key}" :halign "v" :space-evenly "false" :hexpand "false" :vexpand "false"
+    (box :class "audio__icon" :orientation "v")
+    (box :orientation "v" :halign "center" :vexpand "false" :hexpand "false"
+      (label :class "audio__text" :text key :valign "center" :halign "left" )
+      (box :class "audio__bar" :halign "center" :vexpand "false" :hexpand "false"
+        (scale :value percent
+               :space-evenly "false"
+               :orientation "h"
+               :onchange script 
+               :tooltip tooltip
+               :max 100
+               :min 0)))))
 
 (defwindow audio_ctl
   :geometry (geometry :x "-20px" 
@@ -326,7 +309,16 @@
   :anchor "top right"
   :width "280px" 
   :height "60px")
-  (audio))
+  (box :class "audio" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
+    (audio_item :key "speakers"
+                :percent volume_percent
+                :script "amixer -D pulse sset Master {}%"
+                :tooltip "volume on ${volume_percent}%")
+    (label :text "" :class "audio__sep" :halign "center")
+    (audio_item :key "microphone"
+                :percent mic_percent
+                :script "amixer -D pulse sset Capture {}%"
+                :tooltip "volume on ${mic_percent}%")))
 
 
 ; }}}

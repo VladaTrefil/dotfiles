@@ -1,0 +1,147 @@
+.separator {
+  color: $border-color;
+  font-weight: bold;
+  font-size: 22px;
+  margin: 0 5px;
+}
+
+.workspace {
+  font-size: 27px;
+  font-weight: normal;
+  margin-left: 20px;
+  background-color: $background;
+
+  &__button {
+    margin-right: 10px;
+    color: $border-color;
+
+    &--occupied {
+      color: $light-blue;
+    }
+
+    &--focused {
+      color: $light-blue;
+    }
+  }
+}
+
+.volume {
+  &__icon {
+    font-family: $awesome;
+    font-size: 22px;
+    color: $light-blue;
+    margin: 0px 10px;
+  }
+
+  &__bar trough highlight {
+    background: $light-blue;
+    border-radius: 10px;
+  }
+}
+
+.bluetooth {
+  &__icon {
+    font-family: $awesome;
+    font-size: 18px;
+    color: $blue;
+    margin: 0px 10px;
+  }
+}
+
+.disk,
+.cpu,
+.memory {
+  background-color: $background;
+  border-radius: 16px;
+  margin: 0 10px;
+
+  &__bar {
+    background-color: $bar-color;
+    border-radius: 10px;
+  }
+
+  &__icon {
+    font-size: 15px;
+    margin: 10px;
+  }
+}
+
+.cpu {
+  &__bar,
+  &__icon {
+    color: $red-500;
+  }
+
+  &__icon {
+    margin-top: 11px;
+  }
+}
+
+.memory {
+  &__bar,
+  &__icon {
+    color: $red-400;
+  }
+}
+
+.disk {
+  &__bar,
+  &__icon {
+    color: $red-300;
+  }
+
+  &__icon {
+    margin-top: 11px;
+    margin-right: 11px;
+  }
+}
+
+.network {
+  margin-right: 7px;
+  margin-left: 10px;
+
+  &__up {
+    margin-right: 15px;
+    color: $light-blue;
+  }
+
+  &__down {
+    color: $green;
+  }
+
+  &__icon {
+    font-family: $awesome;
+    margin-right: 10px;
+  }
+}
+
+.clock {  
+  margin: 0 20px 0 10px;
+
+  &__sep {
+    font-size: 16px;
+    color: $light-blue;
+    margin: 0px 4px 1px;
+  }
+
+  &__time, &__minute {
+    font-size: 23px;
+  }
+
+  &__time {
+    color: $light-blue;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+
+  &__minute {
+    margin: 0px 4px 0px 3px;
+    color: $light-blue;
+  }
+
+  &__date {
+    font-size: 18px;
+    margin-left: 20px;
+    color: $light-pink;
+  }
+}

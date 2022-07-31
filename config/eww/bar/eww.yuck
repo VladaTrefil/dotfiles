@@ -1,8 +1,8 @@
 ; (defpoll battery :interval "15s" "./scripts/battery --bat")
 ; (defpoll battery_status :interval "1m" "./scripts/battery --bat-st")
 ; (defpoll brightness_percent :interval "5s" "brightnessctl -m -d intel_backlight | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
-(defpoll clock_time :interval "5m" "date +\%I")
-(defpoll clock_minute :interval "5s" "date +\%M")
+(defpoll clock_time :interval "1s" "date +\%I")
+(defpoll clock_minute :interval "1s" "date +\%M")
 ; (defpoll clock_second :interval "1s" "date +\%S")
 (defpoll clock_date :interval "10h" "date '+%d/%m'")
 
@@ -234,6 +234,27 @@
 ; ────────────────────────────────────────────────────────────────────────────────────────────────────
 ; Floating windows: {{{
 
+(defwindow bluetooth_menu
+  :geometry (geometry
+  :x "-270px"
+  :y "4%"
+  :anchor "top right"
+  :width "280px"
+  :height "100px")
+  (box :class "bluetooth-menu" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
+    (box :class "bluetooth-menu__inner" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
+      (literal :content bluetooth_devices))))
+
+(defwidget bluetooth_menu_device [?class key icon icon_class name button_class button_text]
+  (box :orientation 'h' :class 'bluetooth-menu__device ${class}'
+    (box :space-evenly 'false'
+      (label :class 'bluetooth-menu__icon ${icon_class}' :text '${icon}')
+      (label :class 'bluetooth-menu__name' :text '${name}'))
+    (box :space-evenly 'false' :halign 'end'
+      (button
+        :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth device_button_click ${key}"
+        :class 'bluetooth-menu__button ${button_class}' '${button_text}'))))
+
 (defwindow system
   :geometry (geometry :x "-20px" 
   :y "4%" 
@@ -347,27 +368,6 @@
   :width "280px" 
   :height "60px")
   (audio))
-
-(defwindow bluetooth_menu
-  :geometry (geometry
-  :x "-270px" 
-  :y "4%" 
-  :anchor "top right"
-  :width "280px" 
-  :height "100px")
-  (box :class "bluetooth-menu" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
-    (box :class "bluetooth-menu__inner" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
-      (literal :content bluetooth_devices))))
-
-(defwidget bluetooth_menu_device [?class key icon icon_class name button_class button_text]
-  (box :orientation 'h' :class 'bluetooth-menu__device ${class}'
-    (box :space-evenly 'false'
-      (label :class 'bluetooth-menu__icon ${icon_class}' :text '${icon}')
-      (label :class 'bluetooth-menu__name' :text '${name}'))
-    (box :space-evenly 'false' :halign 'end' 
-      (button
-        :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth device_button_click ${key}"
-        :class 'bluetooth-menu__button ${button_class}' '${button_text}'))))
 
 
 ; }}}

@@ -1,0 +1,200 @@
+.bluetooth-menu {
+  font-size: 17px;
+  background: $background;
+  padding: 10px;
+
+  &__devices {
+    border: 2px solid $border-color;
+    border-radius: 10px;
+    background: $background;
+  }
+
+  &__device {
+    border-bottom: 2px solid $border-color;
+    padding: 15px;
+    padding-left: 25px;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__icon {
+    margin-right: 25px;
+    font-family: $awesome;
+  }
+
+  &__icon--untrusted {
+    color: $gray-blue;
+  }
+
+  &__icon--connected {
+    color: $blue;
+  }
+
+  &__button {
+    padding: 8px 25px 11px;
+    background: $blue;
+    margin-left: 100px;
+    font-size: 15px;
+    border-radius: 5px;
+
+    &:hover {
+      background: $blue-hover;
+    }
+  }
+
+  &__button--disconnect {
+    background: $red;
+
+    &:hover {
+      background: $red-hover;
+    }
+  }
+}
+
+.cal {
+  background-color: $background;
+  font-family: $awesome;
+  font-size: 18px;
+  font-weight: normal;
+
+  .cal-in {
+    padding: 0px 10px;
+    color: $light-blue;
+
+    .cal {
+      padding: 5px;
+      margin-left: 10px;
+
+      &.highlight {
+        padding: 20px;
+      }
+    }
+  }
+}
+
+.system {
+  background-color: $background;
+  padding: 10px 15px;
+  // box-shadow: $box-shadow-window;
+
+  &__box {
+    border-radius: 16px;
+    margin: 10px;
+  }
+
+  &__sep {
+    color: $border-color;
+    font-size: 18px;
+    margin: 0px 10px;
+  }
+
+  &__circle {
+    color: #afbea2;
+    background-color: $bar-color;
+    border-radius: 10px;
+  }
+
+  &__icon {
+    font-size: 20px;
+    margin: 30px;
+    font-family: $awesome;
+    font-weight: 500;
+  }
+
+  &__text {
+    font-size: 21px;
+    font-weight: bold;
+    margin-top: 14px;
+    margin-left: 25px;
+  }
+
+  &__text-sub {
+    font-size: 16px;
+    color: #bbc5d7;
+    margin-top: 5px;
+    margin-left: 25px;
+  }
+
+  &__cpu &__text,
+  &__cpu &__icon,
+  &__cpu &__circle {
+    color: #f04c0c;
+  }
+
+  &__memory &__text,
+  &__memory &__icon,
+  &__memory &__circle {
+    color: #e4c9af;
+  }
+}
+
+.audio-box {
+  background-color: $background;
+  border-radius: 16px;
+}
+
+.speaker_icon {
+  background-size: cover;
+  background-image: url('images/speaker.png');
+  background-position: center;
+  min-height: 70px;
+  min-width: 75px;
+  margin: 10px 20px 5px;
+  border-radius: 12px;
+}
+
+.speaker_text {
+  color: #a1bdce;
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.speaker_bar scale trough highlight {
+  background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
+  border-radius: 24px;
+}
+
+.speaker_bar scale trough {
+  all: unset;
+  background-color: #232232;
+  box-shadow: 0 6px 5px #06060b;
+  border-radius: 24px;
+  min-height: 13px;
+  min-width: 120px;
+  margin-bottom: 5px;
+}
+
+.mic_icon {
+  background-size: cover;
+  background-image: url('images/mic.png');
+  background-position: center;
+  min-height: 70px;
+  min-width: 75px;
+  margin: 20px;
+  margin-top: 5px;
+  border-radius: 12px;
+}
+
+.mic_text {
+  color: #a1bdce;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.mic_bar scale trough {
+  all: unset;
+  box-shadow: 0 6px 5px 2px #06060b;
+  background-color: #232232;
+  border-radius: 24px;
+  min-height: 13px;
+  min-width: 120px;
+  margin-bottom: 20px;
+}
+
+.audio_sep {
+  color: $border-color;
+  font-size: 18px;
+}

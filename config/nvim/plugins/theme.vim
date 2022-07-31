@@ -121,7 +121,7 @@ call s:HL('OrangeSign', s:bright_orange, s:bg0, s:invert_signs)
 call s:HL('Normal', s:fg1, s:bg0)
 
 " Screen line that the cursor is
-call s:HL('CursorLine', s:none, s:bg1)
+call s:HL('CursorLine', s:none, s:bg2)
 " Screen column that the cursor is
 hi! link CursorColumn CursorLine
 
@@ -186,7 +186,7 @@ call s:HL('EndOfBuffer', s:vim_bg)
 " Gutter: {{{
 
 " Line number for :number and :# commands
-call s:HL('LineNr', s:bg4, s:bg0)
+call s:HL('LineNr', s:gray, s:bg0)
 
 " Column where signs are displayed
 call s:HL('SignColumn', s:fg2, s:bg0)

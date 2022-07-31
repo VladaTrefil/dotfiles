@@ -79,36 +79,6 @@ let g:loaded_perl_provider = 0
 " ────────────────────────────────────────────────────────────────────────────────────────────────────
 
 " ────────────────────────────────────────────────────────────────────────────────────────────────────
-" Tabline: {{{
-
-set tabline=%!TabLine()
-
-function TabLine()
-  let s = '%#TabLine#'
-  let s .= '%='
-  let s .= '%#TabLineFill#%T'
-
-	for i in range(tabpagenr('$'))
-    if i + 1 == tabpagenr()
-      let s .= '%#TabLineSel#'
-    else
-      let s .= '%#TabLine#'
-    endif
-
-	  " set the tab page number (for mouse clicks)
-	  let s .= '%' . (i + 1) . 'T' . (i + 1) . "  "
-  endfor
-
-  let s .= '%#TabLine#'
-  let s .= "%=%999Xﮊ  "
-
-  return s
-endfunction
-
-" }}}
-" ────────────────────────────────────────────────────────────────────────────────────────────────────
-
-" ────────────────────────────────────────────────────────────────────────────────────────────────────
 " Splits: {{{
 
 set splitbelow
@@ -167,8 +137,8 @@ noremap H 0
 noremap L $
 
 " Block movement
-noremap J }
 noremap K {
+noremap J }
 
 " save, quit
 noremap <C-p> :w!<CR>
@@ -214,21 +184,24 @@ nnoremap <LEADER>fv :<C-u>vsp %:h/
 " Use <C-c> to clear the highlighting of :set hlsearch.
 nnoremap <silent> <C-c> :nohlsearch<C-R><CR><CR><C-c>
 
+" Autoformat file
+nnoremap <Leader>i gg=G<C-o>
+
+nnoremap <Leader>b <ESC>:BlamerToggle<CR><C-c>
+
 " }}}
 " ────────────────────────────────────────────────────────────────────────────────────────────────────
 
 " ────────────────────────────────────────────────────────────────────────────────────────────────────
 " Languages: {{{
 
-" TypeScript: {{{
+" TypeScript:
 
 " Fix typescript redraw exceeded
 set re=0
 
 " Set typescript filetype
 au BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.typescriptreact
-
-" }}}
 
 " }}}
 " ────────────────────────────────────────────────────────────────────────────────────────────────────

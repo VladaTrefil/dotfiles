@@ -1,9 +1,6 @@
 $iosevka: 'Iosevka';
 $awesome: 'Font Awesome 5 Pro';
 
-* {
-  all: unset;
-}
 
 .bar {
   padding: 15px;
@@ -14,29 +11,6 @@ $awesome: 'Font Awesome 5 Pro';
     padding: 8px 0;
     border-radius: 10px;
   }
-}
-
-tooltip {
-  &.background {
-    background-color: #0f0f17;
-    font-size: 18px;
-    border-radius: 10px;
-    color: #bfc9db;
-  }
-
-  & label {
-    padding: 4px 5px;
-  }
-}
-
-scale trough {
-  all: unset;
-  background-color: #22242b;
-  box-shadow: 0 2px 3px 2px #06060b;
-  border-radius: 16px;
-  min-height: 10px;
-  min-width: 70px;
-  margin: 0px 10px 0px 0px;
 }
 
 .separator {
@@ -261,32 +235,6 @@ scale trough {
       padding: 5px 5px 5px 5px;
       margin-left: 10px;
     }
-  }
-}
-
-calender {
-  color: #bfc9db;
-
-  &.header {
-    color: #a1bdce;
-    font-weight: bold;
-  }
-
-  &.button {
-    color: #afbea2;
-  }
-
-  &.highlight {
-    color: #a1bdce;
-    font-weight: bold;
-  }
-
-  &:indeterminate {
-    color: #bfc9db;
-  }
-
-  &:selected {
-    color: #a1bdce;
   }
 }
 

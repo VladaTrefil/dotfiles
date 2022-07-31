@@ -1,0 +1,52 @@
+* {
+  all: unset;
+}
+
+calendar {
+  color: $light-blue;
+
+  &.header {
+    color: #a1bdce;
+    font-weight: bold;
+  }
+
+  &.button {
+    color: #afbea2;
+  }
+
+  &.highlight {
+    color: #a1bdce;
+    font-weight: bold;
+  }
+
+  &:indeterminate {
+    color: $light-blue;
+  }
+
+  &:selected {
+    color: #a1bdce;
+  }
+}
+
+tooltip {
+  &.background {
+    background-color: $background;
+    font-size: 18px;
+    border-radius: 10px;
+    color: $light-blue;
+  }
+
+  label {
+    padding: 4px 5px;
+  }
+}
+
+scale trough {
+  all: unset;
+  background-color: #22242b;
+  box-shadow: 0 2px 3px 2px #06060b;
+  border-radius: 16px;
+  min-height: 10px;
+  min-width: 70px;
+  margin-right: 10px;
+}

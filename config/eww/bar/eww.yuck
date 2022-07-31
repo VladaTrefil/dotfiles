@@ -1,9 +1,9 @@
 ; (defpoll battery :interval "15s" "./scripts/battery --bat")
 ; (defpoll battery_status :interval "1m" "./scripts/battery --bat-st")
 ; (defpoll brightness_percent :interval "5s" "brightnessctl -m -d intel_backlight | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+
 (defpoll clock_time :interval "1s" "date +\%I")
 (defpoll clock_minute :interval "1s" "date +\%M")
-; (defpoll clock_second :interval "1s" "date +\%S")
 (defpoll clock_date :interval "10h" "date '+%d/%m'")
 
 (defpoll volume_percent :interval "3s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
@@ -27,15 +27,11 @@
 (defpoll network_down :interval "1m" "$XDG_CONFIG_HOME/eww/bar/scripts/network down")
 (defpoll network_up :interval "1m" "$XDG_CONFIG_HOME/eww/bar/scripts/network up")
 
-; (defpoll network_down :interval "1m" 10)
-; (defpoll network_up :interval "1m" 10)
-
 (deflisten bluetooth_devices "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth subscribe")
 (deflisten bluetooth_connected "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth connected")
 
 (defpoll workspace :interval ".1s" "$XDG_CONFIG_HOME/eww/bar/scripts/workspace")
 
-; (defvar eww "$HOME/.local/bin/eww/eww -c $HOME/.config/eww/bar")
 (defvar eww "$HOME/eww/target/release/eww -c $HOME/.config/eww")
 
 (defpoll calendar_day :interval "20h" "date '+%d'")

@@ -1,5 +1,5 @@
 [Appearance]
-ColorScheme=Sweet
+ColorScheme=Catppuccin
 Font=Iosevka Nerd Font Mono,10,-1,5,25,0,0,0,0,0
 
 [General]

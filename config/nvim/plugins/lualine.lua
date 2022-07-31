@@ -1,15 +1,23 @@
 -- Lualine:
 ---------------------------------------------------------------
 
-local bg0        = '#0B0E14'
-local bg1        = '#0D1017'
-local bg2        = '#151f28'
-local fg0        = '#E6E1CF'
-local fg1        = '#E6E1CF'
-local yellow     = '#E7C547'
-local orange     = '#F29718'
-local aqua       = '#1f997e'
-local bright_red = '#e23141'
+local palette = {};
+
+if vim.g.palette then
+  palette = vim.g.palette
+else
+  palette = {
+    bg0        = '#0B0E14',
+    bg1        = '#0D1017',
+    bg2        = '#151f28',
+    fg0        = '#E6E1CF',
+    fg1        = '#E6E1CF',
+    yellow     = '#E7C547',
+    orange     = '#F29718',
+    aqua       = '#1f997e',
+    bright_red = '#e23141'
+  }
+end
 
 local function file_path()
   local path = vim.fn.expand('%f')
@@ -27,19 +35,19 @@ end
 
 local bubbles_theme = {
   normal = {
-    a = { fg = bg0, bg = aqua },
-    b = { fg = fg1, bg = bg2 },
-    c = { fg = bg0, bg = bg0 },
+    a = { fg = palette.bg0, bg = palette.aqua },
+    b = { fg = palette.fg1, bg = palette.bg2 },
+    c = { fg = palette.bg0, bg = palette.bg0 },
   },
 
-  insert = { a = { fg = bg0, bg = yellow } },
-  visual = { a = { fg = fg0, bg = bright_red } },
-  replace = { a = { fg = bg0, bg = orange } },
+  insert = { a = { fg = palette.bg0, bg = palette.yellow } },
+  visual = { a = { fg = palette.fg0, bg = palette.bright_red } },
+  replace = { a = { fg = palette.bg0, bg = palette.orange } },
 
   inactive = {
-    a = { fg = fg1, bg = bg2 },
-    b = { fg = fg1, bg = bg1 },
-    c = { fg = bg2, bg = bg1 },
+    a = { fg = palette.fg1, bg = palette.bg2 },
+    b = { fg = palette.fg1, bg = palette.bg0 },
+    c = { fg = palette.bg2, bg = palette.bg0 },
   },
 }
 

@@ -118,7 +118,7 @@ call s:HL('OrangeSign', s:bright_orange, s:bg0, s:invert_signs)
 " General UI: {{{
 
 " Normal text
-call s:HL('Normal', s:fg1, s:bg0)
+call s:HL('Normal', s:fg0, s:bg0)
 
 " Screen line that the cursor is
 call s:HL('CursorLine', s:none, s:bg2)
@@ -128,7 +128,7 @@ hi! link CursorColumn CursorLine
 " Tab pages line filler
 call s:HL('TabLineFill', s:fg0, s:bg0, s:invert_tabline)
 " Active tab page label
-call s:HL('TabLineSel', s:bright_red, s:bg0, s:invert_tabline)
+call s:HL('TabLineSel', s:bright_aqua, s:bg0, s:invert_tabline)
 " Not active tab page label
 hi! link TabLine TabLineFill
 
@@ -252,7 +252,7 @@ hi! link Constant Purple
 " Character constant: 'c', '/n'
 hi! link Character Purple
 " String constant: "this is a string"
-call s:HL('String', s:faded_green, s:none, s:italic)
+call s:HL('String', s:bright_green, s:none, s:italic)
 " Boolean constant: TRUE, false
 hi! link Boolean Purple
 " Number constant: 234, 0xff
@@ -335,7 +335,7 @@ hi! link ALEInfoSign BlueSign
 " CMP: {{{
 
 " The menu field's highlight group.
-call s:HL('CmpPmenu', s:fg1, s:none)
+call s:HL('CmpPmenu', s:fg0, s:none)
 call s:HL('CmpPmenuBorder', s:bright_blue, s:none)
 call s:HL('PmenuSel', s:fg0, s:bg4)
 
@@ -464,7 +464,7 @@ hi! link cssColor Blue
 hi! link cssSelectorOp Blue
 hi! link cssSelectorOp2 Blue
 hi! link cssImportant Green
-hi! link cssVendor Fg1
+hi! link cssVendor Fg0
 
 hi! link cssTextProp Aqua
 hi! link cssAnimationProp Aqua

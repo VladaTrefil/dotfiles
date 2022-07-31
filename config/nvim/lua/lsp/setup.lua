@@ -18,8 +18,9 @@ local handlers = {
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' }),
 }
 
-local function on_attach(client, bufnr)
-  -- set up buffer keymaps, etc.
+-- args: client, bufnr
+local function on_attach()
+  vim.cmd "autocmd! BufWritePre *.lua lua vim.lsp.buf.formatting_sync(nil, 1000)"
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -69,7 +70,7 @@ lspconfig.sumneko_lua.setup {
   settings = lua_config.settings,
 }
 
-for _, server in ipairs { "bashls", "vimls", "solargraph" } do
+for _, server in ipairs { "bashls", "vimls", "solargraph", "cssls" } do
   lspconfig[server].setup {
     on_attach = on_attach,
     capabilities = capabilities,

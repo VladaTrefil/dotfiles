@@ -1,0 +1,32 @@
+(defpoll workspace :interval ".1s" "$XDG_CONFIG_HOME/eww/bar/scripts/workspace")
+
+(defpoll network_down :interval "1m" "$XDG_CONFIG_HOME/eww/bar/scripts/network down")
+(defpoll network_up :interval "1m" "$XDG_CONFIG_HOME/eww/bar/scripts/network up")
+
+
+(defwidget workspaces []
+  (literal :content workspace))
+
+
+(defwidget sep []
+  (box :class "separator" :vexpand "false" :hexpand "false"
+    (label :class "separator__text" :text "|")))
+
+
+(defwidget network []
+  (box :class "network"
+       :space-evenly "false"
+       :orientation "h"
+       :spacing "3"
+    (box :class "network__up"
+       :space-evenly "false"
+      (label :text ""
+             :class "network__icon" )
+      (label :text "${network_up} Mb/s"
+             :class "network__label" ))
+    (box :class "network__down"
+       :space-evenly "false"
+      (label :text ""
+             :class "network__icon" )
+      (label :text "${network_down} Mb/s"
+             :class "network__label" ))))

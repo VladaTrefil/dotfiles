@@ -1,8 +1,11 @@
 .separator {
-  color: $border-color;
-  font-weight: bold;
-  font-size: 22px;
   margin: 0 5px;
+
+  &__text {
+    color: $border-color;
+    font-weight: bold;
+    font-size: 22px;
+  }
 }
 
 .workspace {

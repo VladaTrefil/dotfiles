@@ -1,0 +1,31 @@
+(deflisten bluetooth_devices "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth subscribe")
+(deflisten bluetooth_connected "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth connected")
+
+(defwidget bluetooth []
+  (box :class "bluetooth"
+       :space-evenly "false"
+       :orientation "h"
+       :spacing "3"
+    (button :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop bluetooth"
+            :class "bluetooth__icon" "")))
+
+(defwidget bluetooth_menu_device [?class key icon icon_class name button_class button_text]
+  (box :orientation 'h' :class 'bluetooth-menu__device ${class}'
+    (box :space-evenly 'false'
+      (label :class 'bluetooth-menu__icon ${icon_class}' :text '${icon}')
+      (label :class 'bluetooth-menu__name' :text '${name}'))
+    (box :space-evenly 'false' :halign 'end'
+      (button
+        :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth device_button_click ${key}"
+        :class 'bluetooth-menu__button ${button_class}' '${button_text}'))))
+
+(defwindow bluetooth_menu
+  :geometry (geometry
+  :x "-270px"
+  :y "4%"
+  :anchor "top right"
+  :width "280px"
+  :height "100px")
+  (box :class "bluetooth-menu" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
+    (box :class "bluetooth-menu__inner" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
+      (literal :content bluetooth_devices))))

@@ -4,7 +4,7 @@
 EWW_BIN="$HOME/eww/target/release/eww"
 
 hide_windows() {
-  ${EWW_BIN} -c $HOME/.config/eww/bar close system calendar system music_win audio_ctl bluetooth_menu
+  ${EWW_BIN} -c $HOME/.config/eww/bar close system calendar system audio bluetooth_menu
 }
 
 calendar() {
@@ -65,7 +65,7 @@ audio() {
   LOCK_FILE_AUDIO="$HOME/.cache/eww-audio.lock"
 
   run() {
-    ${EWW_BIN} -c $HOME/.config/eww/bar open audio_ctl 
+    ${EWW_BIN} -c $HOME/.config/eww/bar open audio
   }
 
   # Open widgets
@@ -74,7 +74,7 @@ audio() {
     touch "$LOCK_FILE_AUDIO"
     run && echo "ok good!"
   else
-    ${EWW_BIN} -c $HOME/.config/eww/bar close audio_ctl
+    ${EWW_BIN} -c $HOME/.config/eww/bar close audio
     rm "$LOCK_FILE_AUDIO" && echo "closed"
   fi
 }

@@ -1,0 +1,56 @@
+(defpoll volume_percent :interval "3s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defpoll mic_percent :interval "3s" "amixer -D pulse sget Capture | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+
+(defvar volume_reveal false)
+
+(defwidget volume []
+  (eventbox :onhover "${eww} update volume_reveal=true"
+            :onhoverlost "${eww} update volume_reveal=true"
+    (box :class "volume"
+         :space-evenly "false"
+         :orientation "h"
+         :spacing "3"
+      (button :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop audio"
+              :class "volume__icon" "")
+      (revealer :transition "slideleft"
+                :reveal volume_reveal
+                :duration "200ms"
+        (scale :class "volume__bar"
+               :value volume_percent
+               :orientation "h"
+               :tooltip "${volume_percent}%"
+               :min 0
+               :max 100
+               :onchange "amixer -D pulse sset Master {}%" )))))
+
+
+(defwidget audio_item [key percent script tooltip]
+  (box :class "audio__item audio-${key}" :halign "v" :space-evenly "false" :hexpand "false" :vexpand "false"
+    (box :class "audio__icon" :orientation "v")
+    (box :orientation "v" :halign "center" :vexpand "false" :hexpand "false"
+      (label :class "audio__text" :text key :valign "center" :halign "left" )
+      (box :class "audio__bar" :halign "center" :vexpand "false" :hexpand "false"
+        (scale :value percent
+               :space-evenly "false"
+               :orientation "h"
+               :onchange script
+               :tooltip tooltip
+               :max 100
+               :min 0)))))
+
+(defwindow audio
+  :geometry (geometry :x "-20px"
+  :y "4%"
+  :anchor "top right"
+  :width "280px"
+  :height "60px")
+  (box :class "audio" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
+    (audio_item :key "speakers"
+                :percent volume_percent
+                :script "amixer -D pulse sset Master {}%"
+                :tooltip "volume on ${volume_percent}%")
+    (label :text "" :class "audio__sep" :halign "center")
+    (audio_item :key "microphone"
+                :percent mic_percent
+                :script "amixer -D pulse sset Capture {}%"
+                :tooltip "volume on ${mic_percent}%")))

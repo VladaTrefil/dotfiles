@@ -1,0 +1,45 @@
+(defpoll clock_time :interval "1s" "date +\%I")
+(defpoll clock_minute :interval "1s" "date +\%M")
+(defpoll clock_date :interval "10h" "date '+%d/%m'")
+
+(defpoll calendar_day :interval "20h" "date '+%d'")
+(defpoll calendar_year :interval "20h" "date '+%Y'")
+
+(defvar date_reveal false)
+
+
+(defwidget clock []
+  (eventbox :onhover "${eww} update date_reveal=true"
+            :onhoverlost "${eww} update date_reveal=true"
+    (box :class "module clock"
+         :space-evenly "false"
+         :orientation "h"
+         :spacing "3"
+      (label :text clock_time
+             :class "clock__time" )
+      (label :text ""
+             :class "clock__sep" )
+      (label :text clock_minute
+             :class "clock__minute")
+      (revealer :transition "slideleft"
+                :reveal date_reveal
+                :duration "350ms"
+        (button :class "clock__date"
+                :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop calendar"
+          clock_date)))))
+
+
+(defwidget cal []
+  (box :class "cal" :orientation "v"
+    (box :class "cal-in"
+      (calendar :class "cal"
+                :day calendar_day
+                :year calendar_year))))
+
+(defwindow calendar
+  :geometry (geometry :x "-20px"
+  :y "7%"
+  :anchor "top right"
+  :width "270px"
+  :height "60px")
+  (cal))

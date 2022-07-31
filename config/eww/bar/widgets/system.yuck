@@ -1,0 +1,84 @@
+(defpoll cpu :interval "1s" "$XDG_CONFIG_HOME/eww/bar/scripts/cpu")
+
+(defpoll memory :interval "1s" "$XDG_CONFIG_HOME/eww/bar/scripts/memory used_perc")
+(defpoll memory_used_gb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/memory used")
+(defpoll memory_total_gb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/memory total")
+(defpoll memory_free_gb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/memory free")
+
+(defpoll disk_user_perc :interval "1s" 10)
+(defpoll disk_used_gb :interval "2m" 10)
+
+
+(defwidget system_widget []
+  (button :class "system-widget"
+          :tooltip "system menu"
+          :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop system"
+          :show_truncated false
+    (box :orientation "h"
+      (system_widget_circle
+        :key "cpu"
+        :percentage cpu
+        :icon ""
+        :tooltip "using ${cpu}% CPU")
+      (system_widget_circle
+        :key "memory"
+        :percentage memory
+        :icon ""
+        :tooltip "using ${memory}% RAM")
+      (system_widget_circle
+        :key "disk"
+        :percentage {EWW_DISK["/"]["used_perc"]}
+        :icon ""
+        :tooltip "${round(EWW_DISK["/"]["used"]/1000000000, 0)}/${round(EWW_DISK["/"]["total"]/1000000000, 0)} GB"))))
+
+(defwidget system_widget_circle [key percentage icon tooltip]
+  (box :class "system-widget__circle system-widget-${key}" :vexpand "false" :hexpand "false"
+    (circular-progress :value percentage :class "system-widget__bar" :thickness 4
+      (label :class "system-widget__icon" :text icon :tooltip tooltip :wrap false))))
+
+
+(defwidget system_cpu []
+  (label :text "${cpu}% used"
+         :halign "start"
+         :class "system__text-sub"
+         :limit-width 22
+         :show_truncated false
+         :wrap false))
+
+(defwidget system_memory []
+  (box :orientation "v"
+    (label :text "${memory_used_gb} | ${memory_total_gb} GB"
+           :halign "start"
+           :class "system__text-sub"
+           :limit-width 22
+           :show_truncated false
+           :wrap false)
+    (label :text "Free: ${memory_free_gb} GB"
+           :halign "start"
+           :class "system__text-sub"
+           :limit-width 22
+           :show_truncated false
+           :wrap false)))
+
+(defwidget system_item [key text icon percentage]
+  (box :class "system__box system-${key}" :orientation "h" :space-evenly "false"
+    (circular-progress :value percentage :class "system__circle" :thickness 9
+      (label :text icon
+             :class "system__icon"
+             :limit-width 2
+             :show_truncated false
+             :wrap false))
+    (box :orientation "v" :space-evenly "false" :spacing 0 :hexpand "false" :vexpand "false"
+      (label :text text
+             :halign "start"
+             :class "system__text"
+             :limit-width 9
+             :show_truncated false
+             :wrap false)
+      (children) )))
+
+(defwindow system :geometry (geometry :x "-20px" :y "4%" :anchor "top right" :width "290px" :height "120px")
+  (box :class "system" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false" :spacing 0
+    (system_item :key "cpu" :text "CPU" :icon "" :percentage cpu (system_cpu))
+    (label :text "" :class "system__sep" :halign "center")
+    (system_item :key "memory" :text "Memory" :icon "" :percentage memory (system_memory))))

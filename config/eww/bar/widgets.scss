@@ -48,12 +48,14 @@
   }
 }
 
-.disk,
-.cpu,
-.memory {
-  background-color: $background;
-  border-radius: 16px;
-  margin: 0 10px;
+.system-widget {
+  background: blue;
+
+  &__circle {
+    background-color: $background;
+    border-radius: 16px;
+    margin: 0 10px;
+  }
 
   &__bar {
     background-color: $bar-color;
@@ -64,33 +66,27 @@
     font-size: 15px;
     margin: 10px;
   }
-}
 
-.cpu {
-  &__bar,
-  &__icon {
+  .system-widget-cpu &__bar,
+  .system-widget-cpu &__icon {
     color: $red-500;
   }
 
-  &__icon {
+  .system-widget-cpu &__icon {
     margin-top: 11px;
   }
-}
 
-.memory {
-  &__bar,
-  &__icon {
+  .system-widget-memory &__bar,
+  .system-widget-memory &__icon {
     color: $red-400;
   }
-}
 
-.disk {
-  &__bar,
-  &__icon {
+  .system-widget-disk &__bar,
+  .system-widget-disk &__icon {
     color: $red-300;
   }
 
-  &__icon {
+  .system-widget-disk &__icon {
     margin-top: 11px;
     margin-right: 11px;
   }

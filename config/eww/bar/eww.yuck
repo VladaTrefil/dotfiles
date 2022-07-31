@@ -99,52 +99,32 @@
              :class "network__label" ))))
 
 
-(defwidget cpu []
-  (box :class "cpu"
-       :vexpand "false"
-       :hexpand "false" 
-    (circular-progress :value cpu
-                       :class "cpu__bar"
-                       :thickness 4
-      (button :class "cpu__icon"
-              :limit-width 2
-              :tooltip "using ${cpu}% CPU"
-              :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop system"
-              :show_truncated false
-              :wrap false
-        "" ))))
+(defwidget system_widget []
+  (button :class "system-widget"
+          :tooltip "system menu"
+          :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop system"
+          :show_truncated false
+    (box :orientation "h"
+      (system_widget_circle
+        :key "cpu"
+        :percentage cpu
+        :icon ""
+        :tooltip "using ${cpu}% CPU")
+      (system_widget_circle
+        :key "memory"
+        :percentage memory
+        :icon ""
+        :tooltip "using ${memory}% RAM")
+      (system_widget_circle
+        :key "disk"
+        :percentage {EWW_DISK["/"]["used_perc"]}
+        :icon ""
+        :tooltip "${round(EWW_DISK["/"]["used"]/1000000000, 0)}/${round(EWW_DISK["/"]["total"]/1000000000, 0)} GB"))))
 
-
-(defwidget mem []
-  (box :class "memory"
-       :vexpand "false"
-       :hexpand "false" 
-    (circular-progress :value memory
-                       :class "memory__bar"
-                       :thickness 4
-      (button :class "memory__icon"
-              :limit-width 2
-              :tooltip "using ${memory}% RAM"
-              :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop system"
-              :show_truncated false
-              :wrap false
-        "" ))))
-
-
-(defwidget disk []
-  (box :class "disk"
-       :vexpand "false"
-       :hexpand "false" 
-    (circular-progress :value {EWW_DISK["/"]["used_perc"]}
-                       :class "disk__bar"
-                       :thickness 4
-      (button :class "disk__icon"
-              :limit-width 2
-              :tooltip "${round(EWW_DISK["/"]["used"]/1000000000, 0)}/${round(EWW_DISK["/"]["total"]/1000000000, 0)} GB"
-              :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop system"
-              :show_truncated false
-              :wrap false
-        "" ))))
+(defwidget system_widget_circle [key percentage icon tooltip]
+  (box :class "system-widget__circle system-widget-${key}" :vexpand "false" :hexpand "false" 
+    (circular-progress :value percentage :class "system-widget__bar" :thickness 4
+      (label :class "system-widget__icon" :text icon :tooltip tooltip :wrap false))))
 
 
 (defwidget clock []
@@ -190,9 +170,7 @@
     (sep)
     (network)
     (sep)
-    (cpu)
-    (mem)
-    (disk)
+    (system_widget)
     (sep)
     (clock)))
 
@@ -251,65 +229,51 @@
         :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/bluetooth device_button_click ${key}"
         :class 'bluetooth-menu__button ${button_class}' '${button_text}'))))
 
-(defwindow system
-  :geometry (geometry :x "-20px" 
-  :y "4%" 
-  :anchor "top right"
-  :width "290px" 
-  :height "120px")
+(defwidget system_cpu []
+  (label :text "${cpu}% used"
+         :halign "start"
+         :class "system__text-sub"
+         :limit-width 22
+         :show_truncated false
+         :wrap false))
+
+(defwidget system_memory []
+  (box :orientation "v"
+    (label :text "${memory_used_gb} | ${memory_total_gb} GB"
+           :halign "start"
+           :class "system__text-sub"
+           :limit-width 22
+           :show_truncated false
+           :wrap false)
+    (label :text "Free: ${memory_free_gb} GB"
+           :halign "start"
+           :class "system__text-sub"
+           :limit-width 22
+           :show_truncated false
+           :wrap false)))
+
+(defwidget system_item [key text icon percentage]
+  (box :class "system__box system-${key}" :orientation "h" :space-evenly "false"
+    (circular-progress :value percentage :class "system__circle" :thickness 9
+      (label :text icon
+             :class "system__icon"
+             :limit-width 2
+             :show_truncated false
+             :wrap false))
+    (box :orientation "v" :space-evenly "false" :spacing 0 :hexpand "false" :vexpand "false"
+      (label :text text
+             :halign "start"
+             :class "system__text"
+             :limit-width 9
+             :show_truncated false
+             :wrap false)
+      (children) )))
+
+(defwindow system :geometry (geometry :x "-20px" :y "4%" :anchor "top right" :width "290px" :height "120px")
   (box :class "system" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false" :spacing 0
-    (box :class "system__box system__cpu" :orientation "h" :space-evenly "false"
-      (circular-progress :value cpu
-                         :class "system__circle"
-                         :thickness 9
-        (label :text ""
-               :class "system__icon"
-               :limit-width 2
-               :show_truncated false
-               :wrap false))
-      (box :orientation "v" :space-evenly "false" :spacing 0 :hexpand "false" :vexpand "false"
-        (label :text "CPU"
-               :halign "start"
-               :class "system__text"
-               :limit-width 9
-               :show_truncated false
-               :wrap false)
-        (label :text "${cpu}% used"
-               :halign "start"
-               :class "system__text-sub"
-               :limit-width 22
-               :show_truncated false
-               :wrap false)))
+    (system_item :key "cpu" :text "CPU" :icon "" :percentage cpu (system_cpu))
     (label :text "" :class "system__sep" :halign "center")
-    (box :class "system__box system__memory" :orientation "h" :space-evenly "false" :halign "start"
-      (circular-progress :value memory
-                         :class "system__circle"
-                         :thickness 9
-        (label :text ""
-               :class "system__icon"
-               :limit-width 2
-               :show_truncated false
-               :wrap false
-               :angle 0.0))
-      (box :orientation "v" :space-evenly "false" :spacing 0 :hexpand "false" :vexpand "false"
-        (label :text "Memory"
-               :halign "start"
-               :class "system__text"
-               :limit-width 9
-               :show_truncated false
-               :wrap false)
-        (label :text "${memory_used_gb} | ${memory_total_gb} GB"
-               :halign "start"
-               :class "system__text-sub"
-               :limit-width 22
-               :show_truncated false
-               :wrap false)
-        (label :text "Free: ${memory_free_gb} GB"
-               :halign "start"
-               :class "system__text-sub"
-               :limit-width 22
-               :show_truncated false
-               :wrap false)))))
+    (system_item :key "memory" :text "Memory" :icon "" :percentage memory (system_memory))))
 
 
 (defwidget cal []
@@ -318,7 +282,6 @@
       (calendar :class "cal" 
                 :day calendar_day 
                 :year calendar_year))))
-
 
 (defwindow calendar
   :geometry (geometry :x "-20px" 

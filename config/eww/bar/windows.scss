@@ -77,7 +77,7 @@
 .system {
   background-color: $background;
   padding: 10px 15px;
-  // box-shadow: $box-shadow-window;
+  box-shadow: $box-shadow-window;
 
   &__box {
     border-radius: 16px;
@@ -117,84 +117,65 @@
     margin-left: 25px;
   }
 
-  &__cpu &__text,
-  &__cpu &__icon,
-  &__cpu &__circle {
-    color: #f04c0c;
+  .system-cpu &__icon,
+  .system-cpu &__circle {
+    color: $red-500;
   }
 
-  &__memory &__text,
-  &__memory &__icon,
-  &__memory &__circle {
-    color: #e4c9af;
+  .system-memory &__icon,
+  .system-memory &__circle {
+    color: $red-400;
   }
 }
 
-.audio-box {
+.audio {
   background-color: $background;
   border-radius: 16px;
+
+  &__icon {
+    background-size: cover;
+    background-position: center;
+    min-height: 70px;
+    min-width: 75px;
+    margin: 10px 20px 5px;
+    border-radius: 12px;
+  }
+
+  .audio-speakers &__icon {
+    background-image: url('images/speaker.png');
+  }
+
+  .audio-microphone &__icon {
+    background-image: url('images/mic.png');
+  }
+
+  &__text {
+    color: $light-blue;
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  &__bar scale trough {
+    all: unset;
+    background-color: $light-blue;
+    box-shadow: 0 6px 5px #06060b;
+    border-radius: 24px;
+    min-height: 13px;
+    min-width: 120px;
+    margin-bottom: 5px;
+  }
+
+  &__bar scale trough highlight {
+    background-image: $scale-gradient;
+    border-radius: 24px;
+  }
+
+  &__sep {
+    color: $border-color;
+    font-size: 18px;
+  }
 }
 
-.speaker_icon {
-  background-size: cover;
-  background-image: url('images/speaker.png');
-  background-position: center;
-  min-height: 70px;
-  min-width: 75px;
-  margin: 10px 20px 5px;
-  border-radius: 12px;
-}
 
-.speaker_text {
-  color: #a1bdce;
-  font-size: 26px;
-  font-weight: bold;
-  margin-top: 20px;
-}
 
-.speaker_bar scale trough highlight {
-  background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
-  border-radius: 24px;
-}
-
-.speaker_bar scale trough {
-  all: unset;
-  background-color: #232232;
-  box-shadow: 0 6px 5px #06060b;
-  border-radius: 24px;
-  min-height: 13px;
-  min-width: 120px;
-  margin-bottom: 5px;
-}
-
-.mic_icon {
-  background-size: cover;
-  background-image: url('images/mic.png');
-  background-position: center;
-  min-height: 70px;
-  min-width: 75px;
-  margin: 20px;
-  margin-top: 5px;
-  border-radius: 12px;
-}
-
-.mic_text {
-  color: #a1bdce;
-  font-size: 26px;
-  font-weight: bold;
-}
-
-.mic_bar scale trough {
-  all: unset;
-  box-shadow: 0 6px 5px 2px #06060b;
-  background-color: #232232;
-  border-radius: 24px;
-  min-height: 13px;
-  min-width: 120px;
-  margin-bottom: 20px;
-}
-
-.audio_sep {
-  color: $border-color;
-  font-size: 18px;
-}

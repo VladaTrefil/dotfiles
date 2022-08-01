@@ -5,7 +5,7 @@
   (box :class "bluetooth"
        :space-evenly "false"
        :orientation "h"
-       :spacing "3"
+       :spacing spacing
     (button :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop bluetooth"
             :class "bluetooth__icon" "")))
 
@@ -20,12 +20,10 @@
         :class 'bluetooth-menu__button ${button_class}' '${button_text}'))))
 
 (defwindow bluetooth_menu
-  :geometry (geometry
-  :x "-270px"
-  :y "4%"
-  :anchor "top right"
-  :width "280px"
-  :height "100px")
+  :geometry (geometry :x "-270px"
+                      :y "4%"
+                      :anchor "top right"
+                      :width "280px")
   (box :class "bluetooth-menu" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
     (box :class "bluetooth-menu__inner" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
       (literal :content bluetooth_devices))))

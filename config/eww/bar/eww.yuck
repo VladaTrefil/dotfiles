@@ -1,6 +1,10 @@
 (defvar eww "$HOME/.local/bin/eww -c $HOME/.config/eww")
 
+(defvar spacing "3")
+(defvar window_y "4%")
+
 (include "./bar/widgets/eww.yuck")
+(include "./bar/widgets/control.yuck")
 (include "./bar/widgets/system.yuck")
 (include "./bar/widgets/bluetooth.yuck")
 (include "./bar/widgets/audio.yuck")
@@ -9,8 +13,17 @@
 (defwidget left []
   (box :orientation "h" 
        :space-evenly false  
+       :halign "start"
+       :class "bar__left"
+    (control)
+    (sep)
+    (workspaces)))
+
+(defwidget right []
+  (box :orientation "h" 
+       :space-evenly false  
        :halign "end"
-       :class "left_modules"
+       :class "bar__right"
     (volume)
     (sep)
     (bluetooth)
@@ -29,13 +42,6 @@
 ;     :class "center_modules"
 ;     (music)))
 
-(defwidget right []
-  (box :orientation "h" 
-       :space-evenly false  
-       :halign "start"
-       :class "right_modules"
-    (workspaces)))
-
 (defwindow bar
   :geometry (geometry :x "0%" :y "9px" :width "98%" :height "30px" :anchor "top center")
   :stacking "fg"
@@ -44,6 +50,6 @@
        :orientation "h"
     (box :class "bar__inner"
          :orientation "h"
-      (right)
+      (left)
       ; (center)
-      (left))))
+      (right))))

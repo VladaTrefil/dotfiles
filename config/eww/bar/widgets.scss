@@ -1,29 +1,52 @@
 .separator {
-  margin: 0 5px;
+  margin: 0 $m;
 
   &__text {
     color: $border-color;
     font-weight: bold;
-    font-size: 22px;
+    font-size: $bar-icon-size-lg;
+  }
+}
+
+.w-control {
+  margin-left: $m*3;
+  padding-right: $m*3;
+
+  &__icon {
+    font-family: $awesome;
+    font-size: $bar-icon-size;
+    color: $light-pink;
+  }
+
+  &__inner {
+    margin-left: $m*3;
+  }
+
+  &__button {
+    margin: 0 $m;
+
+    &:hover {
+      color: $light-pink;
+    }
   }
 }
 
 .workspace {
-  font-size: 27px;
+  font-size: $bar-icon-size-lg;
   font-weight: normal;
-  margin-left: 20px;
+  margin-left: $m*3;
   background-color: $background;
 
   &__button {
-    margin-right: 10px;
+    margin-right: $m*2;
     color: $border-color;
 
     &--occupied {
-      color: $light-blue;
+      color: rgba($blue, 0.6);
     }
 
     &--focused {
-      color: $light-blue;
+      color: $blue;
     }
   }
 }
@@ -31,13 +54,13 @@
 .volume {
   &__icon {
     font-family: $awesome;
-    font-size: 22px;
-    color: $light-blue;
-    margin: 0px 10px;
+    font-size: $bar-icon-size*0.95;
+    margin: 0px $m;
+    color: $blue-faint;
   }
 
   &__bar trough highlight {
-    background: $light-blue;
+    background: $blue;
     border-radius: 10px;
   }
 }
@@ -45,19 +68,17 @@
 .bluetooth {
   &__icon {
     font-family: $awesome;
-    font-size: 18px;
-    color: $blue;
-    margin: 0px 10px;
+    font-size: $bar-icon-size;
+    color: $blue-bt;
+    margin: 0px $m*2;
   }
 }
 
 .system-widget {
-  background: blue;
-
   &__circle {
     background-color: $background;
-    border-radius: 16px;
-    margin: 0 10px;
+    border-radius: 15px;
+    margin: 0 $m*2;
   }
 
   &__bar {
@@ -66,8 +87,8 @@
   }
 
   &__icon {
-    font-size: 15px;
-    margin: 10px;
+    font-size: $bar-icon-size*0.65;
+    margin: $m*2;
   }
 
   .system-widget-cpu &__bar,
@@ -76,7 +97,7 @@
   }
 
   .system-widget-cpu &__icon {
-    margin-top: 11px;
+    margin-top: $m*2;
   }
 
   .system-widget-memory &__bar,
@@ -90,57 +111,55 @@
   }
 
   .system-widget-disk &__icon {
-    margin-top: 11px;
-    margin-right: 11px;
+    margin-top: $m*2;
+    margin-right: $m*2;
   }
 }
 
 .network {
-  margin-right: 7px;
-  margin-left: 10px;
+  margin-right: $m * 2 * 0.7;
+  margin-left: $m*2;
 
   &__up {
-    margin-right: 15px;
-    color: $light-blue;
-  }
-
-  &__down {
-    color: $green;
+    margin-right: $m*3;
   }
 
   &__icon {
     font-family: $awesome;
-    margin-right: 10px;
+    margin-right: $m*2;
+    margin-top: -3px;
+  }
+
+  &__down &__icon {
+    color: $green;
+  }
+
+  &__up &__icon {
+    color: $blue;
   }
 }
 
 .clock {  
-  margin: 0 20px 0 10px;
+  margin-left: $m*3;
+  margin-right: $m*3;
 
   &__sep {
-    font-size: 16px;
-    color: $light-blue;
-    margin: 0px 4px 1px;
+    font-size: $font-size*1.2;
+    margin: 0px $m 1px;
+    color: $gray;
   }
 
   &__time, &__minute {
-    font-size: 23px;
+    font-size: $font-size-lg*1.5;
   }
 
   &__time {
-    color: $light-blue;
     font-weight: bold;
-    margin-left: 5px;
-  }
-
-  &__minute {
-    margin: 0px 4px 0px 3px;
-    color: $light-blue;
   }
 
   &__date {
-    font-size: 18px;
-    margin-left: 20px;
+    font-size: $font-size-lg;
+    margin-left: $m*4;
     color: $light-pink;
   }
 }

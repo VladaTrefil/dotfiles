@@ -3,50 +3,50 @@
 }
 
 calendar {
-  color: $light-blue;
+  color: $fg;
 
   &.header {
-    color: #a1bdce;
+    color: $fg;
     font-weight: bold;
   }
 
   &.button {
-    color: #afbea2;
+    color: $light-pink;
   }
 
   &.highlight {
-    color: #a1bdce;
+    color: $blue;
     font-weight: bold;
   }
 
   &:indeterminate {
-    color: $light-blue;
+    color: $gray;
   }
 
   &:selected {
-    color: #a1bdce;
+    color: $blue;
   }
 }
 
 tooltip {
   &.background {
     background-color: $background;
-    font-size: 18px;
+    font-size: $font-size-lg;
     border-radius: 10px;
-    color: $light-blue;
+    color: $fg;
   }
 
   label {
-    padding: 4px 5px;
+    padding: $m*0.9 $m;
   }
 }
 
 scale trough {
   all: unset;
-  background-color: #22242b;
-  box-shadow: 0 2px 3px 2px #06060b;
+  background-color: $background;
+  box-shadow: 0 2px 3px 2px darken($background, 15%);
   border-radius: 16px;
   min-height: 10px;
   min-width: 70px;
-  margin-right: 10px;
+  margin-right: $m*2;
 }

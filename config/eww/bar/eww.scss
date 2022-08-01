@@ -1,12 +1,15 @@
 @import "../variables.scss";
 
 .bar {
-  padding: 15px 15px 0;
+  padding: $m*3;
+  padding-bottom: 0;
 
   &__inner {
     background-color: $background;
-    padding: 8px 0;
+    padding: $m*2;
     border-radius: 10px;
+    font-size: $font-size;
+    color: $fg;
   }
 }
 

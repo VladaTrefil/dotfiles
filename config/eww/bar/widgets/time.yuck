@@ -7,14 +7,13 @@
 
 (defvar date_reveal false)
 
-
 (defwidget clock []
   (eventbox :onhover "${eww} update date_reveal=true"
-            :onhoverlost "${eww} update date_reveal=true"
+            :onhoverlost "${eww} update date_reveal=false"
     (box :class "module clock"
          :space-evenly "false"
          :orientation "h"
-         :spacing "3"
+         :spacing spacing
       (label :text clock_time
              :class "clock__time" )
       (label :text ""
@@ -28,7 +27,6 @@
                 :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop calendar"
           clock_date)))))
 
-
 (defwidget cal []
   (box :class "cal" :orientation "v"
     (box :class "cal-in"
@@ -38,7 +36,7 @@
 
 (defwindow calendar
   :geometry (geometry :x "-20px"
-  :y "7%"
+  :y "4%"
   :anchor "top right"
   :width "270px"
   :height "60px")

@@ -54,12 +54,3 @@ let g:dashboard_custom_shortcut_icon={
 \ 'find_word'          : ' ',
 \ 'book_marks'         : ' ',
 \ }
-
-function! ExtendDashboard()
-  hi dashboardFooter    guibg=none guifg=#516d91
-  hi dashboardHeader    guibg=none guifg=#e4445a
-  hi dashboardCenter    guibg=none guifg=#1f997e
-  hi dashboardShortCut  guibg=none guifg=#516d91
-endf
-
-autocmd FileType dashboard call ExtendDashboard()

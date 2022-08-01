@@ -214,14 +214,14 @@ hi! link lCursor Cursor
 call s:HL('Special', s:bright_orange, s:bg1, s:italic)
 call s:HL('Comment', s:gray, s:none, s:italic)
 call s:HL('Todo', s:vim_fg, s:vim_bg, s:bold . s:italic)
-call s:HL('Error', s:bright_red, s:vim_bg, s:bold . s:inverse)
+call s:HL('Error', s:bright_red, s:vim_bg, s:bold . s:undercurl)
 
 " Generic statement
-hi! link Statement Red
+hi! link Statement PurpleBold
 " if, then, else, endif, swicth, etc.
-hi! link Conditional Red
+hi! link Conditional Aqua
 " for, do, while, etc.
-hi! link Repeat Red
+hi! link Repeat Aqua
 " case, default, etc.
 hi! link Label Red
 " try, catch, throw
@@ -250,18 +250,18 @@ hi! link PreCondit Aqua
 " Generic constant
 hi! link Constant Purple
 " Character constant: 'c', '/n'
-hi! link Character Purple
+hi! link Character Green
 " String constant: "this is a string"
 call s:HL('String', s:bright_green, s:none, s:italic)
 " Boolean constant: TRUE, false
 hi! link Boolean Purple
 " Number constant: 234, 0xff
-hi! link Number Purple
+hi! link Number Orange
 " Floating point constant: 2.3e10
-hi! link Float Purple
+hi! link Float Orange
 
 " Generic type
-hi! link Type Yellow
+call s:HL('Type', s:faded_blue, s:none)
 " static, register, volatile, etc
 hi! link StorageClass Orange
 " struct, union, enum, etc.
@@ -377,6 +377,18 @@ call s:HL('EasyMotionShade', s:bg4, s:none, s:italic)
   call s:HL('lualine_c_inactive', s:none, s:bg1)
 
 " }}}
+" Dashboard: {{{
+
+function! ExtendDashboard()
+  hi link dashboardFooter Blue
+  hi link dashboardHeader PurpleBold
+  hi link dashboardCenter Aqua
+  hi link dashboardShortCut Blue
+endf
+
+autocmd FileType dashboard call ExtendDashboard()
+
+" }}}
 
 " Filetype specific -----------------------------------------------------------
 " Diff: {{{
@@ -442,8 +454,6 @@ hi! link xmlEntity Orange
 hi! link xmlEntityPunct Orange
 " }}}
 " Vim: {{{
-
-call s:HL('vimCommentTitle', s:fg4, s:none, s:bold . s:italic)
 
 hi! link vimNotation Orange
 hi! link vimBracket Orange

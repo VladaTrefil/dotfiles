@@ -12,17 +12,15 @@ if [ ! -e .env ]; then
   cat .env.sample | grep -Ev "^(DB_NAME|DB_USER|DB_PASSWORD)" >> .env
 fi
 
-gunzip -ck "${db_directory}/$( ls $db_directory | grep ${project} | tail -n1 )"
+gunzip -ck "${db_directory}/$( ls $db_directory | grep ${project} | tail -n1 )" > ./db-dump.sql
 
-if [ -e $db_sql ]; then
-  dropdb ${project}_development
-  createdb ${project}_development
+dropdb ${project}_development
+createdb ${project}_development
 
-  sudo -u postgres psql -c 'CREATE EXTENSION unaccent;' ${project}_development
+sudo -u postgres psql -c 'CREATE EXTENSION unaccent;' ${project}_development
 
-  psql ${project}_development < ./db-dump.sql
+psql ${project}_development < ./db-dump.sql
 
-  rm ./db-dump.sql
-fi
+rm ./db-dump.sql
 
 bin/rails db:migrate

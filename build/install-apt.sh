@@ -26,6 +26,7 @@ APT_PACKAGES=(
   "unzip"
   "xclip" # Clipboard
   "speedtest-cli" #Network speedtest
+  "ifstat" #Network speedtest
   "jq" # json parser
 
   # Terminal code interpreters

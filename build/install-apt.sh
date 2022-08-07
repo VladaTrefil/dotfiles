@@ -9,7 +9,6 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 APT_PACKAGES=(
-  "python3-dev"
   "python-is-python3"
   "build-essential"
 
@@ -27,6 +26,11 @@ APT_PACKAGES=(
   "unzip"
   "xclip" # Clipboard
   "speedtest-cli" #Network speedtest
+  "jq" # json parser
+
+  # Terminal code interpreters
+  "python3-dev"
+  "lua5.3:i386"
 
   # Sinfin libs
   "postgresql"
@@ -48,7 +52,6 @@ APT_PACKAGES=(
   "gifsicle"
   "libwebp-dev"
   "webp"
-  "jq" # json parser
 
   # Dunst
   "libdbus-1-dev"

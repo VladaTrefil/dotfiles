@@ -102,7 +102,7 @@
       path: local/bin
 
 - shell:
-  - [ source $HOME/.zprofile, Source zProfile]
+  - [ source $HOME/.zprofile, Source zprofile]
 
   -
     command: ./build/install-apt.sh

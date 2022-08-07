@@ -20,6 +20,7 @@ APT_PACKAGES=(
   "dunst"
 
   # Terminal functions
+  "git"
   "bc" # calculation function
   "ripgrep" # Command line search
   "unzip"
@@ -27,6 +28,7 @@ APT_PACKAGES=(
   "speedtest-cli" #Network speedtest
   "ifstat" #Network speedtest
   "jq" # json parser
+  "moreutils" # Useful shell functions https://joeyh.name/code/moreutils/
 
   # Terminal code interpreters
   "python3-dev"

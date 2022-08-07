@@ -9,7 +9,6 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 APT_PACKAGES=(
-  "python-is-python3"
   "build-essential"
 
   # Desktop enviroment
@@ -31,6 +30,7 @@ APT_PACKAGES=(
 
   # Terminal code interpreters
   "python3-dev"
+  "python-is-python3"
   "lua5.3:i386"
 
   # Sinfin libs

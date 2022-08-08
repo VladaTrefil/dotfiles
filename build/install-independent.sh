@@ -121,6 +121,7 @@ if [ -f `which python3` ]; then
   echo 'Installing Python extensions...'
   pip install pynvim
   pip install yarp
+  pip install speedtest-cli
 fi
 
 # }}}

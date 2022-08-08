@@ -25,7 +25,6 @@ APT_PACKAGES=(
   "ripgrep" # Command line search
   "unzip"
   "xclip" # Clipboard
-  "speedtest-cli" #Network speedtest
   "ifstat" #Network speedtest
   "jq" # json parser
   "moreutils" # Useful shell functions https://joeyh.name/code/moreutils/

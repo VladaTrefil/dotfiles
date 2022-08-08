@@ -18,6 +18,7 @@ plugins=(
   vi-mode
   zsh-autosuggestions
   fast-syntax-highlighting
+  asdf
 )
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#757575,bg=none,bold,underline"
@@ -135,9 +136,13 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source "$XDG_CONFIG_HOME/shell/aliases.sh"
 
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
-# RVM
+# ASDF
 
-[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+if [ -f "$ASDF_DIR/asdf.sh" ]; then
+  . $ASDF_DIR/asdf.sh
+else
+  echo "asdf.sh not found"
+fi
 
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # NVM

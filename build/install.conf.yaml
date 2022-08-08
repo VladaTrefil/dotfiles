@@ -17,8 +17,9 @@
   '~/.config/oh-my-zsh/custom/',
   '~/.config/oh-my-zsh/custom/plugins/',
   '~/.config/oh-my-zsh/custom/themes/',
-  '~/.local/share/fonts']
+  '~/.local/share/fonts',
   '~/.local/bin',
+  '~/.local/lib']
 
 - create:
   - ~/.config/pg
@@ -35,6 +36,7 @@
   - ~/.config/oh-my-zsh/custom/themes
 
   - ~/.local/bin
+  - ~/.local/lib
   - ~/.local/share/fonts
   - ~/.local/share/bundle
   - ~/.local/share/node
@@ -86,6 +88,9 @@
     ~/.config/dunst: config/dunst
     ~/.config/pry: config/pry
     ~/.config/eww: config/eww
+
+    ~/.config/asdf: config/asdf
+    ~/.tool-versions: config/asdf/tool-versions
 
     # KDE Plasma
     ~/.config/konsolerc:

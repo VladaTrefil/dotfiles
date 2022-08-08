@@ -25,6 +25,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_LIB_HOME="$HOME/.local/state"
 export BIN_PATH="$HOME/.local/bin"
 
 export INPUTRC="$XDG_CONFIG_HOME/shell/inputrc"
@@ -35,6 +36,11 @@ export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
 
 export RUSTUP_HOME="$XDG_CONFIG_HOME/rustup"
 export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
+
+export ASDF_DIR="$XDG_LIB_HOME/asdf"
+export ASDF_CONFIG_FILE="$XDG_CONFIG_HOME/asdf/asdfrc"
+export ASDF_DATA_DIR="$XDG_DATA_HOME/asdf"
+
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────

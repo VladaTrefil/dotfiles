@@ -56,6 +56,9 @@ APT_PACKAGES=(
   "libwebp-dev"
   "webp"
 
+  # ASDF dependencies
+  "libdb5.3-dev"
+
   # Dunst
   "libdbus-1-dev"
   "libx11-dev"

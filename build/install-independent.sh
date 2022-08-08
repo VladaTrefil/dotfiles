@@ -47,45 +47,45 @@ fi
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
-# RVM: {{{
+# ASDF: {{{
 
-# Check if RVM is installed
-if [ ! -f "`which rvm`" ]; then
-  echo 'Installing RVM...'
-  gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-  curl -sSL https://get.rvm.io | bash -s stable
-
-  if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
-    . "$HOME/.rvm/scripts/rvm"
-
-    export PATH="$PATH:$HOME/.rvm/bin"
-
-    if [ -f "`which rvm`" ]; then
-      echo 'Installing Ruby versions...'
-      rvm use 3.0.0 --default --install
-      # rvm use 2.6.6 --default --install
-      # rvm use 2.6.8 --default --install
-
-      echo 'Installing rails...'
-      gem install rails:6.1.4
-
-      echo 'Installing bundler...'
-      gem install bundler:2.2.32
-
-      echo 'Installing neovim...'
-      gem install neovim
-
-      echo 'Installing solargraph...'
-      gem install --user-install solargraph
-    else
-      echo "rvm command does not exist."
-    fi
-  else
-    echo "$HOME/.rvm/scripts/rvm" could not be found.
-  fi
+if [ ! -f "`which asdf`" ]; then
+  git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.10.2
 fi
 
+if [ -f "$ASDF_DIR/asdf.sh" ]; then
+  . $ASDF_DIR/asdf.sh
 
+  asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
+
+  asdf install ruby "2.6.0"
+  asdf install ruby "2.6.6"
+  asdf install ruby "2.6.8"
+  asdf install ruby "2.6.9"
+  asdf install ruby "2.7.5"
+  asdf install ruby "3.0.0"
+  asdf install ruby "3.1.1"
+  asdf install ruby "3.1.2"
+
+  asdf global ruby "3.0.0"
+
+  echo 'Installing rails...'
+  gem install rails:6.1.4
+
+  echo 'Installing bundler...'
+  gem install bundler:2.2.32
+
+  echo 'Installing neovim...'
+  gem install neovim
+
+  echo 'Installing solargraph...'
+  gem install --user-install solargraph
+
+  echo 'Installing prettier...'
+  gem install --user-install prettier
+else
+  echo "asdf not found"
+fi
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────

@@ -35,4 +35,4 @@
 	cookieFile = ~/.gitcookies
 
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = ~/.config/git/ignore

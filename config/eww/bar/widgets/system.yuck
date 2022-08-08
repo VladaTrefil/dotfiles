@@ -15,7 +15,6 @@
   (button :class "system-widget"
           :tooltip "system menu"
           :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop system"
-          :show_truncated false
     (box :orientation "h"
       (system_widget_circle
         :key "cpu"
@@ -43,7 +42,6 @@
          :halign "start"
          :class "system__text-sub"
          :limit-width 22
-         :show_truncated false
          :wrap false))
 
 (defwidget system_memory []
@@ -52,13 +50,11 @@
            :halign "start"
            :class "system__text-sub"
            :limit-width 22
-           :show_truncated false
            :wrap false)
     (label :text "Free: ${memory_free_gb} GB"
            :halign "start"
            :class "system__text-sub"
            :limit-width 22
-           :show_truncated false
            :wrap false)))
 
 (defwidget system_disk []
@@ -66,7 +62,6 @@
          :halign "start"
          :class "system__text-sub"
          :limit-width 22
-         :show_truncated false
          :wrap false))
 
 (defwidget system_item [key text icon percentage]
@@ -75,14 +70,12 @@
       (label :text icon
              :class "system__icon"
              :limit-width 2
-             :show_truncated false
              :wrap false))
     (box :orientation "v" :space-evenly "false" :spacing 0 :hexpand "false" :vexpand "false"
       (label :text text
              :halign "start"
              :class "system__text"
              :limit-width circle_thickness_lg
-             :show_truncated false
              :wrap false)
       (children))))
 

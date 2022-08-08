@@ -21,7 +21,6 @@ function create_cache() {
 
   if [ -f "$BLUETOOTH_DEVICE_CACHE" ]; then
     devices=$(devices)
-    echo $devices
     echo "(box :class 'bluetooth-menu__devices' :orientation 'v' $devices)" \
       | cat - "$BLUETOOTH_DEVICE_CACHE" \
       | sponge "$BLUETOOTH_DEVICE_CACHE"
@@ -93,14 +92,15 @@ function devices() {
       fi
     fi
 
-    local device="(bluetooth_menu_device \
-                  :class '$class' \
-                  :key '$key' \
-                  :icon '$icon' \
-                  :icon_class '$icon_class' \
-                  :name '$name' \
-                  :button_class '$button_class' \
-                  :button_text '$button_text')"
+    local device="(box :orientation 'v'\
+                    (bluetooth_menu_device \
+                      :class '$class' \
+                      :key '$key' \
+                      :icon '$icon' \
+                      :icon_class '$icon_class' \
+                      :name '$name' \
+                      :button_class '$button_class' \
+                      :button_text '$button_text'))"
 
     if [[ $d_status = "trusted" ]] || [[ $d_status = "paired" ]] || [[ $d_status = "connected" ]]; then
       devices="$device $devices"
@@ -171,7 +171,9 @@ function subscribe() {
       fi
     done
   else
-    rm $BLUETOOTH_DEVICE_CACHE 2>/dev/null
+    if [ -f "$BLUETOOTH_DEVICE_CACHE" ]; then
+      rm "$BLUETOOTH_DEVICE_CACHE" 2>/dev/null
+    fi
   fi
 }
 

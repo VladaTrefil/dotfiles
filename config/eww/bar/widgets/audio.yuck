@@ -26,13 +26,12 @@
 
 
 (defwidget audio_item [key percent script tooltip icon]
-  (box :class "audio__item audio-${key}" :halign "left" :space-evenly "false" :hexpand "false" :vexpand "false"
+  (box :class "audio__item audio-${key}" :halign "start" :space-evenly "false" :hexpand "false" :vexpand "false"
     (box :class "audio__icon" :orientation "v" icon)
-    (box :orientation "v" :halign "left" :vexpand "false" :hexpand "false":space-evenly "false"
-      (label :class "audio__text" :text key :valign "center" :halign "left" )
-      (box :class "audio__bar" :halign "left" :vexpand "false" :hexpand "false"
+    (box :orientation "v" :halign "start" :vexpand "false" :hexpand "false":space-evenly "false"
+      (label :class "audio__text" :text key :valign "center" :halign "start" )
+      (box :class "audio__bar" :halign "start" :vexpand "false" :hexpand "false"
         (scale :value percent
-               :space-evenly "false"
                :orientation "h"
                :onchange script
                :tooltip tooltip

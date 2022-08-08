@@ -1,9 +1,9 @@
 (defpoll clock_time :interval "1s" "date +\%I")
 (defpoll clock_minute :interval "1s" "date +\%M")
-(defpoll clock_date :interval "10h" "date '+%d/%m'")
+(defpoll clock_date :interval "1s" "date '+%d/%m'")
 
-(defpoll calendar_day :interval "20h" "date '+%d'")
-(defpoll calendar_year :interval "20h" "date '+%Y'")
+(defpoll calendar_day :interval "1s" "date '+%d'")
+(defpoll calendar_year :interval "1s" "date '+%Y'")
 
 (defvar date_reveal false)
 

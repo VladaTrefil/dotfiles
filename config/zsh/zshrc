@@ -156,6 +156,7 @@ export NVM_DIR="$XDG_CONFIG_HOME/nvm"
 # set PATH so it includes user's private bin if it exists
 if [ -d "$BIN_PATH" ]; then
   PATH="$BIN_PATH:$PATH"
+  PATH="$BIN_PATH/usr:$PATH"
 fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.

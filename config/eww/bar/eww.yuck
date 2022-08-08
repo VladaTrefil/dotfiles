@@ -1,4 +1,4 @@
-(defvar eww "$HOME/.local/bin/eww -c $HOME/.config/eww")
+(defvar eww "$HOME/.local/bin/usr/eww -c $HOME/.config/eww")
 
 (defvar spacing "3")
 (defvar window_y "4%")

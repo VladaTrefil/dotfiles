@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-EWW_BIN="$HOME/eww/target/release/eww"
+EWW_BIN="$HOME/.local/bin/usr/eww"
 
 EWW_CACHE_DIR="$XDG_CACHE_HOME/eww"
 BLUETOOTH_DEVICE_CACHE="$EWW_CACHE_DIR/bluetooth.txt"

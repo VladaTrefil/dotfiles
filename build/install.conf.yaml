@@ -18,6 +18,7 @@
   '~/.config/oh-my-zsh/custom/plugins/',
   '~/.config/oh-my-zsh/custom/themes/',
   '~/.local/share/fonts']
+  '~/.local/bin',
 
 - create:
   - ~/.config/pg
@@ -33,6 +34,7 @@
   - ~/.config/oh-my-zsh/custom/plugins
   - ~/.config/oh-my-zsh/custom/themes
 
+  - ~/.local/bin
   - ~/.local/share/fonts
   - ~/.local/share/bundle
   - ~/.local/share/node
@@ -97,7 +99,7 @@
     ~/.local/share/fonts:
       force: true
       path: local/fonts
-    ~/.local/bin:
+    ~/.local/bin/usr:
       force: true
       path: local/bin
 

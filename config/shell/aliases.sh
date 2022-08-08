@@ -38,10 +38,10 @@ alias cd.="cd $DOTFILES_PATH"
 alias clip='xclip -sel clip <'
 
 # Custom scripts
-alias clear-branches="sh $BIN_PATH/shell/clear-git-branches.sh"
-alias kill-server="sh $BIN_PATH/shell/kill-rails-server.sh"
-alias sinfin-init="sh $BIN_PATH/shell/init-sinfin-project.sh"
-alias folio-test-account="bundle exec rails runner \"eval(File.read '$BIN_PATH/folio/folio-test-account.rb')\""
+alias clear-branches="sh $BIN_PATH/usr/clear-git-branches.sh"
+alias kill-server="sh $BIN_PATH/usr/kill-rails-server.sh"
+alias sinfin-init="sh $BIN_PATH/usr/init-sinfin-project.sh"
+alias folio-test-account="bundle exec rails runner \"eval(File.read '$BIN_PATH/usr/folio-test-account.rb')\""
 
 # Youtube-DL download music
 alias ydl="youtube-dl -x --audio-format \"mp3\" -o '%(title)s - %(uploader)s.%(ext)s' --embed-thumbnail"

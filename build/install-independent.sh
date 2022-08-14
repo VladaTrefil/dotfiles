@@ -49,42 +49,66 @@ fi
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # ASDF: {{{
 
+echo "────────────────────────────────────────────────────────────────────────────────────────────────────"
+echo "───  ASDF:"
+
 if [ ! -f "`which asdf`" ]; then
+  echo "─ installing asdf"
   git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.10.2
+
+  if [ -f "$ASDF_DIR/asdf.sh" ]; then
+    echo "─ sourcing asdf.sh"
+    . $ASDF_DIR/asdf.sh
+  fi
+else
+  echo "  core installed"
 fi
 
 if [ -f "$ASDF_DIR/asdf.sh" ]; then
-  . $ASDF_DIR/asdf.sh
+  echo "──  Ruby:"
 
-  asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
+  if [ -z "$(asdf plugin list | grep -o ruby)" ]; then
+    echo
+    echo "─ adding ruby plugin"
+    asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
+  else
+    echo "  ruby plugin"
+  fi
 
-  asdf install ruby "2.6.0"
-  asdf install ruby "2.6.6"
-  asdf install ruby "2.6.8"
-  asdf install ruby "2.6.9"
-  asdf install ruby "2.7.5"
-  asdf install ruby "3.0.0"
-  asdf install ruby "3.1.1"
-  asdf install ruby "3.1.2"
+  # versions=("2.6.0" "2.6.6" "2.6.8" "2.6.9" "2.7.5" "3.0.0" "3.1.1" "3.1.2")
+  versions=("2.6.8")
+  installed_versions=$(asdf list ruby)
 
-  asdf global ruby "3.0.0"
+  for v in ${versions[@]}; do
+    if [ -z "$(echo $installed_versions | grep -o $v)" ]; then
+      printf "─ adding $v \n"
+      asdf install ruby $v
+      echo $GEM_HOME
+      gem install bundler
+    else
+      echo "  $v"
+    fi
+  done
 
-  echo 'Installing rails...'
-  gem install rails:6.1.4
+  printf "\n─ Gems:\n"
 
-  echo 'Installing bundler...'
-  gem install bundler:2.2.32
+  gems=("rails" "neovim" "solargraph" "prettier")
+  installed_gems="$(gem list --local)"
 
-  echo 'Installing neovim...'
-  gem install neovim
-
-  echo 'Installing solargraph...'
-  gem install --user-install solargraph
-
-  echo 'Installing prettier...'
-  gem install --user-install prettier
+  for gem in ${gems[@]}; do
+    if [ -z "$(echo $installed_gems | grep -o $gem)" ]; then
+      printf "\n─ adding $gem"
+      if [ $gem == "rails" ]; then
+        gem install rails:6.1.4
+      else
+        gem install $gem
+      fi
+    else
+      echo "  $gem"
+    fi
+  done
 else
-  echo "asdf not found"
+  echo "asdf script not found"
 fi
 
 # }}}

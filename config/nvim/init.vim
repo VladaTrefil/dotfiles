@@ -54,8 +54,8 @@ set modeline
 " Automaticaly reload changed files
 set autoread
 
-" source vimrc when saving any vim file
-autocmd! BufWritePost .vimrc source $MYVIMRC
+" source vimrc when saving any file in nvim config directory
+autocmd! BufWritePost $HOME/config/nvim/* source $MYVIMRC
 
 autocmd BufWinLeave .vimrc mkview
 autocmd BufWinEnter .vimrc silent loadview 

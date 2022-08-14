@@ -44,8 +44,6 @@ Plug 'brooth/far.vim'
 Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'SirVer/ultisnips'
-Plug 'prettier/vim-prettier'
-Plug 'dense-analysis/ale'
 
 " Completion: -------
 Plug 'hrsh7th/cmp-nvim-lua'
@@ -145,10 +143,6 @@ if exists("plugs['far.vim']")
   source ~/.config/nvim/plugins/far.vim
 end
 
-if exists("plugs['ale']")
-  source ~/.config/nvim/plugins/ale.vim
-end
-
 if exists("plugs['colorizer']")
   source ~/.config/nvim/plugins/colorizer.vim
 end
@@ -165,16 +159,8 @@ if exists("plugs['ultisnips']")
   source ~/.config/nvim/plugins/ultisnips.vim
 end
 
-if exists("plugs['vim-lsp']")
-  source ~/.config/nvim/plugins/lsp.vim
-end
-
 if exists("plugs['emmet-vim']")
   source ~/.config/nvim/plugins/emmet.vim
-end
-
-if exists("plugs['vim-prettier']")
-  source ~/.config/nvim/plugins/prettier.vim
 end
 
 if exists("plugs['vim-ruby']")

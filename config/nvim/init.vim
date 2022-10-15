@@ -84,10 +84,10 @@ let g:loaded_perl_provider = 0
 set splitbelow
 set splitright
 
-nmap <silent> <c-k> :wincmd k<CR>
-nmap <silent> <c-j> :wincmd j<CR>
-nmap <silent> <c-h> :wincmd h<CR>
-nmap <silent> <c-l> :wincmd l<CR>
+nmap <silent> <C-k> :wincmd k<CR>
+nmap <silent> <C-j> :wincmd j<CR>
+nmap <silent> <C-h> :wincmd h<CR>
+nmap <silent> <C-l> :wincmd l<CR>
 
 noremap <silent> <C-s>+ :resize +3<CR>
 noremap <silent> <C-s>- :resize -3<CR>
@@ -140,9 +140,28 @@ noremap L $
 noremap K {
 noremap J }
 
+" Open current fold in vertical window
+nnoremap <silent> <Leader>ov <CR>:vsp %:h<Tab><CR>
+" Open current fold in horizontal window
+nnoremap <silent> <Leader>oh <CR>:sp %:h<Tab><CR>
+
+nnoremap <silent> <Leader>p :Files<CR>
+nnoremap <silent> <Leader><Leader>p :GFiles<CR>
+
+nnoremap <silent> <Leader>p :Files<CR>
+nnoremap <silent> <Leader><Leader>p :GFiles<CR>
+
 " save, quit
-noremap <C-p> :w!<CR>
-noremap <C-q> :q<CR>
+noremap <Leader>w :w!<CR>
+noremap <silent> <Leader>q :q<CR>
+
+" clear the highlighting of :set hlsearch.
+nnoremap <silent> <Leader>c :nohlsearch<C-R><CR><CR><C-c>
+
+nnoremap <LEADER>V :<C-u>source $MYVIMRC<CR>
+
+" open new file in the same directory as the current pane in a vertical split
+nnoremap <LEADER>fv :<C-u>vsp %:h/
 
 noremap <BS> <C-o>
 
@@ -158,7 +177,7 @@ vnoremap < <gv
 noremap <Leader>ss :setlocal spell!<CR>
 
 " launch vertical help command
-nnoremap <Leader>H :vert h 
+" nnoremap <Leader>H :vert h 
 
 " surround visual selection with brackets/parenthesis
 vnoremap ' c''<ESC>P
@@ -175,14 +194,6 @@ nnoremap <LEADER>" e<ESC>a"<ESC>bi"<ESC>lel
 " tab controls
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
-
-nnoremap <LEADER>V :<C-u>source $MYVIMRC<CR>
-
-" open new file in the same directory as the current pane in a vertical split
-nnoremap <LEADER>fv :<C-u>vsp %:h/
-
-" Use <C-c> to clear the highlighting of :set hlsearch.
-nnoremap <silent> <C-c> :nohlsearch<C-R><CR><CR><C-c>
 
 " Autoformat file
 nnoremap <Leader>i gg=G<C-o>

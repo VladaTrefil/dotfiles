@@ -50,8 +50,6 @@ exec_always --no-startup-id killall picom; picom --experimental-backends --confi
 
 exec --no-startup-id $HOME/.config/eww/bar/launch_bar
 
-# Launch polybar
-# exec_always --no-startup-id sh $HOME/.config/polybar/launch.sh
 
 exec --no-startup-id i3-msg 'workspace 1; exec konsole'
 exec --no-startup-id i3-msg 'workspace 2; exec konsole'

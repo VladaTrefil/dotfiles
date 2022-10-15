@@ -14,7 +14,6 @@ APT_PACKAGES=(
   # Desktop enviroment
   "i3-gaps"
   "picom-tryone"
-  "polybar"
   "rofi"
   "feh"
   "dunst"

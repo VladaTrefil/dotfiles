@@ -75,8 +75,7 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
     echo "  ruby plugin"
   fi
 
-  # versions=("2.6.0" "2.6.6" "2.6.8" "2.6.9" "2.7.5" "3.0.0" "3.1.1" "3.1.2")
-  versions=("2.6.8")
+  versions=("2.6.0" "2.6.6" "2.6.8" "2.6.9" "2.7.5" "3.0.0" "3.1.1" "3.1.2")
   installed_versions=$(asdf list ruby)
 
   for v in ${versions[@]}; do
@@ -105,6 +104,28 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
       fi
     else
       echo "  $gem"
+    fi
+  done
+
+  echo "──  Java:"
+
+  if [ -z "$(asdf plugin list | grep -o java)" ]; then
+    echo
+    echo "─ adding java plugin"
+    asdf plugin-add java https://github.com/halcyon/asdf-java.git
+  else
+    echo "  java plugin"
+  fi
+
+  versions=("openjdk-17.0.2")
+  installed_versions=$(asdf list java)
+
+  for v in ${versions[@]}; do
+    if [ -z "$(echo $installed_versions | grep -o $v)" ]; then
+      printf "─ adding $v \n"
+      asdf install java $v
+    else
+      echo "  $v"
     fi
   done
 else

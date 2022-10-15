@@ -27,6 +27,7 @@ APT_PACKAGES=(
   "ifstat" #Network speedtest
   "jq" # json parser
   "moreutils" # Useful shell functions https://joeyh.name/code/moreutils/
+  "rename" # bulk rename files
 
   # Terminal code interpreters
   "python3-dev"

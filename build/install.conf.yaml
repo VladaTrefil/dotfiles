@@ -87,6 +87,7 @@
     ~/.config/dunst: config/dunst
     ~/.config/pry: config/pry
     ~/.config/eww: config/eww
+    ~/.config/stylua: config/stylua
 
     ~/.config/asdf: config/asdf
     ~/.tool-versions: config/asdf/tool-versions

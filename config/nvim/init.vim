@@ -25,6 +25,8 @@ set number relativenumber       " Display line numbers
 
 " Highlight search
 set hlsearch
+" Cancel highlight on source vimrc
+nohlsearch
 " Search ignore case
 set ignorecase smartcase  " ignore case only when the pattern contains no capital letters
 " search as you type

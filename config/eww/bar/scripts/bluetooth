@@ -117,6 +117,7 @@ function device_button_click() {
   local d_status=$(device_status $key)
 
   if [[ $d_status = "paired" ]]; then
+    coproc (bluetoothctl trust $key)
     coproc (bluetoothctl connect $key)
     DEVICE_CONNECTING=$key
   elif [[ $d_status = "connected" ]]; then

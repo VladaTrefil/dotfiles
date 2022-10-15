@@ -37,10 +37,18 @@ export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
 export RUSTUP_HOME="$XDG_CONFIG_HOME/rustup"
 export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
 
+# }}}
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+# ASDF: {{{
+
 export ASDF_DIR="$XDG_LIB_HOME/asdf"
-export ASDF_CONFIG_FILE="$XDG_CONFIG_HOME/asdf/asdfrc"
-export ASDF_DEFAULT_TOOL_VERSIONS_FILENAME="$XDG_CONFIG_HOME/asdf/tool-versions"
 export ASDF_DATA_DIR="$XDG_DATA_HOME/asdf"
+
+export ASDF_CONFIG_FILE="$XDG_CONFIG_HOME/asdf/asdfrc"
+# export ASDF_DEFAULT_TOOL_VERSIONS_FILENAME="$XDG_CONFIG_HOME/asdf/tool-versions"
+# export ASDF_GEM_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-gems"
 
 
 # }}}
@@ -64,7 +72,7 @@ export ERRFILE="$XDG_CACHE_HOME/x11/xsession-errors"
 
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
-export ZSH_COMPDUMP_DIR="$XDG_CACHE_HOME/zsh"
+export ZSH_COMPDUMP_DIR="$XDG_CACHE_HOME/zsh/"
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh/"
 
 export ZSH="$XDG_CONFIG_HOME/oh-my-zsh"
@@ -131,14 +139,13 @@ export PGSERVICEFILE="$XDG_CONFIG_HOME/pg/pg_service.conf"
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 #  Ruby {{{
 
-export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
-export BUNDLE_USER_CACHE="$XDG_CACHE_HOME"/bundle
-export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
+export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
+export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
+export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
 
-export GEM_HOME="$XDG_DATA_HOME"/gem
-export GEM_SPEC_CACHE="$XDG_CACHE_HOME"/gem
+export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
 
-export SOLARGRAPH_CACHE=$XDG_CACHE_HOME/solargraph
+export SOLARGRAPH_CACHE="$XDG_CACHE_HOME/solargraph"
 
 # Rails test fix
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES

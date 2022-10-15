@@ -18,7 +18,6 @@ plugins=(
   vi-mode
   zsh-autosuggestions
   fast-syntax-highlighting
-  asdf
 )
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#757575,bg=none,bold,underline"
@@ -158,6 +157,8 @@ export NVM_DIR="$XDG_CONFIG_HOME/nvm"
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # PATH
 
+export PATH="$ASDF_DIR/shims:$PATH"
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$BIN_PATH" ]; then
   PATH="$BIN_PATH:$PATH"
@@ -165,4 +166,4 @@ if [ -d "$BIN_PATH" ]; then
 fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$GEM_HOME/bin:$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
+# export PATH="$GEM_HOME/bin" # Add RVM to PATH for scripting

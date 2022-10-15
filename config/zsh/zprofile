@@ -1,9 +1,0 @@
-# vim: set ft=sh:
-
-if [ -f "$HOME/.config/shell/profile" ]; then
-  source "$HOME/.config/shell/profile"
-fi
-
-if [ -f "$ZDOTDIR/zshrc" ]; then
-  source "$ZDOTDIR/zshrc"
-fi

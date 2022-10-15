@@ -48,7 +48,7 @@ set backupcopy=yes
 " Offset from end of window to start scrolling
 set scrolloff=10
 
-" Enable setting vim options in files
+" Enable setting vim options in files (vim: set ft='sh')
 set modeline
 
 " Automaticaly reload changed files

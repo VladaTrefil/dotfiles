@@ -229,7 +229,7 @@ fi
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Rust and cargo: {{{
 
-if [ ! -f "which rustc" ]; then
+if [ ! -f "$(which rustc)" ]; then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 

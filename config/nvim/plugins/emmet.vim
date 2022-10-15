@@ -1,7 +1,7 @@
 " Emmet Settings:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-autocmd FileType html,css,jsx EmmetInstall
+autocmd FileType eruby.yaml,yaml,html,css,jsx EmmetInstall
 
 imap   <C-e>  <plug>(emmet-expand-abbr)
 imap   <C-e>;   <plug>(emmet-expand-word)

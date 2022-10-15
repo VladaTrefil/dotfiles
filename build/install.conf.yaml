@@ -90,7 +90,6 @@
     ~/.config/stylua: config/stylua
 
     ~/.config/asdf: config/asdf
-    ~/.tool-versions: config/asdf/tool-versions
 
     # KDE Plasma
     ~/.config/konsolerc:

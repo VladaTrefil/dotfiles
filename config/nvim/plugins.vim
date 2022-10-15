@@ -52,6 +52,7 @@ Plug 'brooth/far.vim'
 Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'SirVer/ultisnips'
+Plug 'mhartington/formatter.nvim'
 
 " Completion: -------
 Plug 'hrsh7th/cmp-nvim-lua'
@@ -92,6 +93,7 @@ Plug 'jez/vim-superman'                 " Man pages in vim
 Plug 'jiangmiao/auto-pairs'
 Plug 'mattn/emmet-vim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'tpope/vim-sleuth'                 " Autoindent based on filetype
 
 " Languages: -------
 Plug 'HerringtonDarkholme/yats.vim'
@@ -100,7 +102,6 @@ Plug 'GutenYe/json5.vim'
 Plug 'elzr/vim-json'
 Plug 'jasonshell/vim-svg-indent'
 Plug 'vim-scripts/svg.vim'
-Plug 'slim-template/vim-slim'
 Plug 'mboughaba/i3config.vim'
 Plug 'elkowar/yuck.vim'
 
@@ -115,6 +116,7 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 Plug 'skalnik/vim-vroom'
+Plug 'slim-template/vim-slim'
 
 call plug#end()
 
@@ -169,6 +171,10 @@ end
 
 if exists("plugs['emmet-vim']")
   source ~/.config/nvim/plugins/emmet.vim
+end
+
+if exists("plugs['formatter.nvim']")
+  source ~/.config/nvim/plugins/formatter.lua
 end
 
 if exists("plugs['vim-ruby']")

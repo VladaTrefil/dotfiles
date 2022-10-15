@@ -1,0 +1,34 @@
+inherit_gem:
+  rubocop-rails_config: config/rails.yml
+
+require:
+  - rubocop-minitest
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rake
+
+AllCops:
+  TargetRubyVersion: ~
+  NewCops: enable
+  DisabledByDefault: false
+  Exclude:
+    - "app/assets/**/*"
+    - "bin/*"
+    - "data/**/*"
+    - "db/schema.rb"
+    - "frontend/**/*"
+    - "lib/generators/folio/install_generator.rb"
+    - "lib/tasks/auto_annotate_models.rake"
+    - "lib/templates/lib/tasks/auto_annotate_models.rake"
+    - "node_modules/**/*"
+    - "public/**/*"
+    - "react/**/*"
+    - "test/dummy/db/schema.rb"
+    - "test/dummy/public/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+
+Lint/UselessAssignment:
+  Exclude:
+    - "db/seeds.rb"
+    - "lib/tasks/developer_tools.rake"

@@ -88,6 +88,7 @@
     ~/.config/pry: config/pry
     ~/.config/eww: config/eww
     ~/.config/stylua: config/stylua
+    ~/.config/rubocop: config/rubocop
 
     ~/.config/asdf: config/asdf
 

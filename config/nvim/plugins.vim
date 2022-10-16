@@ -53,6 +53,7 @@ Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'SirVer/ultisnips'
 Plug 'mhartington/formatter.nvim'
+Plug 'kdheepak/lazygit.nvim'
 
 " Completion: -------
 Plug 'hrsh7th/cmp-nvim-lua'
@@ -179,6 +180,10 @@ end
 
 if exists("plugs['vim-ruby']")
   source ~/.config/nvim/plugins/ruby.vim
+end
+
+if exists("plugs['lazygit.nvim']")
+  source ~/.config/nvim/plugins/lazygit.lua
 end
 
 " }}}

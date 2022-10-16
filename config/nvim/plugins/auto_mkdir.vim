@@ -1,7 +1,5 @@
 " Auto MKdir
 
-echo 'loaded mkdir'
-
 if exists("g:loaded_auto_mkdir")
 	finish
 endif

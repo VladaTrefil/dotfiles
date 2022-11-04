@@ -53,8 +53,13 @@ set scrolloff=10
 " Enable setting vim options in files (vim: set ft='sh')
 set modeline
 
+" Enable current line hightlight
+set cursorline
+
 " Automaticaly reload changed files
 set autoread
+
+au FocusGained,BufEnter * :checktime
 
 " source vimrc when saving any file in nvim config directory
 autocmd! BufWritePost $HOME/config/nvim/* source $MYVIMRC

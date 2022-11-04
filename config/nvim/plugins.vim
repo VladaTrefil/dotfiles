@@ -83,7 +83,7 @@ Plug 'APZelos/blamer.nvim'              " git blame
 Plug 'rhysd/clever-f.vim'               " Improves commands f, F, t and T
 Plug 'easymotion/vim-easymotion'        " Improves vim movement
 Plug 'tomtom/tcomment_vim'
-Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'RRethy/vim-illuminate'            " Highlights words that match the word under cursor
 Plug 'chrisbra/Colorizer'
 Plug 'tpope/vim-eunuch'                 " File commands in vim
@@ -142,8 +142,8 @@ if exists("plugs['dashboard-nvim']")
   source ~/.config/nvim/plugins/dashboard.vim
 end
 
-if exists("plugs['indentLine']")
-  source ~/.config/nvim/plugins/indentline.vim
+if exists("plugs['indent-blankline.nvim']")
+  source ~/.config/nvim/plugins/indent-blankline.lua
 end
 
 if exists("plugs['fzf.vim']")

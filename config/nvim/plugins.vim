@@ -94,7 +94,6 @@ Plug 'jez/vim-superman'                 " Man pages in vim
 Plug 'jiangmiao/auto-pairs'
 Plug 'mattn/emmet-vim'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'tpope/vim-sleuth'                 " Autoindent based on filetype
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'tiagovla/scope.nvim'              " buffers in tabs
 

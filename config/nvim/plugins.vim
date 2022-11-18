@@ -95,6 +95,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'mattn/emmet-vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'tpope/vim-sleuth'                 " Autoindent based on filetype
+Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+Plug 'tiagovla/scope.nvim'              " buffers in tabs
 
 " Languages: -------
 Plug 'HerringtonDarkholme/yats.vim'
@@ -164,6 +166,14 @@ end
 
 if exists("plugs['lualine.nvim']")
   source ~/.config/nvim/plugins/lualine.lua
+end
+
+if exists("plugs['bufferline.nvim']")
+  source ~/.config/nvim/plugins/bufferline.lua
+end
+
+if exists("plugs['scope.nvim']")
+  source ~/.config/nvim/plugins/scope.lua
 end
 
 if exists("plugs['ultisnips']")

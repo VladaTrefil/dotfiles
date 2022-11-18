@@ -158,9 +158,8 @@ nnoremap <silent> <Leader><Leader>p :GFiles<CR>
 nnoremap <silent> <Leader>p :Files<CR>
 nnoremap <silent> <Leader><Leader>p :GFiles<CR>
 
-" save, quit
+" save
 noremap <Leader>w :w!<CR>
-noremap <silent> <Leader>q :q<CR>
 
 " clear the highlighting of :set hlsearch.
 nnoremap <silent> <Leader>c :nohlsearch<C-R><CR><CR><C-c>
@@ -198,15 +197,15 @@ vnoremap [ c[]<ESC>P
 nnoremap <LEADER>' e<ESC>a'<ESC>bi'<ESC>lel
 nnoremap <LEADER>" e<ESC>a"<ESC>bi"<ESC>lel
 
-" tab controls
-nnoremap <Tab> gt
-nnoremap <S-Tab> gT
+" Tabs:
+nnoremap <Leader>tj gt
+nnoremap <Leader>tk gT
+nnoremap <Leader>tc <ESC>:tabclose<CR>
 
-" Autoformat file
-nnoremap <Leader>i gg=G<C-o>
-
-nnoremap <Leader>b <ESC>:BlamerToggle<CR><C-c>
-
+" Close buffer and window
+nnoremap <silent> <Leader>q <ESC>:bd<CR>
+nnoremap <silent> <Leader>bj <ESC>:bnext<CR>
+nnoremap <silent> <Leader>bk <ESC>:bprevious<CR>
 " }}}
 " ────────────────────────────────────────────────────────────────────────────────────────────────────
 

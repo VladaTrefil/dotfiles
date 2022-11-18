@@ -130,6 +130,8 @@ inoremap <expr> <CR> IsCursorInsideNewBlock() ? "<CR><esc>O" : "<CR>"
 nnoremap <Space> <NOP>
 let mapleader = " "
 
+nnoremap <silent> <Leader>Q <ESC>:qa!<CR>
+
 " Toggle fold
 noremap Z za
 
@@ -147,6 +149,14 @@ noremap L $
 noremap K {
 noremap J }
 
+" yank rest of line
+nnoremap Y y$
+nnoremap yy Vy
+
+" Save/Load session
+nnoremap <silent> <Leader>ss <CR>:SessionSave<Tab><CR>
+nnoremap <silent> <Leader>sl <CR>:SessionLoad<Tab><CR>
+
 " Open current fold in vertical window
 nnoremap <silent> <Leader>ov <CR>:vsp %:h<Tab><CR>
 " Open current fold in horizontal window
@@ -155,8 +165,7 @@ nnoremap <silent> <Leader>oh <CR>:sp %:h<Tab><CR>
 nnoremap <silent> <Leader>p :Files<CR>
 nnoremap <silent> <Leader><Leader>p :GFiles<CR>
 
-nnoremap <silent> <Leader>p :Files<CR>
-nnoremap <silent> <Leader><Leader>p :GFiles<CR>
+nnoremap <Leader><Leader>h :vert h 
 
 " save
 noremap <Leader>w :w!<CR>
@@ -164,27 +173,28 @@ noremap <Leader>w :w!<CR>
 " clear the highlighting of :set hlsearch.
 nnoremap <silent> <Leader>c :nohlsearch<C-R><CR><CR><C-c>
 
-nnoremap <LEADER>V :<C-u>source $MYVIMRC<CR>
+nnoremap <Leader>V :<C-u>source $MYVIMRC<CR>
 
 " open new file in the same directory as the current pane in a vertical split
-nnoremap <LEADER>fv :<C-u>vsp %:h/
+nnoremap <Leader>fv :<C-u>vsp %:h/
 
+" toggle spellcheck
+noremap <Leader>sc :setlocal spell!<CR>
+
+" Surround with parenthesis
+nnoremap <Leader>' e<ESC>a'<ESC>bi'<ESC>lel
+nnoremap <Leader>" e<ESC>a"<ESC>bi"<ESC>lel
+
+nnoremap <Leader>b <ESC>:BlamerToggle<CR><C-c>
+
+" Backspace goes back
 noremap <BS> <C-o>
-
-" yank rest of line
-nnoremap Y y$
-nnoremap yy Vy
 
 " Better indent
 vnoremap > >gv
 vnoremap < <gv
 
-" toggle spellcheck
-noremap <Leader>ss :setlocal spell!<CR>
-
-" launch vertical help command
-" nnoremap <Leader>H :vert h 
-
+" Visual:
 " surround visual selection with brackets/parenthesis
 vnoremap ' c''<ESC>P
 vnoremap " c""<ESC>P
@@ -193,9 +203,6 @@ vnoremap ` c``<ESC>P
 vnoremap ( c()<ESC>P
 vnoremap { c{}<ESC>P
 vnoremap [ c[]<ESC>P
-
-nnoremap <LEADER>' e<ESC>a'<ESC>bi'<ESC>lel
-nnoremap <LEADER>" e<ESC>a"<ESC>bi"<ESC>lel
 
 " Tabs:
 nnoremap <Leader>tj gt
@@ -206,6 +213,7 @@ nnoremap <Leader>tc <ESC>:tabclose<CR>
 nnoremap <silent> <Leader>q <ESC>:bd<CR>
 nnoremap <silent> <Leader>bj <ESC>:bnext<CR>
 nnoremap <silent> <Leader>bk <ESC>:bprevious<CR>
+
 " }}}
 " ────────────────────────────────────────────────────────────────────────────────────────────────────
 

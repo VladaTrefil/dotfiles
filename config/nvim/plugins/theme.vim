@@ -120,11 +120,6 @@ call s:HL('OrangeSign', s:bright_orange, s:bg0, s:invert_signs)
 " Normal text
 call s:HL('Normal', s:fg0, s:bg0)
 
-" Screen line that the cursor is
-call s:HL('CursorLine', s:none, s:bg2)
-" Screen column that the cursor is
-hi! link CursorColumn CursorLine
-
 " Tab pages line filler
 call s:HL('TabLineFill', s:fg0, s:bg0, s:invert_tabline)
 " Active tab page label
@@ -132,16 +127,8 @@ call s:HL('TabLineSel', s:bright_aqua, s:bg0, s:invert_tabline)
 " Not active tab page label
 hi! link TabLine TabLineFill
 
-" Match paired bracket under the cursor
-call s:HL('MatchParen', s:none, s:bg3, s:bold)
-
-" Highlighted screen columns
-
 " Concealed element: \lambda → λ
 call s:HL('Conceal', s:bright_blue, s:none)
-
-" Line number of CursorLine
-call s:HL('CursorLineNr', s:bright_orange, s:bg0)
 
 hi! link NonText Bg2
 hi! link SpecialKey Bg2
@@ -189,21 +176,30 @@ call s:HL('LineNr', s:gray, s:bg0)
 call s:HL('SignColumn', s:fg2, s:bg0)
 
 " Line used for closed folds
-call s:HL('Folded', s:faded_blue, s:bg1, s:italic)
-" Column where folds are displayed
-call s:HL('FoldColumn', s:gray, s:bg1)
+call s:HL('Folded', s:faded_blue, s:bg0, s:italic)
 
 " }}}
+
 " Cursor: {{{
 
 " Character under cursor
-call s:HL('Cursor', s:none, s:none, s:inverse)
+call s:HL('Cursor', s:bg0, s:fg0)
+
 " Visual mode cursor, selection
 hi! link vCursor Cursor
 " Input moder cursor
 hi! link iCursor Cursor
 " Language mapping cursor
 hi! link lCursor Cursor
+
+" Screen column that the cursor is
+call s:HL('CursorLine', s:none, s:bg1)
+
+" Line number of CursorLine
+call s:HL('CursorLineNr', s:bright_orange, s:bg0)
+
+" Match paired bracket under the cursor
+call s:HL('MatchParen', s:none, s:bg3, s:bold)
 
 " }}}
 " Syntax Highlighting: {{{
@@ -305,9 +301,8 @@ endif
 " Plugin specific -------------------------------------------------------------
 " IndentLine: {{{
 
-if !exists('g:indentLine_color_gui')
-  let g:indentLine_color_gui = s:bg4
-endif
+call s:HL('IndentBlanklineChar', s:bg3, s:bg0)
+call s:HL('IndentBlanklineContextChar', s:faded_blue, s:bg0)
 
 " }}}
 " GitGutter: {{{

@@ -56,8 +56,8 @@ Plug 'mhartington/formatter.nvim'
 Plug 'kdheepak/lazygit.nvim'
 
 " Completion: -------
-Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 " Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }

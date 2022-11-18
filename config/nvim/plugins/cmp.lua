@@ -1,29 +1,22 @@
---                                   --|
---      ___    ___ ___   _____       --|
---     /'___\/' __` __`\/\ '__`\     --|
---    /\ \__//\ \/\ \/\ \ \ \L\ \    --|
---    \ \____\ \_\ \_\ \_\ \ ,__\    --|
---     \/____/\/_/\/_/\/_/\ \ \/     --|
---                         \ \_\     --|
---                          \/_/     --|
+-- CMP Settings
+---------------------------------------------------------------
 
+vim.cmd('autocmd! BufWritePost *.snippets CmpUltisnipsReloadSnippets')
 
-vim.cmd "autocmd! BufWritePost *.snippets CmpUltisnipsReloadSnippets"
+vim.go.completeopt = 'menu,menuone,noselect'
 
-vim.go.completeopt = "menu,menuone,noselect"
-
-local cmp = require 'cmp'
+local cmp = require('cmp')
 local lspkind = require('lspkind')
 
 local window = {
   documentation = {
-    border = "rounded",
+    border = 'rounded',
     winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None',
   },
   completion = {
-    border = "rounded",
+    border = 'rounded',
     winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None',
-  }
+  },
 }
 
 local mapping = cmp.mapping.preset.insert({
@@ -52,7 +45,7 @@ local sorting = {
 cmp.setup({
   snippet = {
     expand = function(args)
-      vim.fn["UltiSnips#Anon"](args.body)
+      vim.fn['UltiSnips#Anon'](args.body)
     end,
   },
   window = window,
@@ -65,7 +58,7 @@ cmp.setup({
   },
   sorting = sorting,
   completion = {
-    completeopt = 'menu,menuone,noinsert'
+    completeopt = 'menu,menuone,noinsert',
   },
   formatting = {
     format = lspkind.cmp_format(),

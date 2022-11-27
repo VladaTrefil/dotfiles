@@ -1,6 +1,13 @@
 [Appearance]
+AntiAliasFonts=true
+BoldIntense=true
 ColorScheme=Catppuccin
-Font=Iosevka Nerd Font Mono,12,-1,5,25,0,0,0,0,0
+Font=Iosevka Nerd Font,12,-1,5,50,0,0,0,0,0
+UseFontLineChararacters=true
+
+[Cursor Options]
+CustomCursorColor=205,214,244
+UseCustomCursorColor=true
 
 [General]
 Command=/bin/zsh --login

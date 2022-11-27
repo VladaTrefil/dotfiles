@@ -1,5 +1,8 @@
--- Formatter Settings:
----------------------------------------------------------------
+local present, formatter = pcall(require, 'formatter')
+
+if not present then
+  return
+end
 
 -- Utilities for creating configurations
 local util = require('formatter.util')
@@ -53,7 +56,7 @@ local function stylua()
   }
 end
 
-require('formatter').setup({
+formatter.setup({
   logging = true,
   log_level = vim.log.levels.WARN,
   filetype = {

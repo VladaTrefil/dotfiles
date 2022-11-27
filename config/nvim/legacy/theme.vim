@@ -313,17 +313,6 @@ hi! link GitGutterDelete RedSign
 hi! link GitGutterChangeDelete AquaSign
 
 " }}}
-" Asynchronous Lint Engine: {{{
-
-call s:HL('ALEError', s:none, s:none, s:undercurl, s:bright_red)
-call s:HL('ALEWarning', s:none, s:none, s:undercurl, s:bright_yellow)
-call s:HL('ALEInfo', s:none, s:none, s:undercurl, s:bright_blue)
-
-hi! link ALEErrorSign RedSign
-hi! link ALEWarningSign YellowSign
-hi! link ALEInfoSign BlueSign
-
-" }}}
 " CMP: {{{
 
 " The menu field's highlight group.
@@ -369,16 +358,9 @@ call s:HL('EasyMotionShade', s:bg4, s:none, s:italic)
   call s:HL('lualine_c_inactive', s:none, s:bg1)
 
 " }}}
-" Dashboard: {{{
+" Telescope: {{{
 
-function! ExtendDashboard()
-  hi link dashboardFooter Blue
-  hi link dashboardHeader PurpleBold
-  hi link dashboardCenter Aqua
-  hi link dashboardShortCut Blue
-endf
-
-autocmd FileType dashboard call ExtendDashboard()
+call s:HL('TelescopeSelection', s:none, s:bg2, s:bold)
 
 " }}}
 

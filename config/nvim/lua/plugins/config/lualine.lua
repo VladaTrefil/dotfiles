@@ -1,29 +1,32 @@
--- Lualine:
----------------------------------------------------------------
+local present, lualine = pcall(require, 'lualine')
 
-local palette = {};
+if not present then
+  return
+end
+
+local palette = {}
 
 if vim.g.palette then
   palette = vim.g.palette
 else
   palette = {
-    bg0        = '#0B0E14',
-    bg1        = '#0D1017',
-    bg2        = '#151f28',
-    fg0        = '#E6E1CF',
-    fg1        = '#E6E1CF',
-    yellow     = '#E7C547',
-    orange     = '#F29718',
-    aqua       = '#1f997e',
-    bright_red = '#e23141'
+    bg0 = '#0B0E14',
+    bg1 = '#0D1017',
+    bg2 = '#151f28',
+    fg0 = '#E6E1CF',
+    fg1 = '#E6E1CF',
+    yellow = '#E7C547',
+    orange = '#F29718',
+    aqua = '#1f997e',
+    bright_red = '#e23141',
   }
 end
 
 local function file_path()
   local path = vim.fn.expand('%f')
-  local _, count = path:gsub("/", "")
+  local _, count = path:gsub('/', '')
 
-  if (count > 5) then
+  if count > 5 then
     local path_ary = vim.fn.split('/')
 
     -- return string.rep(".", count)
@@ -51,12 +54,12 @@ local bubbles_theme = {
   },
 }
 
-require('lualine').setup {
+lualine.setup({
   options = {
     theme = bubbles_theme,
     component_separators = '|',
     section_separators = { left = '', right = '' },
-    padding = { left = 1, right = 1 }
+    padding = { left = 1, right = 1 },
   },
   sections = {
     lualine_a = {
@@ -70,7 +73,7 @@ require('lualine').setup {
     lualine_x = {},
     lualine_y = {
       { 'filetype' },
-      { 'progress' }
+      { 'progress' },
     },
     lualine_z = {
       { 'location', separator = { left = '', right = '' }, padding = { left = 0, right = 1 } },
@@ -78,16 +81,16 @@ require('lualine').setup {
   },
   inactive_sections = {
     lualine_a = {
-      { file_path, separator = { left = '', right = '' } }
+      { file_path, separator = { left = '', right = '' } },
     },
     -- lualine_b = {},
     -- lualine_c = {},
     -- lualine_x = {},
     -- lualine_y = {},
     lualine_z = {
-      { 'filetype', padding = { right = 2, left = 2 } }
+      { 'filetype', padding = { right = 2, left = 2 } },
     },
   },
   tabline = {},
   extensions = {},
-}
+})

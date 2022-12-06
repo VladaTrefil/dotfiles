@@ -28,6 +28,7 @@ APT_PACKAGES=(
   "jq" # json parser
   "moreutils" # Useful shell functions https://joeyh.name/code/moreutils/
   "rename" # bulk rename files
+  "speedtest-cli"
 
   # Terminal code interpreters
   "python3-dev"

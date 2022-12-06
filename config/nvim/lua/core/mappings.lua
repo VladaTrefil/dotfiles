@@ -2,10 +2,6 @@ local function termcodes(str)
 	return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-function _G.is_cursor_inside_new_block()
-	return require('core.utils').is_cursor_inside_new_block()
-end
-
 local M = {}
 
 M.general = {
@@ -22,7 +18,7 @@ M.general = {
 	},
 
 	i = {
-		['<CR>'] = { 'v:lua.is_cursor_inside_new_block() ? "<CR><esc>O" : "<CR>"', '', opts = { expr = true } },
+		['<CR>'] = { 'v:lua.isCursorInsideNewBlock() ? "<CR><esc>O" : "<CR>"', '', opts = { expr = true } },
 		-- go to  beginning and end
 		['<C-b>'] = { '<ESC>^i', 'beginning of line' },
 		['<C-e>'] = { '<End>', 'end of line' },
@@ -47,7 +43,11 @@ M.general = {
 		['<Leader>tc'] = { '<ESC>:tabclose<CR>', 'Close Tab' },
 
 		-- Buffers
-		['<Leader>q'] = { '<ESC>:bd<CR>', '', opts = { silent = true } },
+		['<Leader>q'] = {
+			'v:lua.closeBuffer() ? "<ESC>:bd<CR>" : "<ESC>:bd<CR>:q<CR>"',
+			'',
+			opts = { silent = true, expr = true },
+		},
 		['<Leader>bj'] = { '<ESC>:bnext<CR>', '', opts = { silent = true } },
 		['<Leader>bk'] = { '<ESC>:bprevious<CR>', '', opts = { silent = true } },
 
@@ -128,7 +128,7 @@ M.telescope = {
 		['<leader>pt'] = { '<cmd> Telescope git_status <CR>', 'git status' },
 
 		-- pick a hidden term
-		['<leader>pt'] = { '<cmd> Telescope terms <CR>', 'pick hidden term' },
+		-- ['<leader>pt'] = { '<cmd> Telescope terms <CR>', 'pick hidden term' },
 	},
 }
 

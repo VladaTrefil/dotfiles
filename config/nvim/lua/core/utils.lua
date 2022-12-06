@@ -2,6 +2,9 @@ local M = {}
 
 local fn = vim.fn
 local merge_tb = vim.tbl_deep_extend
+local stdpath = vim.fn.stdpath
+
+M.default_compile_path = stdpath('data') .. '/packer_compiled.lua'
 
 M.load_mappings = function(section, mapping_opt)
 	local function set_section_map(section_values)
@@ -60,6 +63,16 @@ M.is_cursor_inside_new_block = function()
 	return chars:find('[{}-><-%[%]]') ~= nil
 end
 
+M.buffer_is_empty = function()
+	return vim.fn.line('$') == 1 and vim.fn.getline(1) == ''
+end
+
+M.trigger_event = function(event)
+	vim.schedule(function()
+		vim.api.nvim_exec_autocmds('User', { pattern = 'Custom' .. event })
+	end)
+end
+
 M.create_global_functions = function()
 	function _G.ReloadConfig()
 		for name, _ in pairs(package.loaded) do
@@ -71,6 +84,19 @@ M.create_global_functions = function()
 		dofile(vim.env.MYVIMRC)
 
 		vim.notify('Nvim configuration reloaded!', vim.log.levels.INFO)
+	end
+
+	function _G.closeBuffer()
+		local tab_number = vim.fn.tabpagenr()
+		local tab_pages = vim.fn.tabpagebuflist(tab_number)
+		local tab_pages_len = vim.fn.len(tab_pages)
+
+		-- close buffer window if last in tab
+		return tab_pages_len > 1
+	end
+
+	function _G.isCursorInsideNewBlock()
+		return M.is_cursor_inside_new_block()
 	end
 end
 

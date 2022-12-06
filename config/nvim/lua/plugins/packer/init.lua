@@ -1,11 +1,6 @@
--- Initalize
 local utils = require('core.utils')
-local plugins = require('plugins.plugin_list')
 
 local stdpath = vim.fn.stdpath
-
--- add binaries installed by mason.nvim to path
-vim.env.PATH = vim.env.PATH .. ':' .. stdpath('data') .. '/mason/bin'
 
 -- try loading packer
 local packer_path = stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
@@ -48,7 +43,7 @@ if packer_avail then
 		run_me()
 	else
 		-- if there is no compiled file, ask user to sync packer
-		require('plugins')
+		require('core.plugins')
 
 		vim.api.nvim_create_autocmd('User', {
 			once = true,
@@ -65,47 +60,49 @@ if packer_avail then
 	end
 end
 
-local packer = require('packer')
+setup = function(plugins)
+	packer.startup({
+		function(use)
+			for key, plugin in pairs(plugins) do
+				if type(key) == 'string' and not plugin[1] then
+					plugin[1] = key
+				end
 
-packer.startup({
-	function(use)
-		for key, plugin in pairs(plugins) do
-			if type(key) == 'string' and not plugin[1] then
-				plugin[1] = key
-			end
-
-			if key == 'williamboman/mason.nvim' and plugin.cmd then
-				for mason_plugin, commands in pairs({ -- lazy load mason plugin commands with Mason
-					['jayp0521/mason-null-ls.nvim'] = { 'NullLsInstall', 'NullLsUninstall' },
-					['williamboman/mason-lspconfig.nvim'] = { 'LspInstall', 'LspUninstall' },
-				}) do
-					if plugins[mason_plugin] then
-						vim.list_extend(plugin.cmd, commands)
+				if key == 'williamboman/mason.nvim' and plugin.cmd then
+					for mason_plugin, commands in pairs({ -- lazy load mason plugin commands with Mason
+						['jayp0521/mason-null-ls.nvim'] = { 'NullLsInstall', 'NullLsUninstall' },
+						['williamboman/mason-lspconfig.nvim'] = { 'LspInstall', 'LspUninstall' },
+					}) do
+						if plugins[mason_plugin] then
+							vim.list_extend(plugin.cmd, commands)
+						end
 					end
 				end
-			end
 
-			use(plugin)
-		end
-	end,
-	config = {
-		compile_path = require('core.utils').default_compile_path,
-		display = {
-			open_fn = function()
-				return require('packer.util').float({ border = 'rounded' })
-			end,
-		},
-		profile = {
-			enable = true,
-			threshold = 0.0001,
-		},
-		git = {
-			clone_timeout = 300,
-			subcommands = {
-				update = 'pull --rebase',
+				use(plugin)
+			end
+		end,
+		config = {
+			compile_path = require('core.utils').default_compile_path,
+			display = {
+				open_fn = function()
+					return require('packer.util').float({ border = 'rounded' })
+				end,
 			},
+			profile = {
+				enable = true,
+				threshold = 0.0001,
+			},
+			git = {
+				clone_timeout = 300,
+				subcommands = {
+					update = 'pull --rebase',
+				},
+			},
+			auto_clean = true,
+			compile_on_sync = true,
 		},
-		auto_clean = true,
-		compile_on_sync = true,
-	},
-})
+	})
+end
+
+return setup

@@ -42,6 +42,7 @@ local options = {
 			'--column',
 			'--smart-case',
 			'--vimgrep',
+			'--trim', -- add this value
 		},
 		prompt_prefix = '   ',
 		selection_caret = '  ',
@@ -85,11 +86,21 @@ local options = {
 	extensions_list = { 'themes', 'terms' },
 }
 
-telescope.setup(options)
+local M = {}
 
--- load extensions
-pcall(function()
-	for _, ext in ipairs(options.extensions_list) do
-		telescope.load_extension(ext)
-	end
-end)
+M.core_config = function()
+	telescope.setup(options)
+
+	-- load extensions
+	pcall(function()
+		for _, ext in ipairs(options.extensions_list) do
+			telescope.load_extension(ext)
+		end
+	end)
+end
+
+M.fzf_config = function()
+	telescope.load_extension('fzf')
+end
+
+return M

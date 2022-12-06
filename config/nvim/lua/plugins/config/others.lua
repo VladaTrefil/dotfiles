@@ -1,116 +1,103 @@
 local M = {}
 
 M.autopairs = function()
-  local present1, autopairs = pcall(require, 'nvim-autopairs')
-  local present2, cmp = pcall(require, 'cmp')
+	local present1, autopairs = pcall(require, 'nvim-autopairs')
+	local present2, cmp = pcall(require, 'cmp')
 
-  if not (present1 and present2) then
-    return
-  end
+	if not (present1 and present2) then
+		return
+	end
 
-  local options = {
-    fast_wrap = {},
-    disable_filetype = { 'TelescopePrompt', 'vim' },
-  }
+	local options = {
+		fast_wrap = {},
+		disable_filetype = { 'TelescopePrompt', 'vim' },
+	}
 
-  autopairs.setup(options)
+	autopairs.setup(options)
 
-  local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-  cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+	local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+	cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 end
 
 M.blankline = function()
-  local present, blankline = pcall(require, 'indent_blankline')
+	local present, blankline = pcall(require, 'indent_blankline')
 
-  if not present then
-    return
-  end
+	if not present then
+		return
+	end
 
-  local options = {
-    indentLine_enabled = 1,
-    filetype_exclude = {
-      'help',
-      'terminal',
-      'alpha',
-      'packer',
-      'lspinfo',
-      'TelescopePrompt',
-      'TelescopeResults',
-      'mason',
-      'dashboard',
-      '',
-    },
-    buftype_exclude = { 'terminal' },
-    show_trailing_blankline_indent = false,
-    show_first_indent_level = false,
-    show_current_context = true,
-    show_current_context_start = true,
-  }
+	local options = {
+		indentLine_enabled = 1,
+		filetype_exclude = {
+			'help',
+			'terminal',
+			'alpha',
+			'packer',
+			'lspinfo',
+			'TelescopePrompt',
+			'TelescopeResults',
+			'mason',
+			'dashboard',
+			'',
+		},
+		buftype_exclude = { 'terminal' },
+		show_trailing_blankline_indent = false,
+		show_first_indent_level = false,
+		show_current_context = true,
+		show_current_context_start = true,
+	}
 
-  blankline.setup(options)
+	blankline.setup(options)
 end
 
 M.colorizer = function()
-  local present, colorizer = pcall(require, 'colorizer')
+	local present, colorizer = pcall(require, 'colorizer')
 
-  if not present then
-    return
-  end
+	if not present then
+		return
+	end
 
-  local options = {
-    filetypes = {
-      '*',
-    },
-    user_default_options = {
-      RGB = true, -- #RGB hex codes
-      RRGGBB = true, -- #RRGGBB hex codes
-      names = false, -- "Name" codes like Blue
-      RRGGBBAA = false, -- #RRGGBBAA hex codes
-      rgb_fn = false, -- CSS rgb() and rgba() functions
-      hsl_fn = false, -- CSS hsl() and hsla() functions
-      css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-      css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-      mode = 'background', -- Set the display mode.
-    },
-  }
+	local options = {
+		filetypes = {
+			'*',
+		},
 
-  colorizer.setup(options)
-  -- execute colorizer as soon as possible
-  vim.defer_fn(function()
-    require('colorizer').attach_to_buffer(0)
-  end, 0)
+		user_default_options = {
+			RGB = true, -- #RGB hex codes
+			RRGGBB = true, -- #RRGGBB hex codes
+			names = false, -- "Name" codes like Blue
+			RRGGBBAA = false, -- #RRGGBBAA hex codes
+			rgb_fn = false, -- CSS rgb() and rgba() functions
+			hsl_fn = false, -- CSS hsl() and hsla() functions
+			css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+			css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+			mode = 'background', -- Set the display mode.
+		},
+	}
+
+	colorizer.setup(options)
+	-- execute colorizer as soon as possible
+	vim.defer_fn(function()
+		require('colorizer').attach_to_buffer(0)
+	end, 0)
 end
 
 M.devicons = function()
-  local present, devicons = pcall(require, 'nvim-web-devicons')
-
-  if present then
-    devicons.setup()
-  end
-end
-
-M.onedark = function()
-  local present, onedark = pcall(require, 'onedark')
-
-  if present then
-    onedark.setup({
-      style = 'darker',
-    })
-
-    onedark.load()
-  end
+	local present, devicons = pcall(require, 'nvim-web-devicons')
+	if present then
+		devicons.setup()
+	end
 end
 
 M.scope = function()
-  local present, scope = pcall(require, 'scope')
-
-  if present then
-    scope.setup()
-  end
+	local present, scope = pcall(require, 'scope')
+	if present then
+		scope.setup()
+	end
 end
 
 M.far = function()
-  vim.cmd([[
+	vim.cmd([[
     let g:far#source='rgnvim'
     let g:far#ignore_files=["~/.config/nvim/farignore"]
     let g:far#preview_window_height=20
@@ -120,18 +107,18 @@ M.far = function()
 end
 
 M.ultisnips = function()
-  vim.cmd("let g:UltiSnipsSnippetDirectories=[$XDG_CONFIG_HOME.'/nvim/ultisnips']")
+	vim.g.UltiSnipsSnippetDirectories = { vim.fn.stdpath('config') .. '/ultisnips' }
 end
 
 M.lazygit = function()
-  vim.keymap.set('n', '<Leader>gg', '<cmd>LazyGit<cr>')
+	vim.keymap.set('n', '<Leader>gg', '<cmd>LazyGit<cr>')
 
-  vim.g.lazygit_floating_window_winblend = 1
-  vim.g.lazygit_floating_window_use_plenary = 1
+	vim.g.lazygit_floating_window_winblend = 1
+	vim.g.lazygit_floating_window_use_plenary = 1
 end
 
 M.gitgutter = function()
-  vim.cmd([[
+	vim.cmd([[
     let g:gitgutter_sign_added = '\ +'
     let g:gitgutter_sign_modified = '\ ~'
     let g:gitgutter_sign_removed = '\ -'

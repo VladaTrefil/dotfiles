@@ -3,61 +3,62 @@
       create: true
 
 - shell:
-  -
-    command: ./build/install-zsh.sh
-    stdin: true
-    stdout: true
-    stderr: true
-    description: Installing ZSH
-    quiet: true
+    - command: ./build/install-zsh.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      description: Installing ZSH
+      quiet: true
 
-- clean: [
-  '~/.zsh*',
-  '~/.bash*',
-  '~/.config/oh-my-zsh/custom/',
-  '~/.config/oh-my-zsh/custom/plugins/',
-  '~/.config/oh-my-zsh/custom/themes/',
-  '~/.local/share/fonts',
-  '~/.local/bin',
-  '~/.local/lib']
+- clean:
+    [
+      '~/.zsh*',
+      '~/.bash*',
+      '~/.config/oh-my-zsh/custom/',
+      '~/.config/oh-my-zsh/custom/plugins/',
+      '~/.config/oh-my-zsh/custom/themes/',
+      '~/.local/share/fonts',
+      '~/.local/bin',
+      '~/.local/lib',
+    ]
 
 - create:
-  - ~/.config/pg
-  - ~/.config/x11
-  - ~/.config/yarn
-  - ~/.config/gnupg
-  - ~/.config/npm
-  - ~/.config/gtk-2.0
-  - ~/.config/kde
-  - ~/.config/cargo
-  - ~/.config/rustup
-  - ~/.config/oh-my-zsh/custom/
-  - ~/.config/oh-my-zsh/custom/plugins
-  - ~/.config/oh-my-zsh/custom/themes
+    - ~/.config/pg
+    - ~/.config/x11
+    - ~/.config/yarn
+    - ~/.config/gnupg
+    - ~/.config/npm
+    - ~/.config/gtk-2.0
+    - ~/.config/kde
+    - ~/.config/cargo
+    - ~/.config/rustup
+    - ~/.config/oh-my-zsh/custom/
+    - ~/.config/oh-my-zsh/custom/plugins
+    - ~/.config/oh-my-zsh/custom/themes
 
-  - ~/.local/bin
-  - ~/.local/lib
-  - ~/.local/share/fonts
-  - ~/.local/share/bundle
-  - ~/.local/share/node
-  - ~/.local/share/gem
-  - ~/.local/state
-  - ~/.local/state/zsh
-  - ~/.local/state/less
-  - ~/.local/state/eww
+    - ~/.local/bin
+    - ~/.local/lib
+    - ~/.local/share/fonts
+    - ~/.local/share/bundle
+    - ~/.local/share/node
+    - ~/.local/share/gem
+    - ~/.local/state
+    - ~/.local/state/zsh
+    - ~/.local/state/less
+    - ~/.local/state/eww
 
-  - ~/.cache
-  - ~/.cache/zsh
-  - ~/.cache/bundle
-  - ~/.cache/gem
-  - ~/.cache/solargraph
-  - ~/.cache/x11
+    - ~/.cache
+    - ~/.cache/zsh
+    - ~/.cache/bundle
+    - ~/.cache/gem
+    - ~/.cache/solargraph
+    - ~/.cache/x11
 
-  - ~/Images
-  - ~/Downloads
-  - ~/Documents
-  - ~/Pictures
-  - ~/Music
+    - ~/Images
+    - ~/Downloads
+    - ~/Documents
+    - ~/Pictures
+    - ~/Music
 
 - link:
     ~/.background: background/
@@ -76,7 +77,7 @@
     ~/.config/oh-my-zsh/custom/themes/powerlevel10k: config/zsh/custom/themes/powerlevel10k/
     ~/.zprofile:
       force: true
-      path: config/zsh/zprofile
+      path: config/zsh/.zprofile
 
     # Config
     ~/.config/nvim: config/nvim
@@ -89,6 +90,7 @@
     ~/.config/eww: config/eww
     ~/.config/stylua: config/stylua
     ~/.config/rubocop: config/rubocop
+    ~/.config/solargraph: config/solargraph
 
     ~/.config/asdf: config/asdf
 
@@ -109,28 +111,25 @@
       path: local/bin
 
 - shell:
-  - [ source $HOME/.zprofile, Source zprofile]
+    - [source $HOME/.zprofile, Source zprofile]
 
-  -
-    command: ./build/install-apt.sh
-    stdin: true
-    stdout: true
-    stderr: true
-    description: Installing APT Packages
-    quiet: true
+    - command: ./build/install-apt.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      description: Installing APT Packages
+      quiet: true
 
-  -
-    command: ./build/install-independent.sh
-    stdin: true
-    stdout: true
-    stderr: true
-    description: Installing Independent Software
-    quiet: true
+    - command: ./build/install-independent.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      description: Installing Independent Software
+      quiet: true
 
-  -
-    command: ./build/setup-env.sh
-    stdin: true
-    stdout: true
-    stderr: true
-    description: Running Setup ENV Script
-    quiet: true
+    - command: ./build/setup-env.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      description: Running Setup ENV Script
+      quiet: true

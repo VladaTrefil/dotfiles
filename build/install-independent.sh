@@ -65,14 +65,14 @@ else
 fi
 
 if [ -f "$ASDF_DIR/asdf.sh" ]; then
-  echo "──  Ruby:"
+  printf "\n──  Ruby:\n"
 
   if [ -z "$(asdf plugin list | grep -o ruby)" ]; then
     echo
-    echo "─ adding ruby plugin"
+    echo "─ adding asdf plugin"
     asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
   else
-    echo "  ruby plugin"
+    echo "  asdf plugin"
   fi
 
   versions=("2.6.0" "2.6.6" "2.6.8" "2.6.9" "2.7.5" "3.0.0" "3.1.1" "3.1.2")
@@ -89,7 +89,7 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
     fi
   done
 
-  printf "\n─ Gems:\n"
+  printf "\nGems:\n"
 
   gems=("rails" "neovim" "solargraph" "prettier")
   installed_gems="$(gem list --local)"
@@ -107,7 +107,7 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
     fi
   done
 
-  echo "──  Java:"
+  printf "\n──  Java:\n"
 
   if [ -z "$(asdf plugin list | grep -o java)" ]; then
     echo
@@ -162,11 +162,25 @@ fi
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Python: {{{
 
+printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
+echo "───  Python:"
+
 if [ -f `which python3` ]; then
-  echo 'Installing Python extensions...'
-  pip install pynvim
-  pip install yarp
-  pip install speedtest-cli
+  echo "  core installed"
+
+  printf "\nExtensions:\n"
+
+  packages=("pynvim" "yarp" "speedtest-cli")
+  installed_packages=$(pip list)
+
+  for package in ${packages[@]}; do
+    if [ -z "$(echo $installed_packages | grep -o $package)" ]; then
+      echo "─ adding $package"
+      pip install $package
+    else
+      echo "  $package"
+    fi
+  done
 fi
 
 # }}}
@@ -203,6 +217,7 @@ fi
 
 ETCHER_PATH="$HOME/Images/balenaEtcher.AppImage"
 ETCHER_URL="https://github.com/balena-io/etcher/releases/download/v1.7.9/balena-etcher-electron-1.7.9-linux-x64.zip"
+
 if [ ! -f $ETCHER_PATH ]; then
   echo "Installing Etcher..."
   curl -L $ETCHER_URL -o ./tmp/etcher.zip
@@ -229,12 +244,51 @@ fi
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Rust and cargo: {{{
 
+printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
+echo "───  Rust:"
+
 if [ ! -f "$(which rustc)" ]; then
+  echo "─ Installing rust..."
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+else
+  echo "  core installed"
 fi
 
-if [ -f "$(which cargo)" ]; then
-  cargo install stylua # Formatting for lua
+# Stylua - Formatting for lua
+if [ -f "$(which rustc)" ]; then
+  if [ -f "$(which cargo)" ]; then
+    printf "\nCargo packages:\n"
+
+    packages=("stylua")
+
+    for package in ${packages[@]}; do
+      if [ -z "$(cargo search --quiet --limit 1 $package | grep -o $package)" ]; then
+        echo "─ adding $package"
+        pip install $package
+      else
+        echo "  $package"
+      fi
+    done
+  fi
+fi
+
+# }}}
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+# Neovim add-ons: {{{
+
+printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
+echo "──  Neovim:"
+
+PACKER_URL="https://github.com/wbthomason/packer.nvim"
+PACKER_DIR="$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
+
+if [ ! -d $PACKER_DIR ]; then
+  echo "\n─ installing Packer:\n"
+  git clone --depth 1 $PACKER_URL $PACKER_DIR
+else
+  echo "  Packer"
 fi
 
 # }}}

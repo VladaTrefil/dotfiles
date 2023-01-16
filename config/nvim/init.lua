@@ -8,10 +8,10 @@ require('theme')
 
 require('core.options')
 
+require('core.global_cmds')
+
 vim.cmd('source $XDG_CONFIG_HOME/nvim/legacy/script.vim')
 
 require('plugins')
-
-require('core.utils').create_global_functions()
 
 require('core.utils').load_mappings()

@@ -4,11 +4,11 @@ vim.defer_fn(function()
 	pcall(require, 'impatient')
 end, 0)
 
+require('theme')
+
 require('core.options')
 
 vim.cmd('source $XDG_CONFIG_HOME/nvim/legacy/script.vim')
-vim.cmd('source $XDG_CONFIG_HOME/nvim/legacy/palette.vim')
-vim.cmd('source $XDG_CONFIG_HOME/nvim/legacy/theme.vim')
 
 require('plugins')
 

@@ -14,4 +14,4 @@ vim.cmd('source $XDG_CONFIG_HOME/nvim/legacy/script.vim')
 
 require('plugins')
 
-require('core.utils').load_mappings()
+require('core.mappings')

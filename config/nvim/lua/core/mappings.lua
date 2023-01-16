@@ -37,6 +37,8 @@ M.general = {
 
 		['<Leader>w'] = { ':w!<CR>', 'Save file' },
 
+		['<Leader>e'] = { '<ESC>:e<CR>', 'Refresh file' },
+
 		-- Tabs
 		['<Leader>tj'] = { 'gT', 'Previous Tab' },
 		['<Leader>tk'] = { 'gt', 'Next Tab' },
@@ -66,10 +68,6 @@ M.general = {
 		-- Yank
 		['y'] = { 'y$', 'Yank rest of line' },
 		['yy'] = { 'Vy', 'Yank line' },
-
-		-- Sessionsinit.
-		['<Leader>ss'] = { '<CR>:SessionSave<Tab><CR>', 'Save session', opts = { silent = true } },
-		['<Leader>sl'] = { '<CR>:SessionLoad<Tab><CR>', 'Load session', opts = { silent = true } },
 
 		['<Leader>V'] = { '<cmd>lua ReloadConfig()<CR>', 'Reload nvim config' },
 
@@ -136,6 +134,13 @@ M.blamer = {
 	n = {
 		['<Leader>gb'] = { '<ESC>:BlamerToggle<CR><C-c>', 'Toggle git blamer' },
 	},
+}
+
+M.session_manager = {
+	n = {
+		['<Leader>ss'] = { '<CR>:SessionManager save_current_session<CR>', 'Save session', opts = { silent = true } },
+		['<Leader>sl'] = { '<CR>:SessionManager load_last_session<CR>', 'Load last session', opts = { silent = true } },
+  }
 }
 
 return M

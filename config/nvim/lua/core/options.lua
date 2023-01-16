@@ -9,7 +9,10 @@ opt.list = true
 opt.listchars:append('space:⋅')
 opt.listchars:append('eol:↴')
 
-opt.termguicolors = true
+opt.signcolumn = 'yes:2'
+
+-- Enable popup transparency
+opt.pumblend = 15
 
 -- Display line numbers
 opt.number = true
@@ -84,7 +87,7 @@ opt.regexpengine = 1
 -- Folds
 opt.foldmethod = 'marker'
 opt.foldtext = 'v:lua.foldtext()'
-opt.fillchars = 'fold:\\'
+opt.fillchars = 'fold:|,eob: '
 opt.foldenable = true
 
 if opt.encoding:get() == 'latin1' and fn.has('gui_running') then

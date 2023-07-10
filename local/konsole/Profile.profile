@@ -25,7 +25,7 @@ KeyBindings=default
 
 [Scrolling]
 HistoryMode=1
-HistorySize=10000
+HistorySize=2000
 ScrollBarPosition=1
 ScrollFullPage=true
 

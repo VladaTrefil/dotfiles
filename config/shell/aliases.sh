@@ -63,8 +63,8 @@ alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"' # move config
 
 # Ruby
 alias r='bin/rails'
-alias rs='r s -p 3333'
-alias rss='FORCE_SSL=1 r s -b "ssl://localhost:3333?key=/home/vlada/Documents/ssl-cert/localhost.key&cert=/home/vlada/Documents/ssl-cert/localhost.crt"'
+alias rs='r s -p 3000'
+alias rss='FORCE_SSL=1 r s -b "ssl://localhost:3000?key=/home/vlada/Documents/ssl-cert/localhost.key&cert=/home/vlada/Documents/ssl-cert/localhost.crt"'
 alias rr='bin/rake'
 alias rt='PARALLEL_WORKERS=3 r test'
 

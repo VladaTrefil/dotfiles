@@ -39,5 +39,4 @@ sudo sysctl -p
 
 rm -rf $HOME/Desktop
 rm -rf $HOME/Templates
-rm -rf $HOME/Pictures
 rm -rf $HOME/Public

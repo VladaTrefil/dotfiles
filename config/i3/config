@@ -15,7 +15,7 @@ set $mod Mod1
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-floating_maximum_size 1000 x 800
+floating_maximum_size 1920 x 992
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.

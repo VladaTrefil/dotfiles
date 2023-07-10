@@ -6,21 +6,17 @@ end
 
 local palette = {}
 
-if vim.g.palette then
-  palette = vim.g.palette
-else
-  palette = {
-    bg0 = '#0B0E14',
-    bg1 = '#0D1017',
-    bg2 = '#151f28',
-    fg0 = '#E6E1CF',
-    fg1 = '#E6E1CF',
-    yellow = '#E7C547',
-    orange = '#F29718',
-    aqua = '#1f997e',
-    bright_red = '#e23141',
-  }
-end
+palette = {
+  bg0 = '#0B0E14',
+  bg1 = '#0D1017',
+  bg2 = '#151f28',
+  fg0 = '#E6E1CF',
+  fg1 = '#E6E1CF',
+  yellow = '#E7C547',
+  orange = '#F29718',
+  aqua = '#1f997e',
+  bright_red = '#e23141',
+}
 
 local function file_path()
   local path = vim.fn.expand('%f')

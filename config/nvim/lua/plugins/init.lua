@@ -5,14 +5,16 @@ local plugins = require('plugins.plugin_list')
 local stdpath = vim.fn.stdpath
 
 -- add binaries installed by mason.nvim to path
-vim.env.PATH = vim.env.PATH .. ':' .. stdpath('data') .. '/mason/bin'
+-- vim.env.PATH = vim.env.PATH .. ':' .. stdpath('data') .. '/mason/bin'
+
+local default_compile_path = stdpath('data') .. '/packer_compiled.lua'
 
 -- try loading packer
 local packer_path = stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
-local packer_avail = vim.fn.empty(vim.fn.glob(packer_path)) == 0
+local packer_available = vim.fn.empty(vim.fn.glob(packer_path)) == 0
 
 -- if packer isn't availble, reinstall it
-if not packer_avail then
+if not packer_available then
 	-- set the location to install packer
 	-- delete the old packer install if one exists
 	vim.fn.delete(packer_path, 'rf')
@@ -30,38 +32,39 @@ if not packer_avail then
 	vim.cmd('packadd packer.nvim')
 
 	local packer_loaded, _ = pcall(require, 'packer')
-	packer_avail = packer_loaded
+	packer_available = packer_loaded
 
 	-- if packer didn't load, print error
-	if not packer_avail then
+	if not packer_available then
 		vim.api.nvim_err_writeln('Failed to load packer at:' .. packer_path)
 	end
 end
 
 -- if packer is available, check if there is a compiled packer file
-if packer_avail then
+if packer_available then
 	-- try to load the packer compiled file
-	local run_me, _ = loadfile(utils.default_compile_path)
+	local run_me, _ = loadfile(default_compile_path)
 
 	if run_me then
 		-- if the file loads, run the compiled function
 		run_me()
 	else
 		-- if there is no compiled file, ask user to sync packer
-		require('plugins')
+		-- require('plugins')
 
 		vim.api.nvim_create_autocmd('User', {
 			once = true,
 			pattern = 'PackerComplete',
 			callback = function()
 				vim.cmd.bw()
-				vim.tbl_map(require, { 'nvim-treesitter', 'mason' })
+				-- vim.tbl_map(require, { 'nvim-treesitter', 'mason' })
 				-- astronvim.notify('Mason is installing packages if configured, check status with :Mason')
 			end,
 		})
+
 		vim.opt.cmdheight = 1
 		vim.notify('Please wait while plugins are installed...')
-		vim.cmd.PackerSync()
+		vim.cmd('PackerSync()')
 	end
 end
 
@@ -74,22 +77,12 @@ packer.startup({
 				plugin[1] = key
 			end
 
-			if key == 'williamboman/mason.nvim' and plugin.cmd then
-				for mason_plugin, commands in pairs({ -- lazy load mason plugin commands with Mason
-					['jayp0521/mason-null-ls.nvim'] = { 'NullLsInstall', 'NullLsUninstall' },
-					['williamboman/mason-lspconfig.nvim'] = { 'LspInstall', 'LspUninstall' },
-				}) do
-					if plugins[mason_plugin] then
-						vim.list_extend(plugin.cmd, commands)
-					end
-				end
-			end
-
 			use(plugin)
 		end
 	end,
 	config = {
-		compile_path = require('core.utils').default_compile_path,
+		compile_path = default_compile_path,
+    log = { level = 'debug' },
 		display = {
 			open_fn = function()
 				return require('packer.util').float({ border = 'rounded' })

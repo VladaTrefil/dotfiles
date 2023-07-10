@@ -11,11 +11,7 @@ vim.cmd([[
     \ 'previous_key': '<C-n>'
     \ })
 
-  if exists("g:palette")
-    let s:accent = g:palette.bright_red
-  else
-    let s:accent = '#e23141'
-  end
+  let s:accent = '#e23141'
 
   let s:scale = ['#f4468f', '#fd4a85', '#ff507a', '#ff566f', '#ff5e63',
         \ '#ff6658', '#ff704e', '#ff7a45', '#ff843d', '#ff9036']

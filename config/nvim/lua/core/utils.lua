@@ -24,27 +24,31 @@ M.load_mappings = function(mapping_table, mapping_opt)
 end
 
 M.fold_label_text = function()
-	local line = fn.getline(vim.v.foldstart)
-	local text = fn.substitute(line, '#|"|-+|{+', '', '')
+  local line = fn.getline(vim.v.foldstart)
+  local text = fn.substitute(line, '#|"|-+|{+', '', '')
 
-	local fold_size = vim.v.foldend - vim.v.foldstart
-	local spacer_size = 96 - fn.len(text) - fn.len(fold_size)
+  local fold_size = vim.v.foldend - vim.v.foldstart
+  local spacer_size = 96 - fn.len(text) - fn.len(fold_size)
 
-	local spacer = fn['repeat']('.', spacer_size)
+  local spacer = vim.call('repeat', { '.', spacer_size })
 
-	return ' ' .. text .. spacer .. ' (' .. fold_size .. ' L)  '
+  return ' ' .. text .. spacer .. ' (' .. fold_size .. ' L)  '
 end
 
 M.is_cursor_inside_new_block = function()
-	local line = fn.getline('.')
-	local col = fn.col('.')
-	local chars = string.sub(line, col - 2, col + 1)
+  local line = fn.getline('.')
+  local col = fn.col('.')
+  local chars = string.sub(line, col - 2, col + 1)
 
-	return chars:find('[{}-><-%[%]]') ~= nil
+  return chars:find('[{}-><-%[%]]') ~= nil
 end
 
 M.buffer_is_empty = function()
-	return vim.fn.line('$') == 1 and vim.fn.getline(1) == ''
+  return fn.line('$') == 1 and fn.getline(1) == ''
+end
+
+M.is_available = function(plugin)
+  return packer_plugins ~= nil and packer_plugins[plugin] ~= nil
 end
 
 M.trigger_event = function(event)
@@ -53,8 +57,17 @@ M.trigger_event = function(event)
 	end)
 end
 
-M.is_available = function(plugin)
-	return packer_plugins ~= nil and packer_plugins[plugin] ~= nil
+M.close_buffer = function()
+  local tab_number = vim.fn.tabpagenr()
+  local tab_pages = vim.fn.tabpagebuflist(tab_number)
+  local tab_pages_len = vim.fn.len(tab_pages)
+
+  vim.cmd('bd')
+
+  if tab_pages_len <= 1 then
+    vim.cmd('q')
+  end
 end
 
+M.save_session = function()
 return M

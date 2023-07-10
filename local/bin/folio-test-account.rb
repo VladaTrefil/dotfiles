@@ -1,11 +1,19 @@
 #!/usr/bin/env ruby
 
+# Folio::Account.create!(email: "vladislav.trefil@sinfin.cz", password: "ngfKz2FGyWw3", first_name: "Vladislav", last_name: "Trefil", role: "superuser")
+
 credential = "test@test.test"
 
 unless Folio::Account.where(email: credential).present?
+  role = if Folio::Account.column_names.include? "roles"
+    { roles: ["superuser"] }
+  else
+    { role: "superuser" }
+  end
+
   Folio::Account.create!(email: credential, password:  credential,
                          first_name: "test", last_name: "test",
-                         role: "superuser")
+                         **role)
 
   print "Created Folio::Account\n"
 else
@@ -127,6 +135,24 @@ if defined? Notesvilla
   else
     Notesvilla::User.where(email: credential).update(credits_non_withdrawable: 1000, credits_withdrawable: 1000)
     print "Notesvilla::User exists\n"
+  end
+end
+
+# }}}
+# ===============================================================================
+
+# ===============================================================================
+# Nextpagemedia: {{{
+
+if defined? Nextpagemedia
+  unless Folio::User.where(email: credential).present?
+    Folio::User.create!(email: credential, password: credential,
+                        first_name: "test", last_name: "test", phone: "724999999",
+                        confirmed_at: Time.now, confirmation_sent_at: 1.hour.ago, unconfirmed_email: false)
+
+    print "Created Folio::User\n"
+  else
+    print "Folio::User exists\n"
   end
 end
 

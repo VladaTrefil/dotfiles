@@ -24,3 +24,5 @@ psql ${project}_development < ./db-dump.sql
 rm ./db-dump.sql
 
 bin/rails db:migrate
+
+bundle exec rails runner "eval(File.read '$BIN_PATH/usr/folio-test-account.rb')"

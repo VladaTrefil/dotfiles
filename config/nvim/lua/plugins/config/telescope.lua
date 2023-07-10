@@ -8,6 +8,7 @@ if not present then
 end
 
 local load_mappings = require('core.utils').load_mappings
+local actions = require('telescope.actions')
 
 FILE_IGNORE_PATTERNS = { 'node_modules', '*.ttf', '*.woff*', '*.eot*' }
 
@@ -59,21 +60,7 @@ local options = {
     qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
     -- Developer configurations: Not meant for general override
     buffer_previewer_maker = require('telescope.previewers').buffer_previewer_maker,
-    mappings = {
-      n = {
-        ['q'] = require('telescope.actions').close,
-        ["<C-k>"] = "move_selection_previous",
-        ["<C-j>"] = "move_selection_next",
-        ["<C-s>"] = "select_horizontal",
-      },
-      i = {
-        ["<C-k>"] = "move_selection_previous",
-        ["<C-j>"] = "move_selection_next",
-        ["<C-s>"] = "select_horizontal",
-        ["<C-p>"] = false,
-        ["<C-n>"] = false,
-      },
-    },
+    mappings = require('core.mappings').telescope_api(actions),
   },
   extensions_list = { 'themes', 'terms' },
 }

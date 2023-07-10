@@ -2,45 +2,25 @@ local M = {}
 
 local fn = vim.fn
 local merge_tb = vim.tbl_deep_extend
-local stdpath = vim.fn.stdpath
 
-M.default_compile_path = stdpath('data') .. '/packer_compiled.lua'
+local session_dir = "~/.local/state/nvim/sessions"
 
-M.load_mappings = function(section, mapping_opt)
-	local function set_section_map(section_values)
-		if section_values.plugin then
-			return
-		end
-		section_values.plugin = nil
+M.load_mappings = function(mapping_table, mapping_opt)
+  for mode, mode_values in pairs(mapping_table) do
+    if mode == 1 then
+      mode = ''
+    end
 
-		for mode, mode_values in pairs(section_values) do
-			if mode == 1 then
-				mode = ''
-			end
+    for keybind, mapping_info in pairs(mode_values) do
+      -- print(mode)
+      local opts = merge_tb('force', mapping_opt or {}, mapping_info.opts or {})
+      local cmd = mapping_info[1]
 
-			local default_opts = merge_tb('force', { mode = mode }, mapping_opt or {})
-			for keybind, mapping_info in pairs(mode_values) do
-				-- merge default + user opts
-				local opts = merge_tb('force', default_opts, mapping_info.opts or {})
+      opts.desc = mapping_info[2]
 
-				mapping_info.opts, opts.mode = nil, nil
-				opts.desc = mapping_info[2]
-
-				vim.keymap.set(mode, keybind, mapping_info[1], opts)
-			end
-		end
-	end
-
-	local mappings = require('core.mappings')
-
-	if type(section) == 'string' then
-		mappings[section]['plugin'] = nil
-		mappings = { mappings[section] }
-	end
-
-	for _, sect in pairs(mappings) do
-		set_section_map(sect)
-	end
+      vim.keymap.set(mode, keybind, cmd, opts)
+    end
+  end
 end
 
 M.fold_label_text = function()

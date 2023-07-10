@@ -1,5 +1,6 @@
 local M = {}
 
+local load_mappings = require('core.utils').load_mappings
 
 M.autopairs = function()
   local present1, autopairs = pcall(require, 'nvim-autopairs')
@@ -128,5 +129,11 @@ M.gitgutter = function()
     let g:gitgutter_sign_modified_removed = '\ ~'
   ]])
 end
+
+M.blamer = function()
+  local mappings = require('core.mappings').blamer
+  load_mappings(mappings)
+end
+
 
 return M

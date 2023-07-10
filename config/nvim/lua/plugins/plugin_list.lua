@@ -156,7 +156,11 @@ return {
 
   ['tpope/vim-git'] = {},
   ['tpope/vim-fugitive'] = {},
-  ['APZelos/blamer.nvim'] = {},
+  ['APZelos/blamer.nvim'] = {
+    config = function()
+      require('plugins.config.others').blamer()
+    end,
+  },
   ['onsails/lspkind.nvim'] = {}, -- VSCode like pictograms for menus, powered by Nvim LSP
 
   ['airblade/vim-gitgutter'] = {

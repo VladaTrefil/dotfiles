@@ -88,6 +88,9 @@ APT_PACKAGES=(
 
   # NVIM
   "pip" # pip install pynvim
+
+  # Anki cards
+  "zstd"
 )
 
 if [ ! -f "`which brave-browser`" ]; then

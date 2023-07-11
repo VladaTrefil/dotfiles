@@ -298,4 +298,41 @@ fi
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
-rm -rf ./tmp
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+# Anki: {{{
+
+printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
+echo "──  Anki:"
+
+ANKI_URL="https://github.com/ankitects/anki/releases/download/2.1.65/anki-2.1.65-linux-qt6.tar.zst"
+ANKI_INSTALLER_FILE_NAME="anki-2.1.65-linux-qt6"
+
+if [ ! -f "$(which anki)" ]; then
+  cd ./tmp || return
+
+  if [ ! -f "./$ANKI_INSTALLER_FILE_NAME.tar.zst" ]; then
+    wget -O "$ANKI_INSTALLER_FILE_NAME.tar.zst" $ANKI_URL
+  fi
+
+  if [ -f "./$ANKI_INSTALLER_FILE_NAME.tar.zst" ]; then
+    printf "\n─ installing Anki:\n"
+    tar xaf "$ANKI_INSTALLER_FILE_NAME.tar.zst"
+    cd "./$ANKI_INSTALLER_FILE_NAME" || return
+    sudo ./install.sh
+  else
+    echo "file not found"
+  fi
+
+  cd "$BASE_DIR" || return
+else
+  echo "  installed"
+fi
+
+# }}}
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+#https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+# curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+# sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+# rm -rf ./tmp

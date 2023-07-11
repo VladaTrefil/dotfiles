@@ -2,10 +2,12 @@
 
 mkdir ./tmp
 
+BASE_DIR="$(pwd)"
+
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Brew: {{{
 
-if [ ! -f "`which brew`" ]; then
+if [ ! -f "$(which brew)" ]; then
   echo 'Installing Homebrew...'
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
@@ -13,7 +15,7 @@ fi
 if [ -s "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-  if [ -f "`which brew`" ]; then
+  if [ -f "$(which brew)" ]; then
     if [ ! -f "$HOMEBREW_PREFIX/bin/nvim" ]; then
       echo 'Installing Nvim...,'
       brew install -q neovim
@@ -52,13 +54,13 @@ fi
 echo "────────────────────────────────────────────────────────────────────────────────────────────────────"
 echo "───  ASDF:"
 
-if [ ! -f "`which asdf`" ]; then
+if [ ! -f "$(which asdf)" ]; then
   echo "─ installing asdf"
-  git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.10.2
+  git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch v0.10.2
 
   if [ -f "$ASDF_DIR/asdf.sh" ]; then
     echo "─ sourcing asdf.sh"
-    . $ASDF_DIR/asdf.sh
+    source "$ASDF_DIR/asdf.sh"
   fi
 else
   echo "  core installed"
@@ -67,8 +69,7 @@ fi
 if [ -f "$ASDF_DIR/asdf.sh" ]; then
   printf "\n──  Ruby:\n"
 
-  if [ -z "$(asdf plugin list | grep -o ruby)" ]; then
-    echo
+  if ! grep -qo "ruby" "$(asdf plugin list)"; then
     echo "─ adding asdf plugin"
     asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
   else
@@ -78,11 +79,13 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
   versions=("2.6.0" "2.6.6" "2.6.8" "2.6.9" "2.7.5" "3.0.0" "3.1.1" "3.1.2")
   installed_versions=$(asdf list ruby)
 
-  for v in ${versions[@]}; do
-    if [ -z "$(echo $installed_versions | grep -o $v)" ]; then
-      printf "─ adding $v \n"
-      asdf install ruby $v
-      echo $GEM_HOME
+  for v in "${versions[@]}"; do
+    if ! grep -qo "$v" "$installed_versions"; then
+      printf "─ adding % \n", "$v"
+
+      asdf install ruby "$v"
+
+      echo "$GEM_HOME"
       gem install bundler
     else
       echo "  $v"
@@ -94,13 +97,14 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
   gems=("rails" "neovim" "solargraph" "prettier")
   installed_gems="$(gem list --local)"
 
-  for gem in ${gems[@]}; do
-    if [ -z "$(echo $installed_gems | grep -o $gem)" ]; then
-      printf "\n─ adding $gem"
-      if [ $gem == "rails" ]; then
+  for gem in "${gems[@]}"; do
+    if ! grep -qo "$gem" "$installed_gems"; then
+      printf "\n─ adding %gem", "$gem"
+
+      if [ "$gem" == "rails" ]; then
         gem install rails:6.1.4
       else
-        gem install $gem
+        gem install "$gem"
       fi
     else
       echo "  $gem"
@@ -109,8 +113,7 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
 
   printf "\n──  Java:\n"
 
-  if [ -z "$(asdf plugin list | grep -o java)" ]; then
-    echo
+  if ! grep -qo "java" "$(asdf plugin list)"; then
     echo "─ adding java plugin"
     asdf plugin-add java https://github.com/halcyon/asdf-java.git
   else
@@ -120,10 +123,10 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
   versions=("openjdk-17.0.2")
   installed_versions=$(asdf list java)
 
-  for v in ${versions[@]}; do
-    if [ -z "$(echo $installed_versions | grep -o $v)" ]; then
-      printf "─ adding $v \n"
-      asdf install java $v
+  for v in "${versions[@]}"; do
+    if ! grep -qo "$v" "$installed_versions"; then
+      printf "─ adding %v \n", "$v"
+      asdf install java "$v"
     else
       echo "  $v"
     fi
@@ -143,7 +146,7 @@ if [ ! -d "$NVM_DIR" ]; then
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash | grep -G "\d*"
 
   if [[ -d "$XDG_CONFIG_HOME/nvm" ]]; then
-    export NVM_DIR="$XDG_CONFIG_HOME/nvm" && \. "$NVM_DIR/nvm.sh"
+    export NVM_DIR="$XDG_CONFIG_HOME/nvm" && source "$NVM_DIR/nvm.sh"
 
     echo 'Installing NodeJS versions...'
     nvm install 16 --default
@@ -165,18 +168,19 @@ fi
 printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
 echo "───  Python:"
 
-if [ -f `which python3` ]; then
+if [ -f "$(which python3)" ]; then
   echo "  core installed"
 
   printf "\nExtensions:\n"
 
-  packages=("pynvim" "yarp" "speedtest-cli")
+  packages=("pynvim" "yarp" "speedtest-cli" "yt-dlp")
   installed_packages=$(pip list)
 
-  for package in ${packages[@]}; do
-    if [ -z "$(echo $installed_packages | grep -o $package)" ]; then
+  for package in "${packages[@]}"; do
+    if ! grep -o "$package" "$installed_packages"
+    then
       echo "─ adding $package"
-      pip install $package
+      pip install "$package"
     else
       echo "  $package"
     fi
@@ -189,7 +193,7 @@ fi
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Youtube-dl: {{{
 
-if [ ! -f "`which youtube-dl`" ]; then
+if [ ! -f "$(which youtube-dl)" ]; then
   echo 'Installing Youtube-DL...'
   sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
   sudo chmod a+rx /usr/local/bin/youtube-dl
@@ -201,9 +205,9 @@ fi
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Dunst: {{{
 
-if [ ! -f "`which dunst`" ]; then
+if [ ! -f "$(which dunst)" ]; then
   git clone https://github.com/dunst-project/dunst.git tmp/dunst
-  cd tmp/dunst
+  cd tmp/dunst || ! echo "dunst installer not found"
   make
   sudo make install
   cd ../..
@@ -218,11 +222,11 @@ fi
 ETCHER_PATH="$HOME/Images/balenaEtcher.AppImage"
 ETCHER_URL="https://github.com/balena-io/etcher/releases/download/v1.7.9/balena-etcher-electron-1.7.9-linux-x64.zip"
 
-if [ ! -f $ETCHER_PATH ]; then
+if [ ! -f "$ETCHER_PATH" ]; then
   echo "Installing Etcher..."
   curl -L $ETCHER_URL -o ./tmp/etcher.zip
-  unzip -o ./tmp/etcher.zip '*' -d ./tmp  && mv ./tmp/balena* $ETCHER_PATH
-  chmod a+rx $ETCHER_PATH
+  unzip -o ./tmp/etcher.zip '*' -d ./tmp  && mv ./tmp/balena* "$ETCHER_PATH"
+  chmod a+rx "$ETCHER_PATH"
 fi
 
 # }}}
@@ -261,10 +265,10 @@ if [ -f "$(which rustc)" ]; then
 
     packages=("stylua")
 
-    for package in ${packages[@]}; do
-      if [ -z "$(cargo search --quiet --limit 1 $package | grep -o $package)" ]; then
+    for package in "${packages[@]}"; do
+      if ! grep -qo "$package" "$(cargo search --quiet --limit 1 "$package")"; then
         echo "─ adding $package"
-        pip install $package
+        pip install "$package"
       else
         echo "  $package"
       fi
@@ -284,9 +288,9 @@ echo "──  Neovim:"
 PACKER_URL="https://github.com/wbthomason/packer.nvim"
 PACKER_DIR="$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
 
-if [ ! -d $PACKER_DIR ]; then
-  echo "\n─ installing Packer:\n"
-  git clone --depth 1 $PACKER_URL $PACKER_DIR
+if [ ! -d "$PACKER_DIR" ]; then
+  printf "\n─ installing Packer: \n"
+  git clone --depth 1 "$PACKER_URL" "$PACKER_DIR"
 else
   echo "  Packer"
 fi

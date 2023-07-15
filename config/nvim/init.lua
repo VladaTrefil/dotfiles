@@ -1,7 +1,7 @@
 -- ASCII: https://textkool.com/en/ascii-art-generator?hl=default&vl=default&font=Larry%203D
 
 vim.defer_fn(function()
-	pcall(require, 'impatient')
+  pcall(require, 'impatient')
 end, 0)
 
 require('theme')

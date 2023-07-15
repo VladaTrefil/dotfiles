@@ -7,8 +7,8 @@ end
 vim.cmd([[
   call wilder#setup({
     \ 'modes': [':', '/', '?'],
-    \ 'next_key': '<C-p>',
-    \ 'previous_key': '<C-n>'
+    \ 'next_key': '<C-k>',
+    \ 'previous_key': '<C-j>'
     \ })
 
   let s:accent = '#e23141'

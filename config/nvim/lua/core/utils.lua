@@ -52,9 +52,9 @@ M.is_available = function(plugin)
 end
 
 M.trigger_event = function(event)
-	vim.schedule(function()
-		vim.api.nvim_exec_autocmds('User', { pattern = 'Custom' .. event })
-	end)
+  vim.schedule(function()
+    vim.api.nvim_exec_autocmds('User', { pattern = 'Custom' .. event })
+  end)
 end
 
 M.close_buffer = function()
@@ -70,4 +70,20 @@ M.close_buffer = function()
 end
 
 M.save_session = function()
+  local last_session = vim.v.this_session
+  print(last_session)
+  -- local session_path = last_session
+
+  local filepath = string.gsub(vim.fn.getcwd(), '^/', '')
+  local session_name = string.gsub(filepath, '/', '-')
+
+  local session_path = string.format("%s/%s.vim", session_dir, session_name)
+
+  if session_dir then
+    vim.api.nvim_command('mksession!', session_path)
+  else
+    print('No session path')
+  end
+end
+
 return M

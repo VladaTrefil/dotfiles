@@ -46,6 +46,8 @@
     - ~/.local/state/zsh
     - ~/.local/state/less
     - ~/.local/state/eww
+    - ~/.local/state/nvim
+    - ~/.local/state/nvim/sessions
 
     - ~/.cache
     - ~/.cache/zsh

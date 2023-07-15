@@ -17,6 +17,7 @@ function _G.closeBuffer()
   local tab_pages = vim.fn.tabpagebuflist(tab_number)
   local tab_pages_len = vim.fn.len(tab_pages)
 
+  print(tab_pages, tab_pages_len, tab_number)
   -- close buffer window if last in tab
   return tab_pages_len > 1
 end

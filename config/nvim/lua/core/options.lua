@@ -91,42 +91,42 @@ opt.fillchars = 'fold:|,eob: '
 opt.foldenable = true
 
 if opt.encoding:get() == 'latin1' and fn.has('gui_running') then
-	opt.encoding = 'utf-8'
+  opt.encoding = 'utf-8'
 end
 
 if opt.listchars:get() == 'eol:$' then
-	opt.listchars = 'tab:> ,trail:-,extends:>,precedes:<,nbsp:+'
+  opt.listchars = 'tab:> ,trail:-,extends:>,precedes:<,nbsp:+'
 end
 
 if vim.v.version > 703 or vim.v.version == 703 and fn.has('patch541') then
-	-- Delete comment character when joining commented lines
-	opt.formatoptions:append('j')
+  -- Delete comment character when joining commented lines
+  opt.formatoptions:append('j')
 end
 
 function _G.foldtext()
-	return require('core.utils').fold_label_text()
+  return require('core.utils').fold_label_text()
 end
 
 autocmd('BufWinEnter', {
-	pattern = '*.snippets',
-	callback = function()
-		opt.foldmethod = 'marker'
-		opt.foldlevel = 0
-	end,
+  pattern = '*.snippets',
+  callback = function()
+    opt.foldmethod = 'marker'
+    opt.foldlevel = 0
+  end,
 })
 
 autocmd('BufNewFile, BufRead', {
-	pattern = '*.tsx,*.jsx',
-	callback = function()
-		opt.filetype = 'typescript.typescriptreact'
-	end,
+  pattern = '*.tsx,*.jsx',
+  callback = function()
+    opt.filetype = 'typescript.typescriptreact'
+  end,
 })
 
 autocmd('FocusGained,BufEnter', {
-	pattern = '*',
-	callback = function()
-		vim.api.nvim_command('checktime')
-	end,
+  pattern = '*',
+  callback = function()
+    vim.api.nvim_command('checktime')
+  end,
 })
 
 autocmd('BufWritePost ', {
@@ -154,36 +154,36 @@ autocmd('BufWritePost ', {
 -- Disable default plugins: {{{
 
 local default_plugins = {
-	'2html_plugin',
-	'getscript',
-	'getscriptPlugin',
-	'gzip',
-	'logipat',
-	'netrw',
-	'netrwPlugin',
-	'netrwSettings',
-	'netrwFileHandlers',
-	'matchit',
-	'tar',
-	'tarPlugin',
-	'rrhelper',
-	'spellfile_plugin',
-	'vimball',
-	'vimballPlugin',
-	'zip',
-	'zipPlugin',
-	'tutor',
-	'rplugin',
-	'syntax',
-	'synmenu',
-	'optwin',
-	'compiler',
-	'bugreport',
-	'ftplugin',
+  '2html_plugin',
+  'getscript',
+  'getscriptPlugin',
+  'gzip',
+  'logipat',
+  'netrw',
+  'netrwPlugin',
+  'netrwSettings',
+  'netrwFileHandlers',
+  'matchit',
+  'tar',
+  'tarPlugin',
+  'rrhelper',
+  'spellfile_plugin',
+  'vimball',
+  'vimballPlugin',
+  'zip',
+  'zipPlugin',
+  'tutor',
+  'rplugin',
+  'syntax',
+  'synmenu',
+  'optwin',
+  'compiler',
+  'bugreport',
+  'ftplugin',
 }
 
 for _, plugin in pairs(default_plugins) do
-	g['loaded_' .. plugin] = 1
+  g['loaded_' .. plugin] = 1
 end
 
 -- }}}

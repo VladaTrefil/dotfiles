@@ -1,6 +1,8 @@
 local colors = {
   none = 'NONE',
 
+  dark = '#0c0c18',
+
   dark0 = '#11111b',
   dark1 = '#181825',
   dark2 = '#1e1e2e',
@@ -23,12 +25,12 @@ local colors = {
   aqua = '#94e2d5',
   orange = '#fab387',
 
-  faded_red  = '#f2a3b9',
-  faded_green = '#b6dfb2',
+  faded_red    = '#f2a3b9',
+  faded_green  = '#b6dfb2',
   faded_yellow = '#efe4cb',
-  faded_blue = '#B6D2FB',
-  faded_purple  = '#dcd3f0',
-  faded_aqua = '#D6F9F8',
+  faded_blue   = '#B6D2FB',
+  faded_purple = '#dcd3f0',
+  faded_aqua   = '#D6F9F8',
   faded_orange = '#e8bca0',
 
   bright_red = '#Ea4769',

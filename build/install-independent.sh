@@ -12,7 +12,7 @@ if [ ! -f "$(which brew)" ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-if [ -s "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+if [ -s "$HOMEBREW_PREFIX/bin/brew" ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
   if [ -f "$(which brew)" ]; then
@@ -20,12 +20,6 @@ if [ -s "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
       echo 'Installing Nvim...,'
       brew install -q neovim
 
-      PLUG_DIR="$XDG_DATA_HOME/nvim/site/autoload/plug.vim"
-      if [ -f "$PLUG_DIR" ]; then
-        echo 'Installing Vim-plug...'
-        sh -c 'curl -fLo $PLUG_DIR --create-dirs \
-               https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-      fi
     fi
 
     if [ ! -f "$HOMEBREW_PREFIX/bin/lazygit" ]; then
@@ -42,7 +36,7 @@ if [ -s "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
     echo "brew isn't a command"
   fi
 else
-  echo "/home/linuxbrew/.linuxbrew/bin/brew not found"
+  echo "$HOMEBREW_PREFIX not found"
 fi
 
 # }}}
@@ -69,8 +63,9 @@ fi
 if [ -f "$ASDF_DIR/asdf.sh" ]; then
   printf "\n──  Ruby:\n"
 
-  if ! grep -qo "ruby" "$(asdf plugin list)"; then
+  if [[ "$(asdf plugin list)" != *ruby* ]]; then
     echo "─ adding asdf plugin"
+
     asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
   else
     echo "  asdf plugin"
@@ -80,8 +75,8 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
   installed_versions=$(asdf list ruby)
 
   for v in "${versions[@]}"; do
-    if ! grep -qo "$v" "$installed_versions"; then
-      printf "─ adding % \n", "$v"
+    if [[ "$installed_versions" != *$v* ]]; then
+      printf "─ adding %s \n", "$v"
 
       asdf install ruby "$v"
 
@@ -98,8 +93,8 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
   installed_gems="$(gem list --local)"
 
   for gem in "${gems[@]}"; do
-    if ! grep -qo "$gem" "$installed_gems"; then
-      printf "\n─ adding %gem", "$gem"
+    if [[ "$installed_gems" != *$gem* ]]; then
+      printf "\n─ adding %s", "$gem"
 
       if [ "$gem" == "rails" ]; then
         gem install rails:6.1.4
@@ -113,7 +108,7 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
 
   printf "\n──  Java:\n"
 
-  if ! grep -qo "java" "$(asdf plugin list)"; then
+  if [[ "$(asdf plugin list)" != *java* ]]; then
     echo "─ adding java plugin"
     asdf plugin-add java https://github.com/halcyon/asdf-java.git
   else
@@ -124,8 +119,8 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
   installed_versions=$(asdf list java)
 
   for v in "${versions[@]}"; do
-    if ! grep -qo "$v" "$installed_versions"; then
-      printf "─ adding %v \n", "$v"
+    if [[ "$installed_versions" != *$v* ]]; then
+      printf "─ adding %s \n", "$v"
       asdf install java "$v"
     else
       echo "  $v"
@@ -177,8 +172,7 @@ if [ -f "$(which python3)" ]; then
   installed_packages=$(pip list)
 
   for package in "${packages[@]}"; do
-    if ! grep -o "$package" "$installed_packages"
-    then
+    if [[ "$installed_packages" != *$package* ]]; then
       echo "─ adding $package"
       pip install "$package"
     else
@@ -266,7 +260,7 @@ if [ -f "$(which rustc)" ]; then
     packages=("stylua")
 
     for package in "${packages[@]}"; do
-      if ! grep -qo "$package" "$(cargo search --quiet --limit 1 "$package")"; then
+      if [[ "$(cargo search --quiet --limit 1 "$package")" != *$package* ]]; then
         echo "─ adding $package"
         pip install "$package"
       else

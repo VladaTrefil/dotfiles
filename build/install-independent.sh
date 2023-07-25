@@ -20,6 +20,8 @@ if [ -s "$HOMEBREW_PREFIX/bin/brew" ]; then
       echo 'Installing Nvim...,'
       brew install -q neovim
 
+      # use version in apt
+      brew uninstall --ignore-dependencies readline
     fi
 
     if [ ! -f "$HOMEBREW_PREFIX/bin/lazygit" ]; then
@@ -89,7 +91,7 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
 
   printf "\nGems:\n"
 
-  gems=("rails" "neovim" "solargraph" "prettier")
+  gems=("rails" "spring" "neovim" "solargraph" "prettier")
   installed_gems="$(gem list --local)"
 
   for gem in "${gems[@]}"; do

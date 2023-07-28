@@ -1,5 +1,9 @@
+#!/bin/sh
+
 setxkbmap -layout us,cz -variant ,qwerty
 setxkbmap -option 'grp_led:caps'
-setxkbmap -option 'grp:caps_toggle'
+# setxkbmap -option 'grp:caps_toggle
 
-xrdb "$HOME/.config/x11/xresources" & xrdbpid=$!
+xrdb "$HOME/.config/x11/xresources"
+
+export XINITRC_TEST="test"

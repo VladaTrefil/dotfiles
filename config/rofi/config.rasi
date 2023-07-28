@@ -5,7 +5,6 @@ configuration {
 	filter: "";
 	scroll-method: 0;
 	show-icons: true;
-	icon-theme: "Font Awesome 5 Pro";
 	normalize-match: true;
 	steal-focus: false;
   dpi: -1;
@@ -61,7 +60,6 @@ configuration {
 
 	/*---------- Misc setting ----------*/
 	terminal: "rofi-sensible-terminal";
-	font: "Iosevka 12";
 	sort: false;
 	threads: 0;
 	click-to-exit: true;

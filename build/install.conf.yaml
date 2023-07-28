@@ -86,6 +86,7 @@
     ~/.config/npm: config/npm
     ~/.config/bat: config/bat
     ~/.config/i3: config/i3
+    ~/.config/rofi: config/rofi
     ~/.config/lazygit: config/lazygit
     ~/.config/dunst: config/dunst
     ~/.config/pry: config/pry

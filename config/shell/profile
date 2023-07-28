@@ -42,6 +42,13 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
 
+export THEME_BACKGROUND="#11111b"
+export THEME_BACKGROUND_ALT="#181825"
+export THEME_FOREGROUND="#cdd6f4"
+export THEME_SELECTED="#69a1fb"
+export THEME_ACTIVE="#9aef94"
+export THEME_URGENT="#Ea4769"
+
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 

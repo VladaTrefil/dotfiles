@@ -327,6 +327,62 @@ fi
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+# Rofi: {{{
+
+printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
+echo "──  Rofi:"
+
+if [ ! -f "$(which rofi)" ]; then
+  cd ./tmp || exit
+
+  # use brew if fails
+  if [ ! -f "/usr/local/lib/libcheck.la" ]; then
+    git clone git@github.com:libcheck/check.git
+    git checkout 673dce1d61781c32b449bef0ee8711dc7e689170
+    git submodule update --init
+
+    mkdir ./check/build
+    cd ./check/build || exit
+
+    autoreconf --install
+    ../configure
+
+    make
+    sudo make install
+    sudo ldconfig
+  fi
+
+  git clone git@github.com:davatorium/rofi.git
+  git checkout 48ea818c699cd6d1424f4e98ec9236da4483f951
+  git submodule update --init
+
+  if [ -d "./rofi" ]; then
+    printf "\n─ installing rofi:\n"
+
+    mkdir ./rofi/build
+    cd ./rofi/build || exit
+
+    autoreconf -i
+    ../configure
+
+    make
+    sudo make install
+  else
+    echo "file not found"
+  fi
+
+  cd "$BASE_DIR" || exit
+else
+  echo "  installed"
+fi
+
+
+# }}}
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
 #https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 # curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 # sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl

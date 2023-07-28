@@ -14,7 +14,7 @@ APT_PACKAGES=(
   # Desktop enviroment
   "i3-gaps"
   "picom-tryone"
-  "rofi"
+  # "rofi" -- from source v1.7.4
   "feh"
   "dunst"
 
@@ -29,6 +29,8 @@ APT_PACKAGES=(
   "moreutils" # Useful shell functions https://joeyh.name/code/moreutils/
   "rename" # bulk rename files
   "speedtest-cli"
+  "mason"
+  "ninja"
 
   # Terminal code interpreters
   "python3-dev"
@@ -91,6 +93,23 @@ APT_PACKAGES=(
 
   # Anki cards
   "zstd"
+
+  # Rofi dependencies
+  "flex"
+  "libglib2.0-dev"
+  "libxcb-util0-dev"
+  "libxcb-ewmh-dev"
+  "libxcb-imdkit-dev"
+  "libxcb-xkb-dev"
+  "libxkbcommon-x11-dev"
+  "libxcb-icccm4-dev"
+  "libxcb-cursor-dev"
+  "libxcb-randr-dev"
+  "libxcb-randr0-dev"
+  "libxcb-xinerama0-dev"
+  "libstartup-notification0-dev"
+  "libcompat"
+  "texinfo"
 )
 
 if [ ! -f "`which brave-browser`" ]; then

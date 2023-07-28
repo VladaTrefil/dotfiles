@@ -1,9 +1,11 @@
 * {
     font: "Iosevka Nerd Font 10";
-    background:     #1E2127;
-    background-alt: #282B31;
-    foreground:     #FFFFFF;
-    selected:       #61AFEF;
-    active:         #98C379;
-    urgent:         #E06C75;
+	  icon-theme: "Font Awesome 5 Pro";
+
+    theme-background:     env(THEME_BACKGROUND, #1E2127);
+    theme-background1:    env(THEME_BACKGROUND_ALT, #282B31);
+    theme-foreground:     env(THEME_FOREGROUND, #FFFFFF);
+    theme-selected:       env(THEME_SELECTED, #61AFEF);
+    theme-active:         env(THEME_ACTIVE, #98C379);
+    theme-urgent:         env(THEME_URGENT, #E06C75);
 }

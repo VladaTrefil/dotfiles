@@ -23,8 +23,8 @@ window {
   padding: 0px;
   border: 0px solid;
   border-radius: 20px;
-  border-color: @selected;
-  background-color: @background;
+  border-color: @theme-selected;
+  background-color: @theme-background;
   cursor: "default";
 }
 
@@ -35,7 +35,7 @@ mainbox {
   padding: 0px;
   border: 0px solid;
   border-radius: 0px 0px 0px 0px;
-  border-color: @selected;
+  border-color: @theme-selected;
   background-color: transparent;
   children: [inputbar, listview];
 }
@@ -47,9 +47,9 @@ inputbar {
   padding: 0px;
   border: 0px solid;
   border-radius: 100%;
-  border-color: @selected;
-  background-color: @background-alt;
-  text-color: @foreground;
+  border-color: @theme-selected;
+  background-color: @theme-background1;
+  text-color: @theme-foreground;
   children: [prompt, textbox-prompt-colon, entry];
 }
 
@@ -57,8 +57,8 @@ prompt {
   enabled: true;
   padding: 15px;
   border-radius: 100%;
-  background-color: @selected;
-  text-color: @background;
+  background-color: @theme-selected;
+  text-color: @theme-background;
   width: 100px;
 }
 
@@ -97,17 +97,17 @@ listview {
   padding: 0px;
   border: 0px solid;
   border-radius: 0px;
-  border-color: @selected;
+  border-color: @theme-selected;
   background-color: transparent;
-  text-color: @foreground;
+  text-color: @theme-foreground;
   cursor: "default";
 }
 
 scrollbar {
   handle-width: 5px ;
-  handle-color: @selected;
+  handle-color: @theme-selected;
   border-radius: 0px;
-  background-color: @background-alt;
+  background-color: @theme-background1;
 }
 
 element {
@@ -117,21 +117,27 @@ element {
   padding: 0px;
   border: 0px solid;
   border-radius: 0px;
-  border-color: @selected;
+  border-color: @theme-selected;
   background-color: transparent;
-  text-color: @foreground;
+  text-color: @theme-foreground;
   orientation: horizontal;
   /*cursor: pointer;*/
 }
 
 element normal.normal {
-  background-color: transparent;
-  text-color: @foreground;
+  text-color: @theme-foreground;
+}
+
+element normal.active {
+  text-color: @theme-active;
 }
 
 element selected.normal {
-  border-radius: 100%;
-  text-color: @selected;
+  text-color: @theme-selected;
+}
+
+element selected.active {
+  text-color: @theme-selected;
 }
 
 element-icon {
@@ -154,14 +160,14 @@ error-message {
   padding: 20px;
   border: 2px solid;
   border-radius: 20px;
-  border-color: @selected;
-  background-color: @background;
-  text-color: @foreground;
+  border-color: @theme-selected;
+  background-color: @theme-background;
+  text-color: @theme-foreground;
 }
 
 textbox {
-  background-color: @background;
-  text-color: @foreground;
+  background-color: @theme-background;
+  text-color: @theme-foreground;
   vertical-align: 0.5;
   horizontal-align: 0.0;
   highlight: none;

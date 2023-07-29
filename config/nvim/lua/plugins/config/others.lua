@@ -113,10 +113,10 @@ M.ultisnips = function()
 end
 
 M.lazygit = function()
-  vim.keymap.set('n', '<Leader>gg', '<cmd>LazyGit<cr>')
+  load_mappings(require('core.mappings').lazygit)
 
   vim.g.lazygit_floating_window_winblend = 1
-  vim.g.lazygit_floating_window_use_plenary = 1
+  -- vim.g.lazygit_floating_window_use_plenary = 1
 end
 
 M.gitgutter = function()
@@ -134,6 +134,5 @@ M.blamer = function()
   local mappings = require('core.mappings').blamer
   load_mappings(mappings)
 end
-
 
 return M

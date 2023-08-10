@@ -161,6 +161,7 @@ return {
       require('plugins.config.others').blamer()
     end,
   },
+
   ['onsails/lspkind.nvim'] = {}, -- VSCode like pictograms for menus, powered by Nvim LSP
 
   ['airblade/vim-gitgutter'] = {
@@ -170,7 +171,7 @@ return {
   },
 
   ['rhysd/clever-f.vim'] = {},
-  ['easymotion/vim-easymotion'] = {},
+
   ['tomtom/tcomment_vim'] = {},
   ['lukas-reineke/indent-blankline.nvim'] = {},
 

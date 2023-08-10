@@ -10,11 +10,6 @@ M.general = {
     ['H'] = { '0', 'Move to begining of line' },
     ['L'] = { '$', 'Move to end of line' },
 
-    -- switch k-j and {-}
-    ['K'] = { '{', 'Move behind next block' },
-    ['J'] = { '}', 'Move in front of previous block' },
-    ['}'] = { 'K', 'Bring up help' },
-    ['{'] = { 'J', 'Join lines' },
   },
 
   i = {

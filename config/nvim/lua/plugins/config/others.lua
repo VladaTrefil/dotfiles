@@ -40,7 +40,6 @@ M.blankline = function()
       'TelescopeResults',
       'mason',
       'dashboard',
-      '',
     },
     buftype_exclude = { 'terminal' },
     show_trailing_blankline_indent = false,

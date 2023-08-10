@@ -3,7 +3,8 @@
 (defvar spacing "3")
 (defvar window_y "4%")
 
-(include "./bar/widgets/eww.yuck")
+(include "./bar/widgets/network.yuck")
+(include "./bar/widgets/workspaces.yuck")
 (include "./bar/widgets/control.yuck")
 (include "./bar/widgets/system.yuck")
 (include "./bar/widgets/bluetooth.yuck")

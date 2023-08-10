@@ -1,0 +1,4 @@
+(defpoll workspace :interval ".1s" "$XDG_CONFIG_HOME/eww/bar/scripts/workspace")
+
+(defwidget workspaces []
+  (literal :content workspace))

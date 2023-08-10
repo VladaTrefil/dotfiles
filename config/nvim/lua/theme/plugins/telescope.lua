@@ -1,26 +1,29 @@
 local colors = require('theme.colors')
 
+local prompt_background = colors.dark
+local results_background = colors.dark
+local preview_background = colors.dark1
+
 local config = {
-  TelescopeResultsTitle = { fg = colors.green },
-  TelescopePromptTitle = { fg = colors.blue },
-  TelescopePreviewTitle = { fg = colors.purple },
-  TelescopeResultsBorder = { fg = colors.light0 },
-  TelescopePromptBorder = { fg = colors.light0 },
-  TelescopePreviewBorder = { fg = colors.light0 },
+  TelescopePromptTitle = { fg = prompt_background, bg = colors.blue },
+  TelescopePromptBorder = { fg = prompt_background, bg = prompt_background },
+  TelescopePromptNormal = { fg = colors.light0, bg = prompt_background },
+  TelescopePromptCounter = { fg = colors.light4 },
+  TelescopePromptPrefix = { fg = colors.blue },
+
   TelescopeSelectionCaret = { fg = colors.red },
-  TelescopeMatching = { fg = colors.yellow },
-  TelescopeSelection = { bg = colors.grey },
+  TelescopeMatching = { fg = colors.dark, bg = colors.aqua },
+  TelescopeSelection = { fg = colors.aqua, bg = colors.dark1 },
   TelescopeMultiSelection = { fg = colors.blue },
   TelescopeMultiIcon = { fg = colors.blue },
-  TelescopeNormal = { fg = colors.light0, bg = colors.dark0 },
-  TelescopePreviewNormal = { fg = colors.light0, bg = colors.dark0 },
-  TelescopePromptNormal = { fg = colors.light0, bg = colors.dark0 },
-  TelescopeResultsNormal = { fg = colors.light0, bg = colors.dark0 },
-  TelescopeBorder = { fg = colors.light0 },
+  TelescopeNormal = { fg = colors.light0, bg = preview_background },
+  TelescopeBorder = { fg = colors.dark0 },
   TelescopeTitle = { fg = colors.light0 },
-  TelescopePromptCounter = { fg = colors.grey },
-  TelescopePromptPrefix = { fg = colors.blue },
-  TelescopePreviewLine = { bg = colors.grey },
+
+  TelescopePreviewNormal = { fg = colors.light0, bg = preview_background },
+  TelescopePreviewTitle = { fg = colors.dark1, bg = preview_background },
+  TelescopePreviewBorder = { fg = preview_background, bg = preview_background },
+  TelescopePreviewLine = { fg = colors.light0, bg = colors.gray },
   TelescopePreviewMatch = { fg = colors.yellow },
   TelescopePreviewPipe = { fg = colors.yellow },
   TelescopePreviewCharDev = { fg = colors.yellow },
@@ -39,6 +42,10 @@ local config = {
   TelescopePreviewDate = { fg = colors.blue },
   TelescopePreviewMessage = { fg = colors.light0 },
   TelescopePreviewMessageFillchar = { fg = colors.light0 },
+
+  TelescopeResultsTitle = { fg = results_background },
+  TelescopeResultsBorder = { fg = results_background, bg = results_background },
+  TelescopeResultsNormal = { fg = colors.light0, bg = results_background },
   TelescopeResultsClass = { fg = colors.yellow },
   TelescopeResultsConstant = { fg = colors.yellow },
   TelescopeResultsField = { fg = colors.red },

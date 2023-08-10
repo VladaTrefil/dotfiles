@@ -1,0 +1,43 @@
+(deflisten lang "$XDG_CONFIG_HOME/eww/bar/scripts/langs current")
+(deflisten lang_data "$XDG_CONFIG_HOME/eww/bar/scripts/langs data")
+
+(defwidget language_widget []
+  (box :class "module language language--${lang.css_class}"
+       :space-evenly "false"
+       :orientation "h"
+       :spacing spacing
+    (button :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop language"
+      (image :path "${lang.flag_src}"
+             :class "language__image"
+             :image-width 24
+             :image-height 24))))
+
+(defwindow language_menu
+  :geometry (geometry :x "-170px"
+                      :y "4%"
+                      :anchor "top right"
+                      :width "280px")
+  (box :class "language-menu"
+       :orientation "v"
+    (box :class "language-menu__inner"
+         :orientation "v"
+      (for lang in lang_data
+        (language_menu_item :lang lang)))))
+
+(defwidget language_menu_item [lang]
+  (box :class "language-menu__item"
+       :orientation "v"
+       :space-evenly "false"
+    (button :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/langs choose ${lang.name_ibus}"
+            :class "language-menu__button"
+      (box :class "language-menu__button-inner"
+           :orientation "h"
+           :space-evenly "false"
+        (image :path "${lang.flag_src}"
+               :class "language-menu__flag-img"
+               :image-width 24
+               :image-height 24)
+        (label :class "language-menu__label"
+               :text "${lang.name}"
+               :valign "center"
+               :halign "start" )))))

@@ -8,6 +8,7 @@
 (include "./bar/widgets/system.yuck")
 (include "./bar/widgets/bluetooth.yuck")
 (include "./bar/widgets/audio.yuck")
+(include "./bar/widgets/lang.yuck")
 (include "./bar/widgets/time.yuck")
 
 (defwidget left []
@@ -31,6 +32,8 @@
     (network)
     (sep)
     (system_widget)
+    (sep)
+    (language_widget)
     (sep)
     (clock)))
 

@@ -139,6 +139,27 @@
   }
 }
 
+.language {
+  margin-right: $m*3;
+  margin-left: $m*3;
+  padding: 6px 13px 8px;
+  background-color: $bg1;
+  border-radius: 5px;
+  border: 2px solid $bg1;
+
+  &--jap {
+    border: 2px solid $red;
+  }
+
+  &--cze {
+    border: 2px solid $blue;
+  }
+
+  &__label {
+    margin-left: $m*3;
+  }
+}
+
 .clock {  
   margin-left: $m*3;
   margin-right: $m*3;

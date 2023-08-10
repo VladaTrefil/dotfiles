@@ -1,0 +1,26 @@
+[
+    {
+        "name": "English (US)",
+        "name_method": "US",
+        "name_ibus": "xkb:us::eng",
+        "name_abbr": "ENG",
+        "flag_src": "assets/langs/us.svg",
+        "css_class": "eng"
+    },
+    {
+        "name": "にほんご",
+        "name_method": "Japanese (Mozc)",
+        "name_ibus": "mozc-jp",
+        "name_abbr": "JAP",
+        "flag_src": "assets/langs/jp.svg",
+        "css_class": "jap"
+    },
+    {
+        "name": "Čeština",
+        "name_method": "Czech (QUERTY)",
+        "name_ibus": "xkb:cz:qwerty:cze",
+        "name_abbr": "CZE",
+        "flag_src": "assets/langs/cz.svg",
+        "css_class": "cze"
+    }
+]

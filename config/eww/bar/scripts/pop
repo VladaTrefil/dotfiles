@@ -3,7 +3,7 @@
 EWW_BIN="$HOME/.local/bin/usr/eww"
 
 hide_windows() {
-  ${EWW_BIN} close system calendar system audio bluetooth_menu
+  ${EWW_BIN} close system calendar system audio bluetooth_menu language_menu
 }
 
 calendar() {
@@ -79,6 +79,25 @@ bluetooth() {
   fi
 }
 
+language() {
+  declare -gx LOCK_FILE_LANGUAGE="$HOME/.cache/eww-language.lock"
+
+  run() {
+    ${EWW_BIN} open language_menu 
+  }
+
+  # Open widgets
+  if [[ ! -f "$LOCK_FILE_LANGUAGE" ]]; then
+    hide_windows
+    touch "$LOCK_FILE_LANGUAGE"
+    run && echo "ok good!"
+  else
+    ${EWW_BIN} close language_menu
+    rm "$LOCK_FILE_LANGUAGE" && echo "closed"
+    unset LOCK_FILE_LANGUAGE
+  fi
+}
+
 if [ "$1" = "calendar" ]; then
   calendar
 elif [ "$1" = "system" ]; then
@@ -87,4 +106,6 @@ elif [ "$1" = "audio" ]; then
   audio
 elif [ "$1" = "bluetooth" ]; then
   bluetooth
+elif [ "$1" = "language" ]; then
+  language
 fi

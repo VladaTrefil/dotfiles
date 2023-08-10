@@ -172,5 +172,33 @@
   }
 }
 
+.language-menu {
+  font-size: $font-size-lg;
+  background: $background;
+  color: $fg;
+  box-shadow: $box-shadow-window;
+  border-radius: 5px;
 
+  &__item {
+    border-bottom: 4px solid $border-color;
 
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__flag-img {
+    margin-right: $m*5;
+  }
+
+  &__button {
+    padding: $m*4 $m*5 $m*4.1;
+    font-size: $font-size-lg;
+    color: $fg;
+    transition: .3s;
+
+    &:hover {
+      background: desaturate(darken($blue-dark, 5%), 4%);
+    }
+  }
+}

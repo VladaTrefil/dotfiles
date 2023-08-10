@@ -1,0 +1,30 @@
+#!/bin/bash
+
+json_file="$XDG_CONFIG_HOME/eww/bar/widgets/langs.json"
+
+function parse_json() {
+  lang_key=$(ibus engine)
+  lang_data=$(jq -rc ".[] | select(.name_ibus == \"$lang_key\")" "$json_file")
+
+  echo "$lang_data"
+}
+
+if [ "$1" == "current" ]; then
+  dbus_command="dbus-monitor"
+
+  parse_json
+
+  while IFS= read -r output_line; do
+    if [[ "$output_line" =~ [^[:alnum:]]/desktop/ibus/general/engines-order[^[:alnum:]] ]]; then
+      parse_json
+    fi
+  done < <(eval "$dbus_command")
+elif [ "$1" == "data" ]; then
+  jq -rc "." "$XDG_CONFIG_HOME/eww/bar/widgets/langs.json"
+elif [ "$1" == "choose" ]; then
+  if [ -n "$2" ]; then
+    ibus engine $2
+  fi
+else
+  echo "nothing"
+fi

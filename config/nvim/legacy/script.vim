@@ -1,10 +1,5 @@
-au FocusGained,BufEnter * :checktime
-
-" source vimrc when saving any file in nvim config directory
-autocmd! BufWritePost $HOME/config/nvim/* source $MYVIMRC
-
-autocmd BufWinLeave .vimrc mkview
-autocmd BufWinEnter .vimrc silent loadview 
+" autocmd BufWinLeave .vimrc mkview
+" autocmd BufWinEnter .vimrc silent loadview 
 
 function FolioCell(path)
   let l:dir_name = substitute(getcwd(), '^.*/', '', '')

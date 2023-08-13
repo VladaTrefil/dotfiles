@@ -122,10 +122,13 @@ autocmd('BufNewFile, BufRead', {
   end,
 })
 
-autocmd('FocusGained,BufEnter', {
+autocmd('FocusGained,BufEnter,BufWritePost', {
+  desc = 'Refresh buffer',
   pattern = '*',
   callback = function()
-    vim.api.nvim_command('checktime')
+    if not opt.buftype:get() then
+      vim.api.nvim_command('checktime')
+    end
   end,
 })
 

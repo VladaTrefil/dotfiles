@@ -7,7 +7,7 @@ vim.o.termguicolors = true
 
 local base = { "base", "highlight_groups" }
 local plugins = { 'telescope', 'lualine', 'easymotion', 'cmp', 'gitgutter', 'indentline', 'bufferline' }
-local syntax = { 'base', 'lua', 'vim', 'javascript', 'java', 'json', 'ruby', 'xml', 'css', 'html', 'markdown' }
+local syntax = { 'base', 'lua', 'vim', 'javascript', 'java', 'json', 'ruby', 'xml', 'css', 'html', 'markdown', 'rasi' }
 
 local highlights = {}
 

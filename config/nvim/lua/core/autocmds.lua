@@ -44,6 +44,13 @@ autocmd('BufRead,BufNewFile', {
   end,
 })
 
+-- Syntax
+autocmd('BufRead,BufNewFile', {
+  desc = 'Init rasi syntax',
+  pattern = '*.rasi',
+  callback = require('syntax.rasi'),
+})
+
 -- local function match_redundant_spaces()
 --   vim.fn.matchadd('RedundantSpaces', '\\s\\+$')
 -- end

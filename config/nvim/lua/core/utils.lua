@@ -66,4 +66,14 @@ M.reindent = function()
   M.notify('file formatted')
 end
 
+-- Creates a directory if it doesn't exist
+M.mkdir = function()
+	local dir = fn.expand("<afile>:p:h")
+
+	-- Create that directory (and its parents) if it doesn't exist yet
+	if not fn.isdirectory(dir) then
+		fn.mkdir(dir, "p")
+  end
+end
+
 return M

@@ -44,6 +44,14 @@ autocmd('BufRead,BufNewFile', {
   end,
 })
 
+autocmd('BufWritePre,FileWritePre', {
+  desc = 'Auto mkdir for missing directory',
+  pattern = '*',
+  callback = function()
+    utils.mkdir()
+  end,
+})
+
 -- Syntax
 autocmd('BufRead,BufNewFile', {
   desc = 'Init rasi syntax',

@@ -6,6 +6,10 @@
 ;;;;
 
 
+tmp="${XDG_RUNTIME_DIR}/npm"
+cache="${XDG_CACHE_HOME}/npm"
+init-module="${XDG_CONFIG_HOME}/npm/config/npm-init.js"
+
 ;;;;
 ; all options with default values
 ;;;;
@@ -21,7 +25,6 @@
 ; browser=null
 ; ca=null
 ; cafile=undefined
-cache="${XDG_CACHE_HOME}/npm"
 ; cache-lock-stale=60000
 ; cache-lock-retries=10
 ; cache-lock-wait=10000
@@ -55,7 +58,6 @@ cache="${XDG_CACHE_HOME}/npm"
 ; if-present=false
 ; ignore-prepublish=false
 ; ignore-scripts=false
-init-module=${XDG_CONFIG_HOME}/npm/config/npm-init.js
 ; init-author-name=
 ; init-author-email=
 ; init-author-url=
@@ -121,7 +123,6 @@ init-module=${XDG_CONFIG_HOME}/npm/config/npm-init.js
 ; tag=latest
 ; tag-version-prefix=v
 ; timing=false
-tmp="${XDG_RUNTIME_DIR}/npm"
 ; unicode=true
 ; unsafe-perm=true
 ; update-notifier=true

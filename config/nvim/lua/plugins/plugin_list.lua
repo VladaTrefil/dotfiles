@@ -7,17 +7,11 @@ return {
 
   ['BurntSushi/ripgrep'] = {},
 
-  ['nvim-treesitter/nvim-treesitter'] = {},
+  -- ['nvim-treesitter/nvim-treesitter'] = {},
 
   ['kyazdani42/nvim-web-devicons'] = {
     config = function()
       require('plugins.config.others').devicons()
-    end,
-  },
-
-  ['tiagovla/scope.nvim'] = {
-    config = function()
-      require('plugins.config.others').scope()
     end,
   },
 

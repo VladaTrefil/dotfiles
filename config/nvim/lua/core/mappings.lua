@@ -45,13 +45,7 @@ M.general = {
     ['<Leader>tc'] = { '<cmd> tabclose <CR>', 'Close Tab' },
 
     -- Buffers
-    ['<Leader>q'] = {
-      function()
-        require('core.utils').close_buffer()
-      end,
-      'Close buffer or window',
-      -- opts = { expr = true },
-    },
+    ['<Leader>q'] = { '<cmd> q <CR>', 'Close buffer or window', opts = { silent = true } },
     ['<Leader>Q'] = { '<cmd> qa! <CR>', 'Close NVIM', opts = { silent = true } },
     ['<Leader>bj'] = { '<cmd> bprevious <CR>', 'Previous buffer', opts = { silent = true } },
     ['<Leader>bk'] = { '<cmd> bnext <CR>', 'Next buffer', opts = { silent = true } },
@@ -94,7 +88,9 @@ M.general = {
     },
   },
 
-  t = { ['<C-x>'] = { termcodes('<C-\\><C-N>'), 'escape terminal mode' } },
+  t = {
+    ['<C-x>'] = { termcodes('<C-\\><C-N>'), 'escape terminal mode' }
+  },
 
   v = {
     ['>'] = { '>gv', 'Improve indent in visual' },
@@ -121,57 +117,104 @@ M.general = {
   },
 }
 
-M.telescope = {
-  n = {
-    -- find
-    ['<leader>pp'] = { '<cmd> Telescope find_files <CR>', 'find files' },
-    -- ['<leader>pp'] = { '<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>', 'find all' },
-    ['<leader>pw'] = { '<cmd> Telescope live_grep <CR>', 'live grep' },
-    ['<leader>pb'] = { '<cmd> Telescope buffers <CR>', 'find buffers' },
-    ['<leader>ph'] = { '<cmd> Telescope help_tags <CR>', 'help page' },
-    ['<leader>po'] = { '<cmd> Telescope oldfiles <CR>', 'find oldfiles' },
-    ['<leader>pk'] = { '<cmd> Telescope keymaps <CR>', 'show keys' },
-
-    -- -- git
-    ['<leader>pm'] = { '<cmd> Telescope git_commits <CR>', 'git commits' },
-    ['<leader>pt'] = { '<cmd> Telescope git_status <CR>', 'git status' },
-  },
-}
-
 M.blamer = {
   n = {
     ['<Leader>gb'] = { '<cmd> BlamerToggle <CR>', 'Toggle git blamer' },
   },
 }
 
-M.telescope_api = function(actions)
+M.lazygit = {
+  n = {
+    ['<Leader>gg'] = { '<cmd>LazyGit<cr>', 'Open Lazygit' },
+  },
+}
+
+M.ultisnips = {
+  n = {
+    ['<Leader>us'] = { '<cmd> UltiSnipsEdit <cr>', 'Edit ultisnippets' },
+  },
+}
+
+M.telescope = function(actions)
+  -- Switch to window with buffer if exists or do default select action
+  local function select_buffer(prompt_bufnr)
+    local action_state = require("telescope.actions.state")
+
+    local entry = action_state.get_selected_entry()
+    local winid = vim.fn.win_findbuf(entry.bufnr)[1]
+
+    if winid then
+      vim.fn.win_gotoid(winid)
+    else
+      actions.select_default(prompt_bufnr)
+    end
+  end
+
   return {
-    n = {
-      ['q'] = actions.close,
-      ["<C-k>"] = "move_selection_previous",
-      ["<C-j>"] = "move_selection_next",
-      ["<C-s>"] = "select_horizontal",
+    base = {
+      n = {
+        -- find
+        -- ['<leader>pp'] = { '<cmd> Telescope find_files <CR>', 'find files' },
+        ['<leader>pp'] = { '<cmd> Telescope find_files follow=true hidden=true <CR>', 'find all' },
+        ['<leader>pw'] = { '<cmd> Telescope live_grep <CR>', 'live grep' },
+        ['<leader>pb'] = { '<cmd> Telescope buffers <CR>', 'find buffers' },
+        ['<leader>ph'] = { '<cmd> Telescope help_tags <CR>', 'help page' },
+        ['<leader>po'] = { '<cmd> Telescope oldfiles <CR>', 'find oldfiles' },
+        ['<leader>pk'] = { '<cmd> Telescope keymaps <CR>', 'show keys' },
+
+        -- -- git
+        ['<leader>pm'] = { '<cmd> Telescope git_commits <CR>', 'git commits' },
+        ['<leader>pt'] = { '<cmd> Telescope git_status <CR>', 'git status' },
+      },
     },
-    i = {
-      ["<C-k>"] = "move_selection_previous",
-      ["<C-j>"] = "move_selection_next",
-      ["<C-s>"] = "select_horizontal",
-      ["<C-p>"] = false,
-      ["<C-n>"] = false,
+    window = {
+      n = {
+        ['q']       = actions.close,
+        ["<C-k>"]   = actions.move_selection_previous,
+        ["<C-j>"]   = actions.move_selection_next,
+        ["<C-s>"]   = actions.file_split,
+      },
+      i = {
+        ["<C-k>"]   = actions.move_selection_previous,
+        ["<C-j>"]   = actions.move_selection_next,
+        ["<C-s>"]   = actions.file_split,
+        ["<C-p>"]   = false,
+        ["<C-n>"]   = false,
+      },
+    },
+    pickers = {
+      buffers = {
+        n = {
+          ['<enter>'] = select_buffer,
+          ['d'] = actions.delete_buffer,
+        },
+        i = {
+          ['<enter>'] = select_buffer,
+        }
+      },
+      help_tags = {
+        n = {
+          ['<C-v>'] = actions.file_vsplit,
+          ['<C-s>'] = actions.file_split,
+        },
+        i = {
+          ['<C-v>'] = actions.file_vsplit,
+          ['<C-s>'] = actions.file_split,
+        }
+      }
     },
   }
 end
 
 M.cmp_api = function(cmp)
   return {
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-k>'] = cmp.mapping.select_prev_item(),
-    ['<C-j>'] = cmp.mapping.select_next_item(),
+    ['<C-b>']     = cmp.mapping.scroll_docs(-4),
+    ['<C-f>']     = cmp.mapping.scroll_docs(4),
+    ['<C-k>']     = cmp.mapping.select_prev_item(),
+    ['<C-j>']     = cmp.mapping.select_next_item(),
     ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-e>']     = cmp.mapping.abort(),
+    ['<Tab>']     = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   }
 end
 

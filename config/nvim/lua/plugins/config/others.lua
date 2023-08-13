@@ -109,13 +109,16 @@ end
 
 M.ultisnips = function()
   vim.g.UltiSnipsSnippetDirectories = { vim.fn.stdpath('config') .. '/ultisnips' }
+  vim.g.UltiSnipsEditSplit = 'vertical'
+
+  load_mappings(require('core.mappings').ultisnips)
 end
 
 M.lazygit = function()
-  load_mappings(require('core.mappings').lazygit)
-
   vim.g.lazygit_floating_window_winblend = 1
   -- vim.g.lazygit_floating_window_use_plenary = 1
+
+  load_mappings(require('core.mappings').lazygit)
 end
 
 M.gitgutter = function()

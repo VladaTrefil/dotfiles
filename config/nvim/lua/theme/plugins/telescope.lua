@@ -11,7 +11,7 @@ local config = {
   TelescopePromptCounter = { fg = colors.light4 },
   TelescopePromptPrefix = { fg = colors.blue },
 
-  TelescopeSelectionCaret = { fg = colors.red },
+  TelescopeSelectionCaret = { fg = colors.bright_aqua },
   TelescopeMatching = { fg = colors.dark, bg = colors.aqua },
   TelescopeSelection = { fg = colors.aqua, bg = colors.dark1 },
   TelescopeMultiSelection = { fg = colors.blue },

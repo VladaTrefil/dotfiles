@@ -25,3 +25,7 @@ end
 function _G.isCursorInsideNewBlock()
   return utils.is_cursor_inside_new_block()
 end
+
+function _G.foldtext()
+  return utils.fold_label_text()
+end

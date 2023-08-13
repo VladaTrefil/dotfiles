@@ -1,6 +1,3 @@
-" autocmd BufWinLeave .vimrc mkview
-" autocmd BufWinEnter .vimrc silent loadview 
-
 function FolioCell(path)
   let l:dir_name = substitute(getcwd(), '^.*/', '', '')
   let l:cell_name = substitute(a:path, '^.*/', '', '')

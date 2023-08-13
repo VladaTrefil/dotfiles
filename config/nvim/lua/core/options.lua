@@ -1,7 +1,6 @@
 local fn = vim.fn
 local opt = vim.opt
 local g = vim.g
-local autocmd = vim.api.nvim_create_autocmd
 
 g.mapleader = ' '
 
@@ -102,56 +101,6 @@ if vim.v.version > 703 or vim.v.version == 703 and fn.has('patch541') then
   -- Delete comment character when joining commented lines
   opt.formatoptions:append('j')
 end
-
-function _G.foldtext()
-  return require('core.utils').fold_label_text()
-end
-
-autocmd('BufWinEnter', {
-  pattern = '*.snippets',
-  callback = function()
-    opt.foldmethod = 'marker'
-    opt.foldlevel = 0
-  end,
-})
-
-autocmd('BufNewFile, BufRead', {
-  pattern = '*.tsx,*.jsx',
-  callback = function()
-    opt.filetype = 'typescript.typescriptreact'
-  end,
-})
-
-autocmd('FocusGained,BufEnter,BufWritePost', {
-  desc = 'Refresh buffer',
-  pattern = '*',
-  callback = function()
-    if not opt.buftype:get() then
-      vim.api.nvim_command('checktime')
-    end
-  end,
-})
-
-autocmd('BufWritePost ', {
-	pattern = '$HOME/config/nvim/*',
-	callback = function()
-		vim.fn.source(vim.env.MYVIMRC)
-	end,
-})
-
--- autocmd('BufWinLeave ', {
---   pattern = '.vimrc',
---   callback = function()
---     vim.fn.mkview
---   end,
--- })
---
--- autocmd('BufWinEnter ', {
---   pattern = '.vimrc',
---   callback = function()
---     mkview
---   end,
--- })
 
 -------------------------------------------------------------------------------------------------------
 -- Disable default plugins: {{{

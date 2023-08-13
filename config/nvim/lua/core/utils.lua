@@ -3,8 +3,6 @@ local M = {}
 local fn = vim.fn
 local merge_tb = vim.tbl_deep_extend
 
-local session_dir = "~/.local/state/nvim/sessions"
-
 M.load_mappings = function(mapping_table, mapping_opt)
   for mode, mode_values in pairs(mapping_table) do
     if mode == 1 then
@@ -43,10 +41,6 @@ M.is_cursor_inside_new_block = function()
   return chars:find('[{}-><-%[%]]') ~= nil
 end
 
-M.buffer_is_empty = function()
-  return fn.line('$') == 1 and fn.getline(1) == ''
-end
-
 M.is_available = function(plugin)
   return packer_plugins ~= nil and packer_plugins[plugin] ~= nil
 end
@@ -57,33 +51,17 @@ M.trigger_event = function(event)
   end)
 end
 
-M.close_buffer = function()
-  local tab_number = vim.fn.tabpagenr()
-  local tab_pages = vim.fn.tabpagebuflist(tab_number)
-  local tab_pages_len = vim.fn.len(tab_pages)
-
-  vim.cmd('bd')
-
-  if tab_pages_len <= 1 then
-    vim.cmd('q')
-  end
+M.notify = function(message)
+  print(message)
 end
 
-M.save_session = function()
-  local last_session = vim.v.this_session
-  print(last_session)
-  -- local session_path = last_session
+M.expand_xml_tags = function()
+  vim.cmd([[%s/></>\r</ge]])
+end
 
-  local filepath = string.gsub(vim.fn.getcwd(), '^/', '')
-  local session_name = string.gsub(filepath, '/', '-')
-
-  local session_path = string.format("%s/%s.vim", session_dir, session_name)
-
-  if session_dir then
-    vim.api.nvim_command('mksession!', session_path)
-  else
-    print('No session path')
-  end
+M.reindent = function()
+  vim.fn.feedkeys('gg=G')
+  M.notify('file formatted')
 end
 
 return M

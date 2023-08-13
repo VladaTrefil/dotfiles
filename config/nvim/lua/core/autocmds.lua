@@ -1,0 +1,55 @@
+local autocmd = vim.api.nvim_create_autocmd
+local opt = vim.opt
+
+local utils = require('core.utils')
+
+autocmd('BufWinEnter', {
+  pattern = '*.snippets',
+  callback = function()
+    opt.foldmethod = 'marker'
+    opt.foldlevel = 0
+  end,
+})
+
+autocmd('BufNewFile, BufRead', {
+  pattern = '*.tsx,*.jsx',
+  callback = function()
+    opt.filetype = 'typescript.typescriptreact'
+  end,
+})
+
+autocmd('FocusGained,BufEnter,BufWritePost', {
+  desc = 'Refresh buffer',
+  pattern = '*',
+  callback = function()
+    if not opt.buftype:get() then
+      vim.api.nvim_command('checktime')
+    end
+  end,
+})
+
+autocmd('BufWritePost ', {
+	pattern = '$HOME/config/nvim/*',
+	callback = function()
+		vim.fn.source(vim.env.MYVIMRC)
+	end,
+})
+
+autocmd('BufRead,BufNewFile', {
+  desc = 'Auto format xml buffer',
+  pattern = '*.xml',
+  callback = function()
+    utils.expand_xml_tags()
+    utils.reindent()
+  end,
+})
+
+-- local function match_redundant_spaces()
+--   vim.fn.matchadd('RedundantSpaces', '\\s\\+$')
+-- end
+--
+-- vim.api.nvim_create_autocmd('BufWinEnter,InsertEnter,InsertLeave', {
+--   desc = 'Match redundant spaces',
+--   pattern = '*/*',
+--   callback = match_redundant_spaces
+-- })

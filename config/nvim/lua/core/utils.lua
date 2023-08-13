@@ -55,10 +55,12 @@ M.notify = function(message)
   print(message)
 end
 
+-- Expands xml tags to next lines
 M.expand_xml_tags = function()
   vim.cmd([[%s/></>\r</ge]])
 end
 
+-- Reindents entire file
 M.reindent = function()
   vim.fn.feedkeys('gg=G')
   M.notify('file formatted')

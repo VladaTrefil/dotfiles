@@ -49,6 +49,7 @@ export THEME_SELECTED="#69a1fb"
 export THEME_ACTIVE="#9aef94"
 export THEME_URGENT="#Ea4769"
 
+export W3M_DIR="$XDG_STATE_HOME/w3m"
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 

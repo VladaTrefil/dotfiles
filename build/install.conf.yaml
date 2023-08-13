@@ -35,6 +35,7 @@
     - ~/.config/oh-my-zsh/custom/
     - ~/.config/oh-my-zsh/custom/plugins
     - ~/.config/oh-my-zsh/custom/themes
+    - ~/.config/guard
 
     - ~/.local/bin
     - ~/.local/lib
@@ -42,6 +43,7 @@
     - ~/.local/share/bundle
     - ~/.local/share/node
     - ~/.local/share/gem
+    - ~/.local/share/guard
     - ~/.local/state
     - ~/.local/state/zsh
     - ~/.local/state/less

@@ -5,21 +5,23 @@ if vim.fn.exists "syntax_on" then vim.cmd("syntax reset") end
 vim.o.background = "dark"
 vim.o.termguicolors = true
 
-local base = { "base", "highlight_groups" }
-local plugins = { 'telescope', 'lualine', 'easymotion', 'cmp', 'gitgutter', 'indentline', 'bufferline' }
-local syntax = { 'base', 'lua', 'vim', 'javascript', 'java', 'json', 'ruby', 'xml', 'css', 'html', 'markdown', 'rasi' }
+local highlight_groups = {
+  base = { "base", "highlight_groups" },
+  plugins = { 'telescope', 'lualine', 'easymotion', 'cmp', 'gitgutter', 'indentline', 'bufferline' },
+  syntax = { 'base', 'lua', 'vim', 'javascript', 'java', 'json', 'ruby', 'xml', 'css', 'html', 'markdown', 'rasi' },
+}
 
 local highlights = {}
 
-for _, module in ipairs(base) do
+for _, module in ipairs(highlight_groups.base) do
   highlights = vim.tbl_deep_extend("force", highlights, require("theme." .. module))
 end
 
-for _, module in ipairs(plugins) do
+for _, module in ipairs(highlight_groups.plugins) do
   highlights = vim.tbl_deep_extend("force", highlights, require("theme.plugins." .. module))
 end
 
-for _, module in ipairs(syntax) do
+for _, module in ipairs(highlight_groups.syntax) do
   highlights = vim.tbl_deep_extend("force", highlights, require("theme.syntax." .. module))
 end
 

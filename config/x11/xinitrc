@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck disable=SC1091
 
 setxkbmap -layout us,cz -variant ,qwerty
 setxkbmap -option 'grp_led:caps'
@@ -6,4 +7,4 @@ setxkbmap -option 'grp_led:caps'
 
 xrdb "$HOME/.config/x11/xresources"
 
-export XINITRC_TEST="test"
+source "$HOME/.config/x11/xprofile"

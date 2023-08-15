@@ -39,6 +39,9 @@ exec --no-startup-id dex --autostart --environment i3
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 # exec --no-startup-id nm-applet
 
+# Launch ibus
+exec --no-startup-id ibus-daemon -d
+
 # Plasma compatibility improvements
 exec_always --no-startup-id feh --bg-scale -g 1920x1080 ~/.background/mountains.jpg -g 3840x1440 ~/.background/mountains2.jpg 
 

@@ -71,7 +71,7 @@ M.mkdir = function()
 	local dir = fn.expand("<afile>:p:h")
 
 	-- Create that directory (and its parents) if it doesn't exist yet
-	if not fn.isdirectory(dir) then
+	if fn.isdirectory(dir) == 0 then
 		fn.mkdir(dir, "p")
   end
 end

@@ -39,7 +39,7 @@ end
 endsnippet
 
 snippet forp "pair for loop" b
-for ${1:name},${2:val} in pairs(${3:table_name}) do
+fkjd wsfor ${1:name},${2:val} in pairs(${3:table_name}) do
 	$0
 end
 endsnippet
@@ -127,3 +127,6 @@ snippet req "Require" b
 require('$1')
 endsnippet
 
+snippet insp "Inspect" w
+vim.inspect($1)
+endsnippet

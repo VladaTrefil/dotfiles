@@ -75,8 +75,19 @@ local setup_nvim_lspconfig = function()
   end
 end
 
+local setup_trouble = function()
+	local trouble_ok, trouble = pcall(require, 'trouble')
+
+	if not trouble_ok then
+		return
+	end
+
+  trouble.setup()
+end
+
 setup_null_ls()
 setup_mason()
 setup_mason_null_ls()
 setup_mason_lspconfig()
 setup_nvim_lspconfig()
+setup_trouble()

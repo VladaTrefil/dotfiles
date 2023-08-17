@@ -124,6 +124,13 @@ return {
     end,
   },
 
+  ['folke/trouble.nvim'] = {
+    as = 'trouble',
+    dependencies = {
+      'neovim/nvim-lspconfig',
+    },
+  },
+
   -- LSP symbols
   -- ['stevearc/aerial.nvim'] = {
   -- 	module = 'aerial',

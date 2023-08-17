@@ -71,7 +71,10 @@ alias rt='PARALLEL_WORKERS=3 r test'
 # Rails
 alias rgc="r g folio:cell"
 alias rgm="r g migration"
-alias guard="bundle exec guard"
+
+alias bug="bundle exec guard"
+alias bui="bundle install"
+alias buu="bundle update "
 
 # Python
 alias python='python3'

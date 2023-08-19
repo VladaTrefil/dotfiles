@@ -16,6 +16,17 @@ M.is_line_blank = function()
   return fn.match(line, '^\\s*$') == 0
 end
 
+M.register_ends_in_NL = function()
+  local register = fn.getreg(vim.v.register)
+  return fn.match(register, '\n$') > -1
+end
+
+-- true/false if copy register contains block of text
+M.register_contains_block = function()
+  local register_type = fn.getregtype(register_name)
+  return register_type == 'V' and M.register_ends_in_NL()
+end
+
 -- makes string safe for nvim commands
 M.termcodes = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -64,7 +75,7 @@ M.paste_width_indent = function(reverse)
   local after_cmd = ''
 
   -- Register has linewise text
-  if fn.getregtype(register_name) == 'V' then
+  if M.register_contains_block() then
     if reverse then
       before_cmd = 'O'
     else

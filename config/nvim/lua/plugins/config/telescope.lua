@@ -12,7 +12,14 @@ local mappings = require('core.mappings').telescope(actions)
 
 local load_mappings = require('core.utils').load_mappings
 
-FILE_IGNORE_PATTERNS = { 'node_modules', '%.ttf', '%.woff%', '%.eot%', '.git/' }
+FILE_IGNORE_PATTERNS = {
+  'node_modules',
+  '%.ttf',
+  '%.eof',
+  '%.woff',
+  '%.woff2',
+  '.git/'
+}
 
 local vimgrep_arguments = {
   'rg',
@@ -101,7 +108,6 @@ end
 
 M.fzf_config = function()
   telescope.load_extension('fzf')
-  telescope.load_extension('scope')
 end
 
 return M

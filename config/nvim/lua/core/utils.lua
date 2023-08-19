@@ -16,6 +16,11 @@ M.is_line_blank = function()
   return fn.match(line, '^\\s*$') == 0
 end
 
+-- makes string safe for nvim commands
+M.termcodes = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
 M.load_mappings = function(mapping_table, mapping_opt)
   for mode, mode_values in pairs(mapping_table) do
     if mode == 1 then
@@ -23,7 +28,6 @@ M.load_mappings = function(mapping_table, mapping_opt)
     end
 
     for keybind, mapping_info in pairs(mode_values) do
-      -- print(mode)
       local opts = merge_tb('force', mapping_opt or {}, mapping_info.opts or {})
       local cmd = mapping_info[1]
 

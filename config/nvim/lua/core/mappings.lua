@@ -1,7 +1,3 @@
-local function termcodes(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
 local M = {}
 
 local utils = require('core.utils')
@@ -50,7 +46,7 @@ M.general = {
     ['<Leader>tc'] = { '<cmd> tabclose <CR>', 'Close Tab' },
 
     -- Buffers
-    ['<Leader>q'] = { '<cmd> q <CR>', 'Close buffer or window', opts = { silent = true } },
+    ['<Leader>q'] = { '<cmd> q <CR>', 'Close window', opts = { silent = true } },
     ['<Leader>Q'] = { '<cmd> qa! <CR>', 'Close NVIM', opts = { silent = true } },
     ['<Leader>bj'] = { '<cmd> bprevious <CR>', 'Previous buffer', opts = { silent = true } },
     ['<Leader>bk'] = { '<cmd> bnext <CR>', 'Next buffer', opts = { silent = true } },
@@ -86,15 +82,14 @@ M.general = {
 
     ['<Leader>ss'] = {
       function()
-        require('core.utils').save_session()
+        utils.save_session()
       end,
       'Save session',
-      -- opts = { silent = true, expr = true },
     },
   },
 
   t = {
-    ['<C-x>'] = { termcodes('<C-\\><C-N>'), 'escape terminal mode' }
+    ['<C-x>'] = { utils.termcodes('<C-\\><C-N>'), 'escape terminal mode' }
   },
 
   v = {
@@ -109,16 +104,12 @@ M.general = {
     ['{'] = { 'c{}<ESC>P', 'enclose with {}' },
     ['['] = { 'c[]<ESC>P', 'enclose with []' },
 
-    -- ['<Up>'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', opts = { expr = true } },
-    -- ['<Down>'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', opts = { expr = true } },
   },
 
   x = {
-    -- ['j'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', opts = { expr = true } },
-    -- ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', opts = { expr = true } },
     -- Don't copy the replaced text after pasting in visual mode
     -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
-    ['p'] = { 'p:let @+=@0<CR>:let @"=@0<CR>', opts = { silent = true } },
+    -- ['p'] = { 'p:let @+=@0<CR>:let @"=@0<CR>', opts = { silent = true } },
   },
 }
 

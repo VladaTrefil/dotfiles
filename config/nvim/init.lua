@@ -10,11 +10,11 @@ require('core.options')
 
 require('core.global_cmds')
 
-require('core.autocmds')
-
 vim.cmd('source $XDG_CONFIG_HOME/nvim/legacy/script.vim')
 
 require('plugins')
 
 local base_mappings = require('core.mappings').general
 require('core.utils').load_mappings(base_mappings)
+
+require('core.autocmds')

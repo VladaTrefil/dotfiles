@@ -28,7 +28,7 @@ autocmd('FocusGained,BufEnter,BufWritePost', {
   end,
 })
 
-autocmd('BufWritePost ', {
+autocmd('BufWritePost', {
 	pattern = '$HOME/config/nvim/*',
 	callback = function()
 		vim.fn.source(vim.env.MYVIMRC)

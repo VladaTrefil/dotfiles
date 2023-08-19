@@ -4,6 +4,8 @@ end
 
 local M = {}
 
+local utils = require('core.utils')
+
 M.general = {
   {
     -- Movement
@@ -31,6 +33,9 @@ M.general = {
   },
 
   n = {
+    ['p'] = { function() utils.paste_width_indent() end, 'Paste with indent' },
+    ['P'] = { function() utils.paste_width_indent(true) end, 'Paste Before with indent' },
+
     ['<ESC>'] = { '<cmd> noh <CR>', 'no highlight' },
     ['<Space>'] = { '<NOP>', 'no highlight' },
     ['<BS>'] = { '<C-o>', 'Backspace goes back' },

@@ -2,6 +2,19 @@ local M = {}
 
 local fn = vim.fn
 local merge_tb = vim.tbl_deep_extend
+local register_name = vim.v.register
+
+-- Counts number of lines in copy register
+M.line_count_in_register = function ()
+  local register = fn.getreg(vim.v.register, nil, true)
+  return vim.tbl_count(register)
+end
+
+-- true/false if line under the cursor is blank
+M.is_line_blank = function()
+  local line = fn.getline('.')
+  return fn.match(line, '^\\s*$') == 0
+end
 
 M.load_mappings = function(mapping_table, mapping_opt)
   for mode, mode_values in pairs(mapping_table) do
@@ -39,6 +52,38 @@ M.is_cursor_inside_new_block = function()
   local chars = string.sub(line, col - 2, col + 1)
 
   return chars:find('[{}-><-%[%]]') ~= nil
+end
+
+M.paste_width_indent = function(reverse)
+  local base = '<c-r><c-p>+<esc>'
+  local before_cmd = ''
+  local after_cmd = ''
+
+  -- Register has linewise text
+  if fn.getregtype(register_name) == 'V' then
+    if reverse then
+      before_cmd = 'O'
+    else
+      before_cmd = 'o'
+    end
+
+    local line_count = M.line_count_in_register()
+    after_cmd = '"xdd' .. line_count .. 'k'
+  -- Register has blockwise or charwise text
+  else
+    if M.is_line_blank() then
+      before_cmd = '"xS'
+    else
+      if reverse then
+        before_cmd = 'i'
+      else
+        before_cmd = 'a'
+      end
+    end
+  end
+
+  local keys = M.termcodes(before_cmd .. base .. after_cmd)
+  vim.api.nvim_feedkeys(keys, 'n', false)
 end
 
 M.is_available = function(plugin)

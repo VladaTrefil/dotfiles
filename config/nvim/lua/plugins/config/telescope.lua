@@ -104,6 +104,16 @@ M.core_config = function()
   })
 
   load_mappings(mappings.base)
+
+  -- Prevent telescope from opening files in insert mode
+  -- See: https://github.com/nvim-telescope/telescope.nvim/issues/2027
+  vim.api.nvim_create_autocmd('WinLeave', {
+    callback = function()
+      if vim.bo.ft == 'TelescopePrompt' and vim.fn.mode() == 'i' then
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'i', false)
+      end
+    end,
+  })
 end
 
 M.fzf_config = function()

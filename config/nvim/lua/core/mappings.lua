@@ -79,13 +79,6 @@ M.general = {
 
     ["<Leader>'"] = { "e<ESC>a'<ESC>bi'<ESC>lel", "enclose with '' " },
     ['<Leader>"'] = { 'e<ESC>a"<ESC>bi"<ESC>lel', 'enclose with "" ' },
-
-    ['<Leader>ss'] = {
-      function()
-        utils.save_session()
-      end,
-      'Save session',
-    },
   },
 
   t = {

@@ -15,6 +15,12 @@ return {
     end,
   },
 
+  ['Shatur/neovim-session-manager'] = {
+    config = function()
+      require('plugins.config.session_manager')
+    end,
+  },
+
   ['goolord/alpha-nvim'] = {
     commit = '89eaa18a472be680539dee5977e2255f4dbd0738',
     config = function()

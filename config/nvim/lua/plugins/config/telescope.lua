@@ -18,7 +18,7 @@ FILE_IGNORE_PATTERNS = {
   '%.eof',
   '%.woff',
   '%.woff2',
-  '.git/'
+  '.git/',
 }
 
 local vimgrep_arguments = {
@@ -100,7 +100,7 @@ M.core_config = function()
   telescope.setup({
     defaults = defaults,
     pickers = pickers,
-    extensions = extensions
+    extensions = extensions,
   })
 
   load_mappings(mappings.base)

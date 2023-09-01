@@ -15,7 +15,7 @@
 
 export EDITOR="nvim"
 export TERMINAL="konsole"
-export BROWSER="brave"
+export BROWSER="brave-browser"
 
 export DEV_PATH="$HOME/Development"
 export DOTFILES_PATH="$HOME/Development/dotfiles"

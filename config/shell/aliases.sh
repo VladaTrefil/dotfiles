@@ -4,8 +4,14 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
+alias cdd="cd $DEV_PATH"
+alias cd.="cd $DOTFILES_PATH"
+
+# cd to git root directory
+alias cdgr='cd "$(git root)"'
+
 alias l="ls -l"
-alias la="ls -la --group-directories-first"
+alias la="ls -la --group-directories-first --color=always"
 
 # Aliases to protect against overwriting
 alias cp='cp -i'
@@ -31,23 +37,21 @@ alias gpuo="git pull origin"
 
 alias lgit="lazygit"
 
-alias cdd="cd $DEV_PATH"
-alias cd.="cd $DOTFILES_PATH"
-
 # Xclip
 alias clip='xclip -sel clip <'
 
 # Custom scripts
 alias clear-branches="sh $BIN_PATH/usr/clear-git-branches.sh"
 alias kill-server="sh $BIN_PATH/usr/kill-rails-server.sh"
-alias sinfin-init="sh $BIN_PATH/usr/init-sinfin-project.sh"
+alias sinfin-init="bash $BIN_PATH/usr/init-sinfin-project.sh"
 alias folio-test-account="bundle exec rails runner \"eval(File.read '$BIN_PATH/usr/folio-test-account.rb')\""
 
 # Youtube-DL download music
 alias ydl="yt-dlp -x --audio-format \"mp3\" -o '%(title)s.%(ext)s' --embed-thumbnail"
 
 # NVIM
-alias vim="nvim"
+alias vim="$EDITOR"
+alias history="$EDITOR $XDG_STATE_HOME/zsh/history"
 
 # Docker
 alias dockrai='docker system prune -a' # remove all images
@@ -80,14 +84,18 @@ alias buu="bundle update "
 alias python='python3'
 alias python2='python3'
 
+# Brave
+alias brave-browser='brave-browser-stable'
+
 # Exercism
 alias exes='exercism submit'
 
+# Exercism
+alias qmkm='qmk compile -c -km manna-harbour_miryoku -e MIRYOKU_ALPHAS=QWERTY'
+alias wally='~/Downloads/installers/wally'
+
 # Etcher
 alias etcher="sudo $IMAGES_PATH/balenaEtcher.AppImage"
-
-# cd to git root directory
-alias cdgr='cd "$(git root)"'
 
 # Create a directory and cd into it
 mkcd() {

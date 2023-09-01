@@ -7,7 +7,6 @@ M.general = {
     -- Movement
     ['H'] = { '0', 'Move to begining of line' },
     ['L'] = { '$', 'Move to end of line' },
-
   },
 
   i = {
@@ -29,8 +28,18 @@ M.general = {
   },
 
   n = {
-    ['p'] = { function() utils.paste_width_indent() end, 'Paste with indent' },
-    ['P'] = { function() utils.paste_width_indent(true) end, 'Paste Before with indent' },
+    ['p'] = {
+      function()
+        utils.paste_width_indent()
+      end,
+      'Paste with indent',
+    },
+    ['P'] = {
+      function()
+        utils.paste_width_indent(true)
+      end,
+      'Paste Before with indent',
+    },
 
     ['<ESC>'] = { '<cmd> noh <CR>', 'no highlight' },
     ['<Space>'] = { '<NOP>', 'no highlight' },
@@ -53,7 +62,11 @@ M.general = {
 
     -- Splits
     ['<Leader>ov'] = { '<cmd> vsp %:h<Tab> <CR>', 'Open current fold in vertical window', opts = { silent = true } },
-    ['<Leader>oh'] = { '<cmd> sp %:h<Tab> <CR>', 'Open current fold in horizontal window', opts = { silent = true } },
+    ['<Leader>oh'] = {
+      '<cmd> sp %:h<Tab> <CR>',
+      'Open current fold in horizontal window',
+      opts = { silent = true },
+    },
 
     ['<C-h>'] = { '<C-w>h', 'window left' },
     ['<C-l>'] = { '<C-w>l', 'window right' },
@@ -82,7 +95,7 @@ M.general = {
   },
 
   t = {
-    ['<C-x>'] = { utils.termcodes('<C-\\><C-N>'), 'escape terminal mode' }
+    ['<C-x>'] = { utils.termcodes('<C-\\><C-N>'), 'escape terminal mode' },
   },
 
   v = {
@@ -96,7 +109,6 @@ M.general = {
     ['('] = { 'c()<ESC>P', 'enclose with ()' },
     ['{'] = { 'c{}<ESC>P', 'enclose with {}' },
     ['['] = { 'c[]<ESC>P', 'enclose with []' },
-
   },
 
   x = {

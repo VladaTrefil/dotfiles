@@ -1,28 +1,59 @@
-#!/bin/sh
+#!/bin/bash
 
-project=${PWD##*/}
-db_directory="$HOME/Documents/databases"
+database_dir="$HOME/Documents/databases"
+
+if [ -f .env ]; then
+  project=$(grep -oP '(?<=PROJECT_NAME=){1}\S*$' .env)
+fi
+
+if [ -z "$project" ]; then
+  project=${PWD##*/}
+fi
+
+env_vars="DB_NAME=${project}_development\n
+          TEST_DB_NAME=${project}_test\n
+          DB_USER=vladislavtrefil\n
+          DB_PASSWORD=1234\n"
+
+function setup_env() {
+  if [ ! -e .env ]; then
+    touch .env
+
+    echo "$env_vars" >> .env
+
+    grep -Ev "^(DB_NAME|DB_USER|DB_PASSWORD|TEST_DB_NAME)" .env.sample >> .env
+  fi
+}
+
+function add_psql_extensions() {
+  extensions=$(sed -n 's/enable_extension "\([a-zA-Z_]*\)"/\1/p' db/schema.rb)
+
+  IFS=$'\n'
+  for e in $extensions; do
+    sudo -u postgres psql -c "CREATE EXTENSION ${e};" "${project}_development"
+  done
+}
+
+function insert_psql_database_data() {
+  db_data_file_path=$( find "$database_dir" -type f -name "$project*.sql.gz" )
+
+  gunzip -ck "$db_data_file_path" > ./db-dump.sql
+  psql "${project}_development" < ./db-dump.sql
+
+  bin/rails db:migrate
+
+  rm ./db-dump.sql
+}
 
 git pull --rebase
 bundle install
 
-if [ ! -e .env ]; then
-  touch .env
-  echo "DB_NAME=${project}_development\nDB_USER=vladislavtrefil\nDB_PASSWORD=1234\n" >> .env
-  cat .env.sample | grep -Ev "^(DB_NAME|DB_USER|DB_PASSWORD)" >> .env
-fi
+setup_env
 
-gunzip -ck "${db_directory}/$( ls $db_directory | grep ${project} | tail -n1 )" > ./db-dump.sql
+dropdb "${project}_development"
+createdb "${project}_development"
 
-dropdb ${project}_development
-createdb ${project}_development
-
-sudo -u postgres psql -c 'CREATE EXTENSION unaccent;' ${project}_development
-
-psql ${project}_development < ./db-dump.sql
-
-rm ./db-dump.sql
-
-bin/rails db:migrate
+add_psql_extensions
+insert_psql_database_data
 
 bundle exec rails runner "eval(File.read '$BIN_PATH/usr/folio-test-account.rb')"

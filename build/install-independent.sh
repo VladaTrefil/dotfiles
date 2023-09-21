@@ -382,6 +382,29 @@ fi
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+# QMK: {{{
+
+printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
+echo "──  QMK:"
+
+if [ ! -f "$XDG_LIB_HOME/qmk" ]; then
+  echo "Installing QMK"
+
+  #Install
+  python3 -m pip install --user qmk
+
+  if [ -f "$XDG_LIB_HOME/qmk" ]; then
+    qmk setup -y -H "$XDG_DATA_HOME/qmk"
+    qmk config user.keyboard=ergodox_ez/glow
+  fi
+else
+  echo "  installed"
+fi
+
+
+# }}}
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
 
 #https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 # curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"

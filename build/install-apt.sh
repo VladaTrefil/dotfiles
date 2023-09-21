@@ -111,6 +111,19 @@ APT_PACKAGES=(
   "libcompat"
   "texinfo"
 
+  # QMK dependencies
+  "gcc"
+  "unzip"
+  "wget"
+  "zip"
+  "gcc-avr"
+  "binutils-avr"
+  "avr-libc"
+  "dfu-programmer"
+  "dfu-util"
+  "gcc-arm-none-eabi"
+  "binutils-arm-none-eabi"
+  "libnewlib-arm-none-eabi"
 
   # Docker
   "ca-certificates"

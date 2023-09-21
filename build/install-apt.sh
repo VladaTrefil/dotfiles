@@ -110,12 +110,36 @@ APT_PACKAGES=(
   "libstartup-notification0-dev"
   "libcompat"
   "texinfo"
+
+
+  # Docker
+  "ca-certificates"
+  "curl"
+  "gnupg"
+  "gnome-terminal"
+  "docker-ce"
+  "docker-ce-cli"
+  "containerd.io"
+  "docker-buildx-plugin"
+  "docker-compose-plugin"
 )
 
 if [ ! -f "`which brave-browser`" ]; then
   sudo apt install apt-transport-https curl
   sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
   echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+fi
+
+if [ ! -f /etc/apt/sources.list.d/docker.list ]; then
+  echo "Adding docker repository..."
+  # for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
+  sudo install -m 0755 -d /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+  echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+        "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+        sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 fi
 
 if [ ! -f "`which i3`" ]; then
@@ -150,6 +174,12 @@ if [ ! -f "`which lens`" ]; then
   echo 'Install Lens'
   wget -O tmp_install/lens.deb https://lens-binaries.s3-eu-west-1.amazonaws.com/ide/Lens-5.3.4-latest.20220120.1.amd64.deb
   sudo dpkg -i "tmp_install/lens.deb"
+fi
+
+if [ -z "$(sudo apt list docker-desktop 2>/dev/null | grep -o installed)" ]; then
+  echo 'Installing Docker Desktop'
+  wget -O ./tmp_install/docker-desktop.deb https://raw.githubusercontent.com/google/mozc/master/docker/ubuntu22.04/Dockerfile
+  sudo dpkg -i ./tmp_install/docker-desktop.deb
 fi
 
 sudo apt install -f

@@ -36,6 +36,7 @@
     - ~/.config/oh-my-zsh/custom/plugins
     - ~/.config/oh-my-zsh/custom/themes
     - ~/.config/guard
+    - ~/.config/docker
 
     - ~/.local/bin
     - ~/.local/lib

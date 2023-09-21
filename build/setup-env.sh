@@ -35,6 +35,11 @@ fc-cache -f
 # Reload Sysctl config
 sudo sysctl -p
 
+# Disable gnome keyboard layout switcher window
+if [ -f "$(which ibus)" ]; then
+  gsettings set org.freedesktop.ibus.general switcher-delay-time '-1'
+fi
+
 # Cleanup
 [[ -s "$HOME/.zshrc" ]] && rm "$HOME/.zsh*"
 [[ -s "$HOME/.bashrc" ]] && rm "$HOME/.bash*"

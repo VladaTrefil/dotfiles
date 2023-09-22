@@ -19,10 +19,13 @@ sessions_mngr.setup({
   autoload_mode = require('session_manager.config').AutoloadMode.Disabled,
   autosave_last_session = true,
   autosave_ignore_not_normal = true,
-  autosave_ignore_dirs = {},
+  autosave_ignore_dirs = {
+    vim.env.XDG_STATE_HOME,
+  },
   autosave_ignore_filetypes = {
     'gitcommit',
     'gitrebase',
+    '', -- later change to not save blank if its the only buffer
   },
   autosave_ignore_buftypes = {},
   autosave_only_in_session = false,

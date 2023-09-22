@@ -11,7 +11,7 @@ NC='\033[0m' # No Color
 APT_PACKAGES=(
   "build-essential"
 
-  # Desktop enviroment
+  # Desktop environment
   "i3-gaps"
   "picom-tryone"
   # "rofi" -- from source v1.7.4
@@ -30,7 +30,6 @@ APT_PACKAGES=(
   "rename" # bulk rename files
   "speedtest-cli"
   "mason"
-  "ninja"
 
   # Terminal code interpreters
   "python3-dev"
@@ -79,7 +78,6 @@ APT_PACKAGES=(
   "libgdk-pixbuf2.0-dev"
   "libpangocairo-1.0-0"
   "libglib2.0-dev"
-  "glibc"
 
   # Apps
   "konsole"
@@ -104,11 +102,9 @@ APT_PACKAGES=(
   "libxkbcommon-x11-dev"
   "libxcb-icccm4-dev"
   "libxcb-cursor-dev"
-  "libxcb-randr-dev"
   "libxcb-randr0-dev"
   "libxcb-xinerama0-dev"
   "libstartup-notification0-dev"
-  "libcompat"
   "texinfo"
 
   # QMK dependencies
@@ -184,7 +180,7 @@ mkdir tmp_install
 
 # Install lens
 if [ ! -f "`which lens`" ]; then
-  echo 'Install Lens'
+  echo 'Installing Lens'
   wget -O tmp_install/lens.deb https://lens-binaries.s3-eu-west-1.amazonaws.com/ide/Lens-5.3.4-latest.20220120.1.amd64.deb
   sudo dpkg -i "tmp_install/lens.deb"
 fi
@@ -196,4 +192,5 @@ if [ -z "$(sudo apt list docker-desktop 2>/dev/null | grep -o installed)" ]; the
 fi
 
 sudo apt install -f
+
 rm -rf tmp_install

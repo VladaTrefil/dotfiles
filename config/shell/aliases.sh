@@ -97,6 +97,8 @@ alias wally='~/Downloads/installers/wally'
 # Etcher
 alias etcher="sudo $IMAGES_PATH/balenaEtcher.AppImage"
 
+alias codespell="$XDG_DATA_HOME/nvim/mason/bin/codespell --config $XDG_CONFIG_HOME/codespell/codespellrc"
+
 # Create a directory and cd into it
 mkcd() {
   mkdir "${1}" && cd "${1}"

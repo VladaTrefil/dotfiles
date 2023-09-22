@@ -101,6 +101,8 @@
 
     ~/.config/asdf: config/asdf
 
+    ~/.config/codespell: config/codespell
+
     # KDE Plasma
     ~/.config/konsolerc:
       force: true

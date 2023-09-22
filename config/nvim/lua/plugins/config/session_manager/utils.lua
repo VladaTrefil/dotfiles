@@ -30,9 +30,13 @@ M.restore_session = function(session_name)
   if session_name then
     sm_utils.load_session(session_name)
 
-    utils.notify(string.format('Session restored [%s]', session_name), vim.log.levels.INFO)
+    utils.notify('Restored default session', vim.log.levels.INFO, { title = 'Session manager' })
   else
-    utils.notify('No session for this directory', vim.log.levels.WARN)
+    utils.notify(
+      'No session for this directory',
+      vim.log.levels.WARN,
+      { title = 'Session manager', timeout = 2000 }
+    )
   end
 end
 

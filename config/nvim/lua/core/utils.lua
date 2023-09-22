@@ -111,8 +111,26 @@ M.trigger_event = function(event)
   end)
 end
 
-M.notify = function(message)
-  print(message)
+M.notify = function(msg, log, opts)
+  if pcall(require, 'notify') then
+    local default_opts = {
+      title = 'log',
+      timeout = 1000,
+      animate = false,
+    }
+
+    local async = require('plenary.async')
+
+    opts = merge_tb('force', default_opts, opts or {})
+    log = log or vim.log.levels.INFO
+
+    async.run(function()
+      print(vim.inspect(msg))
+      vim.notify.async(msg, log, opts)
+    end, function() end)
+  else
+    vim.api.nvim_notify(msg, log, {})
+  end
 end
 
 -- Expands xml tags to next lines

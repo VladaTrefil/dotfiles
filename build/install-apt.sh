@@ -85,6 +85,7 @@ APT_PACKAGES=(
   "inkscape"
   "ffmpeg"
   "brave-browser"
+  "thunderbird"
 
   # NVIM
   "pip" # pip install pynvim

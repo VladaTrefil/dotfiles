@@ -91,12 +91,16 @@ return {
 
   -- Formatting and linting
   ['jose-elias-alvarez/null-ls.nvim'] = {
-    as = 'null-ls'
+    as = 'null-ls',
   },
 
   -- Package Manager
   ['williamboman/mason.nvim'] = {
-    as = 'mason'
+    as = 'mason',
+    dependencies = {
+      'williamboman/mason-lspconfig.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+    },
   },
 
   ['williamboman/mason-lspconfig.nvim'] = {

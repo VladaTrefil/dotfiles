@@ -43,6 +43,8 @@ opt.mouse = 'a'
 --Disable safe write for webpack compilation
 opt.backupcopy = 'yes'
 
+opt.smartindent = true
+
 -- Offopt.from end of window to start scrolling
 opt.scrolloff = 10
 

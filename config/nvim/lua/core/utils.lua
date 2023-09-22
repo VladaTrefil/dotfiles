@@ -5,7 +5,7 @@ local merge_tb = vim.tbl_deep_extend
 local register_name = vim.v.register
 
 -- Counts number of lines in copy register
-M.line_count_in_register = function ()
+M.line_count_in_register = function()
   local register = fn.getreg(vim.v.register, nil, true)
   return vim.tbl_count(register)
 end
@@ -84,7 +84,7 @@ M.paste_width_indent = function(reverse)
 
     local line_count = M.line_count_in_register()
     after_cmd = '"xdd' .. line_count .. 'k'
-  -- Register has blockwise or charwise text
+    -- Register has blockwise or charwise text
   else
     if M.is_line_blank() then
       before_cmd = '"xS'
@@ -123,16 +123,15 @@ end
 -- Reindents entire file
 M.reindent = function()
   vim.fn.feedkeys('gg=G')
-  M.notify('file formatted')
 end
 
 -- Creates a directory if it doesn't exist
 M.mkdir = function()
-	local dir = fn.expand("<afile>:p:h")
+  local dir = fn.expand('<afile>:p:h')
 
-	-- Create that directory (and its parents) if it doesn't exist yet
-	if fn.isdirectory(dir) == 0 then
-		fn.mkdir(dir, "p")
+  -- Create that directory (and its parents) if it doesn't exist yet
+  if fn.isdirectory(dir) == 0 then
+    fn.mkdir(dir, 'p')
   end
 end
 

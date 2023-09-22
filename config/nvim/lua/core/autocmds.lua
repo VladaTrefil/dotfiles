@@ -29,10 +29,10 @@ autocmd('FocusGained,BufEnter,BufWritePost', {
 })
 
 autocmd('BufWritePost', {
-	pattern = '$HOME/config/nvim/*',
-	callback = function()
-		vim.fn.source(vim.env.MYVIMRC)
-	end,
+  pattern = '$HOME/config/nvim/*',
+  callback = function()
+    vim.fn.source(vim.env.MYVIMRC)
+  end,
 })
 
 autocmd('BufRead,BufNewFile', {
@@ -41,6 +41,7 @@ autocmd('BufRead,BufNewFile', {
   callback = function()
     utils.expand_xml_tags()
     utils.reindent()
+    utils.notify('File formatted', vim.log.levels.INFO, { title = 'XML Autoindent' })
   end,
 })
 

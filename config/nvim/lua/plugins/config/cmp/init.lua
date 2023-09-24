@@ -4,10 +4,7 @@ if not present then
   return
 end
 
-local lspkind = require('lspkind')
-
-local ELLIPSIS_CHAR = '…'
-local MAX_LABEL_WIDTH = 25
+local cmp_utils = require('plugins.config.cmp.utils')
 
 local window = {
   documentation = {
@@ -19,9 +16,6 @@ local window = {
     winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None',
   },
 }
-
-local mappings_config = require('core.mappings').cmp_api(cmp)
-local mapping = cmp.mapping.preset.insert(mappings_config)
 
 local sorting = {
   comparators = {
@@ -35,28 +29,6 @@ local sorting = {
   },
 }
 
-local format = function(_, item)
-  local content = item.abbr
-
-  local abbr = (" "):rep(MAX_LABEL_WIDTH - #content)
-
-  if #content > MAX_LABEL_WIDTH then
-    item.abbr = vim.fn.strcharpart(content, 0, MAX_LABEL_WIDTH) .. ELLIPSIS_CHAR
-  else
-    item.abbr = content .. abbr
-  end
-
-  return item
-end
-
-local get_buffers = function()
-  local bufs = {}
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    bufs[vim.api.nvim_win_get_buf(win)] = true
-  end
-  return vim.tbl_keys(bufs)
-end
-
 local sources = {
   { name = 'nvim_lsp', priority = 9 },
   { name = 'ultisnips', priority = 9, max_num_results = 4 },
@@ -64,34 +36,37 @@ local sources = {
     name = 'buffer',
     priority = 8,
     option = {
-      get_bufnrs = get_buffers,
+      get_bufnrs = cmp_utils.get_buffers,
     },
-  }
+  },
 }
 
-local expandSnippet = function(args)
-  vim.fn['UltiSnips#Anon'](args.body)
-end
+local mappings_config = require('core.mappings').cmp_api(cmp)
 
 cmp.setup({
-  snippet = {
-    expand = expandSnippet,
-  },
   window = window,
-  mapping = mapping,
+  mapping = cmp.mapping.preset.insert(mappings_config),
   sources = sources,
   sorting = sorting,
   completion = {
-    completeopt = 'menu,menuone,noinsert',
+    completeopt = 'menu,menuone',
+  },
+  snippet = {
+    expand = cmp_utils.expand_snippet,
   },
   formatting = {
-    format = format
+    format = cmp_utils.format_selection_item,
   },
   experimental = {
     ghost_text = {},
   },
 })
 
-vim.cmd('autocmd! BufWritePost *.snippets CmpUltisnipsReloadSnippets')
+vim.api.nvim_create_autocmd('BufWritePost', {
+  pattern = '*.snippets',
+  callback = function()
+    vim.cmd('CmpUltisnipsReloadSnippets')
+  end,
+})
 
 vim.go.completeopt = 'menu,menuone,noselect'

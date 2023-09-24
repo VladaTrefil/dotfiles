@@ -196,6 +196,9 @@ if [ -z "$(sudo apt list docker-desktop 2>/dev/null | grep -o installed)" ]; the
   sudo dpkg -i ./tmp_install/docker-desktop.deb
 fi
 
+# Install packages language dependencies (Keyboard layout)
+sudo apt install $(check-language-support -l en)
+
 sudo apt install -f
 
 rm -rf tmp_install

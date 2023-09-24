@@ -24,10 +24,8 @@
 
 - create:
     - ~/.config/pg
-    - ~/.config/x11
     - ~/.config/yarn
     - ~/.config/gnupg
-    - ~/.config/npm
     - ~/.config/gtk-2.0
     - ~/.config/kde
     - ~/.config/cargo
@@ -44,8 +42,10 @@
     - ~/.local/share/fonts
     - ~/.local/share/bundle
     - ~/.local/share/node
-    - ~/.local/share/gem
+    # - ~/.local/share/gem doesn't work
     - ~/.local/share/guard
+    - ~/.local/share/pass
+
     - ~/.local/state
     - ~/.local/state/zsh
     - ~/.local/state/less
@@ -73,8 +73,7 @@
 
     ~/.config/shell: config/shell
 
-    ~/.config/x11/xinitrc: config/x11/xinitrc
-    ~/.config/x11/xresources: config/x11/xresources
+    ~/.config/x11: config/x11
 
     # Zsh
     ~/.config/zsh: config/zsh
@@ -100,6 +99,8 @@
     ~/.config/solargraph: config/solargraph
 
     ~/.config/asdf: config/asdf
+
+    ~/.config/wgetrc: config/wgetrc
 
     ~/.config/codespell: config/codespell
 

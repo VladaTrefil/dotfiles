@@ -3,10 +3,11 @@ local M = {}
 local utils = require('core.utils')
 
 M.general = {
-  n = {
-    ['H'] = { '0', 'Move to begining of line' },
+  {
+    ['H'] = { '0', 'Move to beginning of line' },
     ['L'] = { '$', 'Move to end of line' },
-
+  },
+  n = {
     ['<C-d>'] = { '<C-d>zz', 'Centered cursor while scrolling' },
     ['<C-u>'] = { '<C-u>zz', 'Centered cursor while scrolling' },
 

@@ -15,9 +15,8 @@ local FILETYPES = {
   'ruby',
   'python',
   'yaml',
-  'shell',
   'bash',
-  'sass',
+  'scss',
 }
 
 require('nvim-treesitter.configs').setup({

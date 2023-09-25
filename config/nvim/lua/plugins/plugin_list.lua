@@ -7,7 +7,12 @@ return {
 
   ['BurntSushi/ripgrep'] = {},
 
-  -- ['nvim-treesitter/nvim-treesitter'] = {},
+  ['nvim-treesitter/nvim-treesitter'] = {
+    run = 'TSUpdate',
+    config = function()
+      require('plugins.config.treesitter')
+    end,
+  },
 
   ['kyazdani42/nvim-web-devicons'] = {
     config = function()

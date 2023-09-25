@@ -81,18 +81,18 @@ M.general = {
       'open substitution with current word',
     },
 
+    ['<C-Down>'] = { ':resize -10<CR>', 'Resize up' },
+    ['<C-Up>'] = { ':resize +10<CR>', 'Resize down' },
+    ['<C-Right>'] = { ':vertical resize -10<CR>', 'Resize left' },
+    ['<C-Left>'] = { ':vertical resize +10<CR>', 'Resize right' },
+
     -- Remove ========================
     ['<Leader>c'] = {
       function()
-        vim.notify('search clear is mapped to ESC')
+        vim.notify('search clear is mapped to ESC', vim.log.levels.WARN)
       end,
       'Clear search highlight',
     },
-
-    ['<C-Up>'] = { ':resize -10<CR>', 'Resize up' },
-    ['<C-Down>'] = { ':resize +10<CR>', 'Resize down' },
-    ['<C-Left>'] = { ':vertical resize -10<CR>', 'Resize left' },
-    ['<C-Right>'] = { ':vertical resize +10<CR>', 'Resize right' },
   },
 
   i = {

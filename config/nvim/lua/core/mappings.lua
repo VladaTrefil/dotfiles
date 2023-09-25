@@ -33,6 +33,12 @@ M.general = {
 
     ['<Leader>V'] = { '<cmd> lua ReloadConfig() <CR>', 'Reload nvim config' },
 
+    ['<Leader>E'] = {
+      '<cmd> :execute "!dolphin " . shellescape(getcwd(),1) <CR>',
+      'Open current directory in explorer',
+      opts = { silent = true },
+    },
+
     ['<Leader>w'] = { '<cmd> w! <CR>', 'Save file' },
 
     ['<Leader>e'] = { '<cmd> e <CR>', 'Refresh file' },

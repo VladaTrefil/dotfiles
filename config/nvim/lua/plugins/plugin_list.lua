@@ -203,8 +203,6 @@ return {
 
   ['tpope/vim-eunuch'] = {}, -- " File commands in vim
 
-  ['psliwka/vim-smoothie'] = {}, -- " Smooth scroll
-
   ['drzel/vim-repo-edit'] = {}, -- " Quickly clone github repo to tmp
 
   ['jiangmiao/auto-pairs'] = {},

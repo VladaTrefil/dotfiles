@@ -88,6 +88,11 @@ M.general = {
       end,
       'Clear search highlight',
     },
+
+    ['<C-Up>'] = { ':resize -10<CR>', 'Resize up' },
+    ['<C-Down>'] = { ':resize +10<CR>', 'Resize down' },
+    ['<C-Left>'] = { ':vertical resize -10<CR>', 'Resize left' },
+    ['<C-Right>'] = { ':vertical resize +10<CR>', 'Resize right' },
   },
 
   i = {

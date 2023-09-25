@@ -9,7 +9,7 @@ opt.signcolumn = 'yes:2'
 -- Enable popup transparency
 opt.pumblend = 15
 
-opt.updatetime = '80'
+opt.updatetime = 80
 
 -- Display line numbers
 opt.number = true

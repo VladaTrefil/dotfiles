@@ -28,7 +28,7 @@ opt.inccommand = 'nosplit'
 opt.ignorecase = true
 opt.smartcase = true
 
-opt.directory = opt.directory ^ { '$HOME/.vim/tmp//' }
+opt.directory = opt.directory ^ { vim.fn.expand('$XDG_STATE_HOME/nvim/tmp/') }
 
 -- opt.clipboard to system clipboard
 opt.clipboard = 'unnamedplus'
@@ -36,7 +36,7 @@ opt.clipboard = 'unnamedplus'
 opt.swapfile = false
 opt.backup = false
 opt.undofile = true
-opt.undodir = vim.fn.expand('$XDG_STATE_HOME/nvim/undodir')
+opt.undodir = vim.fn.expand('$XDG_STATE_HOME/nvim/undodir/')
 
 -- Enable mouse control for resizing panes
 opt.mouse = 'a'

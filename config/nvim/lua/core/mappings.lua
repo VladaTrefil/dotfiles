@@ -3,31 +3,16 @@ local M = {}
 local utils = require('core.utils')
 
 M.general = {
-  {
-    -- Movement
+  n = {
     ['H'] = { '0', 'Move to begining of line' },
     ['L'] = { '$', 'Move to end of line' },
-  },
 
-  i = {
-    ['<CR>'] = {
-      'v:lua.isCursorInsideNewBlock() ? "<CR><esc>O" : "<CR>"',
-      '',
-      opts = { silent = true, expr = true },
-    },
+    ['<C-d>'] = { '<C-d>zz', 'Centered cursor while scrolling' },
+    ['<C-u>'] = { '<C-u>zz', 'Centered cursor while scrolling' },
 
-    -- go to  beginning and end
-    ['<C-b>'] = { '<ESC>^i', 'beginning of line' },
-    ['<C-e>'] = { '<End>', 'end of line' },
+    ['n'] = { 'nzzzv', 'Centered cursor while jumping to next search' },
+    ['N'] = { 'Nzzzv', 'Centered cursor while jumping to previous search' },
 
-    -- navigate within insert mode
-    ['<C-h>'] = { '<Left>', 'move left' },
-    ['<C-l>'] = { '<Right>', 'move right' },
-    ['<C-j>'] = { '<Down>', 'move down' },
-    ['<C-k>'] = { '<Up>', 'move up' },
-  },
-
-  n = {
     ['p'] = {
       function()
         utils.paste_width_indent()
@@ -44,6 +29,8 @@ M.general = {
     ['<ESC>'] = { '<cmd> noh <CR>', 'no highlight' },
     ['<Space>'] = { '<NOP>', 'no highlight' },
     ['<BS>'] = { '<C-o>', 'Backspace goes back' },
+
+    ['<Leader>V'] = { '<cmd> lua ReloadConfig() <CR>', 'Reload nvim config' },
 
     ['<Leader>w'] = { '<cmd> w! <CR>', 'Save file' },
 
@@ -73,16 +60,9 @@ M.general = {
     ['<C-j>'] = { '<C-w>j', 'window down' },
     ['<C-k>'] = { '<C-w>k', 'window up' },
 
-    ['<C-s>+'] = { '<cmd> resize +3 <CR>', '', opts = { silent = true } },
-    ['<C-s>-'] = { '<cmd> resize -3 <CR>', '', opts = { silent = true } },
-
     -- Yank
-    ['y'] = { 'y$', 'Yank rest of line' },
+    ['Y'] = { 'y$', 'Yank rest of line' },
     ['yy'] = { 'Vy', 'Yank line' },
-
-    ['<Leader>V'] = { '<cmd> lua ReloadConfig() <CR>', 'Reload nvim config' },
-
-    ['<Leader>c'] = { '<cmd> noh <CR>', 'Clear search highlight' },
 
     ['<Leader>z'] = { 'za', 'Toggle fold' },
 
@@ -92,6 +72,39 @@ M.general = {
 
     ["<Leader>'"] = { "e<ESC>a'<ESC>bi'<ESC>lel", "enclose with '' " },
     ['<Leader>"'] = { 'e<ESC>a"<ESC>bi"<ESC>lel', 'enclose with "" ' },
+
+    ['J'] = { 'mzJ`z', 'keep cursor when joining lines' },
+
+    ['<leader>s'] = {
+      [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+      'open substitution with current word',
+    },
+
+    -- Remove ========================
+    ['<Leader>c'] = {
+      function()
+        vim.notify('search clear is mapped to ESC')
+      end,
+      'Clear search highlight',
+    },
+  },
+
+  i = {
+    ['<CR>'] = {
+      'v:lua.isCursorInsideNewBlock() ? "<CR><esc>O" : "<CR>"',
+      '',
+      opts = { silent = true, expr = true },
+    },
+
+    -- go to  beginning and end
+    ['<C-b>'] = { '<ESC>^i', 'beginning of line' },
+    ['<C-e>'] = { '<End>', 'end of line' },
+
+    -- navigate within insert mode
+    ['<C-h>'] = { '<Left>', 'move left' },
+    ['<C-l>'] = { '<Right>', 'move right' },
+    ['<C-j>'] = { '<Down>', 'move down' },
+    ['<C-k>'] = { '<Up>', 'move up' },
   },
 
   t = {
@@ -109,6 +122,9 @@ M.general = {
     ['('] = { 'c()<ESC>P', 'enclose with ()' },
     ['{'] = { 'c{}<ESC>P', 'enclose with {}' },
     ['['] = { 'c[]<ESC>P', 'enclose with []' },
+
+    ['J'] = { ":m '>+1<CR>gv=gv", 'move selected block up a line' },
+    ['K'] = { ":m '>-2<CR>gv=gv", 'move selected block down a line' },
   },
 
   x = {
@@ -136,11 +152,23 @@ M.ultisnips = {
   },
 }
 
+M.codespell = {
+  n = {
+    ['<Leader>Ci'] = {
+      function()
+        utils.add_codespell_ignore_misspell()
+      end,
+      'Add misspelling on current line to codespell ignore list',
+    },
+  },
+}
+
 M.telescope = function(actions)
+  local action_state = require('telescope.actions.state')
+  local action_utils = require('telescope.actions.utils')
+
   -- Switch to window with buffer if exists or do default select action
   local function select_buffer(prompt_bufnr)
-    local action_state = require("telescope.actions.state")
-
     local entry = action_state.get_selected_entry()
     local winid = vim.fn.win_findbuf(entry.bufnr)[1]
 
@@ -150,6 +178,26 @@ M.telescope = function(actions)
       actions.select_default(prompt_bufnr)
     end
   end
+
+  -- local function select_file_entry(prompt_bufnr)
+  --   local picker = action_state.get_current_picker(prompt_bufnr)
+  --   local selections = picker:get_multi_selection()mappmapp
+  --
+  --   if #selections > 1 then
+  --     for i, entry in ipairs(selections) do
+  --       print(i)
+  --       if i == 1 then
+  --         vim.cmd.tabnew(entry.value)
+  --       else
+  --         vim.cmd.vsplit(entry.value)
+  --       end
+  --     end
+  --
+  --     vim.cmd('stopinsert')
+  --   else
+  --     actions.select_default(prompt_bufnr)
+  --   end
+  -- end
 
   return {
     base = {
@@ -161,29 +209,45 @@ M.telescope = function(actions)
         ['<leader>pb'] = { '<cmd> Telescope buffers <CR>', 'find buffers' },
         ['<leader>ph'] = { '<cmd> Telescope help_tags <CR>', 'help page' },
         ['<leader>po'] = { '<cmd> Telescope oldfiles <CR>', 'find oldfiles' },
-        ['<leader>pk'] = { '<cmd> Telescope keymaps <CR>', 'show keys' },
+
+        -- -- vim internals
+        ['<leader>pvk'] = { '<cmd> Telescope keymaps <CR>', 'show keys' },
+        ['<leader>pvm'] = { '<cmd> Telescope man_pages <CR>', 'show keys' },
+        ['<leader>pvc'] = { '<cmd> Telescope command_history <CR>', 'show keys' },
+        ['<leader>pvr'] = { '<cmd> Telescope reloader <CR>', 'show keys' },
+        ['<leader>pvh'] = { '<cmd> Telescope highlights <CR>', 'show keys' },
+        ['<leader>pva'] = { '<cmd> Telescope autocommands <CR>', 'show keys' },
+        ['<leader>pvo'] = { '<cmd> Telescope vim_options <CR>', 'show keys' },
 
         -- -- git
-        ['<leader>pm'] = { '<cmd> Telescope git_commits <CR>', 'git commits' },
-        ['<leader>pt'] = { '<cmd> Telescope git_status <CR>', 'git status' },
+        ['<leader>pgc'] = { '<cmd> Telescope git_commits <CR>', 'git commits' },
+        ['<leader>pgs'] = { '<cmd> Telescope git_status <CR>', 'git status' },
       },
     },
     window = {
       n = {
-        ['q']       = actions.close,
-        ["<C-k>"]   = actions.move_selection_previous,
-        ["<C-j>"]   = actions.move_selection_next,
-        ["<C-s>"]   = actions.file_split,
+        ['q'] = actions.close,
+        ['<C-k>'] = actions.move_selection_previous,
+        ['<C-j>'] = actions.move_selection_next,
+        ['<C-s>'] = actions.file_split,
       },
       i = {
-        ["<C-k>"]   = actions.move_selection_previous,
-        ["<C-j>"]   = actions.move_selection_next,
-        ["<C-s>"]   = actions.file_split,
-        ["<C-p>"]   = false,
-        ["<C-n>"]   = false,
+        ['<C-k>'] = actions.move_selection_previous,
+        ['<C-j>'] = actions.move_selection_next,
+        ['<C-s>'] = actions.file_split,
+        ['<C-p>'] = false,
+        ['<C-n>'] = false,
       },
     },
     pickers = {
+      find_files = {
+        -- n = {
+        --   ['<C-t>'] = select_file_entry,
+        -- },
+        -- i = {
+        --   ['<C-t>'] = select_file_entry,
+        -- }
+      },
       buffers = {
         n = {
           ['<enter>'] = select_buffer,
@@ -191,32 +255,38 @@ M.telescope = function(actions)
         },
         i = {
           ['<enter>'] = select_buffer,
-        }
+        },
       },
       help_tags = {
-        n = {
-          ['<C-v>'] = actions.file_vsplit,
-          ['<C-s>'] = actions.file_split,
-        },
-        i = {
-          ['<C-v>'] = actions.file_vsplit,
-          ['<C-s>'] = actions.file_split,
-        }
-      }
+        -- n = {
+        --   ['<C-v>'] = actions.select_vertical,
+        --   ['<C-s>'] = actions.select_horizontal,
+        -- },
+        --   i = {
+        --     ['<C-v>'] = actions.file_vsplit,
+        --     ['<C-s>'] = actions.file_split,
+        --   }
+      },
     },
   }
 end
 
 M.cmp_api = function(cmp)
+  local cmp_utils = require('plugins.config.cmp.utils')
+
   return {
-    ['<C-b>']     = cmp.mapping.scroll_docs(-4),
-    ['<C-f>']     = cmp.mapping.scroll_docs(4),
-    ['<C-k>']     = cmp.mapping.select_prev_item(),
-    ['<C-j>']     = cmp.mapping.select_next_item(),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>']     = cmp.mapping.abort(),
-    ['<Tab>']     = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-k>'] = cmp.mapping.select_prev_item(),
+    ['<C-j>'] = cmp.mapping.select_next_item(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<Tab>'] = cmp.mapping(cmp_utils.on_confirm, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(cmp_utils.on_confirm_inverse, { 'i', 's' }),
   }
+end
+
+M.sessions = function(mngr)
+  return {}
 end
 
 return M

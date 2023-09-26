@@ -10,10 +10,10 @@ if [ -z "$project" ]; then
   project=${PWD##*/}
 fi
 
-env_vars="DB_NAME=${project}_development\n
-          TEST_DB_NAME=${project}_test\n
-          DB_USER=vladislavtrefil\n
-          DB_PASSWORD=1234\n"
+env_vars="DB_NAME=${project}_development
+          TEST_DB_NAME=${project}_test
+          DB_USER=vladislavtrefil
+          DB_PASSWORD=1234"
 
 function setup_env() {
   if [ ! -e .env ]; then

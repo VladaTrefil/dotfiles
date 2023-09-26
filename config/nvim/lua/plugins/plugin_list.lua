@@ -236,4 +236,11 @@ return {
   ['tpope/vim-rails'] = {},
   ['skalnik/vim-vroom'] = {},
   ['slim-template/vim-slim'] = {},
+
+  ['m4xshen/hardtime.nvim'] = {
+    dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('plugins.config.hardtime')
+    end,
+  },
 }

@@ -7,12 +7,15 @@ M.general = {
     ['H'] = { '0', 'Move to beginning of line' },
     ['L'] = { '$', 'Move to end of line' },
   },
+
   n = {
     ['<C-d>'] = { '<C-d>zz', 'Centered cursor while scrolling' },
     ['<C-u>'] = { '<C-u>zz', 'Centered cursor while scrolling' },
 
     ['n'] = { 'nzzzv', 'Centered cursor while jumping to next search' },
     ['N'] = { 'Nzzzv', 'Centered cursor while jumping to previous search' },
+
+    ['J'] = { 'mzJ`z', 'keep cursor when joining lines' },
 
     ['p'] = {
       function()
@@ -75,12 +78,8 @@ M.general = {
 
     ['<Leader>sc'] = { '<cmd> setlocal spell! <CR>', 'Spellcheck' },
 
-    ['<Leader><Leader>h'] = { ':vert h ', 'Open vertical help' },
-
     ["<Leader>'"] = { "e<ESC>a'<ESC>bi'<ESC>lel", "enclose with '' " },
     ['<Leader>"'] = { 'e<ESC>a"<ESC>bi"<ESC>lel', 'enclose with "" ' },
-
-    ['J'] = { 'mzJ`z', 'keep cursor when joining lines' },
 
     ['<leader>s'] = {
       [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
@@ -135,8 +134,8 @@ M.general = {
     ['{'] = { 'c{}<ESC>P', 'enclose with {}' },
     ['['] = { 'c[]<ESC>P', 'enclose with []' },
 
-    ['J'] = { ":m '>+1<CR>gv=gv", 'move selected block up a line' },
-    ['K'] = { ":m '>-2<CR>gv=gv", 'move selected block down a line' },
+    ['J'] = { "<cmd>m '>+1<CR>gv=gv", 'move selected block down a line' },
+    ['K'] = { "<cmd>m '>-2<CR>gv=gv", 'move selected block up a line' },
   },
 
   x = {
@@ -232,8 +231,8 @@ M.telescope = function(actions)
         ['<leader>pvo'] = { '<cmd> Telescope vim_options <CR>', 'show keys' },
 
         -- -- git
-        ['<leader>pgc'] = { '<cmd> Telescope git_commits <CR>', 'git commits' },
-        ['<leader>pgs'] = { '<cmd> Telescope git_status <CR>', 'git status' },
+        ['<leader>gc'] = { '<cmd> Telescope git_commits <CR>', 'git commits' },
+        ['<leader>gs'] = { '<cmd> Telescope git_status <CR>', 'git status' },
       },
     },
     window = {

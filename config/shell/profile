@@ -16,6 +16,7 @@
 export EDITOR="nvim"
 export TERMINAL="konsole"
 export BROWSER="brave-browser"
+export EXPLORER="dolphin"
 
 export DEV_PATH="$HOME/Development"
 export DOTFILES_PATH="$HOME/Development/dotfiles"
@@ -168,5 +169,7 @@ export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
 
 export W3M_DIR="$XDG_STATE_HOME/w3m"
+
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"

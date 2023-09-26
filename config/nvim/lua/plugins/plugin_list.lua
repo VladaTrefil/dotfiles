@@ -193,6 +193,12 @@ return {
     end,
   },
 
+  ['windwp/nvim-autopairs'] = {
+    config = function()
+      require('plugins.config.others').autopairs()
+    end,
+  },
+
   ['rhysd/clever-f.vim'] = {},
 
   ['tomtom/tcomment_vim'] = {},
@@ -205,7 +211,6 @@ return {
 
   ['drzel/vim-repo-edit'] = {}, -- " Quickly clone github repo to tmp
 
-  ['jiangmiao/auto-pairs'] = {},
   ['mattn/emmet-vim'] = {},
 
   ['HerringtonDarkholme/yats.vim'] = {},

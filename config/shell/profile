@@ -28,20 +28,6 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_LIB_HOME="$HOME/.local/state"
 export BIN_PATH="$HOME/.local/bin"
 
-export INPUTRC="$XDG_CONFIG_HOME/shell/inputrc"
-export KDEHOME="$XDG_CONFIG_HOME/kde"
-
-export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
-
-export RUSTUP_HOME="$XDG_CONFIG_HOME/rustup"
-export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
-
-export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
-
-export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
-export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
-
 export THEME_BACKGROUND="#11111b"
 export THEME_BACKGROUND_ALT="#181825"
 export THEME_FOREGROUND="#cdd6f4"
@@ -49,7 +35,6 @@ export THEME_SELECTED="#69a1fb"
 export THEME_ACTIVE="#9aef94"
 export THEME_URGENT="#Ea4769"
 
-export W3M_DIR="$XDG_STATE_HOME/w3m"
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -166,5 +151,22 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+export INPUTRC="$XDG_CONFIG_HOME/shell/inputrc"
+export KDEHOME="$XDG_CONFIG_HOME/kde"
+
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
+
+export RUSTUP_HOME="$XDG_CONFIG_HOME/rustup"
+export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
+
+# proton bridge and pass
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
+
+export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
+export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
+
+export W3M_DIR="$XDG_STATE_HOME/w3m"
 
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"

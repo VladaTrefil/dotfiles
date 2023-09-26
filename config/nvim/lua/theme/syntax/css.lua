@@ -32,6 +32,8 @@ local config = {
   cssRenderProp = { link = 'Aqua' },
   cssColorProp = { link = 'Aqua' },
   cssGeneratedContentProp = { link = 'Aqua' },
+
+  sassVariable = { link = 'Blue' },
 }
 
 return config

@@ -107,12 +107,11 @@ end
 endsnippet
 
 snippet pcall "pcall statement" b
-local present, err = pcall(${1:your_function})
-if not ok then
-	handler(${2:ok, err})
-${3:else
-	success(${4:ok, err})
-}end
+local $1_ok, $1 = pcall(${2:require}, '${3:$1}')
+
+if not $1_ok then
+	${0:return}
+end
 endsnippet
 
 snippet local "local x = 1"

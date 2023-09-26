@@ -107,6 +107,14 @@ return {
     end,
   },
 
+  ['zbirenbaum/copilot.lua'] = {
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    config = function()
+      require('plugins.config.copilot')
+    end,
+  },
+
   -- Formatting and linting
   ['jose-elias-alvarez/null-ls.nvim'] = {
     as = 'null-ls',
@@ -182,6 +190,12 @@ return {
   ['hrsh7th/cmp-path'] = {},
   ['David-Kunz/cmp-npm'] = {},
   ['quangnguyen30192/cmp-nvim-ultisnips'] = {},
+  ['zbirenbaum/copilot-cmp'] = {
+    after = { 'copilot.lua' },
+    config = function()
+      require('plugins.config.cmp.copilot_cmp')
+    end,
+  },
 
   ['tpope/vim-git'] = {},
   ['tpope/vim-fugitive'] = {},

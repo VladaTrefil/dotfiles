@@ -32,6 +32,7 @@ local sorting = {
 local sources = {
   { name = 'nvim_lsp', priority = 9 },
   { name = 'ultisnips', priority = 9, max_num_results = 4 },
+  { name = 'copilot', priority = 2 },
   {
     name = 'buffer',
     priority = 8,

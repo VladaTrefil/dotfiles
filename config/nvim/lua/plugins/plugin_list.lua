@@ -71,6 +71,12 @@ return {
     end,
   },
 
+  ['folke/which-key.nvim'] = {
+    config = function()
+      require('plugins.config.whichkey')
+    end,
+  },
+
   ['brooth/far.vim'] = {
     config = function()
       require('plugins.config.others').far()

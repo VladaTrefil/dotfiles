@@ -178,6 +178,12 @@ M.codespell = {
   },
 }
 
+M.ultisnips = {
+  n = {
+    ['<Leader>us'] = { '<cmd> UltiSnipsEdit <cr>', 'Edit ultisnippets' },
+  },
+}
+
 M.telescope = function(actions)
   local action_state = require('telescope.actions.state')
   local action_utils = require('telescope.actions.utils')

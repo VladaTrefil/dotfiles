@@ -4,7 +4,10 @@ if not present then
   return
 end
 
+local _, copilot_cmp_comparators = pcall(require, 'copilot_cmp.comparators')
 local cmp_utils = require('plugins.config.cmp.utils')
+local format = require('plugins.config.cmp.format')
+local mappings_config = require('core.mappings').cmp_api(cmp)
 
 local window = {
   documentation = {
@@ -17,49 +20,49 @@ local window = {
   },
 }
 
-local sorting = {
+local sources = {
+  { name = 'ultisnips', priority = 1000 },
+  { name = 'copilot', priority = 900 },
+  { name = 'nvim_lsp', priority = 750 },
+  { name = 'buffer', priority = 500, option = { get_bufnrs = cmp_utils.get_buffers } },
+  { name = 'path', priority = 250 },
+}
+
+local sort = {
   comparators = {
+    copilot_cmp_comparators.prioritize or function() end,
     cmp.config.compare.exact,
     cmp.config.compare.locality,
-    cmp.config.compare.recently_used,
     cmp.config.compare.score,
+    cmp.config.compare.recently_used,
     cmp.config.compare.offset,
     cmp.config.compare.sort_text,
     cmp.config.compare.order,
   },
 }
 
-local sources = {
-  { name = 'nvim_lsp', priority = 9 },
-  { name = 'ultisnips', priority = 9, max_num_results = 4 },
-  { name = 'copilot', priority = 2 },
-  {
-    name = 'buffer',
-    priority = 8,
-    option = {
-      get_bufnrs = cmp_utils.get_buffers,
-    },
-  },
-}
-
-local mappings_config = require('core.mappings').cmp_api(cmp)
+local completeopt = 'menu,menuone,preview'
 
 cmp.setup({
   window = window,
-  mapping = cmp.mapping.preset.insert(mappings_config),
   sources = sources,
-  sorting = sorting,
-  completion = {
-    completeopt = 'menu,menuone',
-  },
+  sorting = sort,
   snippet = {
     expand = cmp_utils.expand_snippet,
   },
   formatting = {
-    format = cmp_utils.format_selection_item,
+    fields = { 'abbr', 'kind', 'menu' },
+    format = format.format_selection_item,
+  },
+  mapping = cmp.mapping.preset.insert(mappings_config),
+  completion = {
+    completeopt = completeopt,
   },
   experimental = {
     ghost_text = {},
+  },
+  performance = {
+    max_view_entries = 60,
   },
 })
 
@@ -70,4 +73,4 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   end,
 })
 
-vim.go.completeopt = 'menu,menuone,noselect'
+vim.go.completeopt = completeopt

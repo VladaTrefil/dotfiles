@@ -15,6 +15,9 @@ local config = {
   CmpItemKindKeyword = { fg = colors.faded_yellow, bg = colors.dark0 },
   CmpItemKindProperty = { fg = colors.faded_yellow, bg = colors.dark0 },
   CmpItemKindUnit = { fg = colors.faded_yellow, bg = colors.dark0 },
+
+  -- copilot
+  CmpItemKindCopilot = { fg = colors.bright_blue, bg = colors.dark0 },
 }
 
 return config

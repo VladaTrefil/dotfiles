@@ -1,42 +1,25 @@
 local M = {}
 
-local ELLIPSIS_CHAR = '…'
-local MAX_LABEL_WIDTH = 25
-
 local cmp = require('cmp')
 
-M.format_selection_item = function(_, item)
-  local content = item.abbr
-
-  local abbr = (' '):rep(MAX_LABEL_WIDTH - #content)
-
-  if #content > MAX_LABEL_WIDTH then
-    item.abbr = vim.fn.strcharpart(content, 0, MAX_LABEL_WIDTH) .. ELLIPSIS_CHAR
-  else
-    item.abbr = content .. abbr
-  end
-
-  return item
-end
+local MAX_INDEX_FILE_SIZE = 4000
 
 M.get_buffers = function()
   local bufs = {}
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    bufs[vim.api.nvim_win_get_buf(win)] = true
+
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    -- Don't index giant files
+    if vim.api.nvim_buf_is_loaded(bufnr)
+        and vim.api.nvim_buf_line_count(bufnr) < MAX_INDEX_FILE_SIZE
+    then
+      table.insert(bufs, bufnr)
+    end
   end
-  return vim.tbl_keys(bufs)
+  return bufs
 end
 
 M.expand_snippet = function(args)
-  -- require('core.utils').notify(args)
   vim.fn['UltiSnips#Anon'](args.body)
-end
-
-M.has_words_before = function()
-  local line, col = (unpack or table.unpack)(vim.api.nvim_win_get_cursor(0))
-  line = vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
-
-  return col ~= 0 and line:sub(col, col):match('%s') == nil
 end
 
 M.on_confirm = function(fallback)

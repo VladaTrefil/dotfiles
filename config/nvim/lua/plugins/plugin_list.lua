@@ -167,6 +167,9 @@ return {
     },
   },
 
+  -- VSCode like pictograms for menus, powered by Nvim LSP
+  ['onsails/lspkind.nvim'] = {},
+
   -- LSP symbols
   -- ['stevearc/aerial.nvim'] = {
   -- 	module = 'aerial',
@@ -179,6 +182,7 @@ return {
   -- },
 
   ['hrsh7th/nvim-cmp'] = {
+    after = 'lspkind.nvim',
     config = function()
       require('plugins.config.cmp')
     end,
@@ -204,8 +208,6 @@ return {
       require('plugins.config.others').blamer()
     end,
   },
-
-  ['onsails/lspkind.nvim'] = {}, -- VSCode like pictograms for menus, powered by Nvim LSP
 
   ['airblade/vim-gitgutter'] = {
     config = function()

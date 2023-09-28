@@ -286,8 +286,8 @@ M.cmp_api = function(cmp)
   local cmp_utils = require('plugins.config.cmp.utils')
 
   return {
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
     ['<C-k>'] = cmp.mapping.select_prev_item(),
     ['<C-j>'] = cmp.mapping.select_next_item(),
     ['<C-e>'] = cmp.mapping.abort(),

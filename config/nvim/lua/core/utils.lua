@@ -26,12 +26,12 @@ M.register_contains_block = function()
   local register_type = fn.getregtype(register_name)
   return register_type == 'V' and M.register_ends_in_NL()
 end
-
 -- makes string safe for nvim commands
 M.termcodes = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
+-- sets vim mappings from a table of mode/keybinds to commands
 M.load_mappings = function(mapping_table, mapping_opt)
   for mode, mode_values in pairs(mapping_table) do
     if mode == 1 then
@@ -125,7 +125,6 @@ M.notify = function(msg, log, opts)
     log = log or vim.log.levels.INFO
 
     async.run(function()
-      print(vim.inspect(msg))
       vim.notify.async(msg, log, opts)
     end, function() end)
   else

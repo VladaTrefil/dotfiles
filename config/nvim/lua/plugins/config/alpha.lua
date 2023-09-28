@@ -29,6 +29,8 @@ dashboard.section.header.val = {
   '',
   '',
   '',
+  '',
+  '',
 }
 
 local build_session_button = function()

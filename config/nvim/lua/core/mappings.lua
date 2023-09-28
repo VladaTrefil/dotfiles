@@ -58,7 +58,11 @@ M.general = {
     ['<Leader>bk'] = { '<cmd> bnext <CR>', 'Next buffer', opts = { silent = true } },
 
     -- Splits
-    ['<Leader>ov'] = { '<cmd> vsp %:h<Tab> <CR>', 'Open current fold in vertical window', opts = { silent = true } },
+    ['<Leader>ov'] = {
+      '<cmd> vsp %:h<Tab> <CR>',
+      'Open current fold in vertical window',
+      opts = { silent = true },
+    },
     ['<Leader>oh'] = {
       '<cmd> sp %:h<Tab> <CR>',
       'Open current fold in horizontal window',
@@ -215,7 +219,10 @@ M.telescope = function(actions)
       n = {
         -- find
         -- ['<leader>pp'] = { '<cmd> Telescope find_files <CR>', 'find files' },
-        ['<leader>pp'] = { '<cmd> Telescope find_files follow=true hidden=true <CR>', 'find all' },
+        ['<leader>pp'] = {
+          '<cmd> Telescope find_files follow=true hidden=true <CR>',
+          'find all',
+        },
         ['<leader>pw'] = { '<cmd> Telescope live_grep <CR>', 'live grep' },
         ['<leader>pb'] = { '<cmd> Telescope buffers <CR>', 'find buffers' },
         ['<leader>ph'] = { '<cmd> Telescope help_tags <CR>', 'help page' },

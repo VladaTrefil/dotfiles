@@ -88,7 +88,7 @@ M.is_cursor_inside_new_block = function()
   return chars:find('[{}-><-%[%]]') ~= nil
 end
 
-M.paste_width_indent = function(reverse)
+M.paste_as_insert = function(reverse)
   local base = '<c-r><c-p>+<esc>'
   local before_cmd = ''
   local after_cmd = ''
@@ -118,6 +118,10 @@ M.paste_width_indent = function(reverse)
 
   local keys = M.termcodes(before_cmd .. base .. after_cmd)
   vim.api.nvim_feedkeys(keys, 'n', false)
+end
+
+M.paste_as_insert_reverse = function()
+  M.paste_as_insert(true)
 end
 
 M.is_available = function(plugin)

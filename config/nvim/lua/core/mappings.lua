@@ -17,24 +17,12 @@ M.general = {
 
     ['J'] = { 'mzJ`z', 'keep cursor when joining lines' },
 
-    ['p'] = {
-      function()
-        utils.paste_width_indent()
-      end,
-      'Paste with indent',
-    },
-    ['P'] = {
-      function()
-        utils.paste_width_indent(true)
-      end,
-      'Paste Before with indent',
-    },
+    ['p'] = { utils.paste_as_insert, 'Paste with indent' },
+    ['P'] = { utils.paste_as_insert_reverse, 'Paste Before with indent' },
 
     ['<ESC>'] = { '<cmd> noh <CR>', 'no highlight' },
     ['<Space>'] = { '<NOP>', 'no highlight' },
     ['<BS>'] = { '<C-o>', 'Backspace goes back' },
-
-    ['<Leader>V'] = { '<cmd> lua ReloadConfig() <CR>', 'Reload nvim config' },
 
     ['<Leader>E'] = {
       '<cmd> :execute "!dolphin " . shellescape(getcwd(),1) <CR>',
@@ -56,18 +44,6 @@ M.general = {
     ['<Leader>Q'] = { '<cmd> qa! <CR>', 'Close NVIM', opts = { silent = true } },
     ['<Leader>bj'] = { '<cmd> bprevious <CR>', 'Previous buffer', opts = { silent = true } },
     ['<Leader>bk'] = { '<cmd> bnext <CR>', 'Next buffer', opts = { silent = true } },
-
-    -- Splits
-    ['<Leader>ov'] = {
-      '<cmd> vsp %:h<Tab> <CR>',
-      'Open current fold in vertical window',
-      opts = { silent = true },
-    },
-    ['<Leader>oh'] = {
-      '<cmd> sp %:h<Tab> <CR>',
-      'Open current fold in horizontal window',
-      opts = { silent = true },
-    },
 
     ['<C-h>'] = { '<C-w>h', 'window left' },
     ['<C-l>'] = { '<C-w>l', 'window right' },
@@ -175,12 +151,6 @@ M.codespell = {
       end,
       'Add misspelling on current line to codespell ignore list',
     },
-  },
-}
-
-M.ultisnips = {
-  n = {
-    ['<Leader>us'] = { '<cmd> UltiSnipsEdit <cr>', 'Edit ultisnippets' },
   },
 }
 
@@ -299,6 +269,7 @@ M.cmp_api = function(cmp)
   local cmp_utils = require('plugins.config.cmp.utils')
 
   return {
+    -- add function for switch between docs and completion
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
     ['<C-k>'] = cmp.mapping.select_prev_item(),

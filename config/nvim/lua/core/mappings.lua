@@ -20,8 +20,7 @@ M.general = {
     ['p'] = { utils.paste_as_insert, 'Paste with indent' },
     ['P'] = { utils.paste_as_insert_reverse, 'Paste Before with indent' },
 
-    ['<ESC>'] = { '<cmd> noh <CR>', 'no highlight' },
-    ['<Space>'] = { '<NOP>', 'no highlight' },
+    ['<ESC>'] = { utils.clear_ui, 'Clear UI', opts = { silent = true } },
     ['<BS>'] = { '<C-o>', 'Backspace goes back' },
 
     ['<Leader>E'] = {
@@ -31,7 +30,6 @@ M.general = {
     },
 
     ['<Leader>w'] = { '<cmd> w! <CR>', 'Save file' },
-
     ['<Leader>e'] = { '<cmd> e <CR>', 'Refresh file' },
 
     -- Tabs
@@ -70,14 +68,6 @@ M.general = {
     ['<C-Up>'] = { ':resize +10<CR>', 'Resize down' },
     ['<C-Right>'] = { ':vertical resize -10<CR>', 'Resize left' },
     ['<C-Left>'] = { ':vertical resize +10<CR>', 'Resize right' },
-
-    -- Remove ========================
-    ['<Leader>c'] = {
-      function()
-        vim.notify('search clear is mapped to ESC', vim.log.levels.WARN)
-      end,
-      'Clear search highlight',
-    },
   },
 
   i = {

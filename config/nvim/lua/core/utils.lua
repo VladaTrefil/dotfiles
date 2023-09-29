@@ -175,4 +175,16 @@ M.mkdir = function()
   end
 end
 
+-- Clears neovim UI elements
+M.clear_ui = function()
+  -- clear search highlights
+  vim.fn.feedkeys(M.termcodes('<cmd>noh<CR>'), 'nx')
+
+  -- clear command line
+  vim.fn.feedkeys(':', 'nx')
+
+  -- dismiss any open notify messages
+  vim.notify.dismiss()
+end
+
 return M

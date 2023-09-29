@@ -11,12 +11,11 @@ local mappings_config = require('core.mappings').cmp_api(cmp)
 
 local window = {
   documentation = {
-    border = 'rounded',
     winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None',
   },
   completion = {
-    border = 'rounded',
-    winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None',
+    winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:CmpPmenuSel,Search:None',
+    side_padding = 0,
   },
 }
 
@@ -51,7 +50,7 @@ cmp.setup({
     expand = cmp_utils.expand_snippet,
   },
   formatting = {
-    fields = { 'abbr', 'kind', 'menu' },
+    fields = { 'menu', 'abbr', 'kind' },
     format = format.format_selection_item,
   },
   mapping = cmp.mapping.preset.insert(mappings_config),
@@ -59,12 +58,15 @@ cmp.setup({
     completeopt = completeopt,
   },
   experimental = {
-    ghost_text = {},
+    ghost_text = true,
   },
   performance = {
     max_view_entries = 60,
   },
 })
+
+vim.o.updatetime = 250
+vim.go.completeopt = completeopt
 
 vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = '*.snippets',
@@ -73,4 +75,20 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   end,
 })
 
-vim.go.completeopt = completeopt
+vim.api.nvim_create_augroup('lsp_diagnostics_hold', { clear = true })
+vim.api.nvim_create_autocmd({ 'CursorHold' }, {
+  pattern = '*',
+  group = 'lsp_diagnostics_hold',
+  callback = function()
+    local opts = {
+      focusable = false,
+      close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
+      border = 'rounded',
+      source = 'always',
+      prefix = ' ',
+      scope = 'cursor',
+    }
+
+    vim.diagnostic.open_float(nil, opts)
+  end,
+})

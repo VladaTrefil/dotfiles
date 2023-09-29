@@ -26,9 +26,28 @@ M.register_contains_block = function()
   local register_type = fn.getregtype(register_name)
   return register_type == 'V' and M.register_ends_in_NL()
 end
+
 -- makes string safe for nvim commands
 M.termcodes = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+-- Capitalizes first letter of string
+M.capitalize = function(str)
+  return str:gsub('^%l', string.upper)
+end
+
+-- converts camelCase to snake_case and vice versa
+M.convert_case = function(word)
+  if word:find('[a-z][A-Z]') then
+    return word:gsub('([a-z])([A-Z])', '%1_%2'):lower()
+  elseif word:find('_[a-z]') then
+    return word:gsub('(_)([a-z])', function(_, l)
+      return l:upper()
+    end)
+  else
+    return word
+  end
 end
 
 -- sets vim mappings from a table of mode/keybinds to commands

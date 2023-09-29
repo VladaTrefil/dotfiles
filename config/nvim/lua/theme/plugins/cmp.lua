@@ -1,23 +1,24 @@
 local colors = require('theme.colors')
 
+local cmp_bg = colors.dark
+
 local config = {
-  CmpPmenu = { fg = colors.light0, bg = colors.dark0 },
-  CmpPmenuBorder = { fg = colors.bright_blue, bg = colors.dark0 },
+  CmpPmenu = { fg = colors.light0, bg = cmp_bg },
+  CmpPmenuBorder = { fg = colors.dark1, bg = cmp_bg },
+  CmpPmenuSel = { bg = colors.dark1 },
 
-  CmpItemAbbrDeprecated = { fg = colors.gray, bg = colors.dark0, strikethrough = true },
-  CmpItemAbbrMatch = { fg = colors.bright_blue, bg = colors.dark0 },
-  CmpItemAbbrMatchFuzzy = { fg = colors.bright_blue, bg = colors.dark0 },
-  CmpItemKindVariable = { fg = colors.faded_blue, bg = colors.dark0 },
-  CmpItemKindInterface = { fg = colors.faded_blue, bg = colors.dark0 },
-  CmpItemKindText = { fg = colors.faded_blue, bg = colors.dark0 },
-  CmpItemKindFunction = { fg = colors.faded_red, bg = colors.dark0 },
-  CmpItemKindMethod = { fg = colors.faded_red, bg = colors.dark0 },
-  CmpItemKindKeyword = { fg = colors.faded_yellow, bg = colors.dark0 },
-  CmpItemKindProperty = { fg = colors.faded_yellow, bg = colors.dark0 },
-  CmpItemKindUnit = { fg = colors.faded_yellow, bg = colors.dark0 },
+  CmpItemAbbrDeprecated = { fg = colors.gray, strikethrough = true },
+  CmpItemAbbrMatch = { fg = colors.bright_orange },
+  CmpItemAbbrMatchFuzzy = { fg = colors.bright_orange },
 
-  -- copilot
-  CmpItemKindCopilot = { fg = colors.bright_blue, bg = colors.dark0 },
+  CmpItemKind = { fg = colors.gray },
+  CmpItemKindCopilot = { fg = colors.gray },
+
+  CmpItemMenuCopilot = { bg = colors.light0, fg = cmp_bg },
+  CmpItemMenuNvimLsp = { bg = colors.bright_orange, fg = cmp_bg },
+  CmpItemMenuUltisnips = { bg = colors.bright_blue, fg = cmp_bg },
+  CmpItemMenuBuffer = { bg = cmp_bg, fg = colors.light0 },
+  CmpItemMenuPath = { bg = colors.gray, fg = cmp_bg },
 }
 
 return config

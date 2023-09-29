@@ -4,6 +4,8 @@ if not present then
   return
 end
 
+local WIDE_HEIGHT = 40
+
 local _, copilot_cmp_comparators = pcall(require, 'copilot_cmp.comparators')
 local cmp_utils = require('plugins.config.cmp.utils')
 local format = require('plugins.config.cmp.format')
@@ -11,11 +13,15 @@ local mappings_config = require('core.mappings').cmp_api(cmp)
 
 local window = {
   documentation = {
-    winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None',
+    winhighlight = 'Normal:CmpPmenuDocumentation,FloatBorder:CmpPmenuDocumentationBorder,CursorLine:PmenuSel,Search:None',
+    maxwidth = math.floor((WIDE_HEIGHT * 2) * (vim.o.columns / (WIDE_HEIGHT * 2 * 16 / 9))),
+    maxheight = math.floor(WIDE_HEIGHT * (WIDE_HEIGHT / vim.o.lines)),
+    side_padding = 2,
   },
   completion = {
     winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:CmpPmenuSel,Search:None',
     side_padding = 0,
+    col_offset = -4,
   },
 }
 
@@ -67,6 +73,7 @@ cmp.setup({
 
 vim.o.updatetime = 250
 vim.go.completeopt = completeopt
+vim.o.pumheight = 20
 
 vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = '*.snippets',

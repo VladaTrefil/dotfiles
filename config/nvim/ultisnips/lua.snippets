@@ -32,14 +32,20 @@
 
 priority -50
 
-snippet !fun(ction)?! "New function" br
+snippet fun "New function" b
 function ${1:new_function}(${2:args})
 	$0
 end
 endsnippet
 
+snippet lfun "New function var" b
+local ${1:new_function} = function(${2:args})
+	$0
+end
+endsnippet
+
 snippet forp "pair for loop" b
-fkjd wsfor ${1:name},${2:val} in pairs(${3:table_name}) do
+for ${1:name},${2:val} in pairs(${3:table_name}) do
 	$0
 end
 endsnippet
@@ -114,7 +120,7 @@ if not $1_ok then
 end
 endsnippet
 
-snippet local "local x = 1"
+snippet loc "local x = 1"
 local ${1:x} = ${0:1}
 endsnippet
 

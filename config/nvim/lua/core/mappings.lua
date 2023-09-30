@@ -15,10 +15,10 @@ M.general = {
     ['n'] = { 'nzzzv', 'Centered cursor while jumping to next search' },
     ['N'] = { 'Nzzzv', 'Centered cursor while jumping to previous search' },
 
-    ['J'] = { 'mzJ`z', 'keep cursor when joining lines' },
+    ['J'] = { 'mzJ`z', 'Keep cursor when joining lines' },
 
-    ['p'] = { utils.paste_as_insert, 'Paste with indent' },
-    ['P'] = { utils.paste_as_insert_reverse, 'Paste Before with indent' },
+    ['p'] = { utils.paste_as_insert, 'Paste as insert' },
+    ['P'] = { utils.paste_as_insert_reverse, 'Paste as insert reverse' },
 
     ['<ESC>'] = { utils.clear_ui, 'Clear UI', opts = { silent = true } },
     ['<BS>'] = { '<C-o>', 'Backspace goes back' },
@@ -43,10 +43,10 @@ M.general = {
     ['<Leader>bj'] = { '<cmd> bprevious <CR>', 'Previous buffer', opts = { silent = true } },
     ['<Leader>bk'] = { '<cmd> bnext <CR>', 'Next buffer', opts = { silent = true } },
 
-    ['<C-h>'] = { '<C-w>h', 'window left' },
-    ['<C-l>'] = { '<C-w>l', 'window right' },
-    ['<C-j>'] = { '<C-w>j', 'window down' },
-    ['<C-k>'] = { '<C-w>k', 'window up' },
+    ['<C-h>'] = { '<C-w>h', 'Window left' },
+    ['<C-l>'] = { '<C-w>l', 'Window right' },
+    ['<C-j>'] = { '<C-w>j', 'Window down' },
+    ['<C-k>'] = { '<C-w>k', 'Window up' },
 
     -- Yank
     ['Y'] = { 'y$', 'Yank rest of line' },
@@ -56,12 +56,12 @@ M.general = {
 
     ['<Leader>sc'] = { '<cmd> setlocal spell! <CR>', 'Spellcheck' },
 
-    ["<Leader>'"] = { "e<ESC>a'<ESC>bi'<ESC>lel", "enclose with '' " },
-    ['<Leader>"'] = { 'e<ESC>a"<ESC>bi"<ESC>lel', 'enclose with "" ' },
+    ["<Leader>'"] = { "e<ESC>a'<ESC>bi'<ESC>lel", "Enclose with '' " },
+    ['<Leader>"'] = { 'e<ESC>a"<ESC>bi"<ESC>lel', 'Enclose with "" ' },
 
     ['<leader>s'] = {
       [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-      'open substitution with current word',
+      'Open substitution with current word',
     },
 
     ['<C-Down>'] = { ':resize -10<CR>', 'Resize up' },
@@ -73,39 +73,39 @@ M.general = {
   i = {
     ['<CR>'] = {
       'v:lua.isCursorInsideNewBlock() ? "<CR><esc>O" : "<CR>"',
-      '',
+      'New line with correction for blocks',
       opts = { silent = true, expr = true },
     },
 
     -- go to  beginning and end
-    ['<C-b>'] = { '<ESC>^i', 'beginning of line' },
-    ['<C-e>'] = { '<End>', 'end of line' },
+    ['<C-b>'] = { '<ESC>^i', 'Beginning of line' },
+    ['<C-e>'] = { '<End>', 'End of line' },
 
     -- navigate within insert mode
-    ['<C-h>'] = { '<Left>', 'move left' },
-    ['<C-l>'] = { '<Right>', 'move right' },
-    ['<C-j>'] = { '<Down>', 'move down' },
-    ['<C-k>'] = { '<Up>', 'move up' },
+    ['<C-h>'] = { '<Left>', 'Move left' },
+    ['<C-l>'] = { '<Right>', 'Move right' },
+    ['<C-j>'] = { '<Down>', 'Move down' },
+    ['<C-k>'] = { '<Up>', 'Move up' },
   },
 
   t = {
-    ['<C-x>'] = { utils.termcodes('<C-\\><C-N>'), 'escape terminal mode' },
+    ['<C-x>'] = { utils.termcodes('<C-\\><C-N>'), 'Escape terminal mode' },
   },
 
   v = {
     ['>'] = { '>gv', 'Improve indent in visual' },
     ['<'] = { '<gv', 'Improve indent in visual' },
 
-    ["'"] = { "c''<ESC>P", "enclose with '' " },
-    ['"'] = { 'c""<ESC>P', 'enclose with "" ' },
-    ['`'] = { 'c``<ESC>P', 'enclose with `` ' },
+    ["'"] = { "c''<ESC>P", "Enclose with '' " },
+    ['"'] = { 'c""<ESC>P', 'Enclose with "" ' },
+    ['`'] = { 'c``<ESC>P', 'Enclose with `` ' },
 
-    ['('] = { 'c()<ESC>P', 'enclose with ()' },
-    ['{'] = { 'c{}<ESC>P', 'enclose with {}' },
-    ['['] = { 'c[]<ESC>P', 'enclose with []' },
+    ['('] = { 'c()<ESC>P', 'Enclose with ()' },
+    ['{'] = { 'c{}<ESC>P', 'Enclose with {}' },
+    ['['] = { 'c[]<ESC>P', 'Enclose with []' },
 
-    ['J'] = { "<cmd>m '>+1<CR>gv=gv", 'move selected block down a line' },
-    ['K'] = { "<cmd>m '>-2<CR>gv=gv", 'move selected block up a line' },
+    ['J'] = { "<cmd>m '>+1<CR>gv=gv", 'Move selected block down a line' },
+    ['K'] = { "<cmd>m '>-2<CR>gv=gv", 'Move selected block up a line' },
   },
 
   x = {
@@ -187,25 +187,37 @@ M.telescope = function(actions)
         -- ['<leader>pp'] = { '<cmd> Telescope find_files <CR>', 'find files' },
         ['<leader>pp'] = {
           '<cmd> Telescope find_files follow=true hidden=true <CR>',
-          'find all',
+          'Search in project',
         },
-        ['<leader>pw'] = { '<cmd> Telescope live_grep <CR>', 'live grep' },
-        ['<leader>pb'] = { '<cmd> Telescope buffers <CR>', 'find buffers' },
-        ['<leader>ph'] = { '<cmd> Telescope help_tags <CR>', 'help page' },
-        ['<leader>po'] = { '<cmd> Telescope oldfiles <CR>', 'find oldfiles' },
+        ['<leader>pw'] = {
+          '<cmd> Telescope live_grep <CR>',
+          'Search in project by pattern [telescope]',
+        },
+        ['<leader>pb'] = { '<cmd> Telescope buffers <CR>', 'Buffers [telescope]' },
+        ['<leader>ph'] = { '<cmd> Telescope help_tags <CR>', 'Help page [telescope]' },
+        ['<leader>po'] = { '<cmd> Telescope oldfiles <CR>', 'Recent files [telescope]' },
 
         -- -- vim internals
-        ['<leader>pvk'] = { '<cmd> Telescope keymaps <CR>', 'show keys' },
-        ['<leader>pvm'] = { '<cmd> Telescope man_pages <CR>', 'show keys' },
-        ['<leader>pvc'] = { '<cmd> Telescope command_history <CR>', 'show keys' },
-        ['<leader>pvr'] = { '<cmd> Telescope reloader <CR>', 'show keys' },
-        ['<leader>pvh'] = { '<cmd> Telescope highlights <CR>', 'show keys' },
-        ['<leader>pva'] = { '<cmd> Telescope autocommands <CR>', 'show keys' },
-        ['<leader>pvo'] = { '<cmd> Telescope vim_options <CR>', 'show keys' },
+        ['<leader>pvk'] = { '<cmd> Telescope keymaps <CR>', 'Keymaps [telescope]' },
+        ['<leader>pvm'] = { '<cmd> Telescope man_pages <CR>', 'Man pages [telescope]' },
+        ['<leader>pvc'] = {
+          '<cmd> Telescope command_history <CR>',
+          'Command history [telescope]',
+        },
+        ['<leader>pvr'] = {
+          '<cmd> Telescope reloader <CR>',
+          'Lua module reloader [telescope]',
+        },
+        ['<leader>pvh'] = { '<cmd> Telescope highlights <CR>', 'Highlights [telescope]' },
+        ['<leader>pva'] = {
+          '<cmd> Telescope autocommands <CR>',
+          'Autocommands [telescope]',
+        },
+        ['<leader>pvo'] = { '<cmd> Telescope vim_options <CR>', 'Vim options [telescope]' },
 
         -- -- git
-        ['<leader>gc'] = { '<cmd> Telescope git_commits <CR>', 'git commits' },
-        ['<leader>gs'] = { '<cmd> Telescope git_status <CR>', 'git status' },
+        ['<leader>gc'] = { '<cmd> Telescope git_commits <CR>', 'git commits [telescope]' },
+        ['<leader>gs'] = { '<cmd> Telescope git_status <CR>', 'git status [telescope]' },
       },
     },
     window = {

@@ -17,7 +17,8 @@ local source_labels = {
 
 local menu_hl_group_name = function(source_name)
   local camel_case_source_name = utils.convert_case(source_name)
-  return utils.capitalize(camel_case_source_name)
+  local hl_group_name = utils.capitalize(camel_case_source_name)
+  return 'CmpItemMenu' .. hl_group_name
 end
 
 M.format_selection_item = function(entry, item)
@@ -26,12 +27,14 @@ M.format_selection_item = function(entry, item)
     maxwidth = MAX_LABEL_WIDTH,
   })(entry, item)
 
-  item_with_kind.menu = source_labels[entry.source.name] or ''
-  item_with_kind.menu_hl_group = 'CmpItemMenu' .. menu_hl_group_name(entry.source.name)
-  item_with_kind.abbr = ' ' .. string.sub(item_with_kind.abbr, 1, item_with_kind.maxwidth)
-  item_with_kind.kind = '  ' .. item_with_kind.kind
+  local item_attrs = {
+    menu = source_labels[entry.source.name] or '',
+    menu_hl_group = menu_hl_group_name(entry.source.name),
+    abbr = ' ' .. string.sub(item_with_kind.abbr, 1, item_with_kind.maxwidth),
+    kind = '  ' .. item_with_kind.kind,
+  }
 
-  return item_with_kind
+  return vim.tbl_deep_extend('force', item_with_kind, item_attrs)
 end
 
 return M

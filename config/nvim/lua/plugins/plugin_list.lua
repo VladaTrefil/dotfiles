@@ -16,7 +16,7 @@ return {
 
   ['kyazdani42/nvim-web-devicons'] = {
     config = function()
-      require('plugins.config.others').devicons()
+      require('nvim-web-devicons').setup()
     end,
   },
 
@@ -79,7 +79,7 @@ return {
 
   ['brooth/far.vim'] = {
     config = function()
-      require('plugins.config.others').far()
+      require('plugins.config.far')
     end,
   },
 
@@ -91,7 +91,7 @@ return {
 
   ['SirVer/ultisnips'] = {
     config = function()
-      require('plugins.config.others').ultisnips()
+      require('plugins.config.ultisnips')
     end,
   },
 
@@ -103,7 +103,7 @@ return {
 
   ['kdheepak/lazygit.nvim'] = {
     config = function()
-      require('plugins.config.others').lazygit()
+      require('plugins.config.git').lazygit()
     end,
   },
 
@@ -205,19 +205,19 @@ return {
   ['tpope/vim-fugitive'] = {},
   ['APZelos/blamer.nvim'] = {
     config = function()
-      require('plugins.config.others').blamer()
+      require('plugins.config.git').blamer()
     end,
   },
 
   ['airblade/vim-gitgutter'] = {
     config = function()
-      require('plugins.config.others').gitgutter()
+      require('plugins.config.git').gitgutter()
     end,
   },
 
   ['windwp/nvim-autopairs'] = {
     config = function()
-      require('plugins.config.others').autopairs()
+      require('plugins.config.autopairs')
     end,
   },
 

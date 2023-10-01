@@ -1,14 +1,14 @@
 return {
   ['lewis6991/impatient.nvim'] = {},
 
-  ['nvim-lua/plenary.nvim'] = { module = 'plenary' },
+  ['nvim-lua/plenary.nvim'] = {},
 
   ['wbthomason/packer.nvim'] = {},
 
   ['BurntSushi/ripgrep'] = {},
 
   ['nvim-treesitter/nvim-treesitter'] = {
-    run = 'TSUpdate',
+    build = ':TSUpdate',
     config = function()
       require('plugins.config.treesitter')
     end,
@@ -56,7 +56,7 @@ return {
 
   ['nvim-telescope/telescope.nvim'] = {
     tag = '0.1.0',
-    requires = { { 'nvim-lua/plenary.nvim' } },
+    requires = { 'nvim-lua/plenary.nvim' },
     config = function()
       require('plugins.config.telescope').core_config()
     end,
@@ -66,8 +66,17 @@ return {
     after = 'telescope.nvim',
     disable = vim.fn.executable('make') == 0,
     run = 'make',
+    requires = { { 'nvim-telescope/telescope.nvim' } },
     config = function()
-      require('plugins.config.telescope').fzf_config()
+      require('plugins.config.telescope').load_extension('fzf')
+    end,
+  },
+
+  ['debugloop/telescope-undo.nvim'] = {
+    after = 'telescope.nvim',
+    requires = { 'nvim-telescope/telescope.nvim' },
+    config = function()
+      require('plugins.config.telescope').load_extension('undo')
     end,
   },
 
@@ -76,7 +85,7 @@ return {
       require('plugins.config.whichkey')
     end,
   },
-
+  --
   ['brooth/far.vim'] = {
     config = function()
       require('plugins.config.far')
@@ -95,11 +104,11 @@ return {
     end,
   },
 
-  -- ['mhartington/formatter.nvim'] = {
-  -- 	config = function()
-  -- 		require('plugins.config.formatter')
-  -- 	end,
-  -- },
+  ['mhartington/formatter.nvim'] = {
+    config = function()
+      require('plugins.config.formatter')
+    end,
+  },
 
   ['kdheepak/lazygit.nvim'] = {
     config = function()
@@ -115,54 +124,46 @@ return {
     end,
   },
 
+  -- Package Manager
+  ['williamboman/mason.nvim'] = {
+    build = ':MasonUpdate',
+    config = function()
+      require('plugins.config.lsp_tools.mason_conf')
+    end,
+  },
+
+  ['folke/neodev.nvim'] = {
+    config = function()
+      require('plugins.config.lsp_tools.neodev')
+    end,
+  },
+
   -- Formatting and linting
   ['jose-elias-alvarez/null-ls.nvim'] = {
     as = 'null-ls',
-  },
-
-  -- Package Manager
-  ['williamboman/mason.nvim'] = {
-    as = 'mason',
-    dependencies = {
-      'williamboman/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
+    requires = {
+      { 'williamboman/mason.nvim' },
+      { 'jay-babu/mason-null-ls.nvim', as = 'mason-null-ls' },
     },
-  },
-
-  ['williamboman/mason-lspconfig.nvim'] = {
-    as = 'mason-lspconfig',
-    dependencies = {
-      'williamboman/mason.nvim',
-    },
-    -- cmd = { "LspInstall", "LspUninstall" },
-  },
-
-  -- null-ls manager
-  ['jayp0521/mason-null-ls.nvim'] = {
-    as = 'mason-null-ls',
-    dependencies = {
-      'williamboman/mason.nvim',
-      'jose-elias-alvarez/null-ls.nvim',
-    },
+    config = function()
+      require('plugins.config.lsp_tools.null_ls')
+    end,
   },
 
   -- Built-in LSP
   ['neovim/nvim-lspconfig'] = {
-    -- module = 'lspconfig',
-    dependencies = {
-      'jose-elias-alvarez/null-ls.nvim',
-      'williamboman/mason.nvim',
-      'mason-lspconfig.nvim',
-      'jayp0521/mason-null-ls.nvim',
+    requires = {
+      { 'williamboman/mason.nvim' },
+      { 'williamboman/mason-lspconfig.nvim', as = 'mason-lspconfig' },
     },
     config = function()
-      require('plugins.config.lsp')
+      require('plugins.config.lsp_tools.nvim_lspconfig')
     end,
   },
 
   ['folke/trouble.nvim'] = {
     as = 'trouble',
-    dependencies = {
+    requires = {
       'neovim/nvim-lspconfig',
     },
   },
@@ -182,7 +183,7 @@ return {
   -- },
 
   ['hrsh7th/nvim-cmp'] = {
-    after = 'lspkind.nvim',
+    -- after = 'lspkind.nvim',
     config = function()
       require('plugins.config.cmp')
     end,
@@ -254,7 +255,7 @@ return {
   ['slim-template/vim-slim'] = {},
 
   ['m4xshen/hardtime.nvim'] = {
-    dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
+    requires = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
     config = function()
       require('plugins.config.hardtime')
     end,

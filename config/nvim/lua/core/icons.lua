@@ -4,6 +4,17 @@ return {
   Buffer = '  ',
   Bomb = '  ',
 
+  Success = '✓',
+  Failure = '✗',
+  Pending = '➜',
+
+  Search = '  ',
+  File = '  ',
+  Files = '  ',
+  Settings = '  ',
+  CloseCircle = '  ',
+  Register = '  ',
+
   -- Lsp kinds
   Snippet = '  ',
   FolderOpen = '  ',
@@ -22,7 +33,6 @@ return {
   Enum = ' 了 ',
   Keyword = '  ',
   Color = '  ',
-  File = '  ',
   Folder = '  ',
   EnumMember = '  ',
   Constant = '  ',

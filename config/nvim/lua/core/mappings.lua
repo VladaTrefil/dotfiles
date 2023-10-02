@@ -59,9 +59,14 @@ M.general = {
     ["<Leader>'"] = { "e<ESC>a'<ESC>bi'<ESC>lel", "Enclose with '' " },
     ['<Leader>"'] = { 'e<ESC>a"<ESC>bi"<ESC>lel', 'Enclose with "" ' },
 
-    ['<leader>s'] = {
+    ['<leader>ss'] = {
       [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
       'Open substitution with current word',
+    },
+
+    ['<leader>sc'] = {
+      utils.switch_case_line_under_cursor,
+      'Switch case of word under cursor',
     },
 
     ['<C-Down>'] = { ':resize -10<CR>', 'Resize up' },
@@ -183,8 +188,7 @@ M.telescope = function(actions)
   return {
     base = {
       n = {
-        -- find
-        -- ['<leader>pp'] = { '<cmd> Telescope find_files <CR>', 'find files' },
+        ['<leader>pm'] = { '<cmd> Telescope <CR>', 'Menu [telescope]' },
         ['<leader>pp'] = {
           '<cmd> Telescope find_files follow=true hidden=true <CR>',
           'Search in project',
@@ -200,6 +204,7 @@ M.telescope = function(actions)
         -- -- vim internals
         ['<leader>pvk'] = { '<cmd> Telescope keymaps <CR>', 'Keymaps [telescope]' },
         ['<leader>pvm'] = { '<cmd> Telescope man_pages <CR>', 'Man pages [telescope]' },
+        ['<leader>pvn'] = { '<cmd> Telescope notify <CR>', 'Notifications [telescope]' },
         ['<leader>pvc'] = {
           '<cmd> Telescope command_history <CR>',
           'Command history [telescope]',

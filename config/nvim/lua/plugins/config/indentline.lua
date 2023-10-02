@@ -1,27 +1,35 @@
-local blankline_ok, blankline = pcall(require, 'indent_blankline')
+local indentline_ok, indentline = pcall(require, 'ibl')
 
-if not blankline_ok then
-  return
+if not indentline_ok then
+	return
 end
 
-local options = {
-  indentLine_enabled = 1,
-  filetype_exclude = {
-    'help',
-    'terminal',
-    'alpha',
-    'packer',
-    'lspinfo',
-    'TelescopePrompt',
-    'TelescopeResults',
-    'mason',
-    'dashboard',
-  },
-  buftype_exclude = { 'terminal' },
-  show_trailing_blankline_indent = false,
-  show_first_indent_level = false,
-  show_current_context = true,
-  show_current_context_start = true,
+local highlight = {
+	'Bg2',
+	'Bg3',
+	'Bg4',
 }
 
-blankline.setup(options)
+indentline.setup({
+	debounce = 100,
+	indent = {
+		highlight = highlight,
+		char = { '┃', '│', '╎' },
+		tab_char = { '┃', '│', '╎' },
+	},
+	exclude = {
+		filetypes = {
+			'help',
+			'terminal',
+			'alpha',
+			'packer',
+			'lspinfo',
+			'TelescopePrompt',
+			'TelescopeResults',
+			'mason',
+			'dashboard',
+		},
+		buftypes = { 'terminal' },
+	},
+	remove_blankline_trail = false,
+})

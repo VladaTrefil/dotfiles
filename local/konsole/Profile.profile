@@ -26,7 +26,7 @@ KeyBindings=default
 [Scrolling]
 HistoryMode=1
 HistorySize=2000
-ScrollBarPosition=1
+ScrollBarPosition=2
 ScrollFullPage=true
 
 [Terminal Features]

@@ -81,7 +81,7 @@ opt.fillchars = 'fold:|,eob: '
 opt.foldenable = true
 
 if opt.encoding:get() == 'latin1' and fn.has('gui_running') then
-	opt.encoding = 'utf-8'
+  opt.encoding = 'utf-8'
 end
 
 opt.list = true
@@ -89,48 +89,48 @@ opt.listchars:append('space:⋅')
 opt.listchars:append('eol:↴')
 
 if opt.listchars:get() == 'eol:$' then
-	opt.listchars = 'tab:> ,trail:-,extends:>,precedes:<,nbsp:+'
+  opt.listchars = 'tab:> ,trail:-,extends:>,precedes:<,nbsp:+'
 end
 
 if vim.v.version > 703 or vim.v.version == 703 and fn.has('patch541') then
-	-- Delete comment character when joining commented lines
-	opt.formatoptions:append('j')
+  -- Delete comment character when joining commented lines
+  opt.formatoptions:append('j')
 end
 
 -------------------------------------------------------------------------------------------------------
 -- Disable default plugins: {{{
 
 local default_plugins = {
-	'2html_plugin',
-	'getscript',
-	'getscriptPlugin',
-	'gzip',
-	'logipat',
-	'netrw',
-	'netrwPlugin',
-	'netrwSettings',
-	'netrwFileHandlers',
-	'matchit',
-	'tar',
-	'tarPlugin',
-	'rrhelper',
-	'spellfile_plugin',
-	'vimball',
-	'vimballPlugin',
-	'zip',
-	'zipPlugin',
-	'tutor',
-	'rplugin',
-	'syntax',
-	'synmenu',
-	'optwin',
-	'compiler',
-	'bugreport',
-	'ftplugin',
+  '2html_plugin',
+  'getscript',
+  'getscriptPlugin',
+  'gzip',
+  'logipat',
+  'netrw',
+  'netrwPlugin',
+  'netrwSettings',
+  'netrwFileHandlers',
+  'matchit',
+  'tar',
+  'tarPlugin',
+  'rrhelper',
+  'spellfile_plugin',
+  'vimball',
+  'vimballPlugin',
+  'zip',
+  'zipPlugin',
+  'tutor',
+  'rplugin',
+  'syntax',
+  'synmenu',
+  'optwin',
+  'compiler',
+  'bugreport',
+  'ftplugin',
 }
 
 for _, plugin in pairs(default_plugins) do
-	g['loaded_' .. plugin] = 1
+  g['loaded_' .. plugin] = 1
 end
 
 -- }}}

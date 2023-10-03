@@ -43,7 +43,7 @@ M.setup_autocmds = function()
       vim.api.nvim_create_autocmd('BufUnload', {
         group = 'alpha_tabline',
         buffer = 0,
-        command = 'set showtabline=2 ruler laststatus=3',
+        command = 'set showtabline=2 ruler laststatus=2',
       })
     end,
   })

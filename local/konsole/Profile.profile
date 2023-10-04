@@ -1,7 +1,7 @@
 [Appearance]
 AntiAliasFonts=true
 BoldIntense=true
-ColorScheme=Catppuccin
+ColorScheme=rose-pine
 Font=Iosevka Nerd Font,14,-1,5,50,0,0,0,0,0
 UseFontLineChararacters=true
 

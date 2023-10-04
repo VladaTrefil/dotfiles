@@ -6,17 +6,17 @@ local config = {
 	Todo = { fg = colors.light0, bold = true, italic = true },
 	Error = { fg = colors.bright_red, bg = colors.dark0, bold = true, undercurl = true },
 	String = { fg = colors.green, bg = colors.none, italic = true },
-	Type = { link = 'Aqua' },
+	Type = { fg = colors.faded_purple, bg = colors.none, bold = true },
 
 	Statement = { link = 'PurpleBold' },
-	Conditional = { link = 'Aqua' },
+	Conditional = { link = 'Purple' },
 	Repeat = { link = 'Aqua' },
 	Label = { link = 'Aqua' },
 	Exception = { link = 'Red' },
 	Operator = { fg = colors.light3 },
 	Keyword = { link = 'Blue' },
 
-	Identifier = { link = 'Orange' },
+	Identifier = { fg = colors.orange, bg = colors.none },
 	Function = { link = 'GreenBold' },
 
 	PreProc = { link = 'Aqua' },

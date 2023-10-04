@@ -232,12 +232,6 @@ return {
   },
 
   ['RRethy/vim-illuminate'] = {}, -- " Highlights words that match the word under cursor
-  ['norcalli/nvim-colorizer.lua'] = {
-    config = function()
-      require('plugins.config.colorizer')
-    end,
-  },
-
   ['tpope/vim-eunuch'] = {}, -- " File commands in vim
 
   ['drzel/vim-repo-edit'] = {}, -- " Quickly clone github repo to tmp

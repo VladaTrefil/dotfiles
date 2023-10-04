@@ -102,7 +102,7 @@ M.general = {
     ['<'] = { '<gv', 'Improve indent in visual' },
 
     ["'"] = { "c''<ESC>P", "Enclose with '' " },
-    ['"'] = { 'c""<ESC>P', 'Enclose with "" ' },
+    -- ['"'] = { 'c""<ESC>P', 'Enclose with "" ' },
     ['`'] = { 'c``<ESC>P', 'Enclose with `` ' },
 
     ['('] = { 'c()<ESC>P', 'Enclose with ()' },
@@ -111,6 +111,8 @@ M.general = {
 
     ['J'] = { "<cmd>m '>+1<CR>gv=gv", 'Move selected block down a line' },
     ['K'] = { "<cmd>m '>-2<CR>gv=gv", 'Move selected block up a line' },
+
+    ['<Leader>sc'] = { utils.convert_color_code, 'Convert selection to hex/rgb' },
   },
 
   x = {

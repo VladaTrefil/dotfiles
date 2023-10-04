@@ -48,6 +48,18 @@ M.convert_case = function(word)
 	else
 		return word
 	end
+
+-- Convert hex to rgb
+M.hex2rgb = function(hex)
+  local value = hex:gsub('#', '')
+  return tonumber('0x' .. value:sub(1, 2)),
+      tonumber('0x' .. value:sub(3, 4)),
+      tonumber('0x' .. value:sub(5, 6))
+end
+
+-- Convert rgb to hex
+M.rgb2hex = function(red, green, blue)
+  return string.format('#%02x%02x%02x', red, green, blue)
 end
 
 -- sets vim mappings from a table of mode/keybinds to commands
@@ -204,6 +216,25 @@ M.switch_case_line_under_cursor = function()
 		word_start + #word,
 		{ word_with_converted_case }
 	)
+M.convert_color_code = function(red, green, blue)
+  vim.fn.feedkeys(M.termcodes('"9y'), 'nx')
+
+  local selection = vim.fn.getreg('9')
+  local value
+
+  if selection:find('#') then
+    local red, green, blue = M.hex2rgb(selection)
+    value = string.format('%s,%s,%s', red, green, blue)
+  elseif selection:find(',') then
+    local red, green, blue = selection:match('(%d+),%s?(%d+),%s?(%d+)')
+    value = M.rgb2hex(red, green, blue)
+  else
+    vim.notify('Invalid color code', vim.log.levels.ERROR, { title = 'Color Converter' })
+    return
+  end
+
+  vim.fn.setreg('9', value)
+  vim.fn.feedkeys(M.termcodes('gv"9p'), 'nx')
 end
 
 -- Clears neovim UI elements

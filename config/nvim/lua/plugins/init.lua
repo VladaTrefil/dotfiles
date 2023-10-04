@@ -25,6 +25,9 @@ packer.startup({
       packer.sync()
     end
 
+    -- add binaries installed by mason.nvim to path
+    vim.env.PATH = vim.env.PATH .. ':' .. stdpath('data') .. '/mason/bin'
+
     -- load compiled plugins path if exists
     local compiled_file, _ = loadfile(default_compile_path)
     if compiled_file then
@@ -48,6 +51,3 @@ packer.startup({
     compile_on_sync = true,
   },
 })
-
--- add binaries installed by mason.nvim to path
--- vim.env.PATH = vim.env.PATH .. ':' .. stdpath('data') .. '/mason/bin'

@@ -54,17 +54,17 @@ M.general = {
 
     ['<Leader>z'] = { 'za', 'Toggle fold' },
 
-    ['<Leader>sc'] = { '<cmd> setlocal spell! <CR>', 'Spellcheck' },
-
     ["<Leader>'"] = { "e<ESC>a'<ESC>bi'<ESC>lel", "Enclose with '' " },
     ['<Leader>"'] = { 'e<ESC>a"<ESC>bi"<ESC>lel', 'Enclose with "" ' },
+
+    ['<Leader>sh'] = { '<cmd> setlocal spell! <CR>', 'Spellcheck' },
 
     ['<leader>ss'] = {
       [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
       'Open substitution with current word',
     },
 
-    ['<leader>sc'] = {
+    ['<leader>su'] = {
       utils.switch_case_line_under_cursor,
       'Switch case of word under cursor',
     },

@@ -49,6 +49,7 @@ export ASDF_CONFIG_FILE="$XDG_CONFIG_HOME/asdf/asdfrc"
 export ASDF_DEFAULT_TOOL_VERSIONS_FILENAME="$XDG_CONFIG_HOME/asdf/tool-versions"
 export ASDF_GEM_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-gems"
 
+# fix readline error when installing old ruby versions (2.4.1)
 export RUBY_CONFIGURE_OPTS='--with-readline-dir=/home/linuxbrew/.linuxbrew/Cellar/readline/8.2.1/lib'
 
 # }}}
@@ -149,6 +150,9 @@ export SOLARGRAPH_CACHE="$XDG_CACHE_HOME/solargraph"
 
 # Rails test fix
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+# Ruby options - require bundle/setup library to compile gems
+export RUBYOPT="-rbundler/setup"
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────

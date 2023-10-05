@@ -114,6 +114,8 @@
       force: true
       path: local/konsole
 
+    ~/.config/ranger: config/ranger
+
     # Local
     ~/.local/share/fonts:
       force: true

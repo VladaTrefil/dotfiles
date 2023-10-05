@@ -170,7 +170,7 @@ if [ -f "$(which python3)" ]; then
 
   printf "\nExtensions:\n"
 
-  packages=("pynvim" "yarp" "speedtest-cli" "yt-dlp")
+  packages=("pynvim" "yarp" "speedtest-cli" "yt-dlp" "ranger-fm")
   installed_packages=$(pip list)
 
   for package in "${packages[@]}"; do

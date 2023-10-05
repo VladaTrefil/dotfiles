@@ -388,13 +388,13 @@ fi
 printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
 echo "──  QMK:"
 
-if [ ! -f "$XDG_LIB_HOME/qmk" ]; then
+if [ ! -f "$BIN_PATH/qmk" ]; then
   echo "Installing QMK"
 
   #Install
   python3 -m pip install --user qmk
 
-  if [ -f "$XDG_LIB_HOME/qmk" ]; then
+  if [ -f "$BIN_PATH/qmk" ]; then
     qmk setup -y -H "$XDG_DATA_HOME/qmk"
     qmk config user.keyboard=ergodox_ez/glow
   fi

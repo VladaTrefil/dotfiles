@@ -11,6 +11,10 @@ opt.updatetime = 80
 -- Display line numbers
 opt.number = true
 opt.relativenumber = true
+
+-- Dont show mode indicator in command line
+opt.showmode = false
+
 -- Enable current line highlight
 opt.cursorline = true
 

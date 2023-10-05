@@ -73,7 +73,7 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
     echo "  asdf plugin"
   fi
 
-  versions=("2.6.0" "2.6.6" "2.6.8" "2.6.9" "2.7.5" "3.0.0" "3.1.1" "3.1.2", "3.2.2")
+  versions=("2.6.0" "2.6.6" "2.6.8" "2.6.9" "2.7.5" "3.0.0" "3.1.1" "3.1.2" "3.2.2")
   installed_versions=$(asdf list ruby)
 
   for v in "${versions[@]}"; do

@@ -181,6 +181,8 @@ if [ -f "$(which python3)" ]; then
       echo "  $package"
     fi
   done
+
+  python3 -m pip install -U yt-dlp
 fi
 
 # }}}

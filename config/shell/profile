@@ -1,4 +1,4 @@
-#  vim: set ft=sh:
+#!/bin/bash
 #                           ___      ___             
 #                         /'___\ __ /\_ \            
 #     _____   _ __   ___ /\ \__//\_\\//\ \      __   
@@ -8,7 +8,6 @@
 #      \ \ \/  \/_/ \/___/  \/_/   \/_/\/____/\/____/
 #       \ \_\                                        
 #        \/_/                                        
-
 
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # ENV Variables: {{{
@@ -21,6 +20,9 @@ export EXPLORER="ranger"
 export DEV_PATH="$HOME/Development"
 export DOTFILES_PATH="$HOME/Development/dotfiles"
 export IMAGES_PATH="$HOME/Images"
+
+# proton bridge and pass
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -165,9 +167,6 @@ export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
 
 export RUSTUP_HOME="$XDG_CONFIG_HOME/rustup"
 export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
-
-# proton bridge and pass
-export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
 
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"

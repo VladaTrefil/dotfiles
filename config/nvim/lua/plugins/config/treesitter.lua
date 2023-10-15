@@ -30,8 +30,10 @@ require('nvim-treesitter.configs').setup({
   -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
   auto_install = true,
 
+  -- TODO: Indent is usually wrong, see
+  -- https://github.com/nvim-treesitter/nvim-treesitter/issues/2507
   indent = {
-    enable = true,
+    enable = false,
   },
   highlight = {
     -- `false` will disable the whole extension

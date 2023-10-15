@@ -177,3 +177,5 @@ export W3M_DIR="$XDG_STATE_HOME/w3m"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+
+export RANGER_LOAD_DEFAULT_RC=false

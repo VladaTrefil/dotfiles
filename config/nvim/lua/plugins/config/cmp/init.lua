@@ -71,8 +71,11 @@ cmp.setup({
   },
 })
 
+-- CursorHold event hold time in milliseconds, also used for swapfile auto-save
 vim.o.updatetime = 250
+-- Options for the behavior of completion menu
 vim.go.completeopt = completeopt
+-- Maximum number to show in the completion menu
 vim.o.pumheight = 20
 
 vim.api.nvim_create_autocmd('BufWritePost', {

@@ -16,7 +16,7 @@
 export EDITOR="nvim"
 export TERMINAL="konsole"
 export BROWSER="brave-browser"
-export EXPLORER="dolphin"
+export EXPLORER="ranger"
 
 export DEV_PATH="$HOME/Development"
 export DOTFILES_PATH="$HOME/Development/dotfiles"

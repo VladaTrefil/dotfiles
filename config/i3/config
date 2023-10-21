@@ -43,7 +43,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id ibus-daemon -d
 
 # Plasma compatibility improvements
-exec_always --no-startup-id feh --bg-scale -g 1920x1080 ~/.background/mountains.jpg -g 3840x1440 ~/.background/mountains2.jpg 
+exec_always --no-startup-id feh --bg-scale -g 3840x1440 ~/.background/mountains-blue-and-beige.jpg -g 1920x1080 ~/.background/mountains-blue-and-gold.jpg
 
 # Launch dunst
 exec_always --no-startup-id pkill dunst; dunst
@@ -107,12 +107,12 @@ for_window [class = "^.*"] border pixel 0
 for_window [title = "^.*"] border pixel 0
 
 # it fails to get colors from Xresources.
-set_from_resource $fg i3wm.color7 #bdbdbd
-set_from_resource $bg i3wm.color0 #0b0e14
-set_from_resource $ac "#ffffff" #85105c
+set_from_resource $fg i3wm.color7 #e0def4
+set_from_resource $bg i3wm.color0 #0c0c18
+set_from_resource $ac i3wm.color0 #f2c8c7
 
 # class                 border  backgr. text indicator child_border
-client.focused          $ac     $ac     $fg  $ac       $ac
+client.focused          $ac     $ac     $bg  $ac       $ac
 client.focused_inactive $bg     $bg     $fg  $bg       $bg
 client.unfocused        $bg     $bg     $fg  $bg       $bg
 client.urgent           $bg     $bg     $fg  $bg       $bg

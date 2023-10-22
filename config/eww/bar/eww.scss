@@ -1,17 +1,18 @@
-@import "../variables.scss";
+@import '../variables.scss';
 
 .bar {
-  padding: $m*3;
+  padding: $m * 3;
   padding-bottom: 0;
+  background-color: transparent;
 
   &__inner {
     background-color: $background;
-    padding: $m*2;
+    padding: $m * 2;
     border-radius: 10px;
     font-size: $font-size;
     color: $fg;
   }
 }
 
-@import "./widgets.scss";
-@import "./windows.scss";
+@import './widgets.scss';
+@import './windows.scss';

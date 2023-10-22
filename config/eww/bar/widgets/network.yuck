@@ -11,15 +11,15 @@
        :space-evenly "false"
        :orientation "h"
        :spacing spacing
+    (box :class "network__down"
+      :space-evenly "false"
+      (label :text ""
+             :class "network__icon" )
+      (label :text "${network_down} Mb/s"
+             :class "network__label" ))
     (box :class "network__up"
        :space-evenly "false"
       (label :text ""
              :class "network__icon" )
       (label :text "${network_up} Mb/s"
-             :class "network__label" ))
-    (box :class "network__down"
-       :space-evenly "false"
-      (label :text ""
-             :class "network__icon" )
-      (label :text "${network_down} Mb/s"
              :class "network__label" ))))

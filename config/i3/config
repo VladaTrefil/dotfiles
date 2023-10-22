@@ -27,10 +27,6 @@ font pango:Iosevka M 8
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Exec on startup: {{{
 
-# Start XDG autostart .desktop files using dex. See also
-# https://wiki.archlinux.org/index.php/XDG_Autostart
-exec --no-startup-id dex --autostart --environment i3
-
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 # exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -39,19 +35,8 @@ exec --no-startup-id dex --autostart --environment i3
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 # exec --no-startup-id nm-applet
 
-# Launch ibus
-exec --no-startup-id ibus-daemon -d
-
-# Plasma compatibility improvements
-exec_always --no-startup-id feh --bg-scale -g 3840x1440 ~/.background/mountains-blue-and-beige.jpg -g 1920x1080 ~/.background/mountains-blue-and-gold.jpg
-
-# Launch dunst
-exec_always --no-startup-id pkill dunst; dunst
-
-# Launch picom
-exec_always --no-startup-id killall picom; picom --experimental-backends --config $HOME/.config/i3/picom.conf
-
-exec --no-startup-id $HOME/.config/eww/bar/launch_bar
+exec --no-startup-id $HOME/.config/i3/on-startup.sh initial
+exec_always --no-startup-id $HOME/.config/i3/on-startup.sh
 
 # exec --no-startup-id i3-msg 'workspace 1; exec konsole'
 # exec --no-startup-id i3-msg 'workspace 2; exec konsole'
@@ -142,10 +127,12 @@ bindsym $mod+Shift+q kill
 # start dmenu (a program launcher)
 # bindsym $mod+d exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:
-bindsym $mod+space exec "bash $HOME/.config/rofi/launcher/script.sh"
+bindsym $mod+space exec "bash $HOME/.config/rofi/launch.sh"
+bindsym $mod+Shift+i exec "bash $HOME/.config/rofi/launch.sh 'cheatsheets'"
+bindsym $mod+Shift+e exec --no-startup-id "bash $HOME/.config/rofi/launch.sh 'powermenu'"
 
 # download youtube video from clipboard
-bindsym $mod+Shift+e exec --no-startup-id "bash $HOME/.local/bin/usr/ydl_clip"
+bindsym $mod+Shift+y exec --no-startup-id "bash $HOME/.local/bin/usr/ydl-clip.sh"
 
 # There also is i3-dmenu-desktop which only displays applications shipping a
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
@@ -216,9 +203,6 @@ bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-
-# using plasma's logout screen instead of i3's
-bindsym $mod+Shift+e exec --no-startup-id qdbus-qt5 org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
 
 # Set shut down, restart and locking features
 bindsym $mod+0 mode "$mode_system"

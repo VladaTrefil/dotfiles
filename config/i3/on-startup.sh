@@ -48,6 +48,7 @@ then
   start_initial
 fi
 
+set_background
 start_picom &
 sleep 1
 start_eww &

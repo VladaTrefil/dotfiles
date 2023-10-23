@@ -47,7 +47,7 @@ alias sinfin-init="bash $BIN_PATH/usr/init-sinfin-project.sh"
 alias folio-test-account="bundle exec rails runner \"eval(File.read '$BIN_PATH/usr/folio-test-account.rb')\""
 
 # Youtube-DL download music
-alias ydl="yt-dlp -x --audio-format \"mp3\" -o '%(title)s.%(ext)s' --embed-thumbnail"
+alias ydl="bash $HOME/.local/bin/usr/ydl-clip.sh"
 
 # NVIM
 alias vim="$EDITOR"

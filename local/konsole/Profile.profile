@@ -14,7 +14,7 @@ Command=/bin/zsh --login
 Name=Profile
 Parent=FALLBACK/
 TerminalCenter=false
-TerminalMargin=20
+TerminalMargin=15
 
 [Interaction Options]
 MiddleClickPasteMode=1

@@ -21,9 +21,6 @@ export DEV_PATH="$HOME/Development"
 export DOTFILES_PATH="$HOME/Development/dotfiles"
 export IMAGES_PATH="$HOME/Images"
 
-# proton bridge and pass
-export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
-
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -38,13 +35,16 @@ export THEME_SELECTED="#69a1fb"
 export THEME_ACTIVE="#9aef94"
 export THEME_URGENT="#Ea4769"
 
+# proton bridge and pass
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
+
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # ASDF: {{{
 
-export ASDF_DIR="$XDG_LIB_HOME/asdf"
+export ASDF_DIR="$XDG_DATA_HOME/asdf"
 export ASDF_DATA_DIR="$XDG_DATA_HOME/asdf"
 
 export ASDF_CONFIG_FILE="$XDG_CONFIG_HOME/asdf/asdfrc"
@@ -154,7 +154,7 @@ export SOLARGRAPH_CACHE="$XDG_CACHE_HOME/solargraph"
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 # Ruby options - require bundle/setup library to compile gems
-export RUBYOPT="-rbundler/setup"
+# export RUBYOPT="-rbundler/setup"
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────

@@ -15,27 +15,9 @@ function start_initial() {
   pulseaudio --start
   bluetoothctl power on
 
-  syncthing
-
-  start_dunst &
-}
-
-function start_eww() {
-  sh "$XDG_CONFIG_HOME/eww/bar/launch_bar"
-}
-
-function start_picom() {
-  picom --experimental-backends --config "$XDG_CONFIG_HOME/i3/picom.conf"
-}
-
-function start_dunst() {
-  dunst
-}
-
-function set_background() {
-  feh --bg-scale -g 3840x1440 ~/.background/mountains-blue-and-beige.jpg \
-                 -g 1920x1080 ~/.background/mountains-blue-and-gold.jpg
-
+  syncthing &
+  protonmail-bridge &
+  dunst &
 }
 
 killall -q dunst
@@ -45,10 +27,16 @@ sleep 1
 
 if [ "$1" == "initial" ]
 then
+  # Only run when starting i3 for the first time
   start_initial
 fi
 
-set_background
-start_picom &
-sleep 1
-start_eww &
+# Set desktop wallpapers
+feh --bg-scale -g 3840x1440 ~/.background/mountains-blue-and-beige.jpg \
+               -g 1920x1080 ~/.background/mountains-blue-and-gold.jpg
+
+# Launch picom compositor
+picom --experimental-backends --config "$XDG_CONFIG_HOME/i3/picom.conf" &
+
+# Launch eww bar
+sleep 1; sh "$XDG_CONFIG_HOME/eww/bar/launch_bar" &

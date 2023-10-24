@@ -13,8 +13,8 @@
 (include "./bar/widgets/time.yuck")
 
 (defwidget left []
-  (box :orientation "h" 
-       :space-evenly false  
+  (box :orientation "h"
+       :space-evenly false
        :halign "start"
        :class "bar__left"
     (control)
@@ -22,8 +22,8 @@
     (workspaces)))
 
 (defwidget right []
-  (box :orientation "h" 
-       :space-evenly false  
+  (box :orientation "h"
+       :space-evenly false
        :halign "end"
        :class "bar__right"
     (volume)
@@ -40,8 +40,8 @@
 
 ; (defwidget center []
 ;   (box
-;     :orientation "h" 
-;     :space-evenly false  
+;     :orientation "h"
+;     :space-evenly false
 ;     :halign "center"
 ;     :class "center_modules"
 ;     (music)))

@@ -50,7 +50,7 @@ alias folio-test-account="bundle exec rails runner \"eval(File.read '$BIN_PATH/u
 alias ydl="bash $HOME/.local/bin/usr/ydl-clip.sh"
 
 # NVIM
-alias vim="$EDITOR"
+alias vim="nvim"
 alias history="$EDITOR $XDG_STATE_HOME/zsh/history"
 
 # Docker

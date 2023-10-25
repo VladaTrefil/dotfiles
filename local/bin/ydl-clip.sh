@@ -33,7 +33,7 @@ function notify_download_status() {
   esac
 
   dunstify --hints=string:x-dunst-stack-tag:test \
-           --timeout=20000 \
+           --timeout=5000 \
            --appname="Youtube DL" \
            "$message" "$name"
 }

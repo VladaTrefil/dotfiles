@@ -6,7 +6,6 @@ end
 
 local WIDE_HEIGHT = 40
 
-local _, copilot_cmp_comparators = pcall(require, 'copilot_cmp.comparators')
 local cmp_utils = require('plugins.config.cmp.utils')
 local format = require('plugins.config.cmp.format')
 local mappings_config = require('core.mappings').cmp_api(cmp)
@@ -27,16 +26,15 @@ local window = {
 
 local sources = {
   { name = 'ultisnips', priority = 1000 },
-  { name = 'copilot', priority = 900 },
   { name = 'nvim_lsp', priority = 750 },
-  { name = 'buffer', priority = 500, option = { get_bufnrs = cmp_utils.get_buffers } },
+  { name = 'copilot', priority = 600 },
+  { name = 'buffer', priority = 400, option = { get_bufnrs = cmp_utils.get_buffers } },
   { name = 'path', priority = 250 },
 }
 
 local sort = {
   priority_weight = 2,
   comparators = {
-    copilot_cmp_comparators.prioritize or function() end,
     cmp.config.compare.exact,
     cmp.config.compare.scopes,
     cmp.config.compare.score,

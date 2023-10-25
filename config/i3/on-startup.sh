@@ -1,8 +1,8 @@
 #!/bin/bash
 
-LOCKFILE_DIR="$XDG_RUNTIME_DIR/desktop_env"
-EWW_LOCKFILE="$LOCKFILE_DIR/eww.lock"
-PICOM_LOCKFILE="$LOCKFILE_DIR/picom.lock"
+function notify() {
+  dunstify --appname="i3wm" "$1"
+}
 
 function start_initial() {
   # Start XDG autostart .desktop files using dex. See also
@@ -15,20 +15,17 @@ function start_initial() {
   pulseaudio --start
   bluetoothctl power on
 
-  syncthing &
-  protonmail-bridge &
-  dunst &
+  protonmail-bridge
+  syncthing
 }
-
-killall -q dunst
-killall -q eww
-killall -q picom
-sleep 1
 
 if [ "$1" == "initial" ]
 then
   # Only run when starting i3 for the first time
-  start_initial
+  dunst && notify "Setting up Desktop Environment ..."
+  start_initial &
+else
+  notify "Reloading Desktop Environment ..."
 fi
 
 # Set desktop wallpapers
@@ -36,7 +33,10 @@ feh --bg-scale -g 3840x1440 ~/.background/mountains-blue-and-beige.jpg \
                -g 1920x1080 ~/.background/mountains-blue-and-gold.jpg
 
 # Launch picom compositor
-picom --experimental-backends --config "$XDG_CONFIG_HOME/i3/picom.conf" &
+killall -q picom && sleep 1
+picom --experimental-backends --config "$XDG_CONFIG_HOME/i3/picom.conf" && sleep 1
 
 # Launch eww bar
-sleep 1; sh "$XDG_CONFIG_HOME/eww/bar/launch_bar" &
+sh "$XDG_CONFIG_HOME/eww/bar/launch_bar"
+
+sleep 1; dunstctl close-all

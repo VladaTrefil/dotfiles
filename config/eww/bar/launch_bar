@@ -9,4 +9,8 @@ if [ ! "$(pidof "$EWW")" ]; then
 	sleep 1
 fi
 
-$EWW --restart open bar
+if $EWW windows | grep "/*bar/"; then
+  $EWW --restart open bar
+else
+  $EWW reload bar
+fi

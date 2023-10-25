@@ -133,10 +133,6 @@ M.paste_as_insert = function(reverse)
   vim.api.nvim_feedkeys(keys, 'n', false)
 end
 
-M.paste_as_insert_reverse = function()
-  M.paste_as_insert(true)
-end
-
 M.is_available = function(plugin)
   return packer_plugins ~= nil and packer_plugins[plugin] ~= nil
 end

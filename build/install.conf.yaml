@@ -54,6 +54,7 @@
     - ~/.local/state/nvim/sessions
     - ~/.local/state/nvim/tmp
     - ~/.local/state/nvim/undodir
+    - ~/.local/state/ranger
 
     - ~/.cache
     - ~/.cache/zsh

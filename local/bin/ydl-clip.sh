@@ -9,7 +9,7 @@ DOWNLOADS="$HOME/Music/.meta/downloaded-urls.txt"
 
 SEPARATOR="========================================================================================================================================================================================================"
 
-url="$(echo "${1:-$(xclip -o)}" | sed 's/\(.*\)&list.*/\1/')"
+url="${1:-$(xclip -o)}"
 dir="${2:-$HOME/Music/New}"
 playlist="${3:-0}"
 
@@ -38,9 +38,10 @@ function notify_download_status() {
            "$message" "$name"
 }
 
-name=$(wget --quiet -O - "$url" | sed -n -e 's!.*<title>\(.*\) -.*</title>.*!\1!p')
+base_url="$(echo "$url" | sed 's/\(.*\)&list.*/\1/')"
+name=$(wget --quiet -O - "$base_url" | sed -n -e 's!.*<title>\(.*\) -.*</title>.*!\1!p')
 
-if ! grep -qo "$url" "$DOWNLOADS"
+if ! grep -qo "$base_url" "$DOWNLOADS"
 then
   if [ "$playlist" -eq 1 ]
   then
@@ -48,6 +49,8 @@ then
   else
     playlist="--no-playlist"
   fi
+
+  echo $playlist
 
   notify_download_status "$name" "start"
 

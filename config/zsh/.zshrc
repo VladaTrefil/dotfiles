@@ -166,4 +166,4 @@ if [ -d "$BIN_PATH" ]; then
 fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-# export PATH="$GEM_HOME/bin" # Add RVM to PATH for scripting
+export PATH="$PATH:$GEM_HOME/bin" # Add gem home

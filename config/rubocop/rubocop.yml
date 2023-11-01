@@ -28,8 +28,8 @@ AllCops:
     - 'tmp/**/*'
     - 'vendor/**/*'
 
-Layout/LineLength:
-  EnforcedStyle: ['^RSpec\.describe\s.*\sdo']
+# Layout/LineLength:
+#   EnforcedStyle: ['^RSpec\.describe\s.*\sdo']
 
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space

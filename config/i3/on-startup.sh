@@ -15,7 +15,7 @@ function start_initial() {
   pulseaudio --start
   bluetoothctl power on
 
-  protonmail-bridge
+  # protonmail-bridge &
   syncthing
 }
 

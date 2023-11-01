@@ -160,7 +160,10 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # floating mode toggle
+# 65 is the keycode for spacebar
 bindcode $mod+Shift+65 floating toggle
+bindsym $mod+Shift+x [floating] move scratchpad
+bindsym $mod+x scratchpad show
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+q layout stacking
@@ -239,13 +242,16 @@ bindsym $mod+r mode "resize"
 # Enable keybindings for notifications
 #bindsym --release Control+space exec dunstctl close
 bindsym --release $mod+Shift+c exec dunstctl close-all
-bindsym --release $mod+Shift+x exec dunstctl history-pop
+# bindsym --release $mod+Shift+x exec dunstctl history-pop
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
-# KDE Plasma: {{{
+# Rules for specific windows: {{{
+
+for_window [class="Clementine"] floating enable; border none width 600px height 600px
+for_window [class="Strawberry"] floating enable; border none width 600px height 600px
 
 # Kill kde startup window
 for_window [title="Desktop — Plasma"] kill; floating enable; border none

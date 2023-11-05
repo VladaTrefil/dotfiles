@@ -11,6 +11,7 @@ UseCustomCursorColor=true
 
 [General]
 Command=/bin/zsh --login
+DimWhenInactive=false
 Name=Profile
 Parent=FALLBACK/
 TerminalCenter=false
@@ -18,6 +19,7 @@ TerminalMargin=15
 
 [Interaction Options]
 MiddleClickPasteMode=1
+TripleClickMode=1
 UnderlineFilesEnabled=true
 
 [Keyboard]

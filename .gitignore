@@ -3,3 +3,4 @@ config/nvim/plugged
 config/lazygit/state.yml
 
 .uuid
+.secret-env

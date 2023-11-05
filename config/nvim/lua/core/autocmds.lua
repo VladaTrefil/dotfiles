@@ -11,14 +11,14 @@ autocmd('BufWinEnter', {
   end,
 })
 
-autocmd('BufNewFile, BufRead', {
+autocmd({ 'BufNewFile', 'BufRead' }, {
   pattern = '*.tsx,*.jsx',
   callback = function()
     opt.filetype = 'typescript.typescriptreact'
   end,
 })
 
-autocmd('FocusGained,BufEnter,BufWritePost', {
+autocmd({ 'FocusGained', 'BufEnter', 'BufWritePost' }, {
   desc = 'Refresh buffer',
   pattern = '*',
   callback = function()
@@ -35,7 +35,7 @@ autocmd('BufWritePost', {
   end,
 })
 
-autocmd('BufRead,BufNewFile', {
+autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Auto format xml buffer',
   pattern = '*.xml',
   callback = function()
@@ -45,7 +45,7 @@ autocmd('BufRead,BufNewFile', {
   end,
 })
 
-autocmd('BufWritePre,FileWritePre', {
+autocmd({ 'BufWritePre', 'FileWritePre' }, {
   desc = 'Auto mkdir for missing directory',
   pattern = '*',
   callback = function()
@@ -54,7 +54,7 @@ autocmd('BufWritePre,FileWritePre', {
 })
 
 -- Syntax
-autocmd('BufRead,BufNewFile', {
+autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Init rasi syntax',
   pattern = '*.rasi',
   callback = require('syntax.rasi'),

@@ -69,7 +69,7 @@ local config = {
   javascriptPropertyName = { link = 'Fg1' },
 
   javascriptLogicSymbols = { link = 'Fg1' },
-  javascriptArrowFunc = { link = 'Yellow' },
+  javascriptArrowFunc = { link = 'Aqua' },
 
   javascriptDocParamName = { link = 'Fg4' },
   javascriptDocTags = { link = 'Fg4' },

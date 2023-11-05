@@ -35,18 +35,20 @@ if [ ! -r "$github_key" ]; then
   echo "GitHub SSH key generated."
 fi
 
-touch ./token && echo "$GITHUB_TOKEN" > ./token
-auth=$(gh auth login --with-token < ./token)
-rm ./token
+if [ -z "$GITHUB_TOKEN" ]; then
+  touch ./token && echo "$GITHUB_TOKEN" > ./token
+  auth=$(gh auth login --with-token < ./token)
+  rm ./token
 
-if [ -z "$auth" ]; then
-  echo "Authentication successful"
-else
-  echo "Authentication failed"
-  exit 1
+  if [ -z "$auth" ]; then
+    echo "Authentication successful"
+  else
+    echo "Authentication failed"
+    exit 1
+  fi
 fi
 
-gh ssh-key add "$github_key" --title "Home PC"
+gh ssh-key add "$github_key.pub" --title "Home PC"
 
 # Add SSH key to ssh-agent
 eval "$(ssh-agent -s)"

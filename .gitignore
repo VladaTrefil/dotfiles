@@ -4,3 +4,4 @@ config/lazygit/state.yml
 
 .uuid
 .secret-env
+.zcompdump*

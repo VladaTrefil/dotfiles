@@ -7,7 +7,7 @@ credential = 'test@test.test'
 if Folio::Account.where(email: credential).present?
   print "Folio::Account exists\n"
 else
-  role = if Folio::Account.column_names.include? 'roles'
+  role = if Folio::Account.column_names.include?('roles')
            { roles: ['superuser'] }
          else
            { role: 'superuser' }

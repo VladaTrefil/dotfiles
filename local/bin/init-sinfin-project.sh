@@ -35,11 +35,10 @@ function add_psql_extensions() {
 }
 
 function insert_psql_database_data() {
-  db_data_file_path=$( find "$database_dir" -type f -name "$project*.sql.gz" )
+  db_data_file_path=$( find "$database_dir" -type f -name "$project*.sql.gz" -printf "%T@ %p\n" | sort -n | tail -n 1 | cut -d ' ' -f 2- )
 
   gunzip -ck "$db_data_file_path" > ./db-dump.sql
   psql "${project}_development" < ./db-dump.sql
-
   bin/rails db:migrate
 
   rm ./db-dump.sql

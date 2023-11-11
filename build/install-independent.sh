@@ -82,29 +82,9 @@ if [ -f "$ASDF_DIR/asdf.sh" ]; then
 
       asdf install ruby "$v"
 
-      echo "$GEM_HOME"
       gem install bundler
     else
       echo "  $v"
-    fi
-  done
-
-  printf "\nGems:\n"
-
-  gems=("rails" "spring" "neovim" "solargraph" "prettier")
-  installed_gems="$(gem list --local)"
-
-  for gem in "${gems[@]}"; do
-    if [[ "$installed_gems" != *$gem* ]]; then
-      printf "\n─ adding %s", "$gem"
-
-      if [ "$gem" == "rails" ]; then
-        gem install rails:6.1.4
-      else
-        gem install "$gem"
-      fi
-    else
-      echo "  $gem"
     fi
   done
 

@@ -40,7 +40,8 @@ local config = {
 	iCursor = { link = 'Cursor' },
 	lCursor = { link = 'Cursor' },
 
-	Pmenu = { fg = colors.light1, bg = colors.dark2 },
+	Pmenu = { fg = colors.light0, bg = colors.dark },
+	PmenuBorder = { fg = colors.dark, bg = colors.dark },
 	PmenuSel = { fg = colors.light0, bg = colors.dark4 },
 	PmenuSbar = { bg = colors.dark2 },
 	PmenuThumb = { bg = colors.dark4 },

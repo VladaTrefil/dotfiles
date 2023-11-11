@@ -5,9 +5,9 @@ local results_background = colors.dark
 local preview_background = colors.dark1
 
 local config = {
+	TelescopePromptNormal = { link = 'Pmenu' },
+	TelescopePromptBorder = { link = 'PmenuBorder' },
 	TelescopePromptTitle = { fg = prompt_background, bg = colors.blue },
-	TelescopePromptBorder = { fg = prompt_background, bg = prompt_background },
-	TelescopePromptNormal = { fg = colors.light0, bg = prompt_background },
 	TelescopePromptCounter = { fg = colors.light4 },
 	TelescopePromptPrefix = { fg = colors.blue },
 

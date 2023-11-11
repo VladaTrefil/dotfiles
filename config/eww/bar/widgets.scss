@@ -8,29 +8,6 @@
   }
 }
 
-.w-control {
-  margin-left: $m * 3;
-  padding-right: $m * 3;
-
-  &__icon {
-    font-family: $awesome;
-    font-size: $bar-icon-size;
-    color: $light-pink;
-  }
-
-  &__inner {
-    margin-left: $m * 3;
-  }
-
-  &__button {
-    margin: 0 $m;
-
-    &:hover {
-      color: $light-pink;
-    }
-  }
-}
-
 .workspace {
   font-size: $bar-icon-size-lg;
   font-weight: normal;

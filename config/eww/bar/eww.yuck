@@ -5,7 +5,6 @@
 
 (include "./bar/widgets/network.yuck")
 (include "./bar/widgets/workspaces.yuck")
-(include "./bar/widgets/control.yuck")
 (include "./bar/widgets/system.yuck")
 (include "./bar/widgets/bluetooth.yuck")
 (include "./bar/widgets/audio.yuck")
@@ -17,8 +16,6 @@
        :space-evenly false
        :halign "start"
        :class "bar__left"
-    (control)
-    (sep)
     (workspaces)))
 
 (defwidget right []

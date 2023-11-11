@@ -1,4 +1,5 @@
 bundler
+spring
 solargraph
 rubocop
 rails:6.1.4

@@ -20,6 +20,7 @@ VIMGREP_ARGUMENTS = {
 
 FILE_IGNORE_PATTERNS = {
   'node_modules',
+  'vendor',
   '%.ttf',
   '%.eof',
   '%.woff',

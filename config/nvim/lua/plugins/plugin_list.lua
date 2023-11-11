@@ -274,4 +274,15 @@ return {
       require('plugins.config.hardtime')
     end,
   },
+
+	['~/Development/ChatGPT.nvim'] = {
+		requires = {
+			'MunifTanjim/nui.nvim',
+			'nvim-lua/plenary.nvim',
+			'nvim-telescope/telescope.nvim',
+		},
+		config = function()
+			require('plugins.config._chatgpt')
+		end,
+	},
 }

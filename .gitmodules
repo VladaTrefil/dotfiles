@@ -16,3 +16,6 @@
 [submodule "config/ranger/plugins/ranger_archives"]
 	path = config/ranger/plugins/ranger_archives
 	url = git@github.com:maximtrp/ranger-archives.git
+[submodule "build/dotbot-asdf"]
+	path = build/dotbot-asdf
+	url = https://github.com/sobolevn/dotbot-asdf.git

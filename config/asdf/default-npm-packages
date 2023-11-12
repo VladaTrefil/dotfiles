@@ -1,0 +1,9 @@
+yarn
+neovim
+prettier
+postcss
+postcss-scss
+stylelint
+stylelint-config-sass-guidelines
+stylelint-config-standard
+stylelint-scss

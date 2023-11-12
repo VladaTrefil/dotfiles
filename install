@@ -10,4 +10,4 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${BASEDIR}"
 git submodule update --init --recursive
 
-"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" --plugin-dir build/dotbot-asdf -c "${CONFIG}" "${@}"

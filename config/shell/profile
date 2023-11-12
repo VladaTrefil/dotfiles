@@ -1,13 +1,13 @@
 #!/bin/bash
-#                           ___      ___             
-#                         /'___\ __ /\_ \            
-#     _____   _ __   ___ /\ \__//\_\\//\ \      __   
-#    /\ '__`\/\`'__\/ __`\ \ ,__\/\ \ \ \ \   /'__`\ 
-#    \ \ \L\ \ \ \//\ \L\ \ \ \_/\ \ \ \_\ \_/\  __/ 
-#     \ \ ,__/\ \_\\ \____/\ \_\  \ \_\/\____\ \____\
-#      \ \ \/  \/_/ \/___/  \/_/   \/_/\/____/\/____/
-#       \ \_\                                        
-#        \/_/                                        
+#                           ___      ___                  |
+#                         /'___\ __ /\_ \                 |
+#     _____   _ __   ___ /\ \__//\_\\//\ \      __        |
+#    /\ '__`\/\`'__\/ __`\ \ ,__\/\ \ \ \ \   /'__`\      |
+#    \ \ \L\ \ \ \//\ \L\ \ \ \_/\ \ \ \_\ \_/\  __/      |
+#     \ \ ,__/\ \_\\ \____/\ \_\  \ \_\/\____\ \____\     |
+#      \ \ \/  \/_/ \/___/  \/_/   \/_/\/____/\/____/     |
+#       \ \_\                                             |
+#        \/_/                                             |
 
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # ENV Variables: {{{
@@ -50,8 +50,6 @@ export ASDF_DATA_DIR="$XDG_DATA_HOME/asdf"
 export ASDF_CONFIG_FILE="$XDG_CONFIG_HOME/asdf/asdfrc"
 export ASDF_DEFAULT_TOOL_VERSIONS_FILENAME="$XDG_CONFIG_HOME/asdf/tool-versions"
 
-# fix readline error when installing old ruby versions (2.4.1)
-export RUBY_CONFIGURE_OPTS='--with-readline-dir=/home/linuxbrew/.linuxbrew/Cellar/readline/8.2.1/lib'
 export ASDF_GEM_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-gems"
 export ASDF_NPM_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-npm-packages"
 
@@ -156,6 +154,9 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 # Ruby options - require bundle/setup library to compile gems
 # export RUBYOPT="-rbundler/setup"
+
+# fix readline error when installing old ruby versions (2.4.1)
+export RUBY_CONFIGURE_OPTS='--with-readline-dir=/home/linuxbrew/.linuxbrew/Cellar/readline/8.2.1/lib'
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────

@@ -2,7 +2,7 @@
 
 PERMISSION="$(echo "$USER all=(all) nopasswd: all" | tr '[:lower:]' '[:upper:]')"
 
-if ! grep -qo "$PERMISSION" /etc/sudoers
+if ! sudo grep -qo "$PERMISSION" /etc/sudoers
 then
   echo "add $USER to sudoers"
   echo "$PERMISSION" | sudo tee -a /etc/sudoers
@@ -41,10 +41,10 @@ if [ -f "$(which ibus)" ]; then
 fi
 
 # Cleanup
-[[ -s "$HOME/.zshrc" ]] && rm "$HOME/.zsh*"
-[[ -s "$HOME/.bashrc" ]] && rm "$HOME/.bash*"
-[[ -s "$HOME/.profile" ]] && rm "$HOME/.profile"
-[[ -s "$HOME/.mkshrc" ]] && rm "$HOME/.mkshrc"
+[[ -f "$HOME/.zshrc" ]] && rm "$HOME/.zshrc"
+[[ -f "$HOME/.bashrc" ]] && rm "$HOME/.bashrc"
+[[ -f "$HOME/.profile" ]] && rm "$HOME/.profile"
+[[ -f "$HOME/.mkshrc" ]] && rm "$HOME/.mkshrc"
 
 rm -rf "$HOME/Desktop"
 rm -rf "$HOME/Templates"

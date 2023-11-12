@@ -106,6 +106,7 @@
     ~/.config/wgetrc: config/wgetrc
 
     ~/.config/codespell: config/codespell
+    ~/.config/stylelint: config/stylelint
 
     # KDE Plasma
     ~/.config/konsolerc:

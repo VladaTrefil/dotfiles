@@ -3,7 +3,7 @@ neovim
 prettier
 postcss
 postcss-scss
+postcss-sass
 stylelint
-stylelint-config-sass-guidelines
 stylelint-config-standard
 stylelint-scss

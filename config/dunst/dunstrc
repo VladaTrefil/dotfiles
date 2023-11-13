@@ -8,7 +8,7 @@
 
     width = 400
     origin = top-right
-    offset = 15x75
+    offset = 15x20
     transparency = 10
     # geometry = "0x5-35+35"
 

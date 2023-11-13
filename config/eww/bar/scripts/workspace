@@ -31,7 +31,7 @@ workspaces() {
     output="$output $button"
   done
 
-  echo "(box :class \"workspace\" :orientation \"h\" :spacing 5 :space-evenly \"false\" $output)"
+  echo "(box :halign \"center\" :valign \"center\" :space-evenly false $output)"
 }
 
 workspaces

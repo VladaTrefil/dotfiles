@@ -1,25 +1,110 @@
-.separator {
-  margin: 0 $m;
+$widget-icon-padding: $m * 2 $m * 3 $m * 2 $m * 4;
+$widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
 
-  &__text {
-    color: $border-color;
+@mixin widget {
+  background-color: $background;
+  border-radius: 10px;
+  margin: 0 $m;
+}
+
+@mixin widget-icon {
+  @include widget;
+  padding: $widget-icon-padding;
+}
+
+@mixin widget-row {
+  @include widget;
+  padding: $widget-row-padding;
+}
+
+.mediaplayer {
+  border-radius: 10px;
+  margin: 0 $m;
+  padding: 0;
+  background: $border-color;
+
+  &__status,
+  &__body {
+    @include widget-row;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  &__body {
+    border-radius: 0;
+    margin-left: 0;
+    padding-left: $m * 5;
+    padding-left: $m * 3;
+  }
+
+  &__status {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin: 0;
+  }
+
+  &__cover {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  &__title {
+    font-size: $bar-icon-size * 0.8;
     font-weight: bold;
-    font-size: $bar-icon-size-lg;
+    padding: 0;
+    margin: 0;
+    color: $light-pink;
+  }
+
+  &__artist {
+    font-size: $bar-icon-size * 0.6;
+    color: $fg1;
+  }
+
+  &__current-time,
+  &__duration {
+    font-size: $font-size-lg;
+    font-weight: bold;
+  }
+
+  &__sep {
+    font-size: $font-size * 0.7;
+    margin: 0 $m * 2 1px;
+    color: $gray;
+  }
+
+  &__duration {
+    color: $fg1;
+  }
+
+  &__button {
+    font-family: $awesome;
+    font-size: $bar-icon-size * 0.8;
+    margin: 0;
+
+    &-prev {
+      margin-right: $m * 3;
+    }
+
+    &-next {
+      margin-left: $m * 3;
+    }
   }
 }
 
 .workspace {
-  font-size: $bar-icon-size-lg;
+  @include widget-row;
+  font-size: $bar-icon-size-lg * 1.1;
   font-weight: normal;
   margin-left: $m * 3;
   background-color: $background;
 
   &__button {
-    margin-right: $m * 2;
-    color: $border-color;
+    color: $gray;
+    margin: 0 $m * 1.5;
 
     &--occupied {
-      color: rgba($blue, 0.6);
+      color: rgba($blue, 0.8);
     }
 
     &--focused {
@@ -47,11 +132,13 @@
     font-family: $awesome;
     font-size: $bar-icon-size;
     color: $blue-bt;
-    margin: 0px $m * 2;
+    padding: 0 $m * 2 0 $m * 1;
   }
 }
 
 .system-widget {
+  @include widget-row;
+
   &__circle {
     background-color: $background;
     border-radius: 15px;
@@ -94,8 +181,7 @@
 }
 
 .network {
-  margin-right: $m * 2 * 0.7;
-  margin-left: $m * 2;
+  @include widget-row;
 
   &__down {
     margin-right: $m * 3;
@@ -117,19 +203,19 @@
 }
 
 .language {
-  margin-right: $m * 3;
-  margin-left: $m * 3;
-  padding: 6px 13px 8px;
-  background-color: $bg1;
-  border-radius: 5px;
-  border: 2px solid $bg1;
+  @include widget-icon;
+  border: 5px solid $background;
 
   &--jap {
-    border: 2px solid $red;
+    border: 5px solid $red;
   }
 
   &--cze {
-    border: 2px solid $blue;
+    border: 5px solid $blue;
+  }
+
+  &__image {
+    padding-right: $m;
   }
 
   &__label {
@@ -138,8 +224,7 @@
 }
 
 .clock {
-  margin-left: $m * 3;
-  margin-right: $m * 3;
+  @include widget-row;
 
   &__sep {
     font-size: $font-size * 1.2;

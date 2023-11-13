@@ -126,6 +126,8 @@ APT_PACKAGES=(
   "apt-transport-https"
   "curl"
 
+  "playerctl"
+
   # Docker
   "ca-certificates"
   "curl"

@@ -1,0 +1,51 @@
+(defpoll CURRENT_TIME :interval "1s" "./bar/scripts/mediaplayer current-time")
+(defpoll DURATION :interval "1s" "./bar/scripts/mediaplayer duration")
+(defpoll ART_URL :interval "1s" "./bar/scripts/mediaplayer art-url")
+(defpoll TITLE :interval "1s" "./bar/scripts/mediaplayer title")
+(defpoll ARTIST :interval "1s" "./bar/scripts/mediaplayer artist")
+(defpoll STATUS :interval "1s" "./bar/scripts/mediaplayer status")
+
+(defvar COVER_WIDTH 58)
+(defvar COVER_HEIGHT 44)
+
+(defwidget mediaplayer []
+  (box :class "module mediaplayer"
+       :space-evenly false
+       :halign "start"
+
+    (image
+      :style "background-image:url('${ART_URL}');"
+      :class "mediaplayer__cover"
+      :path {ART_URL}
+      :width COVER_WIDTH
+      :image-height COVER_HEIGHT
+      :image:width COVER_WIDTH
+      :image-height COVER_HEIGHT)
+
+    (box :class "mediaplayer__body"
+      (box :space-evenly false
+           :orientation "v"
+           :valign "center"
+        (label :text TITLE
+               :xalign "0"
+               :class "mediaplayer__title" )
+        (label :text ARTIST
+               :xalign "0"
+               :class "mediaplayer__artist" )))
+
+    (box :class "mediaplayer__status"
+         :space-evenly false
+         :halgin "start"
+         :orientation "h"
+      (button :onclick "playerctl position 10-"
+              :class "mediaplayer__button mediaplayer__button-prev"
+              "")
+      (label :text CURRENT_TIME
+             :class "mediaplayer__current-time" )
+      (label :text ""
+             :class "mediaplayer__sep" )
+      (label :text DURATION
+             :class "mediaplayer__duration" )
+      (button :onclick "playerctl position 10+"
+              :class "mediaplayer__button mediaplayer__button-next"
+              ""))))

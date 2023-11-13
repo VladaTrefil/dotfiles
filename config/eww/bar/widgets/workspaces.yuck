@@ -1,4 +1,9 @@
 (defpoll workspace :interval ".1s" "$XDG_CONFIG_HOME/eww/bar/scripts/workspace")
 
 (defwidget workspaces []
-  (literal :content workspace))
+  (box
+    :orientation "h"
+    :space-evenly false
+    :valign "center"
+    :class "module workspace"
+  (literal :content workspace)))

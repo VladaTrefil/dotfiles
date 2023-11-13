@@ -1,7 +1,9 @@
 @import '../variables.scss';
+@import './widgets.scss';
+@import './windows.scss';
 
 .bar {
-  padding: $m * 3;
+  padding: 12px 12px 0;
   padding-bottom: 0;
   background-color: transparent;
 
@@ -13,6 +15,3 @@
     color: $fg;
   }
 }
-
-@import './widgets.scss';
-@import './windows.scss';

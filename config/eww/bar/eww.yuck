@@ -3,20 +3,32 @@
 (defvar spacing "3")
 (defvar window_y "4%")
 
-(include "./bar/widgets/network.yuck")
 (include "./bar/widgets/workspaces.yuck")
+(include "./bar/widgets/mediaplayer.yuck")
+
+(include "./bar/widgets/time.yuck")
+
+(include "./bar/widgets/network.yuck")
 (include "./bar/widgets/system.yuck")
 (include "./bar/widgets/bluetooth.yuck")
 (include "./bar/widgets/audio.yuck")
 (include "./bar/widgets/lang.yuck")
-(include "./bar/widgets/time.yuck")
 
 (defwidget left []
   (box :orientation "h"
        :space-evenly false
        :halign "start"
        :class "bar__left"
-    (workspaces)))
+    (workspaces)
+    (mediaplayer)))
+
+(defwidget center []
+  (box
+    :orientation "h"
+    :space-evenly false
+    :halign "center"
+    :class "center_modules"
+    (clock)))
 
 (defwidget right []
   (box :orientation "h"
@@ -26,22 +38,9 @@
     (volume)
     (sep)
     (bluetooth)
-    (sep)
-    (network)
-    (sep)
-    (system_widget)
-    (sep)
     (language_widget)
-    (sep)
-    (clock)))
-
-; (defwidget center []
-;   (box
-;     :orientation "h"
-;     :space-evenly false
-;     :halign "center"
-;     :class "center_modules"
-;     (music)))
+    (network)
+    (system_widget)))
 
 (defwindow bar
   :geometry (geometry :x "0%" :y "9px" :width "98%" :height "30px" :anchor "top center")
@@ -52,5 +51,5 @@
     (box :class "bar__inner"
          :orientation "h"
       (left)
-      ; (center)
+      (center)
       (right))))

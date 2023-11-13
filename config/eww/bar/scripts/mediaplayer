@@ -1,0 +1,33 @@
+#!/bin/bash
+
+shopt -s expand_aliases
+
+function mp-art-url() {
+  path=$(playerctl metadata --format "{{mpris:artUrl}}")
+  file_name=$(basename "$path")
+  result_path="/tmp/$file_name-44px.jpg"
+
+  convert "$path" -resize 54x44^ -gravity center -extent 54x44 "$result_path"
+
+  echo "$result_path"
+}
+
+alias mp-current-time='playerctl position --format "{{ duration(position) }}"'
+alias mp-duration='playerctl metadata --format "{{ duration(mpris:length) }}"'
+alias mp-title='playerctl metadata --format "{{ title }}"'
+alias mp-artist='playerctl metadata --format "{{ lc(artist) }}"'
+alias mp-status='playerctl status --format "{{ uc(status) }}"'
+
+subcommand="$1"
+
+if [[ -z "$subcommand" ]]; then
+  echo 'No arguments given'
+else
+  if $(type mp-$subcommand > /dev/null 2> /dev/null); then
+    # It is. Run it.
+    shift
+    eval "mp-$subcommand $@"
+  else
+    echo 'Unknown subcommand'
+  fi
+fi

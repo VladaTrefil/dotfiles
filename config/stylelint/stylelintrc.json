@@ -5,22 +5,6 @@
   "plugins": [
     "/home/vlada/.local/share/asdf/installs/nodejs/20.9.0/lib/node_modules/stylelint-scss"
   ],
-  "overrides": [
-    {
-      "files": ["*.scss", "**/*.scss"],
-      "customSyntax": "/home/vlada/.local/share/asdf/installs/nodejs/20.9.0/lib/node_modules/postcss-scss"
-    },
-    {
-      "files": ["*.sass", "**/*.sass"],
-      "customSyntax": "/home/vlada/.local/share/asdf/installs/nodejs/20.9.0/lib/node_modules/postcss-sass",
-      "rules": {
-        "at-rule-no-unknown": null,
-        "scss/at-rule-no-unknown": true,
-        "scss/dollar-variable-pattern": "^foo",
-        "scss/selector-no-redundant-nesting-selector": true
-      }
-    }
-  ],
   "rules": {
     "annotation-no-unknown": true,
     "at-rule-no-unknown": false,
@@ -64,6 +48,46 @@
       }
     ],
     "string-no-newline": true,
-    "unit-no-unknown": true
-  }
+    "unit-no-unknown": true,
+    "number-leading-zero": "never",
+    "color-hex-case": "upper",
+
+    "color-function-notation": "legacy",
+    "alpha-value-notation": "number"
+  },
+  "overrides": [
+    {
+      "files": ["*.scss", "**/*.scss"],
+      "customSyntax": "/home/vlada/.local/share/asdf/installs/nodejs/20.9.0/lib/node_modules/postcss-scss"
+    },
+    {
+      "files": ["*.sass", "**/*.sass"],
+      "customSyntax": "/home/vlada/.local/share/asdf/installs/nodejs/20.9.0/lib/node_modules/postcss-sass",
+      "rules": {
+        "at-rule-no-unknown": null,
+        "scss/at-rule-no-unknown": true,
+        "scss/selector-no-redundant-nesting-selector": true,
+        "function-no-unknown": [
+          true,
+          { "ignoreFunctions": [
+              "map-get",
+              "mobile-px-to-rem",
+              "px-to-rem",
+              "darken",
+              "saturate",
+              "desaturate",
+              "lighten",
+              "fade-out",
+              "image-url"
+          ] }
+        ],
+        "annotation-no-unknown": [
+          true,
+          { "ignoreAnnotations": [
+              "default"
+          ] }
+        ]
+      }
+    }
+  ]
 }

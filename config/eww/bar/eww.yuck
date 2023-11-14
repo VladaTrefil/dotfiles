@@ -43,7 +43,7 @@
     (system_widget)))
 
 (defwindow bar
-  :geometry (geometry :x "0%" :y "9px" :width "98%" :height "30px" :anchor "top center")
+  :geometry (geometry :x "0%" :y "0%" :width "98%" :height "30px" :anchor "top center")
   :stacking "fg"
   :windowtype "dock"
   (box :class "bar"

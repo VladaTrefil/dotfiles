@@ -1,57 +1,48 @@
-(defpoll volume_percent :interval "1s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
-(defpoll volume_status :interval "1s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $4 }'")
-(defpoll mic_percent :interval "1s" "amixer -D pulse sget Capture | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defpoll volume_percent :interval "1s" "./bar/scripts/audio volume-percent")
+(defpoll volume_status :interval "1s" "./bar/scripts/audio status")
+(defpoll volume_icon :interval "1s" "./bar/scripts/audio icon")
 
-(defvar volume_reveal false)
+(defwidget audio_icon []
+  (box
+    (label :class "audio__icon" :text "" :visible { volume_status == "muted" })
+    (label :class "audio__icon" :text "  " :visible { volume_status == "low" })
+    (label :class "audio__icon" :text "  " :visible { volume_status == "high" })))
 
 (defwidget volume []
-  (eventbox :onhover "${eww} update volume_reveal=true"
-            :onhoverlost "${eww} update volume_reveal=false"
-    (box :class "volume"
-         :space-evenly "false"
-         :orientation "h"
-         :spacing spacing
-      (button :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop audio"
-              :class "volume__icon" { volume_status == 'on' ? '' : '' })
-      (revealer :transition "slideleft"
-                :reveal volume_reveal
-                :duration "200ms"
-        (scale :class "volume__bar"
-               :value volume_percent
-               :orientation "h"
-               :tooltip "${volume_percent}%"
-               :min 0
-               :max 100
-               :onchange "amixer -D pulse sset Master {}%" )))))
+  (box :class "module audio ${ volume_status == "muted" ? "audio--muted" : ""}"
+       :space-evenly false
+    (button :class "audio__button"
+            ; :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop audio"
+            (audio_icon))
+    (progress :class "audio__bar"
+              :flipped true
+              :orientation "vertical"
+              :visible { volume_status != "muted" }
+              :value volume_percent)))
 
 
-(defwidget audio_item [key percent script tooltip icon]
-  (box :class "audio__item audio-${key}" :halign "start" :space-evenly "false" :hexpand "false" :vexpand "false"
-    (box :class "audio__icon" :orientation "v" icon)
-    (box :orientation "v" :halign "start" :vexpand "false" :hexpand "false":space-evenly "false"
-      (label :class "audio__text" :text key :valign "center" :halign "start" )
-      (box :class "audio__bar" :halign "start" :vexpand "false" :hexpand "false"
-        (scale :value percent
-               :orientation "h"
-               :onchange script
-               :tooltip tooltip
-               :max 100
-               :min 0)))))
-
-(defwindow audio
-  :geometry (geometry :x "-20px"
-  :y "4%"
-  :anchor "top right"
-  :width "280px"
-  :height "60px")
-  (box :class "audio" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
-    (audio_item :key "speakers"
-                :percent volume_percent
-                :script "amixer -D pulse sset Master {}%"
-                :tooltip "volume on ${volume_percent}%"
-                :icon { volume_status == 'on' ? '' : '' })
-    (audio_item :key "microphone"
-                :percent mic_percent
-                :script "amixer -D pulse sset Capture {}%"
-                :tooltip "volume on ${mic_percent}%"
-                :icon "")))
+; (defwidget audio_item [key percent script tooltip icon]
+;   (box :class "audio__item audio-${key}" :halign "start" :space-evenly "false" :hexpand "false" :vexpand "false"
+;     (box :class "audio__icon" :orientation "v" icon)
+;     (box :orientation "v" :halign "start" :vexpand "false" :hexpand "false":space-evenly "false"
+;       (label :class "audio__text" :text key :valign "center" :halign "start" )
+;       (box :class "audio__bar" :halign "start" :vexpand "false" :hexpand "false"
+;         (scale :value percent
+;                :orientation "h"
+;                :onchange script
+;                :tooltip tooltip
+;                :max 100
+;                :min 0)))))
+;
+; (defwindow audio
+;   :geometry (geometry :x "-20px"
+;   :y "4%"
+;   :anchor "top right"
+;   :width "280px"
+;   :height "60px")
+;   (box :class "audio" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
+;     (audio_item :key "speakers"
+;                 :percent volume_percent
+;                 :script "amixer -D pulse sset Master {}%"
+;                 :tooltip "volume on ${volume_percent}%"
+;                 :icon { volume_status ? '' : '' })))

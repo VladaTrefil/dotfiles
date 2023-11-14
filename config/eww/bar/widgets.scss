@@ -4,7 +4,7 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
 @mixin widget {
   background-color: $background;
   border-radius: 10px;
-  margin: 0 $m;
+  margin: 0 $m * 2;
 }
 
 @mixin widget-icon {
@@ -19,7 +19,7 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
 
 .mediaplayer {
   border-radius: 10px;
-  margin: 0 $m;
+  margin: 0 $m * 2;
   padding: 0;
   background: $border-color;
 
@@ -28,6 +28,7 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
     @include widget-row;
     padding-top: 0;
     padding-bottom: 0;
+    margin: 0 $m;
   }
 
   &__body {
@@ -113,17 +114,34 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
   }
 }
 
-.volume {
-  &__icon {
+.audio {
+  @include widget-icon;
+  padding: 0;
+  color: $purple;
+
+  &__button {
+    padding: $m * 2 $m * 4 $m * 2 $m * 5;
     font-family: $awesome;
     font-size: $bar-icon-size * 0.95;
-    margin: 0px $m;
-    color: $blue-faint;
   }
 
-  &__bar trough highlight {
-    background: $blue;
-    border-radius: 10px;
+  &--muted {
+    color: $red;
+    padding-right: 7px;
+  }
+
+  &__bar {
+    trough {
+      background: desaturate(darken($purple, 40%), 70%);
+      border-radius: 20px;
+      min-width: 7px;
+      min-height: 30px;
+    }
+
+    progress {
+      background: $purple;
+      border-radius: 20px;
+    }
   }
 }
 

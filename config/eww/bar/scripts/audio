@@ -1,0 +1,36 @@
+#!/bin/bash
+
+shopt -s expand_aliases
+
+function get-pulse-master-metadata() {
+  amixer -D pulse sget Master | grep 'Left:'
+}
+
+function a-volume-percent() {
+  get-pulse-master-metadata | awk -F'[][]' '{ print $2 }' | tr -d '%'
+}
+
+function a-status() {
+  power=$(get-pulse-master-metadata | awk -F'[][]' '{ print $4 }')
+  volume=$(a-volume-percent)
+
+  if [ "$power" = "off" ] || [ "$volume" -lt 1 ]; then
+    echo "muted"
+  elif [ "$volume" -lt 50 ]; then
+    echo "low"
+  else
+    echo "high"
+  fi
+}
+
+subcommand="$1"
+
+if [[ -z "$subcommand" ]]; then
+  echo 'No arguments given'
+else
+  if type "a-$subcommand" > /dev/null 2> /dev/null; then
+    eval "a-$subcommand"
+  else
+    echo 'Unknown subcommand'
+  fi
+fi

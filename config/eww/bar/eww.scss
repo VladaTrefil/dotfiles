@@ -3,14 +3,10 @@
 @import './windows.scss';
 
 .bar {
-  padding: 12px 12px 0;
-  padding-bottom: 0;
+  padding: 15px 9px 0;
   background-color: transparent;
 
   &__inner {
-    background-color: $background;
-    padding: $m * 2;
-    border-radius: 10px;
     font-size: $font-size;
     color: $fg;
   }

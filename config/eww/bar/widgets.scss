@@ -97,7 +97,6 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
   @include widget-row;
   font-size: $bar-icon-size-lg * 1.1;
   font-weight: normal;
-  margin-left: $m * 3;
   background-color: $background;
 
   &__button {
@@ -146,6 +145,8 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
 }
 
 .bluetooth {
+  @include widget-icon;
+
   &__icon {
     font-family: $awesome;
     font-size: $bar-icon-size;
@@ -156,6 +157,7 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
 
 .system-widget {
   @include widget-row;
+  padding-left: $m * 2;
 
   &__circle {
     background-color: $background;
@@ -246,7 +248,7 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
 
   &__sep {
     font-size: $font-size * 1.2;
-    margin: 0px $m 1px;
+    margin: 0 $m 1px;
     color: $gray;
   }
 

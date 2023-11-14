@@ -1,7 +1,7 @@
 (defvar eww "$HOME/.local/bin/usr/eww -c $HOME/.config/eww")
 
 (defvar spacing "3")
-(defvar window_y "4%")
+(defvar window_y "3%")
 
 (include "./bar/widgets/workspaces.yuck")
 (include "./bar/widgets/mediaplayer.yuck")
@@ -36,7 +36,6 @@
        :halign "end"
        :class "bar__right"
     (volume)
-    (sep)
     (bluetooth)
     (language_widget)
     (network)

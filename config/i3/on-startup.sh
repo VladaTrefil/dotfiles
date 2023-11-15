@@ -22,11 +22,13 @@ function start_initial() {
 if [ "$1" == "initial" ]
 then
   # Only run when starting i3 for the first time
-  dunst && notify "Setting up Desktop Environment ..."
+  notify "Setting up Desktop Environment ..."
   start_initial &
 else
   notify "Reloading Desktop Environment ..."
 fi
+
+killall dunst && sleep 1 && dunst
 
 # Set desktop wallpapers
 feh --bg-scale -g 3840x1440 ~/.background/mountains-blue-and-beige.jpg \
@@ -38,5 +40,3 @@ picom --experimental-backends --config "$XDG_CONFIG_HOME/i3/picom.conf" && sleep
 
 # Launch eww bar
 sh "$XDG_CONFIG_HOME/eww/bar/launch_bar"
-
-sleep 1; dunstctl close-all

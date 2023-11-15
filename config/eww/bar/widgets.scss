@@ -23,25 +23,15 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
   padding: 0;
   background: $border-color;
 
-  &__status,
   &__body {
     @include widget-row;
-    padding-top: 0;
+    padding-top: 6px;
     padding-bottom: 0;
-    margin: 0 $m;
-  }
-
-  &__body {
-    border-radius: 0;
-    margin-left: 0;
-    padding-left: $m * 5;
     padding-left: $m * 3;
-  }
-
-  &__status {
+    margin: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    margin: 0;
+    min-width: 200px;
   }
 
   &__cover {
@@ -57,6 +47,12 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
     color: $light-pink;
   }
 
+  &__body-progress {
+    margin-top: 2px;
+  }
+
+  &__current-time,
+  &__duration,
   &__artist {
     font-size: $bar-icon-size * 0.6;
     color: $fg1;
@@ -64,31 +60,30 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
 
   &__current-time,
   &__duration {
-    font-size: $font-size-lg;
     font-weight: bold;
   }
 
+  &__current-time {
+    color: $fg;
+  }
+
   &__sep {
-    font-size: $font-size * 0.7;
-    margin: 0 $m * 2 1px;
-    color: $gray;
+    margin: 1px $m 0;
+    font-size: $font-size * 0.5;
   }
 
-  &__duration {
-    color: $fg1;
-  }
+  &__bar {
+    margin-top: 5px;
+    margin-bottom: 2px;
 
-  &__button {
-    font-family: $awesome;
-    font-size: $bar-icon-size * 0.8;
-    margin: 0;
-
-    &-prev {
-      margin-right: $m * 3;
+    trough {
+      background: desaturate(darken($light-pink, 40%), 70%);
+      min-height: 2px;
     }
 
-    &-next {
-      margin-left: $m * 3;
+    progress {
+      background: $light-pink;
+      min-height: 2px;
     }
   }
 }

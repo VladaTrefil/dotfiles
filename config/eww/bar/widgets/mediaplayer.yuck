@@ -1,51 +1,59 @@
 (defpoll CURRENT_TIME :interval "1s" "./bar/scripts/mediaplayer current-time")
 (defpoll DURATION :interval "1s" "./bar/scripts/mediaplayer duration")
 (defpoll ART_URL :interval "1s" "./bar/scripts/mediaplayer art-url")
-(defpoll TITLE :interval "1s" "./bar/scripts/mediaplayer title")
+(defpoll TITLE :interval ".5s" "./bar/scripts/mediaplayer title")
 (defpoll ARTIST :interval "1s" "./bar/scripts/mediaplayer artist")
-(defpoll STATUS :interval "1s" "./bar/scripts/mediaplayer status")
+(defpoll RUNNING :interval "1s" "./bar/scripts/mediaplayer running")
+(defpoll PROGRESS :interval "1s" "./bar/scripts/mediaplayer progress")
 
-(defvar COVER_WIDTH 58)
-(defvar COVER_HEIGHT 44)
+(defvar COVER_WIDTH 64)
+(defvar COVER_HEIGHT 51)
 
 (defwidget mediaplayer []
   (box :class "module mediaplayer"
+       :visible { RUNNING }
        :space-evenly false
        :halign "start"
 
-    (image
-      :style "background-image:url('${ART_URL}');"
-      :class "mediaplayer__cover"
-      :path {ART_URL}
-      :width COVER_WIDTH
-      :image-height COVER_HEIGHT
-      :image:width COVER_WIDTH
-      :image-height COVER_HEIGHT)
+       (image
+         :style "background-image:url('${ART_URL}');"
+         :class "mediaplayer__cover"
+         :path {ART_URL}
+         :width COVER_WIDTH
+         :image-height COVER_HEIGHT
+         :image:width COVER_WIDTH
+         :image-height COVER_HEIGHT)
 
-    (box :class "mediaplayer__body"
-      (box :space-evenly false
-           :orientation "v"
-           :valign "center"
-        (label :text TITLE
-               :xalign "0"
-               :class "mediaplayer__title" )
-        (label :text ARTIST
-               :xalign "0"
-               :class "mediaplayer__artist" )))
+       (box :class "mediaplayer__body"
+            :vexpand true
+            (box :valign "center"
+                 :space-evenly false
+                 :orientation "v"
+            (label :text TITLE
+                   :xalign "0"
+                   :class "mediaplayer__title" )
+            (box :class "mediaplayer__body-bottom"
+                 :space-evenly false
+                 :halign "fill"
+                 (label :text ARTIST :xalign "0"
+                        :class "mediaplayer__artist" )
+                 (box :class "mediaplayer__body-progress"
+                      :space-evenly false
+                      :halign "end"
+                      :hexpand true
+                      (label :text CURRENT_TIME
+                             :class "mediaplayer__current-time" )
+                      (label :text ""
+                             :class "mediaplayer__sep" )
+                      (label :text DURATION
+                             :class "mediaplayer__duration" )))
 
-    (box :class "mediaplayer__status"
-         :space-evenly false
-         :halgin "start"
-         :orientation "h"
-      (button :onclick "playerctl position 10-"
-              :class "mediaplayer__button mediaplayer__button-prev"
-              "")
-      (label :text CURRENT_TIME
-             :class "mediaplayer__current-time" )
-      (label :text ""
-             :class "mediaplayer__sep" )
-      (label :text DURATION
-             :class "mediaplayer__duration" )
-      (button :onclick "playerctl position 10+"
-              :class "mediaplayer__button mediaplayer__button-next"
-              ""))))
+            (box :vexpand true
+                 :hexpand false
+                 :valign "end"
+                 (progress :class "mediaplayer__bar"
+                           :vexpand false
+                           :hexpand false
+                           :valign "end"
+                           :height 2
+                           :value PROGRESS))))))

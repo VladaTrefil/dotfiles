@@ -1,5 +1,9 @@
 #!/bin/bash
 
+TMP_FILE="/tmp/eww-mediaplayer.json"
+TITLE_MAX_LENGTH=25
+ARTIST_MAX_LENGTH=22
+
 shopt -s expand_aliases
 
 function mp-art-url() {
@@ -7,16 +11,75 @@ function mp-art-url() {
   file_name=$(basename "$path")
   result_path="/tmp/$file_name-44px.jpg"
 
-  convert "$path" -resize 54x44^ -gravity center -extent 54x44 "$result_path"
+  convert "$path" -resize 64x51^ -gravity center -extent 64x51 "$result_path"
 
   echo "$result_path"
 }
 
+function mp-progress() {
+  current_time=$(playerctl position --format "{{ position }}")
+  duration=$(playerctl metadata --format "{{ mpris:length }}")
+
+  echo "scale=2; $current_time / $duration * 100" | bc
+}
+
+function get_call_index() {
+  key=$1
+  json=$(cat "$TMP_FILE")
+  value=$(echo "$json" | jq -r ".${key}_index")
+  echo "$value"
+}
+
+function set_call_index() {
+  key=$1
+  index=$2
+  echo "{ \"${key}_index\": $index }" > "$TMP_FILE"
+}
+
+function mp-title() {
+  title="$(playerctl metadata --format "{{ title }}")  "
+
+  if [ "${#title}" -gt $TITLE_MAX_LENGTH ]; then
+    # last_index=$(get_call_index "title")
+    #
+    # if [ -z "$last_index" ] || [ "$(echo "$last_index + $TITLE_MAX_LENGTH + 1" | bc)" -gt "${#title}" ]; then
+    #   index=0
+    # else
+    #   index=$(echo "$last_index + 1" | bc)
+    # fi
+    #
+    # set_call_index "title" "$index"
+    #
+    # echo "${title:index:TITLE_MAX_LENGTH}"
+    echo "${title:0:TITLE_MAX_LENGTH}..."
+  else
+    echo "$title"
+  fi
+}
+
+function mp-artist() {
+  artist=$(playerctl metadata --format "{{ lc(artist) }}")
+
+  # get length of artists
+  if [ "${#artist}" -gt $ARTIST_MAX_LENGTH ]; then
+    artist=$(echo "${artist:0:$ARTIST_MAX_LENGTH}...")
+  fi
+
+  echo "$artist"
+}
+
+function mp-running() {
+  status=$(playerctl status --format "{{ uc(status) }}")
+
+  if [ -z "$status" ] || [ "$status" = "stopped" ]; then
+    echo 0
+  else
+    echo 1
+  fi
+}
+
 alias mp-current-time='playerctl position --format "{{ duration(position) }}"'
 alias mp-duration='playerctl metadata --format "{{ duration(mpris:length) }}"'
-alias mp-title='playerctl metadata --format "{{ title }}"'
-alias mp-artist='playerctl metadata --format "{{ lc(artist) }}"'
-alias mp-status='playerctl status --format "{{ uc(status) }}"'
 
 subcommand="$1"
 

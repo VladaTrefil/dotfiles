@@ -111,7 +111,8 @@
     history_length = 100
 
     # --- Misc/Advanced --- #
-    dmenu = /usr/bin/dmenu -p dunst:
+    # dmenu = /usr/bin/dmenu -p dunst:
+    dmenu = "rofi -theme '/home/vlada/.config/rofi/launcher/theme.rasi' -no-show-icons -no-lazy-grab -no-plugins -dmenu -mesg 'Context Menu'"
 
     # Browser for opening urls in context menu.
     browser = /usr/bin/brave-browser -new-tab
@@ -132,9 +133,9 @@
     force_xinerama = false
 
     # --- Mouse --- #
-    mouse_left_click = close_current
-    mouse_middle_click = do_action, close_current
-    mouse_right_click = close_all
+    mouse_left_click = do_action, close_current
+    mouse_middle_click = close_all
+    mouse_right_click = close_current
 
 [experimental]
     per_monitor_dpi = false

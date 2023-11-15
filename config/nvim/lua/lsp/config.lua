@@ -5,6 +5,7 @@ M.servers_config = {
 	jsonls = require('lsp.servers.jsonls'),
 	eslint = require('lsp.servers.eslint'),
 	tsserver = require('lsp.servers.tsserver'),
+	cssls = require('lsp.servers.css_ls'),
 	-- solargraph = require('lsp.servers.solargraph'),
 	-- rubocop = require('lsp.servers.rubocop'),
 }

@@ -175,9 +175,9 @@ M.expand_xml_tags = function()
 	vim.cmd([[%s/></>\r</ge]])
 end
 
--- Reindents entire file
-M.reindent = function()
-	vim.fn.feedkeys('gg=G')
+-- Auto indents entire file
+M.autoindent = function()
+	vim.fn.feedkeys("gg=G''")
 end
 
 -- Creates a directory if it doesn't exist

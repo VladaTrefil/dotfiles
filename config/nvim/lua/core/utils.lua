@@ -99,14 +99,6 @@ M.fold_label_text = function()
 	return ' ' .. text .. spacer .. ' (' .. fold_size .. ' L)  '
 end
 
-M.is_cursor_inside_new_block = function()
-	local line = fn.getline('.')
-	local col = fn.col('.')
-	local chars = string.sub(line, col - 2, col + 1)
-
-	return chars:find('[{}-><-%[%]]') ~= nil
-end
-
 M.paste_as_insert = function(reverse)
 	local base = '<c-r><c-p>+<esc>'
 	local before_cmd = ''

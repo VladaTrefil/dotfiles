@@ -93,12 +93,6 @@ M.general = {
 	},
 
 	i = {
-		-- ['<CR>'] = {
-		--   'v:lua.isCursorInsideNewBlock() ? "<CR><esc>O" : "<CR>"',
-		--   'New line with correction for blocks',
-		--   opts = { silent = true, expr = true },
-		-- },
-
 		-- go to  beginning and end
 		['<C-b>'] = { '<ESC>^i', 'Beginning of line' },
 		['<C-e>'] = { '<End>', 'End of line' },

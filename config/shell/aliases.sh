@@ -101,5 +101,5 @@ alias codespell="$XDG_DATA_HOME/nvim/mason/bin/codespell --config $XDG_CONFIG_HO
 
 # Create a directory and cd into it
 mkcd() {
-  mkdir "${1}" && cd "${1}"
+  mkdir "${1}" && cd "${1}" || exit
 }

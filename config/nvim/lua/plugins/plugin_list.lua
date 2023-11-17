@@ -239,7 +239,12 @@ return {
 
 	['rhysd/clever-f.vim'] = {},
 
-	['tomtom/tcomment_vim'] = {},
+	['numToStr/Comment.nvim'] = {
+		config = function()
+			require('plugins.config._comment')
+		end,
+	},
+
 	['lukas-reineke/indent-blankline.nvim'] = {
 		config = function()
 			require('plugins.config.indentline')

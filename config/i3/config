@@ -49,8 +49,9 @@ exec_always --no-startup-id $HOME/.config/i3/on-startup.sh
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Dual Monitor: {{{
 
-set $monitor1 HDMI-A-0
-set $monitor2 DisplayPort-2
+set $monitor1 DisplayPort-2
+set $monitor2 DVI-D-0
+set $monitor3 HDMI-A-0
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -58,16 +59,15 @@ set $monitor2 DisplayPort-2
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # workspace: {{{
 
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
 
 workspace $ws1 output $monitor1
 workspace $ws2 output $monitor1
@@ -75,6 +75,7 @@ workspace $ws3 output $monitor1
 workspace $ws4 output $monitor2
 workspace $ws5 output $monitor2
 workspace $ws6 output $monitor2
+workspace $ws9 output $monitor3
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────

@@ -36,6 +36,7 @@
     - ~/.config/guard
     - ~/.config/qmk
     - ~/.config/docker
+    - ~/.config/bundle
 
     - ~/.local/bin
     - ~/.local/lib

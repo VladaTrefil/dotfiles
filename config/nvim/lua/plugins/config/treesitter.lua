@@ -6,17 +6,24 @@ end
 
 local FILETYPES = {
 	'git_config',
+	'gitignore',
 	'vimdoc',
 	'lua',
+	'luap',
 	'javascript',
 	'typescript',
 	'c',
 	'rust',
 	'ruby',
 	'python',
+	'json',
 	'yaml',
+	'xml',
 	'bash',
 	'scss',
+	'yuck',
+	'toml',
+	'dockerfile',
 }
 
 require('nvim-treesitter.configs').setup({

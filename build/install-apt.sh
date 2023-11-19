@@ -19,7 +19,6 @@ APT_PACKAGES=(
   "dunst"
 
   # Terminal functions
-  "git"
   "bc" # calculation function
   "ripgrep" # Command line search
   "unzip"
@@ -127,6 +126,17 @@ APT_PACKAGES=(
   "curl"
 
   "playerctl"
+  # Git dependencies
+  "install-info"
+  "dh-autoreconf"
+  "libcurl4-gnutls-dev"
+  "libexpat1-dev"
+  "gettext"
+  "libz-dev"
+  "libssl-dev"
+  "asciidoc"
+  "xmlto"
+  "docbook2x"
 
   # Docker
   "ca-certificates"

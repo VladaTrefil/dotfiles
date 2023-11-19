@@ -1,34 +1,38 @@
-local treesitter_ok, treesitter = pcall(require, 'nvim-treesitter')
+local treesitter_ok, _ = pcall(require, 'nvim-treesitter')
 
 if not treesitter_ok then
 	return
 end
 
 local FILETYPES = {
-	'git_config',
-	'gitignore',
-	'vimdoc',
+	'c',
 	'lua',
 	'luap',
 	'javascript',
 	'typescript',
-	'c',
 	'rust',
 	'ruby',
 	'python',
-	'json',
-	'yaml',
-	'xml',
 	'bash',
 	'scss',
-	'yuck',
+
+	-- Markup
+	'json',
+	'yaml',
 	'toml',
+	'xml',
+	'yuck',
+	'vimdoc',
 	'dockerfile',
+	'git_config',
+	'gitignore',
 }
 
 require('nvim-treesitter.configs').setup({
 	-- A list of parser names, or "all"
 	ensure_installed = FILETYPES,
+	ignore_install = {},
+	modules = {},
 
 	-- Install parsers synchronously (only applied to `ensure_installed`)
 	sync_install = false,
@@ -37,11 +41,14 @@ require('nvim-treesitter.configs').setup({
 	-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
 	auto_install = true,
 
+	incremental_selection = { enable = true },
+
 	-- TODO: Indent is usually wrong, see
 	-- https://github.com/nvim-treesitter/nvim-treesitter/issues/2507
 	indent = {
 		enable = false,
 	},
+
 	highlight = {
 		-- `false` will disable the whole extension
 		enable = true,
@@ -53,3 +60,8 @@ require('nvim-treesitter.configs').setup({
 		additional_vim_regex_highlighting = false,
 	},
 })
+
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- set all folds to unfold on open
+vim.opt.foldlevel = 99

@@ -30,7 +30,12 @@ $gray: #585b70;
 $border-color: #2f2f47;
 $bar-color: #3e3e5a;
 
-$scale-gradient: linear-gradient(to right, $blue-bt 15%, $blue 60%, $blue-faint 100%);
+$scale-gradient: linear-gradient(
+  to right,
+  $blue-bt 15%,
+  $blue 60%,
+  $blue-faint 100%
+);
 
 $box-shadow-window: 0px 5px 15px rgba(0, 0, 0, 0.1);
 

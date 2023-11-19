@@ -207,7 +207,7 @@ contexts:
     - match: ^\#!
       scope: punctuation.definition.comment.js
       set: shebang-body
-    - match: ^|(?=\S)  # Note: Ensure to highlight shebang if the syntax is embedded.
+    - match: ^|(?=\S) # Note: Ensure to highlight shebang if the syntax is embedded.
       pop: 1
 
   shebang-body:
@@ -930,12 +930,12 @@ contexts:
   expression:
     - meta_include_prototype: false
     - match: ''
-      set: [ expression-end, expression-begin ]
+      set: [expression-end, expression-begin]
 
   expression-no-comma:
     - meta_include_prototype: false
     - match: ''
-      set: [ expression-end-no-comma, expression-begin ]
+      set: [expression-end-no-comma, expression-begin]
 
   expression-list:
     - include: expression-break
@@ -1089,7 +1089,7 @@ contexts:
       set:
         - meta_include_prototype: false
         - meta_scope: meta.string.js string.quoted.other.js
-        - match: "`"
+        - match: '`'
           scope: punctuation.definition.string.end.js
           pop: true
         - match: '\$\{'
@@ -1117,23 +1117,23 @@ contexts:
       set: regexp
 
   regexp:
-      - meta_include_prototype: false
-      - meta_scope: meta.string.js string.regexp.js
-      - match: "/"
-        scope: punctuation.definition.string.end.js
-        set:
-          - meta_include_prototype: false
-          - meta_content_scope: meta.string.js string.regexp.js
-          - match: '[gimyus]'
-            scope: keyword.other.js
-          - match: '[A-Za-z0-9]' # Ignore unknown flags for future-compatibility
-          - include: immediately-pop
-      - match: '(?=.|\n)'
-        push:
-          - meta_include_prototype: false
-          - match: '(?=/)'
-            pop: true
-          - include: scope:source.regexp.js
+    - meta_include_prototype: false
+    - meta_scope: meta.string.js string.regexp.js
+    - match: '/'
+      scope: punctuation.definition.string.end.js
+      set:
+        - meta_include_prototype: false
+        - meta_content_scope: meta.string.js string.regexp.js
+        - match: '[gimyus]'
+          scope: keyword.other.js
+        - match: '[A-Za-z0-9]' # Ignore unknown flags for future-compatibility
+        - include: immediately-pop
+    - match: '(?=.|\n)'
+      push:
+        - meta_include_prototype: false
+        - match: '(?=/)'
+          pop: true
+        - include: scope:source.regexp.js
 
   constructor:
     - match: new{{identifier_break}}

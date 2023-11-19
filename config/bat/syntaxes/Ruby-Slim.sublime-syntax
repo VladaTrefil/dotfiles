@@ -121,7 +121,7 @@ contexts:
         - include: scope:text.html.basic
         - include: embedded-ruby
     - match: '^\s*(\.|#|[-a-zA-Z0-9]+)([\w-]+)?'
-      comment: "1 - dot OR hash OR any combination of word, number; 2 - OPTIONAL any combination of word, number, dash or underscore (following a . or"
+      comment: '1 - dot OR hash OR any combination of word, number; 2 - OPTIONAL any combination of word, number, dash or underscore (following a . or'
       captures:
         1: entity.name.tag.slim
         2: entity.other.attribute-name.event.slim
@@ -220,12 +220,12 @@ contexts:
           pop: true
         - include: scope:source.ruby.rails
   entities:
-    - match: "(&)([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+)(;)"
+    - match: '(&)([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+)(;)'
       scope: constant.character.entity.html
       captures:
         1: punctuation.definition.entity.html
         3: punctuation.definition.entity.html
-    - match: "&"
+    - match: '&'
       scope: invalid.illegal.bad-ampersand.html
   interpolated-ruby:
     - match: '=(?=\b)'
@@ -248,7 +248,7 @@ contexts:
           captures:
             1: keyword.control.start-block.ruby
           pop: true
-        - match: "#.*$"
+        - match: '#.*$'
           comment: Hack to let ruby comments work in this context properly
           scope: comment.line.number-sign.ruby
         - include: continuation

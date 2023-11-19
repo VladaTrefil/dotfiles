@@ -34,7 +34,7 @@ M.capabilities = {
 
 M.signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
 
-M.diagnotic_config = {
+M.diagnostic_config = {
 	signs = true,
 	underline = true,
 	update_in_insert = false,

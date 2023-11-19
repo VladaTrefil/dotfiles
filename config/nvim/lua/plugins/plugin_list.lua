@@ -104,9 +104,9 @@ return {
 		end,
 	},
 
-	['mhartington/formatter.nvim'] = {
+	['stevearc/conform.nvim'] = {
 		config = function()
-			require('plugins.config.formatter')
+			require('plugins.config._conform')
 		end,
 	},
 

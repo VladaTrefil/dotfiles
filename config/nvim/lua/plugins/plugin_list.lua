@@ -264,22 +264,11 @@ return {
 
 	['mattn/emmet-vim'] = {},
 
-	['HerringtonDarkholme/yats.vim'] = {},
 	['wavded/vim-stylus'] = {},
-	['GutenYe/json5.vim'] = {},
-	['elzr/vim-json'] = {},
 	['jasonshell/vim-svg-indent'] = {},
 	['vim-scripts/svg.vim'] = {},
 	['mboughaba/i3config.vim'] = {},
-	['elkowar/yuck.vim'] = {},
-
-	['pangloss/vim-javascript'] = {},
 	['kchmck/vim-coffee-script'] = {},
-	['jose-elias-alvarez/typescript.nvim'] = {},
-
-	['vim-ruby/vim-ruby'] = {},
-	['tpope/vim-rails'] = {},
-	['skalnik/vim-vroom'] = {},
 	['slim-template/vim-slim'] = {},
 
 	['m4xshen/hardtime.nvim'] = {

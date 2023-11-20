@@ -38,19 +38,19 @@ local formatters = {
 conform.setup({
 	formatters_by_ft = {
 		lua = { 'stylua' },
-		ruby = { 'rubocop' },
-		sass = { 'prettier' },
+		-- ruby = { 'rubocop' },
+		-- sass = { 'prettier' },
 		scss = { 'prettier' },
 		js = { 'prettier' },
 		json = { 'prettier' },
 		sh = { 'shellcheck' },
 		yaml = { 'prettier' },
+		['_'] = { 'trim_whitespace' },
 	},
-
-	['_'] = { 'trim_whitespace' },
 
 	formatters = formatters,
 
+	log_level = vim.log.levels.WARN,
 	format_on_save = {
 		-- I recommend these options. See :help conform.format for details.
 		lsp_fallback = true,

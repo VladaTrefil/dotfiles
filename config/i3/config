@@ -38,6 +38,8 @@ font pango:Iosevka M 8
 exec --no-startup-id $HOME/.config/i3/on-startup.sh initial
 exec_always --no-startup-id $HOME/.config/i3/on-startup.sh
 
+exec_always --no-startup-id auto_scratchpad.py True,,strawberry,,,
+
 # exec --no-startup-id i3-msg 'workspace 1; exec konsole'
 # exec --no-startup-id i3-msg 'workspace 2; exec konsole'
 # exec --no-startup-id i3-msg 'workspace 4; exec brave'
@@ -252,7 +254,7 @@ bindsym --release $mod+Shift+c exec dunstctl close-all
 # Rules for specific windows: {{{
 
 for_window [class="Clementine"] floating enable; border none width 600px height 600px
-for_window [class="Strawberry"] floating enable; border none width 600px height 600px
+for_window [class="strawberry"] floating enable; border none width 600px height 600px
 
 # Kill kde startup window
 for_window [title="Desktop — Plasma"] kill; floating enable; border none

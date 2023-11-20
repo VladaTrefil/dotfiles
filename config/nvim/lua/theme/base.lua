@@ -47,10 +47,10 @@ local config = {
 	PmenuThumb = { bg = colors.dark4 },
 
 	-- Diff
-	DiffDelete = { fg = colors.bright_red, bg = colors.dark0, reverse = true },
-	DiffAdd = { fg = colors.bright_green, bg = colors.dark0, reverse = true },
-	DiffChange = { fg = colors.bright_aqua, bg = colors.dark0, reverse = true },
-	DiffText = { fg = colors.bright_yellow, bg = colors.dark0, reverse = true },
+	DiffAdd = { fg = colors.dark0, bg = colors.bright_green },
+	DiffDelete = { fg = colors.dark0, bg = colors.bright_red },
+	DiffChange = { link = 'Normal' },
+	DiffText = { fg = colors.light0, bg = colors.blue },
 
 	diffAdded = { link = 'Green' },
 	diffRemoved = { link = 'Red' },

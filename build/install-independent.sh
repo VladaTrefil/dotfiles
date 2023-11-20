@@ -68,6 +68,7 @@ if [ -f "$(which python3)" ]; then
   done
 
   python3 -m pip install -U yt-dlp
+  python3 -m pip install -U mercurial
 fi
 
 # }}}

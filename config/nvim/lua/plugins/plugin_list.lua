@@ -231,6 +231,12 @@ return {
 		end,
 	},
 
+	['sindrets/diffview.nvim'] = {
+		config = function()
+			require('plugins.config._diffview')
+		end,
+	},
+
 	['windwp/nvim-autopairs'] = {
 		config = function()
 			require('plugins.config.autopairs')

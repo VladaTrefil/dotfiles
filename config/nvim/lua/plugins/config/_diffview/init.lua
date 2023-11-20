@@ -1,4 +1,4 @@
-local diffview_ok, diffview = pcall(require, 'diffview')
+local diffview_ok, _ = pcall(require, 'diffview')
 
 if not diffview_ok then
 	vim.notify('diffview not found', vim.log.levels.ERROR)
@@ -9,7 +9,14 @@ local actions = require('diffview.actions')
 local utils = require('core.utils')
 
 local highlights = require('plugins.config._diffview.theme')
+local mappings = {
+	n = {
+		['<leader>gd'] = { '<cmd> DiffviewOpen <CR>', 'Open Diffview layout' },
+	},
+}
+
 utils.set_highlights(highlights)
+utils.load_mappings(mappings)
 
 require('diffview').setup({
 	diff_binaries = false, -- Show diffs for binaries

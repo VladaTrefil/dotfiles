@@ -86,12 +86,8 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.shellcheck.with(sources_config.shellcheck),
 		-- null_ls.builtins.diagnostics.rubocop.with(sources_config.rubocop),
 
-		null_ls.builtins.formatting.stylua,
-		null_ls.builtins.formatting.stylelint,
 
 		-- null_ls.builtins.diagnostics.deno_lint,
-		-- null_ls.builtins.formatting.beautysh,
-		-- null_ls.builtins.formatting.clang_format,
 		-- null_ls.builtins.diagnostics.clang_check,
 		-- null_ls.builtins.diagnostics.tsc,
 		-- null_ls.builtins.diagnostics.eslint_d,

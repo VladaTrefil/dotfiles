@@ -1,25 +1,5 @@
 local M = {}
 
-M.formatting = function(capabilities, bufnr)
-	if capabilities.documentFormattingProvider then
-		vim.api.nvim_buf_create_user_command(bufnr, 'Format', function()
-			vim.lsp.buf.format()
-		end, { desc = 'Format file with LSP' })
-
-		local autocmd_group = 'auto_format_' .. bufnr
-		vim.api.nvim_create_augroup(autocmd_group, { clear = true })
-
-		vim.api.nvim_create_autocmd('BufWritePre', {
-			group = autocmd_group,
-			buffer = bufnr,
-			desc = 'Auto format buffer ' .. bufnr .. ' before save',
-			callback = function()
-				vim.lsp.buf.format()
-			end,
-		})
-	end
-end
-
 M.highlighting = function(capabilities, bufnr)
 	if not capabilities.documentHighlightProvider then
 		return

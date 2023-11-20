@@ -68,7 +68,6 @@ end
 lsp.on_attach = function(client, bufnr)
 	local capabilities = client.server_capabilities
 
-	on_attach_func.formatting(capabilities, bufnr)
 	on_attach_func.highlighting(capabilities, bufnr)
 	on_attach_func.mappings(capabilities, bufnr)
 end

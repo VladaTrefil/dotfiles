@@ -234,6 +234,11 @@ return {
 		end,
 	},
 
+	['backdround/improved-search.nvim'] = {
+		config = function()
+			require('plugins.config._improved_search')
+		end,
+	},
 	['rhysd/clever-f.vim'] = {},
 
 	['numToStr/Comment.nvim'] = {

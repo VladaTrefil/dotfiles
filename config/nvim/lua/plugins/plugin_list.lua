@@ -224,10 +224,14 @@ return {
 			require('plugins.config.git').blamer()
 		end,
 	},
-
 	['airblade/vim-gitgutter'] = {
 		config = function()
 			require('plugins.config.git').gitgutter()
+		end,
+	},
+	['folke/todo-comments.nvim'] = {
+		config = function()
+			require('plugins.config._todo_comments')
 		end,
 	},
 

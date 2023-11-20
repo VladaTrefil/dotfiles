@@ -48,4 +48,12 @@ return {
 	CheckboxChecked = '  ',
 	Person = '  ',
 	Robot = ' ﮧ ',
+
+	Bug = '  ',
+	Checkmark = '  ',
+	Fire = '  ',
+	Warning = '  ',
+	Performance = ' 龍 ',
+	Note = '  ',
+	Test = '  ',
 }

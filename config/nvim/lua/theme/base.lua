@@ -58,6 +58,11 @@ local config = {
 	diffFile = { link = 'Orange' },
 	diffNewFile = { link = 'Yellow' },
 	diffLine = { link = 'Blue' },
+
+	DiagnosticInfo = { link = 'BlueSign' },
+	DiagnosticHint = { link = 'OrangeSign' },
+	DiagnosticWarn = { link = 'YellowSign' },
+	DiagnosticError = { link = 'RedSign' },
 }
 
 if vim.fn.has('spell') then

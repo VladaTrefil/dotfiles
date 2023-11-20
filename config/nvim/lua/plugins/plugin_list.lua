@@ -157,19 +157,6 @@ return {
 		end,
 	},
 
-	-- Formatting and linting
-	['jose-elias-alvarez/null-ls.nvim'] = {
-		as = 'null-ls',
-		after = 'nvim-lspconfig',
-		requires = {
-			{ 'williamboman/mason.nvim' },
-			{ 'jay-babu/mason-null-ls.nvim', as = 'mason-null-ls' },
-		},
-		config = function()
-			require('plugins.config.lsp_tools.null_ls')
-		end,
-	},
-
 	['folke/trouble.nvim'] = {
 		as = 'trouble',
 		requires = {

@@ -7,6 +7,13 @@ return {
 
 	['BurntSushi/ripgrep'] = {},
 
+	['rcarriga/nvim-notify'] = {
+		requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+		config = function()
+			require('plugins.config.notify')
+		end,
+	},
+
 	['nvim-treesitter/nvim-treesitter'] = {
 		build = ':TSUpdate',
 		config = function()
@@ -44,13 +51,6 @@ return {
 		tag = 'v2.*',
 		config = function()
 			require('plugins.config.bufferline')
-		end,
-	},
-
-	['rcarriga/nvim-notify'] = {
-		requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-		config = function()
-			require('plugins.config.notify')
 		end,
 	},
 
@@ -110,17 +110,11 @@ return {
 		end,
 	},
 
-	['kdheepak/lazygit.nvim'] = {
-		config = function()
-			require('plugins.config.git').lazygit()
-		end,
-	},
-
-	['kelly-lin/ranger.nvim'] = {
-		config = function()
-			require('plugins.config.ranger')
-		end,
-	},
+	-- ['kelly-lin/ranger.nvim'] = {
+	-- 	config = function()
+	-- 		require('plugins.config.ranger')
+	-- 	end,
+	-- },
 
 	['zbirenbaum/copilot.lua'] = {
 		cmd = 'Copilot',
@@ -217,6 +211,12 @@ return {
 		end,
 	},
 
+	['kdheepak/lazygit.nvim'] = {
+		config = function()
+			require('plugins.config.git').lazygit()
+		end,
+	},
+	['drzel/vim-repo-edit'] = {}, -- " Quickly clone github repo to tmp
 	['tpope/vim-git'] = {},
 	['tpope/vim-fugitive'] = {},
 	['APZelos/blamer.nvim'] = {
@@ -269,8 +269,6 @@ return {
 	},
 
 	['tpope/vim-eunuch'] = {}, -- " File commands in vim
-
-	['drzel/vim-repo-edit'] = {}, -- " Quickly clone github repo to tmp
 
 	['mattn/emmet-vim'] = {},
 

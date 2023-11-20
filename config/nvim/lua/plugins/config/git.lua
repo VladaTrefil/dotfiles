@@ -3,14 +3,14 @@ local M = {}
 local load_mappings = require('core.utils').load_mappings
 
 M.lazygit = function()
-  vim.g.lazygit_floating_window_winblend = 1
-  -- vim.g.lazygit_floating_window_use_plenary = 1
+	vim.g.lazygit_floating_window_winblend = 1
+	-- vim.g.lazygit_floating_window_use_plenary = 1
 
-  load_mappings(require('core.mappings').lazygit)
+	load_mappings(require('core.mappings').lazygit)
 end
 
 M.gitgutter = function()
-  vim.cmd([[
+	vim.cmd([[
     let g:gitgutter_sign_added = '\ +'
     let g:gitgutter_sign_modified = '\ ~'
     let g:gitgutter_sign_removed = '\ -'
@@ -21,8 +21,8 @@ M.gitgutter = function()
 end
 
 M.blamer = function()
-  local mappings = require('core.mappings').blamer
-  load_mappings(mappings)
+	local mappings = require('core.mappings').blamer
+	load_mappings(mappings)
 end
 
 return M

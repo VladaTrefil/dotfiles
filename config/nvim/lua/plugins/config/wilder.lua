@@ -1,7 +1,7 @@
 local present, _ = pcall(require, 'wilder')
 
 if not present then
-  return
+	return
 end
 
 vim.cmd([[

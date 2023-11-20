@@ -112,12 +112,12 @@ M.general = {
 		['>'] = { '>gv', 'Improve indent in visual' },
 		['<'] = { '<gv', 'Improve indent in visual' },
 
-		["S'"] = { "c''<ESC>P", "Surround with '' " },
-		['S"'] = { 'c""<ESC>P', 'Surround with "" ' },
-		['S`'] = { 'c``<ESC>P', 'Surround with `` ' },
-		['S('] = { 'c()<ESC>P', 'Surround with ()' },
-		['S{'] = { 'c{}<ESC>P', 'Surround with {}' },
-		['S['] = { 'c[]<ESC>P', 'Surround with []' },
+		["s'"] = { "c''<ESC>P", "Surround with '' " },
+		['s"'] = { 'c""<ESC>P', 'Surround with "" ' },
+		['s`'] = { 'c``<ESC>P', 'Surround with `` ' },
+		['s('] = { 'c()<ESC>P', 'Surround with ()' },
+		['s{'] = { 'c{}<ESC>P', 'Surround with {}' },
+		['s['] = { 'c[]<ESC>P', 'Surround with []' },
 
 		['J'] = { "<cmd>m '>+1<CR>gv=gv", 'Move selected block down a line' },
 		['K'] = { "<cmd>m '>-2<CR>gv=gv", 'Move selected block up a line' },

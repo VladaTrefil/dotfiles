@@ -29,6 +29,7 @@ APT_PACKAGES=(
   "rename" # bulk rename files
   "speedtest-cli"
   "mason"
+  "playerctl" # Control media player from terminal
 
   # Terminal code interpreters
   "python3-dev"
@@ -125,7 +126,6 @@ APT_PACKAGES=(
   "apt-transport-https"
   "curl"
 
-  "playerctl"
   # Git dependencies
   "install-info"
   "dh-autoreconf"
@@ -163,9 +163,9 @@ if [ ! -f /etc/apt/sources.list.d/docker.list ]; then
   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
   sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
-  echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-        "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-        sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  version="$(. /etc/os-release && echo "$VERSION_CODENAME")"
+  params="[arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg]"
+  echo "deb $params https://download.docker.com/linux/ubuntu $version stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 fi
 
 if [ ! -f "`which i3`" ]; then

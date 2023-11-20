@@ -1,12 +1,12 @@
-return function ()
-  if (vim.b.current_syntax) then
-    return
-  end
+return function()
+	if vim.b.current_syntax then
+		return
+	end
 
-  vim.b.current_syntax = 'rasi'
-  vim.opt_local.filetype = 'rasi'
+	vim.b.current_syntax = 'rasi'
+	vim.opt_local.filetype = 'rasi'
 
-  vim.cmd([[
+	vim.cmd([[
     syntax case match
 
     syntax region rasiString start="\"" skip="\." end="\""

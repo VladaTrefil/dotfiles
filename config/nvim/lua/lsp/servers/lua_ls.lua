@@ -5,9 +5,9 @@ M.settings = {
 		diagnostics = {
 			globals = { 'vim', 'packer_plugins' },
 		},
-    hint = {
-      setType = true
-    },
+		hint = {
+			setType = true,
+		},
 	},
 }
 

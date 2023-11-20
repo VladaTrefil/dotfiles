@@ -224,7 +224,6 @@ echo "──  Rofi:"
 if [ ! -f "$(which rofi)" ]; then
   cd ./tmp || exit
 
-  # use brew if fails
   if [ ! -f "/usr/local/lib/libcheck.la" ]; then
     git clone git@github.com:libcheck/check.git
     git checkout 673dce1d61781c32b449bef0ee8711dc7e689170

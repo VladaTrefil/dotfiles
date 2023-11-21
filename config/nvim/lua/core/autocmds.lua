@@ -41,7 +41,6 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
 	callback = function()
 		utils.expand_xml_tags()
 		utils.autoindent()
-		utils.notify('File formatted', vim.log.levels.INFO, { title = 'XML Autoindent' })
 	end,
 })
 
@@ -60,9 +59,10 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
 	callback = require('syntax.rasi'),
 })
 
+-- Basic autoindent for filetypes without a plugin
 autocmd({ 'BufWritePre' }, {
 	desc = 'Autoformat',
-	pattern = '*.yuck,*.xml,*.sh',
+	pattern = '*.yuck,*.svg',
 	callback = function()
 		utils.autoindent()
 	end,

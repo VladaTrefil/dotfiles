@@ -50,8 +50,6 @@ then
     playlist="--no-playlist"
   fi
 
-  echo $playlist
-
   notify_download_status "$name" "start"
 
   output=$(yt-dlp --embed-thumbnail \

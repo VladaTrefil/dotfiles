@@ -228,11 +228,11 @@ return {
 		end,
 	},
 
-  ['echasnovski/mini.splitjoin'] = {
-    config = function()
-      require('plugins.config._splitjoin')
-    end,
-  },
+	['echasnovski/mini.splitjoin'] = {
+		config = function()
+			require('plugins.config._splitjoin')
+		end,
+	},
 
 	['windwp/nvim-autopairs'] = {
 		config = function()

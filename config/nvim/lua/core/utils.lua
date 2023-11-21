@@ -7,7 +7,12 @@ local register_name = vim.v.register
 -- Counts number of lines in copy register
 M.line_count_in_register = function()
 	local register = fn.getreg(vim.v.register, nil, true)
-	return vim.tbl_count(register)
+
+	if type(register) == 'table' then
+		return vim.tbl_count(register)
+	else
+		return 1
+	end
 end
 
 -- true/false if line under the cursor is blank
@@ -94,7 +99,7 @@ M.fold_label_text = function()
 	local fold_size = vim.v.foldend - vim.v.foldstart
 	local spacer_size = 96 - fn.len(text) - fn.len(fold_size)
 
-	local spacer = vim.call('repeat', { '.', spacer_size })
+	local spacer = fn['repeat']({ '.', spacer_size })
 
 	return ' ' .. text .. spacer .. ' (' .. fold_size .. ' L)  '
 end
@@ -220,10 +225,10 @@ M.convert_color_code = function(red, green, blue)
 	local value
 
 	if selection:find('#') then
-		local red, green, blue = M.hex2rgb(selection)
+		red, green, blue = M.hex2rgb(selection)
 		value = string.format('%s,%s,%s', red, green, blue)
 	elseif selection:find(',') then
-		local red, green, blue = selection:match('(%d+),%s?(%d+),%s?(%d+)')
+		red, green, blue = selection:match('(%d+),%s?(%d+),%s?(%d+)')
 		value = M.rgb2hex(red, green, blue)
 	else
 		vim.notify('Invalid color code', vim.log.levels.ERROR, { title = 'Color Converter' })
@@ -243,7 +248,7 @@ M.clear_ui = function()
 	vim.fn.feedkeys(':', 'nx')
 
 	-- dismiss any open notify messages
-	vim.notify.dismiss()
+	vim.notify.dismiss({ pending = false, silent = false })
 end
 
 return M

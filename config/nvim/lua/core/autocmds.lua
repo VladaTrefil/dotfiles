@@ -40,7 +40,6 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
 	pattern = '*.xml',
 	callback = function()
 		utils.expand_xml_tags()
-		utils.autoindent()
 	end,
 })
 

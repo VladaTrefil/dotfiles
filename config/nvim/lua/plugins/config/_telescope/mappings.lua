@@ -26,19 +26,10 @@ M.base = {
 			'Notifications [telescope]',
 		},
 
-		['<leader>pvc'] = {
-			'<cmd> Telescope command_history <CR>',
-			'Command history [telescope]',
-		},
-		['<leader>pvr'] = {
-			'<cmd> Telescope reloader <CR>',
-			'Lua module reloader [telescope]',
-		},
+		['<leader>pvc'] = { '<cmd> Telescope command_history <CR>', 'Command history [telescope]' },
+		['<leader>pvr'] = { '<cmd> Telescope reloader <CR>', 'Lua module reloader [telescope]' },
 		['<leader>pvh'] = { '<cmd> Telescope highlights <CR>', 'Highlights [telescope]' },
-		['<leader>pva'] = {
-			'<cmd> Telescope autocommands <CR>',
-			'Autocommands [telescope]',
-		},
+		['<leader>pva'] = { '<cmd> Telescope autocommands <CR>', 'Autocommands [telescope]' },
 		['<leader>pvo'] = { '<cmd> Telescope vim_options <CR>', 'Vim options [telescope]' },
 
 		-- -- git

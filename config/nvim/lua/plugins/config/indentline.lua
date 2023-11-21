@@ -14,9 +14,14 @@ indentline.setup({
 	debounce = 100,
 	indent = {
 		highlight = highlight,
-		char = { '┃', '│', '╎' },
-		tab_char = { '┃', '│', '╎' },
+		char = '┃',
+		tab_char = '┃',
 	},
+	whitespace = {
+		highlight = highlight,
+		remove_blankline_trail = false,
+	},
+	scope = { highlight = 'Gray' },
 	exclude = {
 		filetypes = {
 			'help',

@@ -39,7 +39,7 @@ opt.clipboard = 'unnamedplus'
 opt.swapfile = false
 opt.backup = false
 opt.undofile = true
-opt.undodir = vim.fn.expand('$XDG_STATE_HOME/nvim/undodir/')
+opt.undodir:append(vim.fn.expand('$XDG_STATE_HOME/nvim/undodir/'))
 opt.directory = opt.directory ^ { vim.fn.expand('$XDG_STATE_HOME/nvim/tmp/') }
 
 -- Enable mouse control for resizing panes

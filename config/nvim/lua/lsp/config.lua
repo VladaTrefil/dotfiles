@@ -42,10 +42,15 @@ M.signs = {
 
 M.diagnostic_config = {
 	signs = true,
-	underline = true,
+	underline = {
+		severity = vim.diagnostic.severity.WARN,
+	},
 	update_in_insert = false,
 	severity_sort = false,
-	virtual_text = true,
+	virtual_text = {
+		severity = vim.diagnostic.severity.WARN,
+		spacing = 1,
+	},
 	float = {
 		source = 'always', -- Or "if_many"
 	},

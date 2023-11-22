@@ -104,12 +104,6 @@ return {
 		end,
 	},
 
-	['stevearc/conform.nvim'] = {
-		config = function()
-			require('plugins.config._conform')
-		end,
-	},
-
 	-- ['kelly-lin/ranger.nvim'] = {
 	-- 	config = function()
 	-- 		require('plugins.config.ranger')
@@ -177,6 +171,18 @@ return {
 	-- 		require('plugins.config.aerial')
 	-- 	end,
 	-- },
+
+	['mfussenegger/nvim-lint'] = {
+		config = function()
+			require('plugins.config._lint')
+		end,
+	},
+
+	['stevearc/conform.nvim'] = {
+		config = function()
+			require('plugins.config._conform')
+		end,
+	},
 
 	['hrsh7th/nvim-cmp'] = {
 		-- after = 'lspkind.nvim',

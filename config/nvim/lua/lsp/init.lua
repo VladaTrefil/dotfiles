@@ -7,12 +7,10 @@ local lspconfig = require('lspconfig')
 local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 local extend = vim.tbl_deep_extend
 
-local disabled_servers = { 'rubocop' }
-
 --- Helper function to set up a given server with the Neovim LSP client
 -- @param server the name of the server to be setup
 lsp.setup = function(server)
-	if vim.tbl_contains(disabled_servers, server) then
+	if vim.tbl_contains(user_config.disabled_servers, server) then
 		return
 	end
 

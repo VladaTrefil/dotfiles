@@ -5,12 +5,13 @@ if not lint_ok then
 	return
 end
 
+local disable_linting = false
+
 lint.linters_by_ft = {
 	sh = { 'shellcheck' },
 	bash = { 'shellcheck' },
-	zsh = { 'shellcheck' },
-	javascript = { 'standardjs' },
-	typescript = { 'standardjs' },
+	-- javascript = { 'standardjs' },
+	-- typescript = { 'standardjs' },
 	lua = { 'selene' },
 	scss = { 'stylelint' },
 	sass = { 'stylelint' },
@@ -54,14 +55,8 @@ lint.linters.rubocop.args = {
 		return vim.fn.expand('%:p')
 	end,
 }
--- condition = function()
--- 	return vim.fn.executable('rubocop') > 0
--- end,
--- env = {
--- 	PRETTIERD_DEFAULT_CONFIG = vim.fn.expand(
--- 		'~/.config/nvim/utils/linter-config/.prettierrc.json'
--- 	),
--- },
+
+vim.g.disable_linting = disable_linting
 
 local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave', 'TextChanged' }, {

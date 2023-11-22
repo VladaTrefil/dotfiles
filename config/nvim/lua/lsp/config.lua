@@ -11,6 +11,8 @@ M.servers_config = {
 	rubocop = require('lsp.servers.rubocop'),
 }
 
+M.disabled_servers = { 'rubocop', 'tsserver' }
+
 M.capabilities = {
 	textDocument = {
 		completion = {
@@ -42,9 +44,9 @@ M.signs = {
 
 M.diagnostic_config = {
 	signs = true,
-	underline = {
-		severity = vim.diagnostic.severity.WARN,
-	},
+	-- underline = {
+	-- 	severity = vim.diagnostic.severity.WARN,
+	-- },
 	update_in_insert = false,
 	severity_sort = false,
 	virtual_text = {

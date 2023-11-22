@@ -5,6 +5,9 @@ if not conform_ok then
 	return
 end
 
+local ignore_filetypes = { 'javascript', 'sass' }
+local disable_autoformat = false
+
 local formatters = {
 	stylua = {
 		prepend_args = {
@@ -23,8 +26,11 @@ local formatters = {
 		prepend_args = {
 			'exec',
 			'rubocop',
+			'--force-exclusion',
 			'--config',
 			vim.fn.expand('$XDG_CONFIG_HOME/rubocop/rubocop.yml'),
+			'--stdin',
+			'$FILENAME',
 		},
 		condition = function()
 			return vim.fn.executable('rubocop') > 0
@@ -35,6 +41,13 @@ local formatters = {
 	},
 }
 
+local autoformat_opts = {
+	timeout_ms = 3000,
+	lsp_fallback = true,
+}
+
+vim.g.disable_autoformat = disable_autoformat
+
 conform.setup({
 	formatters_by_ft = {
 		lua = { 'stylua' },
@@ -43,7 +56,7 @@ conform.setup({
 		scss = { 'prettier' },
 		js = { 'prettier' },
 		json = { 'prettier' },
-		sh = { 'shellcheck' },
+		sh = { 'beautysh' },
 		yaml = { 'prettier' },
 		['_'] = { 'trim_whitespace' },
 	},
@@ -51,9 +64,23 @@ conform.setup({
 	formatters = formatters,
 
 	log_level = vim.log.levels.WARN,
-	format_on_save = {
-		-- I recommend these options. See :help conform.format for details.
-		lsp_fallback = true,
-		timeout_ms = 3000,
-	},
+	format_on_save = function(bufnr)
+		-- Disable autoformat on certain filetypes
+		if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
+			return
+		end
+
+		-- Disable with a global or buffer-local variable
+		if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+			return
+		end
+
+		-- Disable autoformat for files in a certain path
+		local bufname = vim.api.nvim_buf_get_name(bufnr)
+		if bufname:match('/node_modules/') then
+			return
+		end
+
+		return autoformat_opts
+	end,
 })

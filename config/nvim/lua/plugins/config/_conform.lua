@@ -54,6 +54,6 @@ conform.setup({
 	format_on_save = {
 		-- I recommend these options. See :help conform.format for details.
 		lsp_fallback = true,
-		timeout_ms = 2000,
+		timeout_ms = 3000,
 	},
 })

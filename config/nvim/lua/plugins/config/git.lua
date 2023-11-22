@@ -1,6 +1,7 @@
 local M = {}
 
 local load_mappings = require('core.utils').load_mappings
+local icons = require('core.icons')
 
 M.lazygit = function()
 	vim.g.lazygit_floating_window_winblend = 1
@@ -10,14 +11,15 @@ M.lazygit = function()
 end
 
 M.gitgutter = function()
-	vim.cmd([[
-    let g:gitgutter_sign_added = '\ +'
-    let g:gitgutter_sign_modified = '\ ~'
-    let g:gitgutter_sign_removed = '\ -'
-    let g:gitgutter_sign_removed_first_line = '\ -'
-    let g:gitgutter_sign_removed_above_and_below = '\ -'
-    let g:gitgutter_sign_modified_removed = '\ ~'
-  ]])
+	vim.g.gitgutter_sign_added = icons.Plus:gsub('%s', '')
+	vim.g.gitgutter_sign_modified = icons.Change:gsub('%s', '')
+	vim.g.gitgutter_sign_removed = icons.Minus:gsub('%s', '')
+	vim.g.gitgutter_sign_removed_first_line = '‾ '
+	vim.g.gitgutter_sign_removed_above_and_below = '_¯'
+	vim.g.gitgutter_sign_modified_removed = '~_'
+
+	vim.g.gitgutter_sign_priority = 5
+	vim.g.gitgutter_sign_allow_clobber = 1
 end
 
 M.blamer = function()

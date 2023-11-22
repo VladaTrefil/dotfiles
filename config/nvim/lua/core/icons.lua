@@ -56,6 +56,10 @@ return {
 	Note = '  ',
 	Test = '  ',
 
+	Plus = '  ',
+	Change = '  ',
+	Minus = '  ',
+
 	Error = '  ',
 	Warning = '  ',
 	Hint = '  ',

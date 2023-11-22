@@ -1,10 +1,10 @@
-local colors = require('theme.colors')
+local groups = require('theme.highlight_groups')
 
 local config = {
-	GitGutterAdd = { link = 'GreenBold' },
-	GitGutterChange = { link = 'BlueBold' },
-	GitGutterDelete = { link = 'RedBold' },
-	GitGutterChangeDelete = { link = 'RedBold' },
+	GitGutterAdd = groups.GreenBold,
+	GitGutterChange = groups.BlueBold,
+	GitGutterDelete = groups.RedBold,
+	GitGutterChangeDelete = groups.RedBold,
 }
 
 return config

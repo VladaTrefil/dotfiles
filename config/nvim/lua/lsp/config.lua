@@ -11,7 +11,7 @@ M.servers_config = {
 	rubocop = require('lsp.servers.rubocop'),
 }
 
-M.disabled_servers = { 'rubocop', 'tsserver' }
+M.disabled_servers = { 'rubocop', 'tsserver', 'eslint' }
 
 M.capabilities = {
 	textDocument = {

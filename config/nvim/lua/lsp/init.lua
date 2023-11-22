@@ -3,9 +3,13 @@ local lsp = {}
 local user_config = require('lsp.config')
 local on_attach_func = require('lsp.on_attach')
 local lspconfig = require('lspconfig')
+local sign_handler = require('lsp.sign_handler')
 
 local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 local extend = vim.tbl_deep_extend
+
+-- Register a handler for displaying diagnostic signs
+sign_handler.register()
 
 --- Helper function to set up a given server with the Neovim LSP client
 -- @param server the name of the server to be setup
@@ -52,6 +56,10 @@ lsp.setup_server = function(server_name)
 		capabilities = capabilities,
 		flags = flags,
 		on_attach = function(client, bufnr)
+			if not client then
+				return
+			end
+
 			if user_server_config.on_attach then
 				user_server_config.on_attach()
 			end

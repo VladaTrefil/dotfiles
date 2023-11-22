@@ -36,19 +36,21 @@ M.capabilities = {
 }
 
 M.signs = {
-	Error = icons.Error:gsub('%s', ''),
-	Warn = icons.Warning:gsub('%s', ''),
-	Hint = icons.Hint:gsub('%s', ''),
-	Info = icons.Info:gsub('%s', ''),
+	Error = icons.Error:gsub('%s$', ''),
+	Warn = icons.Warning:gsub('%s$', ''),
+	Hint = icons.Hint:gsub('%s$', ''),
+	Info = icons.Info:gsub('%s$', ''),
 }
 
 M.diagnostic_config = {
-	signs = true,
-	-- underline = {
-	-- 	severity = vim.diagnostic.severity.WARN,
-	-- },
+	signs = {
+		priority = 10,
+	},
+	underline = {
+		severity = vim.diagnostic.severity.WARN,
+	},
 	update_in_insert = false,
-	severity_sort = false,
+	severity_sort = true,
 	virtual_text = {
 		severity = vim.diagnostic.severity.WARN,
 		spacing = 1,

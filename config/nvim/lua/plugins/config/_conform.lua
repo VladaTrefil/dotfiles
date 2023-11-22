@@ -19,12 +19,12 @@ local formatters = {
 		},
 	},
 	rubocop = {
-		command = 'bundle exec rubocop',
+		command = 'bundle',
 		prepend_args = {
+			'exec',
+			'rubocop',
 			'--config',
 			vim.fn.expand('$XDG_CONFIG_HOME/rubocop/rubocop.yml'),
-			'--require rubocop-rails',
-			'--require rubocop-performance',
 		},
 		condition = function()
 			return vim.fn.executable('rubocop') > 0
@@ -38,7 +38,7 @@ local formatters = {
 conform.setup({
 	formatters_by_ft = {
 		lua = { 'stylua' },
-		-- ruby = { 'rubocop' },
+		ruby = { 'rubocop' },
 		-- sass = { 'prettier' },
 		scss = { 'prettier' },
 		js = { 'prettier' },

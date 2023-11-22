@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
-
-# Folio::Account.create!(email: "vladislav.trefil@sinfin.cz", password: "ngfKz2FGyWw3", first_name: "Vladislav", last_name: "Trefil", role: "superuser")
+# frozen_string_literal: true
 
 credential = 'test@test.test'
 

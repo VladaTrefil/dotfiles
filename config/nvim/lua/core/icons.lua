@@ -52,8 +52,12 @@ return {
 	Bug = '  ',
 	Checkmark = '  ',
 	Fire = '  ',
-	Warning = '  ',
 	Performance = ' 龍 ',
 	Note = '  ',
 	Test = '  ',
+
+	Error = '  ',
+	Warning = '  ',
+	Hint = '  ',
+	Info = '  ',
 }

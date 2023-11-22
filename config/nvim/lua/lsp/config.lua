@@ -1,13 +1,14 @@
 local M = {}
 
+local icons = require('core.icons')
+
 M.servers_config = {
 	lua_ls = require('lsp.servers.lua_ls'),
 	jsonls = require('lsp.servers.jsonls'),
 	eslint = require('lsp.servers.eslint'),
 	tsserver = require('lsp.servers.tsserver'),
 	cssls = require('lsp.servers.css_ls'),
-	-- solargraph = require('lsp.servers.solargraph'),
-	-- rubocop = require('lsp.servers.rubocop'),
+	rubocop = require('lsp.servers.rubocop'),
 }
 
 M.capabilities = {
@@ -32,16 +33,19 @@ M.capabilities = {
 	},
 }
 
-M.signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
+M.signs = {
+	Error = icons.Error:gsub('%s', ''),
+	Warn = icons.Warning:gsub('%s', ''),
+	Hint = icons.Hint:gsub('%s', ''),
+	Info = icons.Info:gsub('%s', ''),
+}
 
 M.diagnostic_config = {
 	signs = true,
 	underline = true,
 	update_in_insert = false,
 	severity_sort = false,
-	virtual_text = {
-		source = 'always', -- Or "if_many"
-	},
+	virtual_text = true,
 	float = {
 		source = 'always', -- Or "if_many"
 	},

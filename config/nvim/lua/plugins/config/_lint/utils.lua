@@ -1,12 +1,16 @@
 local M = {}
 
-M.exec_lint = function(engine)
+M.exec_lint = function(engine, ignore_filetypes)
 	local names = engine.linters_by_ft[vim.bo.filetype] or {}
 	-- Use nvim-lint's logic first:
 	-- * checks if linters exist for the full filetype first
 	-- * otherwise will split filetype by "." and add all those linters
 	-- * this differs from conform.nvim which only uses the first filetype that has a formatter
 	names = engine._resolve_linter_by_ft(vim.bo.filetype)
+
+	if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+		return
+	end
 
 	-- Add fallback linters.
 	if #names == 0 then
@@ -32,8 +36,10 @@ M.exec_lint = function(engine)
 			vim.notify('Linter not found: ' .. name, vim.log.levels.WARN, { title = 'nvim-engine' })
 		end
 
-		local condition = linter.condition and not linter.condition(ctx)
-		return linter and not (type(linter) == 'table' and condition)
+		local linter_condition = not linter.condition or linter.condition(ctx)
+		local linter_is_table = type(linter) == 'table'
+
+		return linter and (linter_is_table and linter_condition)
 	end, names)
 
 	-- Run linters.

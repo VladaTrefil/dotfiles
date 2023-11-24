@@ -10,6 +10,7 @@ local lint_utils = require('plugins.config._lint.utils')
 
 local disable_linting = false
 local lint_events = { 'BufEnter', 'BufWritePost', 'InsertLeave', 'TextChanged' }
+local ignore_filetypes = { 'help' }
 
 lint.linters_by_ft = {
 	sh = { 'shellcheck' },
@@ -18,11 +19,14 @@ lint.linters_by_ft = {
 	-- typescript = { 'standardjs' },
 	lua = { 'selene' },
 	scss = { 'stylelint' },
-	sass = { 'stylelint' },
+	-- sass = { 'stylelint' },
 	ruby = { 'rubocop' },
 	json = { 'jsonlint' },
 	['*'] = { 'codespell' },
 }
+
+-- Highlight vertical tab as error
+vim.api.nvim_command('match RedSign /\\%x0b/')
 
 vim.g.disable_linting = disable_linting
 
@@ -36,7 +40,7 @@ for name, data in pairs(linters) do
 end
 
 local function lint_callback()
-	lint_utils.exec_lint(lint)
+	lint_utils.exec_lint(lint, ignore_filetypes)
 end
 
 local lint_augroup = vim.api.nvim_create_augroup('linting', { clear = true })

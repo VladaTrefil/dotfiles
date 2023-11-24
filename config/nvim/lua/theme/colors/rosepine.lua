@@ -8,6 +8,7 @@ return {
 	dark2 = '#26233a',
 	dark3 = '#2a273f',
 	dark4 = '#2f2f47',
+	dark5 = '#3f3f5f',
 
 	gray = '#908caa',
 

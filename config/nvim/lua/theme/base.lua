@@ -23,7 +23,7 @@ local config = {
 
 	Cursor = { fg = colors.dark0, bg = colors.light0 },
 	CursorLine = { bg = colors.dark1 },
-	CursorLineNr = { fg = colors.bright_orange, bg = colors.dark0 },
+	CursorLineNr = { fg = colors.bright_orange, bg = colors.dark0, bold = true },
 
 	MatchParen = { fg = colors.dark0, bg = colors.bright_blue, bold = true },
 
@@ -39,6 +39,8 @@ local config = {
 	VisualNOS = { link = 'Visual' },
 	iCursor = { link = 'Cursor' },
 	lCursor = { link = 'Cursor' },
+
+	StatusColumnBorder = { fg = colors.dark5, bg = colors.dark0 },
 
 	Pmenu = { fg = colors.light0, bg = colors.dark },
 	PmenuBorder = { fg = colors.dark, bg = colors.dark },

@@ -1,5 +1,6 @@
 local M = {}
 
+local statuscolumn = require('core.ui.statuscolumn')
 local dashboard = require('alpha.themes.dashboard')
 local separator_element = ' >  '
 
@@ -33,7 +34,12 @@ M.setup_autocmds = function()
 	vim.api.nvim_create_autocmd('FileType', {
 		group = 'alpha_tabline',
 		pattern = 'alpha',
-		command = 'set showtabline=0 laststatus=0 noruler',
+		callback = function()
+			vim.opt.showtabline = 0
+			vim.opt.laststatus = 0
+			vim.opt.ruler = false
+			statuscolumn.hide_statuscolumn()
+		end,
 	})
 
 	vim.api.nvim_create_autocmd('FileType', {
@@ -43,7 +49,12 @@ M.setup_autocmds = function()
 			vim.api.nvim_create_autocmd('BufUnload', {
 				group = 'alpha_tabline',
 				buffer = 0,
-				command = 'set showtabline=2 ruler laststatus=2',
+				callback = function()
+					vim.opt.showtabline = 2
+					vim.opt.laststatus = 2
+					vim.opt.ruler = true
+					statuscolumn.show_statuscolumn()
+				end,
 			})
 		end,
 	})

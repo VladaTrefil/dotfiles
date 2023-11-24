@@ -22,6 +22,9 @@ autocmd({ 'FocusGained', 'BufEnter', 'BufWritePost' }, {
 	desc = 'Refresh buffer',
 	pattern = '*',
 	callback = function()
+		-- Highlight vertical tab as error
+		vim.api.nvim_command('match RedSign /\\%x0b/')
+
 		if not opt.buftype:get() then
 			vim.api.nvim_command('checktime')
 		end

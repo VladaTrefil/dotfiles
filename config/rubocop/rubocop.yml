@@ -34,20 +34,23 @@ AllCops:
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
 
+Metrics/MethodLength:
+  CountAsOne: ['array', 'heredoc', 'method_call']
+  Max: 15
+
+Lint/UselessAssignment:
+  Exclude:
+    - 'db/seeds.rb'
+    - 'lib/tasks/developer_tools.rake'
+
 Style/ClassAndModuleChildren:
   Enabled: false
 
 Style/Documentation:
   Enabled: false
 
-Metrics/MethodLength:
-  CountAsOne: ['array', 'heredoc', 'method_call']
-  Max: 15
+Style/MutableConstant:
+  Enabled: false
 
 Style/Lambda:
   EnforcedStyle: 'literal'
-
-Lint/UselessAssignment:
-  Exclude:
-    - 'db/seeds.rb'
-    - 'lib/tasks/developer_tools.rake'

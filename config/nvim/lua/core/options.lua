@@ -19,6 +19,9 @@ opt.signcolumn = 'yes:2'
 -- Dont show mode indicator in command line
 opt.showmode = false
 
+-- Dont change split scroll when opening new pane
+opt.splitkeep = 'screen'
+
 -- Enable current line highlight
 opt.cursorline = true
 
@@ -79,8 +82,9 @@ opt.re = 0
 opt.regexpengine = 1
 
 -- Folds
-opt.foldmethod = 'marker'
-opt.foldtext = 'v:lua.foldtext()'
+-- h
+-- opt.foldmethod = 'marker'
+-- opt.foldtext = 'v:lua.foldtext()'
 opt.fillchars:append('fold:|,eob: ')
 opt.foldenable = true
 

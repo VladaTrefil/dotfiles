@@ -11,9 +11,9 @@ M.lazygit = function()
 end
 
 M.gitgutter = function()
-	vim.g.gitgutter_sign_added = icons.Plus:gsub('%s', '')
-	vim.g.gitgutter_sign_modified = icons.Change:gsub('%s', '')
-	vim.g.gitgutter_sign_removed = icons.Minus:gsub('%s', '')
+	vim.g.gitgutter_sign_added = icons.Plus:gsub('^%s', '')
+	vim.g.gitgutter_sign_modified = icons.Change:gsub('^%s', '')
+	vim.g.gitgutter_sign_removed = icons.Minus:gsub('^%s', '')
 	vim.g.gitgutter_sign_removed_first_line = '‾ '
 	vim.g.gitgutter_sign_removed_above_and_below = '_¯'
 	vim.g.gitgutter_sign_modified_removed = '~_'

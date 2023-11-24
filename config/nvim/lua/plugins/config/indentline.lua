@@ -6,7 +6,6 @@ end
 
 local highlight = {
 	'Bg2',
-	'Bg3',
 	'Bg4',
 }
 

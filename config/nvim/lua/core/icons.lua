@@ -64,4 +64,8 @@ return {
 	Warning = '  ',
 	Hint = '  ',
 	Info = '  ',
+
+	Pipe = '│',
+	PipeThick = '┃',
+	PipeDashed = '┆',
 }

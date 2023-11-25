@@ -4,6 +4,8 @@ if not indentline_ok then
 	return
 end
 
+local icons = require('core.icons')
+
 local highlight = {
 	'Bg2',
 	'Bg4',
@@ -13,8 +15,8 @@ indentline.setup({
 	debounce = 100,
 	indent = {
 		highlight = highlight,
-		char = '┃',
-		tab_char = '┃',
+		char = icons.PipeThick,
+		tab_char = icons.PipeThick,
 	},
 	whitespace = {
 		highlight = highlight,

@@ -217,9 +217,9 @@ return {
 			require('plugins.config.git').blamer()
 		end,
 	},
-	['airblade/vim-gitgutter'] = {
+	['lewis6991/gitsigns.nvim'] = {
 		config = function()
-			require('plugins.config.git').gitgutter()
+			require('plugins.config.git').signs()
 		end,
 	},
 	['folke/todo-comments.nvim'] = {

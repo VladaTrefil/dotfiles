@@ -10,16 +10,26 @@ M.lazygit = function()
 	load_mappings(require('core.mappings').lazygit)
 end
 
-M.gitgutter = function()
-	vim.g.gitgutter_sign_added = icons.Plus:gsub('^%s', '')
-	vim.g.gitgutter_sign_modified = icons.Change:gsub('^%s', '')
-	vim.g.gitgutter_sign_removed = icons.Minus:gsub('^%s', '')
-	vim.g.gitgutter_sign_removed_first_line = '‾ '
-	vim.g.gitgutter_sign_removed_above_and_below = '_¯'
-	vim.g.gitgutter_sign_modified_removed = '~_'
+M.signs = function()
+	local gitsigns_ok, gitsigns = pcall(require, 'gitsigns')
 
-	vim.g.gitgutter_sign_priority = 5
-	vim.g.gitgutter_sign_allow_clobber = 1
+	if not gitsigns_ok then
+		vim.notify('gitsigns not found', vim.log.levels.ERROR)
+		return
+	end
+
+	gitsigns.setup({
+		signs = {
+			add = { text = icons.PipeDashed },
+			change = { text = icons.PipeDashed },
+			delete = { text = icons.PipeDashed },
+			topdelete = { text = icons.PipeDashed },
+			changedelete = { text = icons.PipeDashed },
+			untracked = { text = icons.PipeDashed },
+		},
+		sign_priority = 6,
+		attach_to_untracked = true,
+	})
 end
 
 M.blamer = function()

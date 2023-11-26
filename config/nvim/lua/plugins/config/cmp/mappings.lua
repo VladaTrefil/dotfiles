@@ -1,5 +1,22 @@
 local cmp = require('cmp')
-local cmp_utils = require('plugins.config.cmp.utils')
+
+local on_confirm = function(fallback)
+	if cmp.visible() then
+		cmp.confirm({ select = true })
+	elseif vim.fn['UltiSnips#CanJumpForwards']() ~= 0 then
+		vim.fn['UltiSnips#JumpForwards']()
+	else
+		fallback()
+	end
+end
+
+local on_confirm_inverse = function(fallback)
+	if vim.fn['UltiSnips#CanJumpBackwards']() ~= 0 then
+		vim.fn['UltiSnips#JumpBackwards']()
+	else
+		fallback()
+	end
+end
 
 return {
 	-- add function for switch between docs and completion
@@ -8,6 +25,6 @@ return {
 	['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c', 's' }),
 	['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c', 's' }),
 	['<C-e>'] = cmp.mapping(cmp.mapping.abort(), { 'i', 'c', 's' }),
-	['<Tab>'] = cmp.mapping(cmp_utils.on_confirm, { 'i', 's' }),
-	['<S-Tab>'] = cmp.mapping(cmp_utils.on_confirm_inverse, { 'i', 's' }),
+	['<Tab>'] = cmp.mapping(on_confirm, { 'i', 's' }),
+	['<S-Tab>'] = cmp.mapping(on_confirm_inverse, { 'i', 's' }),
 }

@@ -3,7 +3,6 @@ local M = {}
 local cmp = require('cmp')
 
 local cmp_utils = require('plugins.config.cmp.utils')
-local format = require('plugins.config.cmp.format')
 local mappings = require('plugins.config.cmp.mappings')
 
 local WIDE_HEIGHT = 40
@@ -36,6 +35,7 @@ local sort = {
 
 local common_opts = {
 	preselect = cmp.PreselectMode.Item,
+	autocomplete = cmp.TriggerEvent.InsertEnter,
 	mapping = cmp.mapping.preset.insert(mappings),
 	window = window,
 	performance = {
@@ -46,7 +46,7 @@ local common_opts = {
 	},
 	formatting = {
 		fields = { 'menu', 'abbr', 'kind' },
-		format = format.format_selection_item,
+		format = cmp_utils.format_selection_item,
 	},
 	completion = {
 		completeopt = 'menu,menuone,preview,noselect',
@@ -56,9 +56,10 @@ local common_opts = {
 local sources = {
 	editor = {
 		{ name = 'ultisnips', priority = 1000 },
-		{ name = 'nvim_lsp', priority = 750 },
+		{ name = 'nvim_lsp', priority = 800 },
+		{ name = 'treesitter', priority = 700 },
 		{ name = 'copilot', priority = 600 },
-		{ name = 'buffer', priority = 400, option = { get_bufnrs = cmp_utils.get_buffers } },
+		{ name = 'buffer', priority = 100, option = { get_bufnrs = cmp_utils.get_buffers } },
 		{ name = 'path', priority = 250 },
 	},
 	cmdline = {

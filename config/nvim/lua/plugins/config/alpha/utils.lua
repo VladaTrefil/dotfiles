@@ -51,7 +51,7 @@ M.setup_autocmds = function()
 				buffer = 0,
 				callback = function()
 					vim.opt.showtabline = 2
-					vim.opt.laststatus = 2
+					vim.opt.laststatus = 3
 					vim.opt.ruler = true
 					statuscolumn.show_statuscolumn()
 				end,

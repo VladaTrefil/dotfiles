@@ -8,9 +8,9 @@ local config = {
 	TabLineSel = { fg = colors.bright_aqua, bg = colors.dark0, reverse = true },
 
 	Conceal = { fg = colors.bright_blue },
-	Search = { fg = colors.yellow, bg = colors.dark0, reverse = true },
-	IncSearch = { fg = colors.bright_yellow, bg = colors.dark0, reverse = true },
-	CurSearch = { fg = colors.red, bg = colors.dark0, reverse = true },
+	Search = { fg = colors.faded_yellow, bg = colors.dark0, reverse = true },
+	IncSearch = { fg = colors.faded_yellow, bg = colors.dark0, reverse = true },
+	CurSearch = { fg = colors.bright_orange, bg = colors.dark0, reverse = true, bold = true },
 	Underlined = { fg = colors.bright_blue, underline = true },
 	VertSplit = { fg = colors.dark2, bg = colors.dark0 },
 	WildMenu = { fg = colors.bright_blue, bg = colors.dark2, bold = true },

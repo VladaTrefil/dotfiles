@@ -16,6 +16,7 @@ local source_labels = {
 	ultisnips = icons.Snippet,
 	path = icons.Folder,
 	cmdline = icons.Terminal,
+	treesitter = icons.Treesitter,
 }
 
 local is_loaded = function(bufnr)

@@ -3,6 +3,7 @@ return {
 	Stack = '  ',
 	Buffer = '  ',
 	Bomb = '  ',
+	Treesitter = '',
 
 	Success = '✓',
 	Failure = '✗',

@@ -23,6 +23,7 @@ local config = {
 	CmpItemMenuCmdline = { bg = colors.bright_aqua, fg = cmp_colors.primary_bg },
 	CmpItemMenuBuffer = { bg = cmp_colors.primary_bg, fg = colors.light0 },
 	CmpItemMenuPath = { bg = colors.gray, fg = cmp_colors.primary_bg },
+	CmpItemMenuTreesitter = { bg = colors.green, fg = cmp_colors.primary_bg },
 }
 
 return config

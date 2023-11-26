@@ -17,7 +17,7 @@ vim.go.completeopt = 'menu,menuone,preview,noinsert'
 vim.o.pumheight = 20
 
 opt.number = true
-opt.relativenumber = true
+-- opt.relativenumber = true
 opt.signcolumn = 'yes:2'
 
 -- Dont show mode indicator in command line

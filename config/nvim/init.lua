@@ -14,7 +14,7 @@ vim.cmd('source $XDG_CONFIG_HOME/nvim/legacy/script.vim')
 
 require('plugins')
 
-require('core.ui.statuscolumn').show_statuscolumn()
+require('core.ui.statuscolumn').show()
 
 local base_mappings = require('core.mappings').general
 require('core.utils').load_mappings(base_mappings)

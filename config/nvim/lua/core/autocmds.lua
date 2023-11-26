@@ -54,6 +54,29 @@ autocmd({ 'BufWritePre', 'FileWritePre' }, {
 	end,
 })
 
+-- Toggle relative number when lose focus/insert mode
+vim.api.nvim_create_augroup('numbertoggle', { clear = true })
+autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
+	desc = 'Toggle number on',
+	pattern = '*',
+	group = 'numbertoggle',
+	callback = function()
+		if opt.number:get() and vim.fn.mode() ~= 'i' then
+			opt.rnu = true
+		end
+	end,
+})
+autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
+	desc = 'Toggle number off',
+	pattern = '*',
+	group = 'numbertoggle',
+	callback = function()
+		if opt.number:get() then
+			opt.rnu = false
+		end
+	end,
+})
+
 -- Syntax
 autocmd({ 'BufRead', 'BufNewFile' }, {
 	desc = 'Init rasi syntax',

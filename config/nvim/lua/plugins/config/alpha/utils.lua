@@ -1,6 +1,6 @@
 local M = {}
 
-local statuscolumn = require('core.ui.statuscolumn')
+local utils = require('core.utils')
 local dashboard = require('alpha.themes.dashboard')
 local separator_element = ' >  '
 
@@ -35,10 +35,7 @@ M.setup_autocmds = function()
 		group = 'alpha_tabline',
 		pattern = 'alpha',
 		callback = function()
-			vim.opt.showtabline = 0
-			vim.opt.laststatus = 0
-			vim.opt.ruler = false
-			statuscolumn.hide_statuscolumn()
+			utils.disable_ui()
 		end,
 	})
 
@@ -50,10 +47,7 @@ M.setup_autocmds = function()
 				group = 'alpha_tabline',
 				buffer = 0,
 				callback = function()
-					vim.opt.showtabline = 2
-					vim.opt.laststatus = 3
-					vim.opt.ruler = true
-					statuscolumn.show_statuscolumn()
+					utils.enable_ui()
 				end,
 			})
 		end,

@@ -1,5 +1,7 @@
 local M = {}
 
+local statuscolumn = require('core.ui.statuscolumn')
+
 local fn = vim.fn
 local merge_tb = vim.tbl_deep_extend
 local register_name = vim.v.register
@@ -278,6 +280,20 @@ M.clear_ui = function()
 
 	-- dismiss any open notify messages
 	vim.notify.dismiss({ pending = false, silent = false })
+end
+
+M.enable_ui = function()
+	vim.opt.showtabline = 2
+	vim.opt.laststatus = 3
+	vim.opt.ruler = true
+	statuscolumn.show()
+end
+
+M.disable_ui = function()
+	vim.opt.showtabline = 0
+	vim.opt.laststatus = 0
+	vim.opt.ruler = false
+	statuscolumn.hide()
 end
 
 return M

@@ -54,12 +54,23 @@ local pickers = {
 	},
 }
 
+local lga_actions = require('telescope-live-grep-args.actions')
 local extensions = {
 	fzf = {
 		fuzzy = true, -- false will only do exact matching
 		override_generic_sorter = true, -- override the generic sorter
 		override_file_sorter = true, -- override the file sorter
 		case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
+	},
+	live_grep_args = {
+		prompt_title = 'Search with ripgrep ',
+		auto_quoting = true, -- enable/disable auto-quoting
+		mappings = { -- extend mappings
+			i = {
+				['<C-f>'] = lga_actions.quote_prompt(),
+				['<C-g>'] = lga_actions.quote_prompt({ postfix = ' --iglob ' }),
+			},
+		},
 	},
 }
 
@@ -100,3 +111,5 @@ telescope.setup({
 	pickers = pickers,
 	extensions = extensions,
 })
+
+require('plugins.config._telescope.utils').load_extension('live_grep_args')

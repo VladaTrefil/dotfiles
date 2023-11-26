@@ -1,5 +1,7 @@
 local M = {}
 
+local extensions = require('telescope').extensions
+
 M.base = {
 	n = {
 		['<leader>pm'] = { '<cmd> Telescope <CR>', 'Menu [telescope]' },
@@ -8,7 +10,9 @@ M.base = {
 			'Search in project',
 		},
 		['<leader>pw'] = {
-			'<cmd> Telescope live_grep <CR>',
+			function()
+				extensions.live_grep_args.live_grep_args()
+			end,
 			'Search in project by pattern [telescope]',
 		},
 		['<leader>pb'] = { '<cmd> Telescope buffers <CR>', 'Buffers [telescope]' },
@@ -21,7 +25,7 @@ M.base = {
 		['<leader>pvm'] = { '<cmd> Telescope man_pages <CR>', 'Man pages [telescope]' },
 		['<leader>pvn'] = {
 			function()
-				require('telescope').extensions.notify.notify({ layout_strategy = 'vertical' })
+				extensions.notify.notify({ layout_strategy = 'vertical' })
 			end,
 			'Notifications [telescope]',
 		},

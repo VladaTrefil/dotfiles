@@ -4,18 +4,24 @@ local cmp = require('cmp')
 
 local MAX_INDEX_FILE_SIZE = 4000
 
+local is_loaded = function(bufnr)
+	return vim.api.nvim_buf_is_loaded(bufnr)
+end
+
+local valid_size = function(bufnr)
+	return vim.api.nvim_buf_line_count(bufnr) < MAX_INDEX_FILE_SIZE
+end
+
 M.get_buffers = function()
 	local bufs = {}
 
 	for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
 		-- Don't index giant files
-		if
-			vim.api.nvim_buf_is_loaded(bufnr)
-			and vim.api.nvim_buf_line_count(bufnr) < MAX_INDEX_FILE_SIZE
-		then
+		if is_loaded(bufnr) and valid_size(bufnr) then
 			table.insert(bufs, bufnr)
 		end
 	end
+
 	return bufs
 end
 

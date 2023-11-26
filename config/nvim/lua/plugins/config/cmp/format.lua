@@ -3,7 +3,6 @@ local M = {}
 local icons = require('core.icons')
 local utils = require('core.utils')
 
-local ELLIPSIS_CHAR = '…'
 local MAX_LABEL_WIDTH = 25
 
 local source_labels = {

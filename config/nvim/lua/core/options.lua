@@ -11,7 +11,11 @@ opt.redrawtime = 1500
 opt.updatetime = 100
 opt.lazyredraw = true -- improve scrolling performance
 
--- Display line numbers
+-- Options for the behavior of completion menu
+vim.go.completeopt = 'menu,menuone,preview,noselect'
+-- Maximum number to show in the completion menu
+vim.o.pumheight = 20
+
 opt.number = true
 opt.relativenumber = true
 opt.signcolumn = 'yes:2'

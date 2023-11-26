@@ -185,18 +185,19 @@ return {
 	},
 
 	['hrsh7th/nvim-cmp'] = {
-		-- after = 'lspkind.nvim',
+		requires = {
+			'hrsh7th/cmp-nvim-lsp',
+			'hrsh7th/cmp-nvim-lua',
+			'hrsh7th/cmp-buffer',
+			'hrsh7th/cmp-path',
+			'David-Kunz/cmp-npm',
+			'quangnguyen30192/cmp-nvim-ultisnips',
+		},
 		config = function()
 			require('plugins.config.cmp')
 		end,
 	},
 
-	['hrsh7th/cmp-nvim-lsp'] = {},
-	['hrsh7th/cmp-nvim-lua'] = {},
-	['hrsh7th/cmp-buffer'] = {},
-	['hrsh7th/cmp-path'] = {},
-	['David-Kunz/cmp-npm'] = {},
-	['quangnguyen30192/cmp-nvim-ultisnips'] = {},
 	['zbirenbaum/copilot-cmp'] = {
 		after = { 'copilot.lua' },
 		config = function()

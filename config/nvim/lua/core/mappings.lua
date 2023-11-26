@@ -161,21 +161,6 @@ M.codespell = {
 	},
 }
 
-M.cmp_api = function(cmp)
-	local cmp_utils = require('plugins.config.cmp.utils')
-
-	return {
-		-- add function for switch between docs and completion
-		['<C-u>'] = cmp.mapping.scroll_docs(-4),
-		['<C-d>'] = cmp.mapping.scroll_docs(4),
-		['<C-k>'] = cmp.mapping.select_prev_item(),
-		['<C-j>'] = cmp.mapping.select_next_item(),
-		['<C-e>'] = cmp.mapping.abort(),
-		['<Tab>'] = cmp.mapping(cmp_utils.on_confirm, { 'i', 's' }),
-		['<S-Tab>'] = cmp.mapping(cmp_utils.on_confirm_inverse, { 'i', 's' }),
-	}
-end
-
 M.sessions = function(mngr)
 	return {}
 end

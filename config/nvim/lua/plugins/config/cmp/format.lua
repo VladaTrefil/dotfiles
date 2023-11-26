@@ -12,6 +12,7 @@ local source_labels = {
 	nvim_lua = icons.Bomb,
 	ultisnips = icons.Snippet,
 	path = icons.Folder,
+	cmdline = icons.Terminal,
 }
 
 local menu_hl_group_name = function(source_name)

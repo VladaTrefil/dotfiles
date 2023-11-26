@@ -20,6 +20,7 @@ local config = {
 	CmpItemMenuCopilot = { bg = colors.light0, fg = cmp_colors.primary_bg },
 	CmpItemMenuNvimLsp = { bg = colors.bright_orange, fg = cmp_colors.primary_bg },
 	CmpItemMenuUltisnips = { bg = colors.bright_blue, fg = cmp_colors.primary_bg },
+	CmpItemMenuCmdline = { bg = colors.bright_aqua, fg = cmp_colors.primary_bg },
 	CmpItemMenuBuffer = { bg = cmp_colors.primary_bg, fg = colors.light0 },
 	CmpItemMenuPath = { bg = colors.gray, fg = cmp_colors.primary_bg },
 }

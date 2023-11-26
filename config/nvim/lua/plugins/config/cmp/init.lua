@@ -7,6 +7,8 @@ end
 local config = require('plugins.config.cmp.options')
 
 cmp.setup(config.editor_opts)
+cmp.setup.cmdline({ '/', '?' }, config.search_opts)
+cmp.setup.cmdline(':', config.cmd_opts)
 
 vim.api.nvim_create_autocmd('BufWritePost', {
 	pattern = '*.snippets',

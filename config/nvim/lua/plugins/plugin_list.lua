@@ -92,11 +92,11 @@ return {
 		end,
 	},
 
-	['gelguy/wilder.nvim'] = {
-		config = function()
-			require('plugins.config.wilder')
-		end,
-	},
+	-- ['gelguy/wilder.nvim'] = {
+	-- 	config = function()
+	-- 		require('plugins.config.wilder')
+	-- 	end,
+	-- },
 
 	['SirVer/ultisnips'] = {
 		config = function()
@@ -190,6 +190,7 @@ return {
 			'hrsh7th/cmp-nvim-lua',
 			'hrsh7th/cmp-buffer',
 			'hrsh7th/cmp-path',
+			'hrsh7th/cmp-cmdline',
 			'David-Kunz/cmp-npm',
 			'quangnguyen30192/cmp-nvim-ultisnips',
 		},

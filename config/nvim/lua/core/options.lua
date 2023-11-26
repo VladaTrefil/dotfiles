@@ -83,7 +83,8 @@ opt.wrap = false
 opt.re = 0
 
 -- use old regexp engine
-opt.regexpengine = 1
+-- https://github.com/hrsh7th/cmp-cmdline/issues/87
+-- opt.regexpengine = 1
 
 -- Folds
 -- h

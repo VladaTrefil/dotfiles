@@ -61,6 +61,23 @@ local sources = {
 		{ name = 'buffer', priority = 400, option = { get_bufnrs = cmp_utils.get_buffers } },
 		{ name = 'path', priority = 250 },
 	},
+	cmdline = {
+		{ name = 'path', priority = 0, option = { trailing_slash = true } },
+		{
+			name = 'cmdline',
+			priority = 500,
+			keyword_pattern = [=[[^[:blank:]%]*]=],
+			option = {
+				ignore_cmds = { 'Man', 'vsp', '%' },
+			},
+		},
+		-- { name = 'nvim_lsp', priority = 1000 },
+		{ name = 'copilot', priority = 1000 },
+		{ name = 'buffer', priority = 1000 },
+	},
+	search = {
+		{ name = 'buffer' },
+	},
 }
 
 M.editor_opts = vim.tbl_deep_extend('force', common_opts, {
@@ -72,6 +89,14 @@ M.editor_opts = vim.tbl_deep_extend('force', common_opts, {
 	experimental = {
 		ghost_text = true,
 	},
+})
+
+M.cmd_opts = vim.tbl_deep_extend('force', common_opts, {
+	sources = sources.cmdline,
+})
+
+M.search_opts = vim.tbl_deep_extend('force', common_opts, {
+	sources = sources.search,
 })
 
 return M

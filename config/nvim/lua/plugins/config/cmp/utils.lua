@@ -1,14 +1,12 @@
 local M = {}
 
-local cmp = require('cmp')
-
 local icons = require('core.icons')
 local utils = require('core.utils')
 
 local MAX_INDEX_FILE_SIZE = 4000
 local MAX_ITEM_WIDTH = 25
 
-local source_labels = {
+local source_icons = {
 	copilot = icons.Github,
 	nvim_lsp = icons.Stack,
 	buffer = icons.File,
@@ -19,20 +17,31 @@ local source_labels = {
 	treesitter = icons.Treesitter,
 }
 
+-- Check if a buffer is loaded
+-- @params bufnr number: The buffer number
+-- return boolean: Whether the buffer is loaded
 local is_loaded = function(bufnr)
 	return vim.api.nvim_buf_is_loaded(bufnr)
 end
 
+-- Check if a buffer is valid to be indexed
+-- @params bufnr number: The buffer number
+-- return boolean: Whether the buffer is valid
 local valid_size = function(bufnr)
 	return vim.api.nvim_buf_line_count(bufnr) < MAX_INDEX_FILE_SIZE
 end
 
+-- Create a highlight group name for a items cmp source
+-- @params source_name string: The source name
+-- return string: The highlight group name
 local menu_hl_group_name = function(source_name)
 	local camel_case_source_name = utils.convert_case(source_name)
 	local hl_group_name = utils.capitalize(camel_case_source_name)
 	return 'CmpItemMenu' .. hl_group_name
 end
 
+-- Get currently opened valid buffers
+-- return table: The list of valid buffers
 M.get_buffers = function()
 	local bufs = {}
 
@@ -46,21 +55,30 @@ M.get_buffers = function()
 	return bufs
 end
 
+-- Expend a completion item snippet
+-- @params args table: The snippet args
 M.expand_snippet = function(args)
 	vim.fn['UltiSnips#Anon'](args.body)
 end
 
-M.format_selection_item = function(entry, item)
+-- Function to format the cmp completion item
+-- @param entry table: The completion entry
+-- @param item table: The completion item
+-- return table: The formatted completion item
+M.format_completion_item = function(entry, item)
 	local item_with_kind = require('lspkind').cmp_format({
 		mode = 'text',
 		maxwidth = MAX_ITEM_WIDTH,
 	})(entry, item)
 
+	local source_icon = source_icons[entry.source.name] or ''
+	local completion = string.sub(item_with_kind.abbr, 1, item_with_kind.maxwidth)
+
 	local item_attrs = {
-		menu = source_labels[entry.source.name] or '',
 		menu_hl_group = menu_hl_group_name(entry.source.name),
-		abbr = ' ' .. string.sub(item_with_kind.abbr, 1, item_with_kind.maxwidth),
-		kind = '  ' .. item_with_kind.kind,
+		menu = string.format(' %s ', source_icon),
+		abbr = string.format(' %s', completion),
+		kind = string.format('  %s', item_with_kind.kind),
 	}
 
 	return vim.tbl_deep_extend('force', item_with_kind, item_attrs)

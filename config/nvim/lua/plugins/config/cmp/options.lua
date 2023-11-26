@@ -46,7 +46,7 @@ local common_opts = {
 	},
 	formatting = {
 		fields = { 'menu', 'abbr', 'kind' },
-		format = cmp_utils.format_selection_item,
+		format = cmp_utils.format_completion_item,
 	},
 	completion = {
 		completeopt = 'menu,menuone,preview,noselect',

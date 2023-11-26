@@ -1,8 +1,8 @@
 return {
-	Github = '  ',
-	Stack = '  ',
-	Buffer = '  ',
-	Bomb = '  ',
+	Github = '',
+	Stack = '',
+	Buffer = '',
+	Bomb = '',
 	Treesitter = '',
 
 	Success = '✓',

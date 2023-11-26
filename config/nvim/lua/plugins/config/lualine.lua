@@ -1,11 +1,11 @@
 local present, lualine = pcall(require, 'lualine')
-local utils = require('core.utils')
 
 if not present then
 	return
 end
 
 local colors = require('theme.colors')
+local utils = require('core.utils')
 
 local function file_path()
 	local path = vim.fn.expand('%f')

@@ -25,7 +25,7 @@ local common = {
 	['<C-u>'] = cmp.mapping.scroll_docs(-4),
 	['<C-d>'] = cmp.mapping.scroll_docs(4),
 	['<C-e>'] = cmp.mapping(cmp.mapping.abort(), { 'i', 'c', 's' }),
-	['<Tab>'] = cmp.mapping(on_confirm, { 'i', 's' }),
+	['<Tab>'] = cmp.mapping(on_confirm, { 'i', 'c', 's' }),
 	['<S-Tab>'] = cmp.mapping(on_confirm_inverse, { 'i', 's' }),
 }
 

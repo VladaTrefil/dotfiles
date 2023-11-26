@@ -84,4 +84,22 @@ M.format_completion_item = function(entry, item)
 	return vim.tbl_deep_extend('force', item_with_kind, item_attrs)
 end
 
+M.filter_lsp = function(entry, _)
+	local kind = require('cmp.types.lsp').CompletionItemKind[entry:get_kind()]
+
+	if kind == 'Text' then
+		return false
+	end
+
+	return true
+end
+
+M.compare_underscore = function(entry1, entry2)
+	local _, entry1_under = entry1.completion_item.label:find('^_+')
+	local _, entry2_under = entry2.completion_item.label:find('^_+')
+	entry1_under = entry1_under or 0
+	entry2_under = entry2_under or 0
+	return entry1_under < entry2_under
+end
+
 return M

@@ -18,15 +18,16 @@ local window = {
 		winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:CmpPmenuSel,Search:None',
 		side_padding = 0,
 		col_offset = -4,
+		scrolloff = 8,
 	},
 }
-
 local sort = {
 	priority_weight = 2,
 	comparators = {
 		cmp.config.compare.exact,
 		cmp.config.compare.scopes,
 		cmp.config.compare.score,
+		cmp_utils.compare_underscore,
 		cmp.config.compare.offset,
 		cmp.config.compare.order,
 		cmp.config.compare.sort_text,
@@ -56,10 +57,10 @@ local common_opts = {
 local sources = {
 	editor = {
 		{ name = 'ultisnips', priority = 1000 },
-		{ name = 'nvim_lsp', priority = 800 },
-		{ name = 'treesitter', priority = 700 },
+		{ name = 'nvim_lsp', priority = 800, entry_filter = cmp_utils.filter_lsp },
 		{ name = 'copilot', priority = 600 },
-		{ name = 'buffer', priority = 100, option = { get_bufnrs = cmp_utils.get_buffers } },
+		{ name = 'treesitter', priority = 250 },
+		{ name = 'buffer', priority = 250, option = { get_bufnrs = cmp_utils.get_buffers } },
 		{ name = 'path', priority = 250 },
 	},
 	cmdline = {

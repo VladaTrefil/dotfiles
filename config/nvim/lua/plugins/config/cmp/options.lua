@@ -34,7 +34,7 @@ local sort = {
 }
 
 local common_opts = {
-	preselect = cmp.PreselectMode.Item,
+	preselect = cmp.PreselectMode.None,
 	autocomplete = cmp.TriggerEvent.InsertEnter,
 	mapping = cmp.mapping.preset.insert(mappings),
 	window = window,
@@ -49,7 +49,7 @@ local common_opts = {
 		format = cmp_utils.format_completion_item,
 	},
 	completion = {
-		completeopt = 'menu,menuone,preview,noselect',
+		completeopt = vim.o.completeopt,
 	},
 }
 
@@ -72,7 +72,6 @@ local sources = {
 				ignore_cmds = { 'Man', 'vsp', '%' },
 			},
 		},
-		-- { name = 'nvim_lsp', priority = 1000 },
 		{ name = 'copilot', priority = 1000 },
 		{ name = 'buffer', priority = 1000 },
 	},

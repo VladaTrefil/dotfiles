@@ -12,7 +12,7 @@ opt.updatetime = 100
 opt.lazyredraw = true -- improve scrolling performance
 
 -- Options for the behavior of completion menu
-vim.go.completeopt = 'menu,menuone,preview,noselect'
+vim.go.completeopt = 'menu,menuone,preview,noinsert'
 -- Maximum number to show in the completion menu
 vim.o.pumheight = 20
 

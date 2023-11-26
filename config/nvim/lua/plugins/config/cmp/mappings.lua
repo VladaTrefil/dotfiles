@@ -1,3 +1,5 @@
+local M = {}
+
 local cmp = require('cmp')
 
 local on_confirm = function(fallback)
@@ -18,13 +20,23 @@ local on_confirm_inverse = function(fallback)
 	end
 end
 
-return {
+local common = {
 	-- add function for switch between docs and completion
 	['<C-u>'] = cmp.mapping.scroll_docs(-4),
 	['<C-d>'] = cmp.mapping.scroll_docs(4),
-	['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c', 's' }),
-	['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c', 's' }),
 	['<C-e>'] = cmp.mapping(cmp.mapping.abort(), { 'i', 'c', 's' }),
 	['<Tab>'] = cmp.mapping(on_confirm, { 'i', 's' }),
 	['<S-Tab>'] = cmp.mapping(on_confirm_inverse, { 'i', 's' }),
 }
+
+M.editor = vim.tbl_deep_extend('force', common, {
+	['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c', 's' }),
+	['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c', 's' }),
+})
+
+M.cmdline = vim.tbl_deep_extend('force', common, {
+	['<C-j>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c', 's' }),
+	['<C-k>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c', 's' }),
+})
+
+return M

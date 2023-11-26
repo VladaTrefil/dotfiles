@@ -36,8 +36,6 @@ local sort = {
 
 local common_opts = {
 	preselect = cmp.PreselectMode.None,
-	autocomplete = cmp.TriggerEvent.InsertEnter,
-	mapping = cmp.mapping.preset.insert(mappings),
 	window = window,
 	performance = {
 		max_view_entries = 60,
@@ -64,17 +62,18 @@ local sources = {
 		{ name = 'path', priority = 250 },
 	},
 	cmdline = {
-		{ name = 'path', priority = 0, option = { trailing_slash = true } },
+		{ name = 'path', priority = 1000, option = { trailing_slash = true } },
 		{
 			name = 'cmdline',
 			priority = 500,
+			-- exclude % from completion expand
 			keyword_pattern = [=[[^[:blank:]%]*]=],
 			option = {
 				ignore_cmds = { 'Man', 'vsp', '%' },
 			},
 		},
-		{ name = 'copilot', priority = 1000 },
-		{ name = 'buffer', priority = 1000 },
+		{ name = 'copilot', priority = 200 },
+		{ name = 'buffer', priority = 200 },
 	},
 	search = {
 		{ name = 'buffer' },
@@ -82,6 +81,7 @@ local sources = {
 }
 
 M.editor_opts = vim.tbl_deep_extend('force', common_opts, {
+	mapping = cmp.mapping.preset.insert(mappings.editor),
 	sources = sources.editor,
 	sorting = sort,
 	snippet = {
@@ -93,11 +93,19 @@ M.editor_opts = vim.tbl_deep_extend('force', common_opts, {
 })
 
 M.cmd_opts = vim.tbl_deep_extend('force', common_opts, {
+	mapping = cmp.mapping.preset.insert(mappings.cmdline),
 	sources = sources.cmdline,
+	view = {
+		entries = { name = 'custom', selection_order = 'near_cursor' },
+	},
 })
 
 M.search_opts = vim.tbl_deep_extend('force', common_opts, {
+	mapping = cmp.mapping.preset.insert(mappings.cmdline),
 	sources = sources.search,
+	view = {
+		entries = { name = 'custom', selection_order = 'near_cursor' },
+	},
 })
 
 return M

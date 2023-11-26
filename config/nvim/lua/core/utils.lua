@@ -42,6 +42,33 @@ M.capitalize = function(str)
 	return str:gsub('^%l', string.upper)
 end
 
+-- Truncate path segments
+-- @param path string: The path to truncate
+-- @param trunc_at number: The number of segments to keep
+-- @param trunc_len number: The length of the truncated segments
+-- @param max_len number: Maximum number of segments to show
+-- return string: The truncated path
+M.truncate_path = function(path, trunc_at, trunc_len, max_len)
+	local path_ary = vim.fn.split(path, '/')
+	local result = {}
+
+	if #path_ary <= trunc_at then
+		return path
+	end
+
+	for index, value in ipairs(path_ary) do
+		local diff = #path_ary - index
+
+		if diff < trunc_at then
+			table.insert(result, value)
+		elseif diff < max_len then
+			table.insert(result, value:sub(1, trunc_len))
+		end
+	end
+
+	return vim.fn.join(result, '/')
+end
+
 -- converts camelCase to snake_case and vice versa
 M.convert_case = function(word)
 	if word:find('[a-z][A-Z]') then
@@ -92,6 +119,8 @@ M.load_mappings = function(mapping_table, mapping_opt)
 	end
 end
 
+-- Builds a label for a folded section
+-- @return string: The label
 M.fold_label_text = function()
 	local line = fn.getline(vim.v.foldstart)
 	local text = fn.substitute(line, '#|"|-+|{+', '', '')

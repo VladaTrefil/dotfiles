@@ -1,4 +1,5 @@
 local present, lualine = pcall(require, 'lualine')
+local utils = require('core.utils')
 
 if not present then
 	return
@@ -8,27 +9,7 @@ local colors = require('theme.colors')
 
 local function file_path()
 	local path = vim.fn.expand('%f')
-	local _, count = path:gsub('/', '')
-
-	if count > 3 then
-		local path_ary = vim.fn.split(path, '/')
-
-		for index, value in ipairs(path_ary) do
-			local diff = count - index
-
-			if diff >= 3 then
-				path_ary[index] = value:sub(1, 1)
-			elseif diff >= 1 then
-				path_ary[index] = value:sub(1, 3)
-			else
-				path_ary[index] = value
-			end
-		end
-
-		return vim.fn.join(path_ary, '/')
-	else
-		return path
-	end
+	return utils.truncate_path(path, 3, 3, 5)
 end
 
 local bubbles_theme = {
@@ -67,7 +48,7 @@ lualine.setup({
 			{ file_path, padding = { left = 2, right = 2 } },
 			{ 'branch', padding = { left = 2, right = 2 } },
 		},
-		lualine_c = { 'fileformat' },
+		lualine_c = {},
 		lualine_x = {},
 		lualine_y = {
 			{ 'filetype' },

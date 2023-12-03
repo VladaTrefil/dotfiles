@@ -6,19 +6,48 @@ ARTIST_MAX_LENGTH=22
 
 shopt -s expand_aliases
 
-function mp-art-url() {
-  path=$(playerctl metadata --format "{{mpris:artUrl}}")
-  file_name=$(basename "$path")
-  result_path="/tmp/$file_name-44px.jpg"
+SPOTIFY_STATUS=$(playerctl status --player=spotify --format "{{ status }}")
+STRAWBERRY_STATUS=$(playerctl status --player=strawberry --format "{{ status }}")
 
+function active_player() {
+  if [ "$STRAWBERRY_STATUS" = "Playing" ]; then
+    echo "strawberry"
+  elif [ "$SPOTIFY_STATUS" = "Playing" ]; then
+    echo "spotify"
+  elif [ "$STRAWBERRY_STATUS" = "Paused" ]; then
+    echo "strawberry"
+  elif [ "$SPOTIFY_STATUS" = "Paused" ]; then
+    echo "spotify"
+  fi
+}
+
+function player_data() {
+  player_param="--player=$(active_player)"
+  playerctl "$1" "$player_param" --format "{{ $2 }}"
+}
+
+function mp-art-url() {
+  url=$(player_data metadata "mpris:artUrl")
+  player=$(active_player)
+
+  if [ "$player" = "strawberry" ]; then
+    path="$url"
+    file_name=$(basename "$path")
+  elif [ "$player" = "spotify" ]; then
+    file_name="spotify-cover-${url##*/}"
+    path="/tmp/$file_name.jpg"
+    wget -O $path "$url"
+  fi
+
+  result_path="/tmp/$file_name-44px.jpg"
   convert "$path" -resize 64x51^ -gravity center -extent 64x51 "$result_path"
 
   echo "$result_path"
 }
 
 function mp-progress() {
-  current_time=$(playerctl position --format "{{ position }}")
-  duration=$(playerctl metadata --format "{{ mpris:length }}")
+  current_time=$(player_data position "position")
+  duration=$(player_data metadata "mpris:length")
 
   echo "scale=2; $current_time / $duration * 100" | bc
 }
@@ -37,7 +66,7 @@ function set_call_index() {
 }
 
 function mp-title() {
-  title="$(playerctl metadata --format "{{ title }}")  "
+  title="$(player_data metadata "title")"
 
   if [ "${#title}" -gt $TITLE_MAX_LENGTH ]; then
     # last_index=$(get_call_index "title")
@@ -58,18 +87,18 @@ function mp-title() {
 }
 
 function mp-artist() {
-  artist=$(playerctl metadata --format "{{ lc(artist) }}")
+  artist=$(player_data metadata "lc(artist)")
 
   # get length of artists
   if [ "${#artist}" -gt $ARTIST_MAX_LENGTH ]; then
-    artist=$(echo "${artist:0:$ARTIST_MAX_LENGTH}...")
+    artist="${artist:0:$ARTIST_MAX_LENGTH}..."
   fi
 
   echo "$artist"
 }
 
 function mp-running() {
-  status=$(playerctl status --format "{{ uc(status) }}")
+  status=$(player_data status "uc(status)")
 
   if [ -z "$status" ] || [ "$status" = "stopped" ]; then
     echo 0
@@ -78,8 +107,18 @@ function mp-running() {
   fi
 }
 
-alias mp-current-time='playerctl position --format "{{ duration(position) }}"'
-alias mp-duration='playerctl metadata --format "{{ duration(mpris:length) }}"'
+# formats the time in miliseconds to a human readable format m:ss without leading zeros
+function mp-duration() {
+  # in miliseconds
+  duration=$(player_data metadata "mpris:length")
+
+  formatted_duration=$(date -d@"$((duration / 1000000))" -u +%M:%S)
+  formatted_duration=$(echo "$formatted_duration" | sed 's/^0*//')
+
+  echo "$formatted_duration"
+}
+
+alias mp-current-time='player_data position "duration(position)"'
 
 subcommand="$1"
 

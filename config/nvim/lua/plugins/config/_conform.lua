@@ -9,6 +9,11 @@ local ignore_filetypes = { 'javascript', 'sass' }
 local disable_autoformat = false
 
 local formatters = {
+	beautysh = {
+		prepend_args = {
+			'--indent-size=2',
+		},
+	},
 	stylua = {
 		prepend_args = {
 			'--config-path',

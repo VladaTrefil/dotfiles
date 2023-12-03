@@ -34,6 +34,9 @@ AllCops:
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
 
+Layout/LineLength:
+  Max: 100
+
 Metrics/MethodLength:
   CountAsOne: ['array', 'heredoc', 'method_call']
   Max: 15
@@ -42,6 +45,9 @@ Lint/UselessAssignment:
   Exclude:
     - 'db/seeds.rb'
     - 'lib/tasks/developer_tools.rake'
+
+Naming/BlockForwarding:
+  EnforcedStyle: explicit
 
 Style/ClassAndModuleChildren:
   Enabled: false

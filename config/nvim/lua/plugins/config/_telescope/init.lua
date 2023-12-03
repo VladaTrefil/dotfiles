@@ -7,6 +7,7 @@ end
 
 VIMGREP_ARGUMENTS = {
 	'rg',
+	'--threads=1',
 	'--hidden',
 	'--color=never',
 	'--no-heading',

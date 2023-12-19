@@ -3,7 +3,7 @@
 (defpoll ART_URL :interval "1s" "./bar/scripts/mediaplayer art-url")
 (defpoll TITLE :interval ".5s" "./bar/scripts/mediaplayer title")
 (defpoll ARTIST :interval "1s" "./bar/scripts/mediaplayer artist")
-(defpoll RUNNING :interval "1s" "./bar/scripts/mediaplayer running")
+(defpoll RUNNING :interval ".1s" "./bar/scripts/mediaplayer running")
 (defpoll PROGRESS :interval "1s" "./bar/scripts/mediaplayer progress")
 
 (defvar COVER_WIDTH 64)
@@ -11,7 +11,7 @@
 
 (defwidget mediaplayer []
   (box :class "module mediaplayer"
-       :visible { RUNNING }
+       :visible { RUNNING == "true" }
        :space-evenly false
        :halign "start"
 

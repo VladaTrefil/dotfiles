@@ -6,6 +6,10 @@ ARTIST_MAX_LENGTH=22
 
 shopt -s expand_aliases
 
+if [ "$(playerctl -l | wc -l)" -eq 0 ]; then
+  exit
+fi
+
 SPOTIFY_STATUS=$(playerctl status --player=spotify --format "{{ status }}")
 STRAWBERRY_STATUS=$(playerctl status --player=strawberry --format "{{ status }}")
 
@@ -98,12 +102,10 @@ function mp-artist() {
 }
 
 function mp-running() {
-  status=$(player_data status "uc(status)")
+  status=$(active_player)
 
-  if [ -z "$status" ] || [ "$status" = "stopped" ]; then
-    echo 0
-  else
-    echo 1
+  if [ -n "$status" ]; then
+    echo "true"
   fi
 }
 

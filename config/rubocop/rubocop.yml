@@ -1,5 +1,5 @@
 inherit_gem:
-  rubocop-rails_config: config/rails.yml
+  folio: lib/rubocop_config.yml
 
 require:
   - rubocop-minitest

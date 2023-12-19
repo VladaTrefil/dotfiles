@@ -389,7 +389,11 @@ snippet ${
 endsnippet
 
 snippet stim:controller
-window.${1}.Stimulus.register('${2}', class extends window.Stimulus.Controller {
+window.${1:Folio}.Stimulus.register('${2}', class extends window.Stimulus.Controller {
 	${0}
 })
+endsnippet
+
+snippet stim:targets "Stimulus targets" b
+static targets = ['${0}']
 endsnippet

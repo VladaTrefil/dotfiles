@@ -43,6 +43,11 @@ priority -50
 
 # SINFIN ======================================
 
+snippet _ "class modifier" b
+&__${1}
+	${0}
+endsnippet
+
 snippet media:down "media down" b
 +media-breakpoint-down(${1})
   ${2}
@@ -72,12 +77,16 @@ snippet spacers "" i
 map-get($spacers, ${1:gg})
 endsnippet
 
-snippet ggh "" i
+snippet ggh "Half" i
 $grid-gutter-half
 endsnippet
 
-snippet ggw "" i
+snippet ggw "Width" i
 $grid-gutter-width
+endsnippet
+
+snippet ggb "Base " i
+$grid-gutter-base
 endsnippet
 
 snippet bold "" i

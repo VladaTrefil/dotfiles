@@ -46,6 +46,10 @@ Lint/UselessAssignment:
     - 'db/seeds.rb'
     - 'lib/tasks/developer_tools.rake'
 
+Lint/MissingSuper:
+  Exclude:
+    - 'test/**/*'
+
 Naming/BlockForwarding:
   EnforcedStyle: explicit
 
@@ -60,3 +64,6 @@ Style/MutableConstant:
 
 Style/Lambda:
   EnforcedStyle: 'literal'
+
+Minitest/EmptyLineBeforeAssertionMethods:
+  Enabled: false

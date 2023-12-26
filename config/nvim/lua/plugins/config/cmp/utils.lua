@@ -76,7 +76,7 @@ M.format_completion_item = function(entry, item)
 
 	local item_attrs = {
 		menu_hl_group = menu_hl_group_name(entry.source.name),
-		menu = string.format(' %s ', source_icon),
+		menu = string.format(' %s ', source_icon:gsub(' ', '')),
 		abbr = string.format(' %s', completion),
 		kind = string.format('  %s', item_with_kind.kind),
 	}

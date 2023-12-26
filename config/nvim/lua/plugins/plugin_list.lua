@@ -212,20 +212,13 @@ return {
 			'hrsh7th/cmp-nvim-lua',
 			'hrsh7th/cmp-buffer',
 			'hrsh7th/cmp-path',
-			'hrsh7th/cmp-cmdline',
+			'VladaTrefil/cmp-cmdline',
 			'David-Kunz/cmp-npm',
 			'ray-x/cmp-treesitter',
 			'quangnguyen30192/cmp-nvim-ultisnips',
 		},
 		config = function()
 			require('plugins.config.cmp')
-		end,
-	},
-
-	['zbirenbaum/copilot-cmp'] = {
-		after = { 'copilot.lua' },
-		config = function()
-			require('plugins.config.cmp.copilot_cmp')
 		end,
 	},
 

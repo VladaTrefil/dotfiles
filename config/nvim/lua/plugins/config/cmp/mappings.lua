@@ -22,6 +22,8 @@ end
 
 local common = {
 	-- add function for switch between docs and completion
+	['<C-n>'] = vim.NIL,
+	['<C-p>'] = vim.NIL,
 	['<C-u>'] = cmp.mapping.scroll_docs(-4),
 	['<C-d>'] = cmp.mapping.scroll_docs(4),
 	['<C-e>'] = cmp.mapping(cmp.mapping.abort(), { 'i', 'c', 's' }),

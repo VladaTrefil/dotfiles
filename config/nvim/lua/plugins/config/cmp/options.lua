@@ -56,7 +56,6 @@ local sources = {
 	editor = {
 		{ name = 'ultisnips', priority = 1000 },
 		{ name = 'nvim_lsp', priority = 800, entry_filter = cmp_utils.filter_lsp },
-		{ name = 'copilot', priority = 600 },
 		{ name = 'treesitter', priority = 250 },
 		{ name = 'buffer', priority = 250, option = { get_bufnrs = cmp_utils.get_buffers } },
 		{ name = 'path', priority = 250 },
@@ -72,7 +71,6 @@ local sources = {
 				ignore_cmds = { 'Man', 'vsp', '%' },
 			},
 		},
-		{ name = 'copilot', priority = 200 },
 		{ name = 'buffer', priority = 200 },
 	},
 	search = {
@@ -87,9 +85,9 @@ M.editor_opts = vim.tbl_deep_extend('force', common_opts, {
 	snippet = {
 		expand = cmp_utils.expand_snippet,
 	},
-	experimental = {
-		ghost_text = true,
-	},
+	-- experimental = {
+	-- 	ghost_text = true,
+	-- },
 })
 
 M.cmd_opts = vim.tbl_deep_extend('force', common_opts, {

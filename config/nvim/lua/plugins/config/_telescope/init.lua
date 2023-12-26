@@ -27,6 +27,7 @@ FILE_IGNORE_PATTERNS = {
 	'%.woff',
 	'%.woff2',
 	'.git/',
+	'react.js',
 }
 
 local mappings = require('plugins.config._telescope.mappings')

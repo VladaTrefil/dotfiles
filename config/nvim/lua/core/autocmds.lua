@@ -87,7 +87,7 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
 -- Basic autoindent for filetypes without a plugin
 autocmd({ 'BufWritePre' }, {
 	desc = 'Autoformat',
-	pattern = '*.yuck,*.svg',
+	pattern = '*.svg',
 	callback = function()
 		utils.autoindent()
 	end,

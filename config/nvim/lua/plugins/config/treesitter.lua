@@ -22,6 +22,7 @@ local FILETYPES = {
 	'toml',
 	'xml',
 	'yuck',
+	'rasi',
 	'vimdoc',
 	'dockerfile',
 	'git_config',

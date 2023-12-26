@@ -12,8 +12,9 @@ APT_PACKAGES=(
   "alsa-utils" # Basic sound control
 
   # Desktop environment
-  "i3-gaps"
-  "picom-tryone"
+  "xinit"
+  "i3"
+  "picom"
   # "rofi" -- from source v1.7.4
   "feh"
   "dunst"

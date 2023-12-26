@@ -8,6 +8,17 @@ end
 local ignore_filetypes = { 'javascript', 'sass' }
 local disable_autoformat = false
 
+local function stylua_args()
+	if vim.fn.filereadable(vim.fn.getcwd() .. '/stylua.toml') > 0 then
+		return { '--config-path', vim.fn.getcwd() .. '/stylua.toml' }
+	else
+		return {
+			'--config-path',
+			vim.fn.expand('$XDG_CONFIG_HOME/stylua/stylua.toml'),
+		}
+	end
+end
+
 local formatters = {
 	beautysh = {
 		prepend_args = {
@@ -15,10 +26,8 @@ local formatters = {
 		},
 	},
 	stylua = {
-		prepend_args = {
-			'--config-path',
-			vim.fn.expand('$XDG_CONFIG_HOME/stylua/stylua.toml'),
-		},
+		prepend_args = stylua_args(),
+		cwd = require('conform.util').root_file({ '.git' }),
 	},
 	stylelint = {
 		prepend_args = {

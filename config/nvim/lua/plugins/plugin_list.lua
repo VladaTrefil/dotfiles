@@ -113,6 +113,25 @@ return {
 	-- 	end,
 	-- },
 
+	['nvim-neotest/neotest'] = {
+		requires = {
+			'nvim-lua/plenary.nvim',
+			'antoinemadec/FixCursorHold.nvim',
+			'nvim-treesitter/nvim-treesitter',
+			-- 'VladaTrefil/neotest-minitest',
+			'~/Development/nvim/neotest-minitest',
+			{
+				'stevearc/overseer.nvim',
+				config = function()
+					require('overseer').setup()
+				end,
+			},
+		},
+		config = function()
+			require('plugins.config._neotest')
+		end,
+	},
+
 	['zbirenbaum/copilot.lua'] = {
 		cmd = 'Copilot',
 		event = 'InsertEnter',

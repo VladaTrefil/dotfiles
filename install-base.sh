@@ -6,8 +6,12 @@ else
   echo "Please create .secret-env file with credentials"
 fi
 
-if [[ -z "$GITHUB_USERNAME" || -z "$GITHUB_PASSWORD" ]]; then
-  echo "Please set the GITHUB_USERNAME and GITHUB_PASSWORD environment variables."
+if [[ -z "$GITHUB_USERNAME" ]]; then
+  echo "Please set the GITHUB_USERNAME in secret-env file."
+  exit 1
+fi
+if [[ -z "$GITHUB_TOKEN" ]]; then
+  echo "Please set the GITHUB_TOKEN in secret-env file."
   exit 1
 fi
 
@@ -28,33 +32,25 @@ if [ ! -r "$(which gh)" ]; then
   exit 1
 fi
 
-github_key=~/.ssh/github_key_rsa
+github_key="$HOME/.ssh/github_key_rsa"
 
 if [ ! -r "$github_key" ]; then
-  ssh-keygen -t rsa -b 4096 -C "$GITHUB_USERNAME@github.com" -N "" -f "$github_key"
+  ssh-keygen -t ed25519 -C "$GITHUB_USERNAME" -N "" -f "$github_key"
   echo "GitHub SSH key generated."
 fi
 
-if [ -z "$GITHUB_TOKEN" ]; then
-  touch ./token && echo "$GITHUB_TOKEN" > ./token
-  auth=$(gh auth login --with-token < ./token)
-  rm ./token
-
-  if [ -z "$auth" ]; then
-    echo "Authentication successful"
-  else
-    echo "Authentication failed"
-    exit 1
-  fi
-fi
-
-gh ssh-key add "$github_key.pub" --title "Home PC"
-
 # Add SSH key to ssh-agent
 eval "$(ssh-agent -s)"
-ssh-add $github_key
+ssh-add "$github_key"
 
-echo "GitHub SSH key setup completed."
+if [ -n "$GITHUB_TOKEN" ]; then
+  touch ./token && echo "$GITHUB_TOKEN" > ./token
+  gh auth login --with-token < ./token
+  rm ./token
+
+  key_name=$GITHUB_KEY_NAME || "New SSH key"
+  gh ssh-key add "$github_key.pub" --title "$key_name" --type "authentication"
+fi
 
 mkdir -p ~/Development; cd ~/Development || exit "$?"
 

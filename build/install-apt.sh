@@ -36,6 +36,7 @@ APT_PACKAGES=(
 
   # Terminal code interpreters
   "python3-dev"
+  "python3-venv"
   "python-is-python3"
   "lua5.3:i386"
 

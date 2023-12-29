@@ -60,3 +60,5 @@ if [ -d "./dotfiles" ]; then
 else
   git clone git@github.com:VladaTrefil/dotfiles.git && cd dotfiles || exit "$?"
 fi
+
+# Run ssh-add "$github_key" in another shell instance to enable github key in different instances

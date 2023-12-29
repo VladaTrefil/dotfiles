@@ -13,7 +13,7 @@ APT_PACKAGES=(
 
   # Desktop environment
   "xinit"
-  "i3"
+  "i3-gaps-wm"
   "picom"
   "rofi"
   "feh"
@@ -251,8 +251,8 @@ if [ ! -f "`which strawberry`" ]; then
 fi
 
 if [ ! -f "`which i3`" ]; then
-  echo "Adding i3-gaps and picom-tryone repository..."
-  sudo add-apt-repository ppa:dennis-kruyt/ricebuilder
+  echo "Adding i3-gaps repository..."
+  sudo add-apt-repository ppa:regolith-desktop/jammy-unstable
 fi
 
 if [ ! -f "`which inkscape`" ]; then

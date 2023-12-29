@@ -15,7 +15,7 @@ APT_PACKAGES=(
   "xinit"
   "i3"
   "picom"
-  # "rofi" -- from source v1.7.4
+  "rofi"
   "feh"
   "dunst"
 

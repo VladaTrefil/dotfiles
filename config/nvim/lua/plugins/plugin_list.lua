@@ -118,8 +118,7 @@ return {
 			'nvim-lua/plenary.nvim',
 			'antoinemadec/FixCursorHold.nvim',
 			'nvim-treesitter/nvim-treesitter',
-			-- 'VladaTrefil/neotest-minitest',
-			'~/Development/nvim/neotest-minitest',
+			'VladaTrefil/neotest-minitest',
 			{
 				'stevearc/overseer.nvim',
 				config = function()
@@ -140,7 +139,7 @@ return {
 		end,
 	},
 
-	['~/Development/ChatGPT.nvim'] = {
+	['VladaTrefil/ChatGPT.nvim'] = {
 		requires = {
 			'MunifTanjim/nui.nvim',
 			'nvim-lua/plenary.nvim',

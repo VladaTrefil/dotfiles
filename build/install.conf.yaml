@@ -10,14 +10,6 @@
       description: Installing ZSH
       quiet: true
 
-- shell:
-    - command: ./build/install-asdf.sh
-      stdin: true
-      stdout: true
-      stderr: true
-      description: Installing Asdf
-      quiet: true
-
 - clean:
     [
       '~/.zsh*',
@@ -136,12 +128,21 @@
       path: local/bin
 
 - shell:
-    - [source $HOME/.zprofile, Source zprofile]
+    - [source $HOME/.zprofile, Source profile]
+
+    - command: git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch v0.10.2
+      stdin: true
+      stdout: true
+      stderr: true
+      description: Installing ASDF
+      quiet: true
+
+    - [source $ASDF_DIR/asdf.sh, Source ASDF]
 
 - asdf:
     - plugin: nodejs
       url: https://github.com/asdf-vm/asdf-nodejs.git
-      global: 20.9
+      global: 20.9.0
       versions:
         - 20.9.0
     - plugin: ruby

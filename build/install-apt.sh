@@ -18,6 +18,9 @@ APT_PACKAGES=(
   "feh"
   "dunst"
 
+  # Desktop tools (GUI)
+  "kde-spectacle" # Screenshot tool
+
   # Terminal functions
   "bc" # calculation function
   "ripgrep" # Command line search

@@ -10,6 +10,14 @@
       description: Installing ZSH
       quiet: true
 
+- shell:
+    - command: ./build/install-asdf.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      description: Installing Asdf
+      quiet: true
+
 - clean:
     [
       '~/.zsh*',

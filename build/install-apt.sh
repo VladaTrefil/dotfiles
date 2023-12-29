@@ -52,6 +52,13 @@ APT_PACKAGES=(
   "ibus-mozc"
   "mozc-utils-gui"
 
+  # Audio/Video manager
+  "pipewire"
+  "pipewire-alsa"
+  "pipewire-audio-client-libraries"
+  "libpipewire-0.2-1"
+  "libspa-0.2-bluetooth"
+
   # Terminal functions
   "bc" # calculation function
   "ripgrep" # Command line search

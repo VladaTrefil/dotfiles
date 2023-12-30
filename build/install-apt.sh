@@ -5,10 +5,9 @@ if [ ! -f "`which apt`" ]; then
   exit  1
 fi
 
-GREEN='\033[0;32m'
-NC='\033[0m' # No Color
-
 APT_PACKAGES=(
+  "aptitude" # Better apt
+  "libreadline-dev" # Better apt
   "build-essential"
 
   # Desktop environment
@@ -19,7 +18,37 @@ APT_PACKAGES=(
   "dunst"
 
   # Desktop tools (GUI)
+  "konsole" # Terminal
+  "syncthing" # LAN File sync
+  "inkscape" # Vector graphics editor
+  "ffmpeg" # Video editor
+  "brave-browser" # Web browser
+  "thunderbird" # Email client
+  "protonmail-bridge" # Protonmail bridge
   "kde-spectacle" # Screenshot tool
+  "dolphin" # File manager
+  "picard" # Music tagger
+  "qbittorrent" # Torrent client
+  "ark" # Archive tool
+  "libreoffice" # Office suite
+  "libreoffice-i10n-cs" # Office suite
+  "libreoffice-i10n-en-gb" # Office suite
+  "strawberry" # Music player
+  "vlc" # Video player
+  "mpv" # Minimal video player
+  "skanlite" # Scanner tool
+  "openrgb" # RGB LED controller
+  "ksysguard" # System monitor
+  "partitionmanager" # Disk partition manager
+  "spotify-client" # Music player
+  "telegram-desktop" # Telegram chat client
+
+  # Ibus
+  "ibus"
+  "im-config"
+  "ibus-data"
+  "ibus-mozc"
+  "mozc-utils-gui"
 
   # Terminal functions
   "bc" # calculation function
@@ -33,12 +62,29 @@ APT_PACKAGES=(
   "speedtest-cli"
   "mason"
   "playerctl" # Control media player from terminal
+  "awscli" # AWS client
+  "brightnessctl" # Brightness control
+  "nmcli" # Network manager
 
   # Terminal code interpreters
   "python3-dev"
   "python3-venv"
   "python-is-python3"
   "lua5.3:i386"
+
+  # Language tools
+  "language-pack-cs"
+  "language-pack-en-base"
+  "language-pack-en"
+  "language-pack-ja-base"
+  "language-pack-ja"
+
+  # Ibus
+  "virtualbox"
+  "virtualbox-ext-pack"
+  "virtualbox-guest-additions-iso"
+  "virtualbox-guest-utils"
+  "virtualbox-guest-x11"
 
   # Sinfin libs
   "postgresql"
@@ -82,14 +128,6 @@ APT_PACKAGES=(
   "libgdk-pixbuf2.0-dev"
   "libpangocairo-1.0-0"
   "libglib2.0-dev"
-
-  # Apps
-  "konsole"
-  "syncthing"
-  "inkscape"
-  "ffmpeg"
-  "brave-browser"
-  "thunderbird"
 
   # NVIM
   "pip" # pip install pynvim
@@ -152,15 +190,30 @@ APT_PACKAGES=(
   "containerd.io"
   "docker-buildx-plugin"
   "docker-compose-plugin"
+
+  # Drivers
+  "ubuntu-drivers-common"
+  "printer-driver-brlaser"
+  "printer-driver-c2esp"
+  "printer-driver-foo2zjs"
+  "printer-driver-m2300w"
+  "printer-driver-min12xxw"
+  "printer-driver-pnm2ppa"
+  "printer-driver-ptouch"
+  "printer-driver-pxljr"
+  "printer-driver-sag-gdi"
+  "printer-driver-splix"
 )
 
-if [ ! -f /etc/apt/sources.list.d/brave-browser-release.list ]; then
+apt_sources_dir="/etc/apt/sources.list.d"
+
+if [ ! -f "$apt_sources_dir/brave-browser-release.list" ]; then
   echo "Adding Brave browser repository..."
   sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-  echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+  echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee "$apt_sources_dir/brave-browser-release.list"
 fi
 
-if [ ! -f /etc/apt/sources.list.d/docker.list ]; then
+if [ ! -f "$apt_sources_dir/docker.list" ]; then
   echo "Adding docker repository..."
   # for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
   sudo install -m 0755 -d /etc/apt/keyrings
@@ -169,7 +222,12 @@ if [ ! -f /etc/apt/sources.list.d/docker.list ]; then
 
   version="$(. /etc/os-release && echo "$VERSION_CODENAME")"
   params="[arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg]"
-  echo "deb $params https://download.docker.com/linux/ubuntu $version stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  echo "deb $params https://download.docker.com/linux/ubuntu $version stable" | sudo tee "$apt_sources_dir/docker.list" > /dev/null
+fi
+
+if [ ! -f "$apt_sources_dir/spotify.list" ]; then
+  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 4773BD5E130D1D45
+  echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list > /dev/null
 fi
 
 if [ ! -f "`which i3`" ]; then
@@ -183,6 +241,9 @@ fi
 
 sudo apt update
 
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
 for p in $APT_PACKAGES; do
   if [ $(dpkg-query -W -f='${Status}' $p 2>/dev/null | grep -c "ok installed") = "0" ]; then
     echo "\n============================================================================="
@@ -195,26 +256,7 @@ for p in $APT_PACKAGES; do
   fi
 done
 
-# Unofficial repos
-
-mkdir tmp_install
-
-# Install lens
-if [ ! -f "`which lens`" ]; then
-  echo 'Installing Lens'
-  wget -O tmp_install/lens.deb https://lens-binaries.s3-eu-west-1.amazonaws.com/ide/Lens-5.3.4-latest.20220120.1.amd64.deb
-  sudo dpkg -i "tmp_install/lens.deb"
-fi
-
-if [ -z "$(sudo apt list docker-desktop 2>/dev/null | grep -o installed)" ]; then
-  echo 'Installing Docker Desktop'
-  wget -O ./tmp_install/docker-desktop.deb https://raw.githubusercontent.com/google/mozc/master/docker/ubuntu22.04/Dockerfile
-  sudo dpkg -i ./tmp_install/docker-desktop.deb
-fi
-
 # Install packages language dependencies (Keyboard layout)
 sudo apt install $(check-language-support -l en)
 
 sudo apt install -f
-
-rm -rf tmp_install

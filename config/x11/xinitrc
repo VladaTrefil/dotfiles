@@ -11,6 +11,7 @@ if [ "$(lsusb | grep -c ErgoDox)" = 0 ]; then
 fi
 
 xdg_home="$HOME/.config/x11"
+
 if [ -f "$xdg_home/xresources" ]; then
   xrdb -merge "$xdg_home/xresources"
 fi

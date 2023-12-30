@@ -5,6 +5,11 @@ setxkbmap -layout us,cz -variant ,qwerty
 setxkbmap -option 'grp_led:caps'
 # setxkbmap -option 'grp:caps_toggle
 
-xrdb "$HOME/.config/x11/xresources"
+xdg_home="$HOME/.config/x11"
+if [ -f "$xdg_home/xresources" ]; then
+  xrdb -merge "$xdg_home/xresources"
+fi
 
-source "$HOME/.config/x11/xprofile"
+if [ -f "$xdg_home/xprofile" ]; then
+  . "$xdg_home/xprofile"
+fi

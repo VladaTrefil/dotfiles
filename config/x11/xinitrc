@@ -1,9 +1,14 @@
 #!/bin/sh
 # shellcheck disable=SC1091
 
-setxkbmap -layout us,cz -variant ,qwerty
-setxkbmap -option 'grp_led:caps'
-# setxkbmap -option 'grp:caps_toggle
+# https://man.archlinux.org/man/xkeyboard-config.7
+setxkbmap -layout us,cz,ja -variant qwerty
+setxkbmap -option 'grp:ctrl_space_toggle'
+
+if [ "$(lsusb | grep ErgoDox)" = 0 ]; then
+  setxkbmap -option 'grp_led:caps'
+  setxkbmap -option 'caps:swapescape'
+fi
 
 xdg_home="$HOME/.config/x11"
 if [ -f "$xdg_home/xresources" ]; then

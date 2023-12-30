@@ -29,3 +29,5 @@ fi
 if [ -f "$xdg_home/xprofile" ]; then
   . "$xdg_home/xprofile"
 fi
+
+exec i3

@@ -22,6 +22,7 @@ xrandr --dpi 96 \
   --output HDMI-A-0      --auto --right-of DVI-D-0
 
 xdg_home="$HOME/.config/x11"
+
 if [ -f "$xdg_home/xresources" ]; then
   xrdb -merge "$xdg_home/xresources"
 fi

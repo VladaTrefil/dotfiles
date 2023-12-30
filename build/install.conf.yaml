@@ -130,15 +130,12 @@
 - shell:
     - [source $HOME/.zprofile, Source profile]
 
+- shell:
     - command: git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch v0.10.2
-      stdin: true
-      stdout: true
-      stderr: true
       description: Installing ASDF
+      stderr: true
       quiet: true
-
     - [source $ASDF_DIR/asdf.sh, Source ASDF]
-
 - asdf:
     - plugin: nodejs
       url: https://github.com/asdf-vm/asdf-nodejs.git

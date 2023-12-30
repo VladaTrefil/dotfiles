@@ -129,6 +129,12 @@
 
 - shell:
     - [source $HOME/.zprofile, Source profile]
+    - command: ./build/install-apt.sh
+      stdin: true
+      stdout: true
+      stderr: true
+      description: Installing APT Packages
+      quiet: true
 
 - shell:
     - command: git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch v0.10.2
@@ -162,13 +168,6 @@
         - openjdk-17.0.2
 
 - shell:
-    - command: ./build/install-apt.sh
-      stdin: true
-      stdout: true
-      stderr: true
-      description: Installing APT Packages
-      quiet: true
-
     - command: ./build/install-independent.sh
       stdin: true
       stdout: true

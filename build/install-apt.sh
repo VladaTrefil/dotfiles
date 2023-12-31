@@ -40,6 +40,7 @@ APT_PACKAGES=(
   "telegram-desktop" # Telegram chat client
   "krita" # Image editor
   "spotify-client" # Music player
+  "lens" # Kubernetes IDE
 
   # Ibus
   "ibus"

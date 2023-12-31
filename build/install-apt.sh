@@ -39,6 +39,7 @@ APT_PACKAGES=(
   "partitionmanager" # Disk partition manager
   "telegram-desktop" # Telegram chat client
   "krita" # Image editor
+  "spotify-client" # Music player
 
   # Ibus
   "ibus"
@@ -226,6 +227,11 @@ if [ ! -f "$apt_sources_dir/lens.list" ]; then
   curl -fsSL https://downloads.k8slens.dev/keys/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/lens-archive-keyring.gpg > /dev/null
   params="[arch=amd64 signed-by=/usr/share/keyrings/lens-archive-keyring.gpg]"
   echo "deb $params https://downloads.k8slens.dev/apt/debian stable main" | sudo tee "$apt_sources_dir/lens.list" > /dev/null
+fi
+
+if [ ! -f "$apt_sources_dir/spotify.list" ]; then
+  curl -sS https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
+  echo "deb http://repository.spotify.com stable non-free" | sudo tee "$apt_sources_dir/spotify.list"
 fi
 
 if [ ! -f "`which i3`" ]; then

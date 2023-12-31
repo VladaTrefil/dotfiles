@@ -55,7 +55,7 @@ if [ -f "$(which python3)" ]; then
 
   printf "\nExtensions:\n"
 
-  packages=("pynvim" "yarp" "speedtest-cli" "yt-dlp" "ranger-fm")
+  packages=("pynvim" "yarp" "speedtest-cli" "yt-dlp" "ranger-fm" "mercurial" "i3ipc")
   installed_packages=$(pip list)
 
   for package in "${packages[@]}"; do
@@ -66,10 +66,6 @@ if [ -f "$(which python3)" ]; then
       echo "  $package"
     fi
   done
-
-  python3 -m pip install -U yt-dlp
-  python3 -m pip install -U mercurial
-  python3 -m pip install -U i3ipc
 fi
 
 # }}}

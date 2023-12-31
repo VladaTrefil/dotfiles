@@ -9,6 +9,7 @@ APT_PACKAGES=(
   "aptitude" # Better apt
   "libreadline-dev" # Better apt
   "build-essential"
+  "alsa-utils" # Basic sound control
 
   # Desktop environment
   "i3-gaps"

@@ -16,9 +16,9 @@ then
 fi
 
 # Add hosts
-if ! grep -qof "$DOTFILES_PATH/config/hosts" /etc/hosts
+if ! grep -of "$DOTFILES_PATH/config/hosts" /etc/hosts
 then
-  sudo tee -a /etc/hosts | sudo cat "$DOTFILES_PATH/config/hosts"
+  cat "$DOTFILES_PATH/config/hosts" | sudo tee -a /etc/hosts
 fi
 
 if [ ! -f "/usr/share/xsessions/plasma-i3.desktop" ]; then

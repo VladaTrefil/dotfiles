@@ -5,7 +5,7 @@
 setxkbmap -layout us,cz,ja -variant qwerty
 setxkbmap -option 'grp:ctrl_space_toggle'
 
-if [ "$(lsusb | grep ErgoDox)" = 0 ]; then
+if [ "$(lsusb | grep -c ErgoDox)" = 0 ]; then
   setxkbmap -option 'grp_led:caps'
   setxkbmap -option 'caps:swapescape'
 fi

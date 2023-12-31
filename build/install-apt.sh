@@ -24,24 +24,22 @@ APT_PACKAGES=(
   "ffmpeg" # Video editor
   "brave-browser" # Web browser
   "thunderbird" # Email client
-  "protonmail-bridge" # Protonmail bridge
   "kde-spectacle" # Screenshot tool
   "dolphin" # File manager
   "picard" # Music tagger
   "qbittorrent" # Torrent client
   "ark" # Archive tool
   "libreoffice" # Office suite
-  "libreoffice-i10n-cs" # Office suite
-  "libreoffice-i10n-en-gb" # Office suite
-  "strawberry" # Music player
+  "libreoffice-l10n-cs" # Office suite
+  "libreoffice-l10n-en-gb" # Office suite
   "vlc" # Video player
   "mpv" # Minimal video player
   "skanlite" # Scanner tool
-  "openrgb" # RGB LED controller
   "ksysguard" # System monitor
   "partitionmanager" # Disk partition manager
   "spotify-client" # Music player
   "telegram-desktop" # Telegram chat client
+  "krita" # Image editor
 
   # Ibus
   "ibus"
@@ -64,7 +62,7 @@ APT_PACKAGES=(
   "playerctl" # Control media player from terminal
   "awscli" # AWS client
   "brightnessctl" # Brightness control
-  "nmcli" # Network manager
+  "network-manager" # Network manager
 
   # Terminal code interpreters
   "python3-dev"
@@ -81,7 +79,7 @@ APT_PACKAGES=(
 
   # Ibus
   "virtualbox"
-  "virtualbox-ext-pack"
+  # "virtualbox-ext-pack"
   "virtualbox-guest-additions-iso"
   "virtualbox-guest-utils"
   "virtualbox-guest-x11"
@@ -225,9 +223,10 @@ if [ ! -f "$apt_sources_dir/docker.list" ]; then
   echo "deb $params https://download.docker.com/linux/ubuntu $version stable" | sudo tee "$apt_sources_dir/docker.list" > /dev/null
 fi
 
-if [ ! -f "$apt_sources_dir/spotify.list" ]; then
-  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 4773BD5E130D1D45
-  echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list > /dev/null
+if [ ! -f "$apt_sources_dir/lens.list" ]; then
+  curl -fsSL https://downloads.k8slens.dev/keys/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/lens-archive-keyring.gpg > /dev/null
+  params="[arch=amd64 signed-by=/usr/share/keyrings/lens-archive-keyring.gpg]"
+  echo "deb $params https://downloads.k8slens.dev/apt/debian stable main" | sudo tee "$apt_sources_dir/lens.list" > /dev/null
 fi
 
 if [ ! -f "`which i3`" ]; then
@@ -260,3 +259,10 @@ done
 sudo apt install $(check-language-support -l en)
 
 sudo apt install -f
+
+# Install DPKG:
+installers=$(find . -name "*.deb")
+while IFS= read -r installer; do
+  echo "Installing $installer"
+  sudo dpkg -i "$installer"
+done <<< "$installers"

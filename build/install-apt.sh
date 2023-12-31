@@ -35,7 +35,7 @@ APT_PACKAGES=(
   "vlc" # Video player
   "mpv" # Minimal video player
   "skanlite" # Scanner tool
-  "ksysguard" # System monitor
+  "gnome-system-monitor" # System monitor
   "partitionmanager" # Disk partition manager
   "spotify-client" # Music player
   "telegram-desktop" # Telegram chat client
@@ -258,11 +258,13 @@ done
 # Install packages language dependencies (Keyboard layout)
 sudo apt install $(check-language-support -l en)
 
-sudo apt install -f
+sudo apt --fix-broken install
 
 # Install DPKG:
 installers=$(find . -name "*.deb")
-while IFS= read -r installer; do
-  echo "Installing $installer"
-  sudo dpkg -i "$installer"
-done <<< "$installers"
+if [ -n "$installers" ]; then
+  while IFS= read -r installer; do
+    echo "Installing $installer"
+    sudo dpkg -i "$installer"
+  done <<< "$installers"
+fi

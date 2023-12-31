@@ -1,3 +1,5 @@
+build/deb-installers
+
 config/nvim/plugged
 
 config/lazygit/state.yml

@@ -54,9 +54,8 @@ APT_PACKAGES=(
 
   # Audio/Video manager
   "pipewire"
-  "pipewire-alsa"
   "pipewire-audio-client-libraries"
-  "libpipewire-0.2-1"
+  "libpipewire-0.3-0"
   "libspa-0.2-bluetooth"
 
   # Terminal functions

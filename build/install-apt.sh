@@ -41,6 +41,7 @@ APT_PACKAGES=(
   "krita" # Image editor
   "spotify-client" # Music player
   "lens" # Kubernetes IDE
+  "strawberry" # Music player
 
   # Ibus
   "ibus"
@@ -233,6 +234,11 @@ fi
 if [ ! -f "$apt_sources_dir/spotify.list" ]; then
   curl -sS https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
   echo "deb http://repository.spotify.com stable non-free" | sudo tee "$apt_sources_dir/spotify.list"
+fi
+
+if [ ! -f "`which strawberry`" ]; then
+  echo "Adding strawberry repository..."
+  sudo add-apt-repository ppa:jonaski/strawberry
 fi
 
 if [ ! -f "`which i3`" ]; then

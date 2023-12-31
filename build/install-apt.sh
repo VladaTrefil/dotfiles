@@ -37,7 +37,6 @@ APT_PACKAGES=(
   "skanlite" # Scanner tool
   "gnome-system-monitor" # System monitor
   "partitionmanager" # Disk partition manager
-  "spotify-client" # Music player
   "telegram-desktop" # Telegram chat client
   "krita" # Image editor
 
@@ -264,7 +263,7 @@ sudo apt --fix-broken install
 installers=$(find . -name "*.deb")
 if [ -n "$installers" ]; then
   while IFS= read -r installer; do
-    echo "Installing $installer"
+    echo -e "Installing ${GREEN}$installer${NC}..."
     sudo dpkg -i "$installer"
   done <<< "$installers"
 fi

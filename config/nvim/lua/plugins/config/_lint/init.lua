@@ -5,8 +5,8 @@ if not lint_ok then
 	return
 end
 
-local linters = require('plugins.config._lint.linters')
 local lint_utils = require('plugins.config._lint.utils')
+local linters = require('plugins.config._lint.linters')
 
 local disable_linting = false
 local lint_events = { 'BufEnter', 'BufWritePost', 'InsertLeave', 'TextChanged' }
@@ -15,29 +15,22 @@ local ignore_filetypes = { 'help' }
 lint.linters_by_ft = {
 	sh = { 'shellcheck' },
 	bash = { 'shellcheck' },
-	-- javascript = { 'standardjs' },
-	-- typescript = { 'standardjs' },
+	javascript = { 'standardjs' },
+	typescript = { 'standardjs' },
 	lua = { 'selene' },
 	scss = { 'stylelint' },
-	-- sass = { 'stylelint' },
+	sass = { 'stylelint' },
 	ruby = { 'rubocop' },
 	json = { 'jsonlint' },
 	['*'] = { 'codespell' },
 }
 
+linters.setup_linters()
+
 -- Highlight vertical tab as error
 vim.api.nvim_command('match RedSign /\\%x0b/')
 
 vim.g.disable_linting = disable_linting
-
--- Setup custom linter options
-for name, data in pairs(linters) do
-	local linter = lint.linters[name]
-	linter.cmd = data.cmd or linter.cmd
-	linter.args = data.args or linter.args
-	linter.stdin = data.stdin or linter.stdin
-	linter.parser = data.parser or linter.parser
-end
 
 local function lint_callback()
 	lint_utils.exec_lint(lint, ignore_filetypes)

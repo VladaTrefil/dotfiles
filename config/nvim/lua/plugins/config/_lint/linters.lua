@@ -1,4 +1,7 @@
+local lint_ok, lint = pcall(require, 'lint')
+
 local M = {}
+local linters = {}
 
 local severity_map = {
 	['fatal'] = vim.diagnostic.severity.ERROR,
@@ -9,7 +12,7 @@ local severity_map = {
 	['info'] = vim.diagnostic.severity.INFO,
 }
 
-M.shellcheck = {
+linters.shellcheck = {
 	args = {
 		'--format',
 		'json',
@@ -17,14 +20,21 @@ M.shellcheck = {
 	},
 }
 
-M.stylelint = {
+linters.stylelint = {
 	args = {
 		'--config',
 		vim.fn.expand('$XDG_CONFIG_HOME/stylelint/stylelintrc.json'),
+		'-f',
+		'json',
+		'--stdin',
+		'--stdin-filename',
+		function()
+			return vim.fn.expand('%:p')
+		end,
 	},
 }
 
-M.codespell = {
+linters.codespell = {
 	args = {
 		'--ignore-words',
 		vim.fn.expand('$XDG_CONFIG_HOME/codespell/ignore.txt'),
@@ -37,18 +47,35 @@ M.codespell = {
 	},
 }
 
+local function server_argument()
+	local output = vim.fn.system('bundle exec rubocop --server --version')
+
+	if not output:match('--server') then
+		return '--server'
+	end
+end
+
+local function config_path()
+	if vim.fn.filereadable(vim.fn.getcwd() .. '/.rubocop.yml') then
+		return vim.fn.getcwd() .. '/.rubocop.yml'
+	else
+		return vim.fn.expand('$XDG_CONFIG_HOME/rubocop/rubocop.yml')
+	end
+end
+
 -- TODO: disable diagnostics underline in multiline diagnostics
-M.rubocop = {
+linters.rubocop = {
 	cmd = 'bundle',
 	stdin = true,
 	args = {
 		'exec',
 		'rubocop',
+		'--force-exclusion',
 		'--config',
-		vim.fn.expand('$XDG_CONFIG_HOME/rubocop/rubocop.yml'),
+		config_path(),
+		server_argument(),
 		'--format',
 		'json',
-		'--force-exclusion',
 		'--stdin',
 		function()
 			return vim.fn.expand('%:p')
@@ -81,5 +108,20 @@ M.rubocop = {
 		return diagnostics
 	end,
 }
+
+-- Setup custom linter options
+M.setup_linters = function()
+	for name, data in pairs(linters) do
+		local linter = lint.linters[name] or {}
+
+		linter.cmd = data.cmd or linter.cmd
+		linter.args = data.args or linter.args
+		linter.stdin = data.stdin or linter.stdin
+		linter.ignore_exitcode = data.ignore_exitcode or linter.ignore_exitcode
+		linter.parser = data.parser or linter.parser
+
+		lint.linters[name] = linter
+	end
+end
 
 return M

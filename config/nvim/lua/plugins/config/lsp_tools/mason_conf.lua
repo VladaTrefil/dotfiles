@@ -20,6 +20,7 @@ local ensure_installed = {
 	'selene',
 	'shellcheck',
 	'stylua',
+	'standardjs',
 	'typescript-language-server',
 	'vim-language-server',
 	'yaml-language-server',

@@ -8,51 +8,23 @@ end
 local ignore_filetypes = { 'javascript', 'sass' }
 local disable_autoformat = false
 
-local function stylua_args()
-	if vim.fn.filereadable(vim.fn.getcwd() .. '/stylua.toml') > 0 then
-		return { '--config-path', vim.fn.getcwd() .. '/stylua.toml' }
-	else
-		return {
-			'--config-path',
-			vim.fn.expand('$XDG_CONFIG_HOME/stylua/stylua.toml'),
-		}
-	end
-end
+local rubocop = require('plugins.config._conform.rubocop')
+local stylua = require('plugins.config._conform.stylua')
 
 local formatters = {
-	beautysh = {
-		prepend_args = {
-			'--indent-size=2',
-		},
-	},
-	stylua = {
-		prepend_args = stylua_args(),
-		cwd = require('conform.util').root_file({ '.git' }),
-	},
 	stylelint = {
 		prepend_args = {
 			'--config',
 			vim.fn.expand('$XDG_CONFIG_HOME/stylelint/stylelintrc.json'),
 		},
 	},
-	rubocop = {
-		command = 'bundle',
+	beautysh = {
 		prepend_args = {
-			'exec',
-			'rubocop',
-			'--force-exclusion',
-			'--config',
-			vim.fn.expand('$XDG_CONFIG_HOME/rubocop/rubocop.yml'),
-			'--stdin',
-			'$FILENAME',
+			'--indent-size=2',
 		},
-		condition = function()
-			return vim.fn.executable('rubocop') > 0
-		end,
-		-- env = {
-		--   VAR = "value",
-		-- },
 	},
+	rubocop = rubocop,
+	stylua = stylua,
 }
 
 local autoformat_opts = {

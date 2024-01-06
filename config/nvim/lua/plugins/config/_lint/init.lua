@@ -21,6 +21,7 @@ lint.linters_by_ft = {
 	scss = { 'stylelint' },
 	sass = { 'stylelint' },
 	ruby = { 'rubocop' },
+	slim = { 'slimlint' },
 	json = { 'jsonlint' },
 	['*'] = { 'codespell' },
 }

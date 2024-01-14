@@ -73,13 +73,14 @@
               "darken",
               "lighten",
               "fade-out",
-              "image-url"
+              "image-url",
+              "to-rem"
             ]
           }
         ],
         "selector-type-no-unknown": [
           true,
-          { "ignoreTypes": ["highlight", "through", "progress"] }
+          { "ignoreTypes": ["highlight", "trough", "progress"] }
         ],
         "annotation-no-unknown": [true, { "ignoreAnnotations": ["default"] }]
       }

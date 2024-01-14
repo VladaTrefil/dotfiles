@@ -126,15 +126,33 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
 
   &__bar {
     trough {
-      background: desaturate(darken($purple, 40%), 70%);
       border-radius: 20px;
       min-width: 7px;
       min-height: 30px;
     }
 
     progress {
-      background: $purple;
       border-radius: 20px;
+    }
+
+    &--base {
+      trough {
+        background: desaturate(darken($purple, 40%), 70%);
+      }
+
+      progress {
+        background: $purple;
+      }
+    }
+
+    &--over {
+      trough {
+        background: $purple;
+      }
+
+      progress {
+        background: $red;
+      }
     }
   }
 }

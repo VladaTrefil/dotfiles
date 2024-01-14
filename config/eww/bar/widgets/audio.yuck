@@ -14,11 +14,16 @@
     (button :class "audio__button"
             ; :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop audio"
             (audio_icon))
-    (progress :class "audio__bar"
+    (progress :class "audio__bar audio__bar--base"
               :flipped true
               :orientation "vertical"
-              :visible { volume_status != "muted" }
-              :value volume_percent)))
+              :visible { volume_status != "muted" && volume_percent < 100 }
+              :value volume_percent)
+    (progress :class "audio__bar audio__bar--over"
+              :flipped true
+              :orientation "vertical"
+              :visible { volume_status != "muted" && volume_percent >= 100 }
+              :value { volume_percent - 100 })))
 
 
 ; (defwidget audio_item [key percent script tooltip icon]

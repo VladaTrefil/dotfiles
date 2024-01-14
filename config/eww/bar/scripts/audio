@@ -7,7 +7,7 @@ function get-pulse-master-metadata() {
 }
 
 function a-volume-percent() {
-  get-pulse-master-metadata | awk -F'[][]' '{ print $2 }' | tr -d '%'
+  get-pulse-master-metadata | awk -F'[][]' '{ print $2 }' | tr -d '%' | bc
 }
 
 function a-status() {

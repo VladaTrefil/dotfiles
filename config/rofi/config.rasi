@@ -15,7 +15,7 @@ configuration {
 
 	/*---------- SSH settings ----------*/
 	ssh-client: "ssh";
-	ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";
+	// ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";
 	parse-hosts: true;
 	parse-known-hosts: true;
 
@@ -59,7 +59,7 @@ configuration {
 	display-filebrowser: "Files";
 
 	/*---------- Misc setting ----------*/
-	terminal: "rofi-sensible-terminal";
+	terminal: "konsole";
 	sort: false;
 	threads: 0;
 	click-to-exit: true;

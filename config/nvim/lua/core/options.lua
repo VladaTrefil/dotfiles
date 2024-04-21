@@ -4,7 +4,8 @@ local g = vim.g
 
 g.mapleader = ' '
 
-opt.timeoutlen = 2000
+vim.opt.timeout = true
+opt.timeoutlen = 1000
 
 -- Performance
 opt.redrawtime = 1500

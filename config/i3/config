@@ -1,8 +1,8 @@
-#           __                              
-#     __  /'__`\                            
-#    /\_\/\_\L\ \  __  __  __    ___ ___    
-#    \/\ \/_/_\_<_/\ \/\ \/\ \ /' __` __`\  
-#     \ \ \/\ \L\ \ \ \_/ \_/ \/\ \/\ \/\ \ 
+#           __
+#     __  /'__`\
+#    /\_\/\_\L\ \  __  __  __    ___ ___
+#    \/\ \/_/_\_<_/\ \/\ \/\ \ /' __` __`\
+#     \ \ \/\ \L\ \ \ \_/ \_/ \/\ \/\ \/\ \
 #      \ \_\ \____/\ \___x___/'\ \_\ \_\ \_\
 #       \/_/\/___/  \/__//__/   \/_/\/_/\/_/
 
@@ -15,7 +15,7 @@ set $mod Mod1
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-floating_maximum_size 1920 x 992
+floating_maximum_size 2000 x 1600
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -85,8 +85,8 @@ workspace $ws9 output $monitor3
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Theme: {{{
 
-gaps inner 9
-gaps outer 9
+gaps inner 10
+gaps outer 10
 
 # No title bar in windows
 new_window pixel 0
@@ -253,11 +253,11 @@ bindsym --release $mod+Shift+c exec dunstctl close-all
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Rules for specific windows: {{{
 
-for_window [class="Clementine"] floating enable; border none width 600px height 600px
-for_window [class="strawberry"] floating enable; border none width 600px height 600px
+for_window [class="Clementine"] floating enable, border none, width 600px height 600px
+for_window [class="strawberry"] floating enable, border none, width 600px height 600px
 
 # Kill kde startup window
-for_window [title="Desktop — Plasma"] kill; floating enable; border none
+for_window [title="Desktop — Plasma"] kill, floating enable, border none
 
 # Plasma compatibility improvements
 for_window [window_role="pop-up"] floating enable

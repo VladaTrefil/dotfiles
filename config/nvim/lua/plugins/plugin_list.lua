@@ -299,11 +299,4 @@ return {
 	['mboughaba/i3config.vim'] = {},
 	['kchmck/vim-coffee-script'] = {},
 	['slim-template/vim-slim'] = {},
-
-	['m4xshen/hardtime.nvim'] = {
-		requires = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
-		config = function()
-			require('plugins.config.hardtime')
-		end,
-	},
 }

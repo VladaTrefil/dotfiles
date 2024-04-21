@@ -35,7 +35,11 @@ Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
 
 Layout/LineLength:
-  Max: 100
+  Max: 110
+
+Layout/HashAlignment:
+  EnforcedLastArgumentHashStyle: always_inspect
+  EnforcedColonStyle: key
 
 Metrics/MethodLength:
   CountAsOne: ['array', 'heredoc', 'method_call']
@@ -53,6 +57,15 @@ Lint/MissingSuper:
 Naming/BlockForwarding:
   EnforcedStyle: explicit
 
+Style/HashAsLastArrayItem:
+  EnforcedStyle: no_braces
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
 Style/ClassAndModuleChildren:
   Enabled: false
 
@@ -65,5 +78,8 @@ Style/MutableConstant:
 Style/Lambda:
   EnforcedStyle: 'literal'
 
-Minitest/EmptyLineBeforeAssertionMethods:
+Style/IfUnlessModifier:
   Enabled: false
+#
+# Minitest/EmptyLineBeforeAssertionMethods:
+#   Enabled: false

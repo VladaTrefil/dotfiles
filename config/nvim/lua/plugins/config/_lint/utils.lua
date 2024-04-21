@@ -1,16 +1,28 @@
 local M = {}
 
-M.exec_lint = function(engine, ignore_filetypes)
-	local names = engine.linters_by_ft[vim.bo.filetype] or {}
+local lint = require('lint')
+
+M.setup_linters = function(linters)
+	for name, data in pairs(linters) do
+		local linter = lint.linters[name] or {}
+
+		linter.cmd = data.cmd or linter.cmd
+		linter.args = data.args or linter.args
+		linter.stdin = data.stdin or linter.stdin
+		linter.ignore_exitcode = data.ignore_exitcode or linter.ignore_exitcode
+		linter.parser = data.parser or linter.parser
+
+		lint.linters[name] = linter
+	end
+end
+
+M.exec_lint = function(engine)
 	-- Use nvim-lint's logic first:
 	-- * checks if linters exist for the full filetype first
 	-- * otherwise will split filetype by "." and add all those linters
 	-- * this differs from conform.nvim which only uses the first filetype that has a formatter
+	local names = engine.linters_by_ft[vim.bo.filetype] or {}
 	names = engine._resolve_linter_by_ft(vim.bo.filetype)
-
-	if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
-		return
-	end
 
 	-- Add fallback linters.
 	if #names == 0 then

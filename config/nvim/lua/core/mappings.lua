@@ -108,6 +108,11 @@ M.general = {
 		['<C-x>'] = { utils.termcodes('<C-\\><C-N>'), 'Escape terminal mode' },
 	},
 
+	c = {
+		['<C-x>'] = { utils.termcodes('<C-\\><C-N>'), 'Escape command-line mode' },
+		['<C-g>'] = { utils.termcodes('%:p'), 'Insert current path' },
+	},
+
 	v = {
 		['>'] = { '>gv', 'Improve indent in visual' },
 		['<'] = { '<gv', 'Improve indent in visual' },

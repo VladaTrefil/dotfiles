@@ -16,6 +16,7 @@ mason_lspconfig.setup({
 		'cssls',
 		'yamlls',
 		'lua_ls',
+		'pylsp',
 
 		-- TODO: ensure installed non-lsp
 		-- 'prettier',

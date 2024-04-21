@@ -9,6 +9,7 @@ M.servers_config = {
 	tsserver = require('lsp.servers.tsserver'),
 	cssls = require('lsp.servers.css_ls'),
 	rubocop = require('lsp.servers.rubocop'),
+	pylsp = require('lsp.servers.pylsp'),
 }
 
 M.disabled_servers = { 'rubocop', 'tsserver', 'eslint' }

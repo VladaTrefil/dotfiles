@@ -38,6 +38,7 @@ conform.setup({
 	formatters_by_ft = {
 		lua = { 'stylua' },
 		ruby = { 'rubocop' },
+		python = { 'isort', 'blue' },
 		-- sass = { 'prettier' },
 		scss = { 'prettier' },
 		js = { 'prettier' },

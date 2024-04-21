@@ -145,7 +145,8 @@ M.blamer = {
 
 M.lazygit = {
 	n = {
-		['<Leader>gg'] = { '<cmd>LazyGit<cr>', 'Open Lazygit' },
+		['<Leader>gl'] = { '<cmd>LazyGit<cr>', 'Open Lazygit' },
+		['<Leader>gg'] = { '<cmd>Git<cr>', 'Open Lazygit' },
 	},
 }
 

@@ -1,7 +1,7 @@
 local colors = require('theme.colors')
 
 local config = {
-	Special = { fg = colors.blue, bg = colors.dark1, italic = true },
+	Special = { fg = colors.blue, bg = colors.none, italic = true },
 	Comment = { fg = colors.gray, bg = colors.dark1, italic = true },
 	Todo = { fg = colors.light0, bold = true, italic = true },
 	Error = { fg = colors.bright_red, bg = colors.dark0, bold = true, undercurl = true },

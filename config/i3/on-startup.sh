@@ -32,7 +32,7 @@ killall dunst && sleep 1 && dunst
 
 # Set desktop wallpapers
 feh --bg-scale -g 3840x1440 ~/.background/mountains-blue-and-beige.jpg \
-               -g 1920x1080 ~/.background/mountains-blue-and-gold.jpg
+  -g 1920x1080 ~/.background/mountains-blue-and-gold.jpg
 
 # Launch picom compositor
 killall -q picom && sleep 1

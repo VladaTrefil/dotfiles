@@ -44,6 +44,7 @@ local function lint_callback()
 	if
 		vim.tbl_contains(ignore_filetypes, vim.bo.filetype)
 		or ignored_path
+		or utils.filesize_kb() > 128
 		or vim.g.disable_linting
 	then
 		return

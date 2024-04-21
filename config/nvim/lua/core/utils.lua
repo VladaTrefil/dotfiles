@@ -296,4 +296,9 @@ M.disable_ui = function()
 	statuscolumn.hide()
 end
 
+-- @return number: The size of the file in kilobytes
+M.filesize_kb = function()
+	return vim.fn.getfsize(vim.fn.expand('%')) / 1024
+end
+
 return M

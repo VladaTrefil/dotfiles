@@ -285,6 +285,18 @@ else
   echo "  installed"
 fi
 
+printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
+echo "──  AWS:"
+
+if [ ! -f "$(which aws)" ]; then
+  echo "Installing AWS"
+
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "tmp/awscliv2.zip"
+  unzip tmp/awscliv2.zip
+  sudo ./tmp/aws/install
+else
+  echo "  installed"
+fi
 
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────

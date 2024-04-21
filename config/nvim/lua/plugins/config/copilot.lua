@@ -35,4 +35,11 @@ copilot.setup({
 			dismiss = '<C-x>',
 		},
 	},
+	filetypes = {
+		yaml = true,
+		markdown = true,
+		gitcommit = true,
+		gitrebase = true,
+		['.'] = false,
+	},
 })

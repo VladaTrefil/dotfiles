@@ -10,6 +10,17 @@ if [ "$(lsusb | grep -cE 'ErgoDox|OpenMoko')" = 0 ]; then
   setxkbmap -option 'caps:swapescape'
 fi
 
+# https://wiki.archlinux.org/title/Xrandr
+# xrandr --dpi 96 \
+  #   --output DisplayPort-2 --auto --preferred --primary \
+  #   --output DVI-D-0       --auto --panning 2880x1620+3840+0 --right-of DisplayPort-2 \
+  #   --output HDMI-A-0      --auto --panning 3840x2160+6720+0 --right-of DVI-D-0
+
+xrandr --dpi 96 \
+  --output DisplayPort-2 --auto --preferred --primary \
+  --output DVI-D-0       --auto --right-of DisplayPort-2 \
+  --output HDMI-A-0      --auto --right-of DVI-D-0
+
 xdg_home="$HOME/.config/x11"
 if [ -f "$xdg_home/xresources" ]; then
   xrdb -merge "$xdg_home/xresources"

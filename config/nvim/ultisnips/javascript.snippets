@@ -388,12 +388,25 @@ snippet ${
 \${${1}}${2}
 endsnippet
 
+# TODO: Get path to file in folio format
+snippet foo ""
+`!p snip.rv = os.getcwd() + snip.basename`
+endsnippet
+
 snippet stim:controller
-window.${1:Folio}.Stimulus.register('${2}', class extends window.Stimulus.Controller {
+window.Folio.Stimulus.register('${2}', class extends window.Stimulus.Controller {
 	${0}
 })
 endsnippet
 
 snippet stim:targets "Stimulus targets" b
 static targets = ['${0}']
+endsnippet
+
+snippet stim:values "Stimulus values" b
+static values = { ${1}: ${0:String} }
+endsnippet
+
+snippet stim:classes "Stimulus classes" b
+static classes = ['${0}']
 endsnippet

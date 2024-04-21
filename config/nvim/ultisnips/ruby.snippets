@@ -30,15 +30,15 @@
 #   }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
-#                   __                  
-#                  /\ \                 
-#     _ __   __  __\ \ \____  __  __    
-#    /\`'__\/\ \/\ \\ \ '__`\/\ \/\ \   
-#    \ \ \/ \ \ \_\ \\ \ \L\ \ \ \_\ \  
-#     \ \_\  \ \____/ \ \_,__/\/`____ \ 
+#                   __
+#                  /\ \
+#     _ __   __  __\ \ \____  __  __
+#    /\`'__\/\ \/\ \\ \ '__`\/\ \/\ \
+#    \ \ \/ \ \ \_\ \\ \ \L\ \ \ \_\ \
+#     \ \_\  \ \____/ \ \_,__/\/`____ \
 #      \/_/   \/___/   \/___/  `/___/> \
 #                                 /\___/
-#                                 \/__/ 
+#                                 \/__/
 
 
 priority -50
@@ -335,6 +335,23 @@ snippet asntd "asntd"
 assert_nothing_thrown do
 	${1}
 end
+endsnippet
+
+snippet stim:controller "controller"
+stimulus_controller("i-leads-form", values:)
+endsnippet
+
+# TODO: turn 'button' into 'onButtonClick'
+snippet stim:action "action"
+stimulus_action(${1:click}: ${0:onClick})
+endsnippet
+
+snippet stim:target "target"
+stimulus_target("${0}")
+endsnippet
+
+snippet bem "Component bem_class_name"
+bem_class_name :${0}
 endsnippet
 
 extends rails

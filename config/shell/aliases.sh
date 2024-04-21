@@ -63,7 +63,8 @@ alias npmrd='npm run dev'
 alias npmrb='npm run build'
 
 # Yarn
-alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"' # move config
+# NODE_OPTIONS fix envelope bug
+alias yarn='NODE_OPTIONS=--openssl-legacy-provider yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"' # move config
 
 # Ruby
 alias r='bin/rails'

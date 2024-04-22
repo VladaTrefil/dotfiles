@@ -2,7 +2,7 @@
 AntiAliasFonts=true
 BoldIntense=true
 ColorScheme=rose-pine
-Font=Iosevka Nerd Font,14,-1,5,50,0,0,0,0,0
+Font=Iosevka Nerd Font,13,-1,5,50,0,0,0,0,0
 UseFontLineChararacters=true
 
 [Cursor Options]

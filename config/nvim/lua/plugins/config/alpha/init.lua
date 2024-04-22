@@ -49,20 +49,19 @@ local button_config = {
 }
 
 local header_str = {
-	'                                             o8o                     ',
-	'                                             `"\'                     ',
-	'ooo. .oo.    .ooooo.   .ooooo.  oooo    ooo oooo  ooo. .oo.  .oo.    ',
-	'`888P"Y88b  d88\' `88b d88\' `88b  `88.  .8\'  `888  `888P"Y88bP"Y88b   ',
-	" 888   888  888ooo888 888   888   `88..8'    888   888   888   888   ",
-	" 888   888  888    .o 888   888    `888'     888   888   888   888   ",
-	"o888o o888o `Y8bod8P' `Y8bod8P'     `8'     o888o o888o o888o o888o  ",
+	'                                                o8o                     ',
+	'                                                `"\'                     ',
+	'   ooo. .oo.    .ooooo.   .ooooo.  oooo    ooo oooo  ooo. .oo.  .oo.    ',
+	'   `888P"Y88b  d88\' `88b d88\' `88b  `88.  .8\'  `888  `888P"Y88bP"Y88b   ',
+	"    888   888  888ooo888 888   888   `88..8'    888   888   888   888   ",
+	"    888   888  888    .o 888   888    `888'     888   888   888   888   ",
+	"   o889o o888o `Y8bod8P' `Y8bod8P'     `8'     o888o o888o o888o o888o  ",
 }
 
 alpha_utils.setup_autocmds()
 
 dashboard.section.header.val = header_str
-dashboard.section.buttons.val = alpha_utils.make_button_list(button_config)
-dashboard.section.footer.val = alpha_utils.build_footer()
+dashboard.section.buttons.val = alpha_utils.build_button_list(button_config)
 
 dashboard.section.header.opts = {
 	position = 'center',
@@ -75,9 +74,6 @@ dashboard.section.footer.opts = {
 
 local section = {
 	header = dashboard.section.header,
-	-- hi_top_section = hi_top_section,
-	-- hi_middle_section = hi_middle_section,
-	-- hi_bottom_section = hi_bottom_section,
 	buttons = dashboard.section.buttons,
 	footer = dashboard.section.footer,
 }
@@ -86,13 +82,9 @@ local opts = {
 	layout = {
 		{ type = 'padding', val = 14 },
 		section.header,
-		{ type = 'padding', val = 4 },
-		section.hi_top_section,
-		section.hi_middle_section,
-		section.hi_bottom_section,
-		{ type = 'padding', val = 2 },
+		{ type = 'padding', val = 6 },
 		section.buttons,
-		{ type = 'padding', val = 4 },
+		{ type = 'padding', val = 8 },
 		section.footer,
 	},
 	opts = {

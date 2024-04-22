@@ -58,10 +58,19 @@ local header_str = {
 	"   o889o o888o `Y8bod8P' `Y8bod8P'     `8'     o888o o888o o888o o888o  ",
 }
 
+local footer_str = {
+	'                                                                                 ',
+	'                                                          💖   ／l、             ',
+	'                                                             （ﾟ､ ｡７            ',
+	'                                                               l、ﾞ~ヽ           ',
+	'                                                               じしf_,)ノ        ',
+}
+
 alpha_utils.setup_autocmds()
 
 dashboard.section.header.val = header_str
 dashboard.section.buttons.val = alpha_utils.build_button_list(button_config)
+dashboard.section.footer.val = footer_str
 
 dashboard.section.header.opts = {
 	position = 'center',

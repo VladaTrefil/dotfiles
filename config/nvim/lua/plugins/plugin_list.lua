@@ -236,8 +236,7 @@ return {
 	},
 	['lewis6991/gitsigns.nvim'] = {
 		config = function()
-			require('plugins.config.git').signs()
-			require('plugins.config._gitgutter')
+			require('plugins.config._gitsigns')
 		end,
 	},
 	['folke/todo-comments.nvim'] = {

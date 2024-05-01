@@ -43,14 +43,14 @@ return {
 	['nvim-lualine/lualine.nvim'] = {
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true },
 		config = function()
-			require('plugins.config.lualine')
+			require('plugins.config._lualine')
 		end,
 	},
 
 	['akinsho/bufferline.nvim'] = {
 		tag = 'v2.*',
 		config = function()
-			require('plugins.config.bufferline')
+			require('plugins.config._bufferline')
 		end,
 	},
 
@@ -237,6 +237,7 @@ return {
 	['lewis6991/gitsigns.nvim'] = {
 		config = function()
 			require('plugins.config.git').signs()
+			require('plugins.config._gitgutter')
 		end,
 	},
 	['folke/todo-comments.nvim'] = {
@@ -278,7 +279,7 @@ return {
 
 	['lukas-reineke/indent-blankline.nvim'] = {
 		config = function()
-			require('plugins.config.indentline')
+			require('plugins.config._indentline')
 		end,
 	},
 

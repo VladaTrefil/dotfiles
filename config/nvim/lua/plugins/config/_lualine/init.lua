@@ -4,8 +4,12 @@ if not present then
 	return
 end
 
+local theme = require('plugins.config._lualine.theme')
+
 local colors = require('theme.colors')
 local utils = require('core.utils')
+
+utils.set_highlights(theme)
 
 local function file_path()
 	local path = vim.fn.expand('%f')

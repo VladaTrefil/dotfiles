@@ -30,7 +30,10 @@ FILE_IGNORE_PATTERNS = {
 	'react.js',
 }
 
+local utils = require('core.utils')
+
 local mappings = require('plugins.config._telescope.mappings')
+local theme = require('plugins.config._telescope.theme')
 
 local pickers = {
 	find_files = {
@@ -76,7 +79,9 @@ local extensions = {
 	},
 }
 
-require('core.utils').load_mappings(mappings.base)
+utils.load_mappings(mappings.base)
+utils.set_highlights(theme)
+
 require('plugins.config._telescope.utils').create_autocmds()
 
 telescope.setup({

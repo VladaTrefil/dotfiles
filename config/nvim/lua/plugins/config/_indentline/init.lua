@@ -4,7 +4,11 @@ if not indentline_ok then
 	return
 end
 
+local utils = require('core.utils')
 local icons = require('core.icons')
+
+local theme = require('plugins.config._indentline.theme')
+utils.set_highlights(theme)
 
 local highlight = {
 	'Bg2',

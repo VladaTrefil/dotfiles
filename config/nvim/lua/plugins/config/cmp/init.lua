@@ -4,7 +4,12 @@ if not cmp_ok then
 	return
 end
 
+local utils = require('core.utils')
+
+local theme = require('plugins.config.cmp.theme')
 local config = require('plugins.config.cmp.options')
+
+utils.set_highlights(theme)
 
 cmp.setup(config.editor_opts)
 cmp.setup.cmdline({ '/', '?' }, config.search_opts)

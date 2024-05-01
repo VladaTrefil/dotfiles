@@ -4,6 +4,11 @@ if not present then
 	return
 end
 
+local utils = require('core.utils')
+local theme = require('plugins.config._bufferline.theme')
+
+utils.set_highlights(theme)
+
 -- show only buffers with window open on current tab
 local tab_buffers_filter = function(bufnr)
 	local winid = vim.fn.win_findbuf(bufnr)[1]

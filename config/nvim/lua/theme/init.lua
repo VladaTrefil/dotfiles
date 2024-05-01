@@ -11,15 +11,6 @@ vim.o.termguicolors = true
 
 local highlight_groups = {
 	base = { 'base', 'highlight_groups' },
-	plugins = {
-		'telescope',
-		'lualine',
-		'easymotion',
-		'cmp',
-		'gitgutter',
-		'indentline',
-		'bufferline',
-	},
 	syntax = {
 		'base',
 		'lua',
@@ -40,11 +31,6 @@ local highlights = {}
 
 for _, module in ipairs(highlight_groups.base) do
 	highlights = require('theme.' .. module)
-	utils.set_highlights(highlights)
-end
-
-for _, module in ipairs(highlight_groups.plugins) do
-	highlights = require('theme.plugins.' .. module)
 	utils.set_highlights(highlights)
 end
 

@@ -53,10 +53,6 @@ local pickers = {
 		prompt_title = 'Help tags ',
 		mappings = mappings.pickers.help_tags,
 	},
-	notify = {
-		-- -- Move here from mappings
-		-- layout_strategy = 'vertical',
-	},
 }
 
 local lga_actions = require('telescope-live-grep-args.actions')

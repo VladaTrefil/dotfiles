@@ -25,6 +25,7 @@ M.base = {
 		['<leader>pvm'] = { '<cmd> Telescope man_pages <CR>', 'Man pages [telescope]' },
 		['<leader>pvn'] = {
 			function()
+				-- Cannot be set in picker config
 				extensions.notify.notify({ layout_strategy = 'vertical' })
 			end,
 			'Notifications [telescope]',

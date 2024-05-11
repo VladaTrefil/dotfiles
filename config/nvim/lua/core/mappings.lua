@@ -90,6 +90,8 @@ M.general = {
 		['<C-Up>'] = { ':resize +10<CR>', 'Resize down' },
 		['<C-Right>'] = { ':vertical resize -10<CR>', 'Resize left' },
 		['<C-Left>'] = { ':vertical resize +10<CR>', 'Resize right' },
+
+		['<Leader>gg'] = { '<cmd>Git<cr>', 'Open git' },
 	},
 
 	i = {
@@ -134,19 +136,6 @@ M.general = {
 		-- Don't copy the replaced text after pasting in visual mode
 		-- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
 		-- ['p'] = { 'p:let @+=@0<CR>:let @"=@0<CR>', opts = { silent = true } },
-	},
-}
-
-M.blamer = {
-	n = {
-		['<Leader>gb'] = { '<cmd> BlamerToggle <CR>', 'Toggle git blamer' },
-	},
-}
-
-M.lazygit = {
-	n = {
-		['<Leader>gl'] = { '<cmd>LazyGit<cr>', 'Open Lazygit' },
-		['<Leader>gg'] = { '<cmd>Git<cr>', 'Open Lazygit' },
 	},
 }
 

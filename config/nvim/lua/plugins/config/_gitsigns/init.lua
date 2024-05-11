@@ -9,6 +9,7 @@ local icons = require('core.icons')
 local utils = require('core.utils')
 
 local theme = require('plugins.config._gitsigns.theme')
+local mappings = require('plugins.config._gitsigns.mappings')
 
 utils.set_highlights(theme)
 
@@ -22,5 +23,15 @@ gitsigns.setup({
 		untracked = { text = icons.PipeDashed },
 	},
 	sign_priority = 6,
-	attach_to_untracked = true,
+	on_attach = function(bufnr)
+		utils.load_mappings(mappings, { buffer = bufnr })
+	end,
+	preview_config = {
+		-- Options passed to nvim_open_win
+		border = 'single',
+		style = 'minimal',
+		relative = 'cursor',
+		row = 0,
+		col = 1,
+	},
 })

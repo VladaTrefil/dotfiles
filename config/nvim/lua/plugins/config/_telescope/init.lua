@@ -53,6 +53,17 @@ local pickers = {
 		prompt_title = 'Help tags ',
 		mappings = mappings.pickers.help_tags,
 	},
+	git_status = {
+		devicons = false,
+		git_icons = {
+			added = icons.Plus,
+			changed = icons.Change,
+			copied = icons.Copy,
+			delete = icons.Minus,
+			renamed = icons.Character,
+			untracked = icons.PlusSquare,
+		},
+	},
 }
 
 local lga_actions = require('telescope-live-grep-args.actions')

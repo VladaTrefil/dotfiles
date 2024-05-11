@@ -39,7 +39,8 @@ M.base = {
 
 		-- -- git
 		['<leader>gc'] = { '<cmd> Telescope git_commits <CR>', 'git commits [telescope]' },
-		['<leader>gs'] = { '<cmd> Telescope git_status <CR>', 'git status [telescope]' },
+		['<leader>gl'] = { '<cmd> Telescope git_status <CR>', 'git status [telescope]' },
+		['<leader>gB'] = { '<cmd> Telescope git_branches <CR>', 'git branches [telescope]' },
 	},
 }
 
@@ -91,6 +92,12 @@ M.pickers = {
 		--     ['<C-s>'] = actions.file_split,
 		--   }
 	},
+	-- git_status = {
+	-- 	n = {
+	-- 		['<C-s>'] = actions.git_stage,
+	-- 		['<C-u>'] = actions.git_unstage,
+	-- 	},
+	-- },
 }
 
 return M

@@ -221,19 +221,9 @@ return {
 		end,
 	},
 
-	['kdheepak/lazygit.nvim'] = {
-		config = function()
-			require('plugins.config.git').lazygit()
-		end,
-	},
 	['drzel/vim-repo-edit'] = {}, -- " Quickly clone github repo to tmp
 	['tpope/vim-git'] = {},
 	['tpope/vim-fugitive'] = {},
-	['APZelos/blamer.nvim'] = {
-		config = function()
-			require('plugins.config.git').blamer()
-		end,
-	},
 	['lewis6991/gitsigns.nvim'] = {
 		config = function()
 			require('plugins.config._gitsigns')

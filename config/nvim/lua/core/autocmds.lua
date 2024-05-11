@@ -102,3 +102,18 @@ autocmd({ 'BufWritePre' }, {
 --   pattern = '*/*',
 --   callback = match_redundant_spaces
 -- })
+
+-- Change unsupported filetypes to supported ones
+autocmd({ 'BufRead', 'BufNewFile' }, {
+	pattern = '*.txt',
+	callback = function()
+		vim.opt_local.filetype = 'help'
+	end,
+})
+
+autocmd({ 'BufRead', 'BufNewFile' }, {
+	pattern = '*.es6',
+	callback = function()
+		vim.opt_local.filetype = 'javascript'
+	end,
+})

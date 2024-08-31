@@ -59,10 +59,11 @@ local config = {
 	TelescopeResultsNumber = { fg = colors.orange },
 	TelescopeResultsComment = { fg = colors.light3 },
 	TelescopeResultsSpecialComment = { fg = colors.grey },
-	TelescopeResultsDiffChange = { fg = colors.none, bg = colors.yellow },
-	TelescopeResultsDiffAdd = { fg = colors.none, bg = colors.green },
-	TelescopeResultsDiffDelete = { fg = colors.none, bg = colors.red },
-	TelescopeResultsDiffUntracked = { fg = colors.none, bg = colors.light4 },
+
+	TelescopeResultsDiffChange = { link = 'diffChanged' },
+	TelescopeResultsDiffAdd = { link = 'diffAdded' },
+	TelescopeResultsDiffDelete = { link = 'diffRemoved' },
+	TelescopeResultsDiffUntracked = { link = 'diffFile' },
 }
 
 return config

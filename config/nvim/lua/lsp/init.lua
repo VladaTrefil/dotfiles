@@ -22,8 +22,13 @@ lsp.setup = function(server)
 	vim.diagnostic.config(user_config.diagnostic_config)
 
 	for type, icon in pairs(user_config.signs) do
-		local hl = 'DiagnosticSign' .. type
-		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+		local hl = 'Diagnostic' .. type
+
+		vim.fn.sign_define('DiagnosticSign' .. type, {
+			text = icon,
+			texthl = hl,
+			numhl = hl,
+		})
 	end
 end
 

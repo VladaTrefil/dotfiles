@@ -31,6 +31,7 @@ FILE_IGNORE_PATTERNS = {
 }
 
 local utils = require('core.utils')
+local icons = require('core.icons')
 
 local mappings = require('plugins.config._telescope.mappings')
 local theme = require('plugins.config._telescope.theme')
@@ -48,6 +49,7 @@ local pickers = {
 		mappings = mappings.pickers.buffers,
 		sort_mru = true,
 		preview_title = false,
+		theme = 'dropdown',
 	},
 	help_tags = {
 		prompt_title = 'Help tags ',
@@ -64,6 +66,7 @@ local pickers = {
 			untracked = icons.PlusSquare,
 		},
 	},
+	-- TODO: Picker with theme=cursor for copy history selection and past action
 }
 
 local lga_actions = require('telescope-live-grep-args.actions')
@@ -86,9 +89,6 @@ local extensions = {
 	},
 }
 
-utils.load_mappings(mappings.base)
-utils.set_highlights(theme)
-
 require('plugins.config._telescope.utils').create_autocmds()
 
 telescope.setup({
@@ -98,6 +98,7 @@ telescope.setup({
 		set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
 		prompt_prefix = '   ',
 		selection_caret = ' ',
+		multi_icon = icons.Plus .. ' ',
 		path_display = { truncate = 3 },
 		winblend = 9,
 		color_devicons = true,
@@ -125,5 +126,8 @@ telescope.setup({
 	pickers = pickers,
 	extensions = extensions,
 })
+
+utils.load_mappings(mappings.base)
+utils.set_highlights(theme)
 
 require('plugins.config._telescope.utils').load_extension('live_grep_args')

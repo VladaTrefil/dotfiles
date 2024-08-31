@@ -118,6 +118,7 @@
       path: local/konsole
 
     ~/.config/ranger: config/ranger
+    ~/.config/pulse: config/pulse
 
     # Local
     ~/.local/share/fonts:
@@ -137,7 +138,7 @@
       quiet: true
 
 - shell:
-    - command: git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch v0.10.2
+    - command: git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch v0.14.2
       description: Installing ASDF
       stderr: true
       quiet: true
@@ -166,6 +167,9 @@
       global: openjdk-17.0.2
       versions:
         - openjdk-17.0.2
+    - plugin: glab
+      versions:
+        - latest
 
 - shell:
     - command: ./build/install-independent.sh

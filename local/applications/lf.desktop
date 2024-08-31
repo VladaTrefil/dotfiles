@@ -1,0 +1,14 @@
+[Desktop Entry]
+Icon=system-file-manager
+Name=LF
+GenericName=File Manager
+Comment=Terminal file manager with VI key bindings
+
+# TODO: Add link to universal bin directory and use that instead
+Exec=/home/vlada/.local/share/asdf/installs/golang/1.18/packages/bin/lf
+Terminal=true
+
+Type=Application
+Categories=System;FileTools;FileManager;Terminal;
+MimeType=inode/directory;
+StartupWMClass=lf-file-manager

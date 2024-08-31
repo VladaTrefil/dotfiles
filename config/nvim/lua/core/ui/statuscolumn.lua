@@ -19,6 +19,7 @@ end
 -- Custom status column
 M.show = function()
 	-- sign column
+
 	opt.statuscolumn = '%s'
 
 	-- fold column

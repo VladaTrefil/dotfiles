@@ -7,8 +7,8 @@ if not mason_ok then
 end
 
 local ensure_installed = {
-	'clang-format',
-	'clangd',
+	-- 'clang-format',
+	-- 'clangd',
 	'codespell',
 	'css-lsp',
 	'eslint-lsp',

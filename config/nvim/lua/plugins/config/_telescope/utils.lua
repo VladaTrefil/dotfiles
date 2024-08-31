@@ -58,7 +58,7 @@ end
 
 -- local function select_file_entry(prompt_bufnr)
 --   local picker = action_state.get_current_picker(prompt_bufnr)
---   local selections = picker:get_multi_selection()mappmapp
+--   local selections = picker:get_multi_selection()
 --
 --   if #selections > 1 then
 --     for i, entry in ipairs(selections) do

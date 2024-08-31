@@ -6,7 +6,10 @@ if not conform_ok then
 end
 
 local ignore_filetypes = { 'sass' }
+local ignore_paths = { 'Gemfile.lock', '.min.', '/node_modules/' }
 local disable_autoformat = false
+
+local utils = require('core.utils')
 
 local rubocop = require('plugins.config._conform.rubocop')
 local stylua = require('plugins.config._conform.stylua')
@@ -37,28 +40,20 @@ vim.g.disable_autoformat = disable_autoformat
 local format_on_save = function(bufnr)
 	local bufname = vim.api.nvim_buf_get_name(bufnr)
 
-	-- Disable autoformat on certain filetypes
-	if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
-		return false
+	local ignored_path = false
+	for _, path in ipairs(ignore_paths) do
+		if bufname:match(path) then
+			ignored_path = true
+		end
 	end
 
-	-- Disable with a global or buffer-local variable
-	if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-		return false
-	end
-
-	-- disable autoformat for files larger than 128KB
-	if vim.fn.getfsize(vim.fn.expand('%')) > 128 * 1024 then
-		return false
-	end
-
-	-- Disable autoformat for minified files
-	if bufname:match('.min.') then
-		return false
-	end
-
-	-- Disable autoformat for files in a certain path
-	if bufname:match('/node_modules/') then
+	if
+		vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype)
+		or ignored_path
+		or vim.g.disable_autoformat
+		or vim.b[bufnr].disable_autoformat
+		or utils.filesize_kb() > 128
+	then
 		return false
 	end
 
@@ -76,6 +71,7 @@ conform.setup({
 		json = { 'prettier' },
 		sh = { 'beautysh' },
 		yaml = { 'prettier' },
+		c = { 'clang-format' },
 		['_'] = { 'trim_whitespace' },
 	},
 

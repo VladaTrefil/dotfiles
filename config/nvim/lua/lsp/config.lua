@@ -7,7 +7,7 @@ M.servers_config = {
 	jsonls = require('lsp.servers.jsonls'),
 	eslint = require('lsp.servers.eslint'),
 	tsserver = require('lsp.servers.tsserver'),
-	cssls = require('lsp.servers.css_ls'),
+	-- cssls = require('lsp.servers.css_ls'),
 	rubocop = require('lsp.servers.rubocop'),
 	pylsp = require('lsp.servers.pylsp'),
 }

@@ -53,6 +53,7 @@ Lint/UselessAssignment:
 Lint/MissingSuper:
   Exclude:
     - 'test/**/*'
+    - '**/*_component.rb'
 
 Naming/BlockForwarding:
   EnforcedStyle: explicit

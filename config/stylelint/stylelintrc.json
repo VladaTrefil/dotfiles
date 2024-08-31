@@ -51,7 +51,14 @@
     "string-no-newline": true,
     "unit-no-unknown": true,
     "color-function-notation": "legacy",
-    "alpha-value-notation": "number"
+    "alpha-value-notation": "number",
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreKeywords": ["/transparent-(W|B)/"],
+        "camelCaseSvgKeywords": true
+      }
+    ]
   },
   "overrides": [
     {
@@ -74,7 +81,9 @@
               "lighten",
               "fade-out",
               "image-url",
-              "to-rem"
+              "to-rem",
+              "-px-to-rem",
+              "percentage"
             ]
           }
         ],
@@ -82,7 +91,10 @@
           true,
           { "ignoreTypes": ["highlight", "trough", "progress"] }
         ],
-        "annotation-no-unknown": [true, { "ignoreAnnotations": ["default"] }]
+        "annotation-no-unknown": [
+          true,
+          { "ignoreAnnotations": ["default", "important"] }
+        ]
       }
     },
     {

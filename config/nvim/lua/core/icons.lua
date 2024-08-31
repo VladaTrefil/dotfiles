@@ -53,6 +53,8 @@ return {
 	Person = '',
 	Robot = 'ﮧ',
 	Forward = '',
+	Copy = '',
+	Character = '',
 
 	Bug = '',
 	Checkmark = '',
@@ -62,6 +64,7 @@ return {
 	Test = '',
 
 	Plus = '',
+	PlusSquare = '',
 	Change = '',
 	Minus = '',
 

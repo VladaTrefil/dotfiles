@@ -194,12 +194,16 @@ return {
 	-- },
 
 	['mfussenegger/nvim-lint'] = {
+		opt = true,
+		event = 'User PackLoad',
 		config = function()
 			require('plugins.config._lint')
 		end,
 	},
 
 	['stevearc/conform.nvim'] = {
+		opt = true,
+		event = 'User PackLoad',
 		config = function()
 			require('plugins.config._conform')
 		end,

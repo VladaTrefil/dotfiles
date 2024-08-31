@@ -53,6 +53,11 @@ export ASDF_DEFAULT_TOOL_VERSIONS_FILENAME="$XDG_CONFIG_HOME/asdf/tool-versions"
 export ASDF_GEM_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-gems"
 export ASDF_NPM_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-npm-packages"
 
+# explicitly include go.mod and go.work
+export ASDF_GOLANG_MOD_VERSION_ENABLED=true
+
+# GOV=$(asdf current golang | sed  's/ (set by .*)//g')
+export GOPATH="$ASDF_DATA_DIR/installs/golang/1.18/packages"
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -92,7 +97,7 @@ export LESSKEY="$XDG_CONFIG_HOME/less/keys"
 # Remove history file
 export LESS=-R
 
-# colorize manual pages 
+# colorize manual pages
 export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
 export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
 export LESS_TERMCAP_me="$(printf '%b' '[0m')"
@@ -180,3 +185,4 @@ export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 
 export RANGER_LOAD_DEFAULT_RC=false
+

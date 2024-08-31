@@ -1,8 +1,11 @@
 #!/bin/sh
 
-export GTK_IM_MODULE=ibus
-export QT_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
+export LANG="en_US.UTF-8"
+export GTK_IM_MODULE="ibus"
+export QT_IM_MODULE="ibus"
+export XMODIFIERS="@im=ibus"
+
+export QTWEBENGINE_REMOTE_DEBUGGING=8080
 
 # export GDK_SCALE=2
 # export GDK_DPI_SCALE=0.5

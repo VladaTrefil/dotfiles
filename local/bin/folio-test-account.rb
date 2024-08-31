@@ -1,20 +1,28 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-credential = 'test@test.test'
+credential = "test@test.test"
 
-if Folio::Account.where(email: credential).present?
+account_klass = if Object.const_defined?("Folio::Account")
+  Folio::Account
+elsif Object.const_defined?("Folio::User")
+  Folio::User
+end
+
+if account_klass.where(email: credential).present?
   print "Folio::Account exists\n"
 else
-  role = if Folio::Account.column_names.include?('roles')
-           { roles: ['superuser'] }
-         else
-           { role: 'superuser' }
-         end
+  role = if account_klass.column_names.include?("roles")
+    { roles: ["superuser"] }
+  elsif account_klass.column_names.include?("role")
+    { role: "superuser" }
+  else
+    { confirmed_at: Time.current, superadmin: true }
+  end
 
-  Folio::Account.create!(email: credential, password:  credential,
-                         first_name: 'test', last_name: 'test',
-                         **role)
+  account = account_klass.create!(email: credential, password:  credential,
+                                  first_name: "test", last_name: "test",
+                                  **role)
 
   print "Created Folio::Account\n"
 end
@@ -27,8 +35,8 @@ if defined? Squared
     print "AdminUser exists\n"
   else
     AdminUser.create!(email: credential, password: credential,
-                      first_name: 'test', last_name: 'test',
-                      role: 'superuser')
+                      first_name: "test", last_name: "test",
+                      role: "superuser")
 
     print "Created AdminUser\n"
   end
@@ -38,8 +46,8 @@ if defined? Squared
       print "User exists\n"
     else
       User.create!(email: credential, password: credential,
-                   first_name: 'test', last_name: 'test',
-                   nickname: 'superuser', zone: zone)
+                   first_name: "test", last_name: "test",
+                   nickname: "superuser", zone: zone)
 
       print "Created User\n"
     end
@@ -57,7 +65,7 @@ if defined? Mmspektrum
     print "Folio::User exists\n"
   else
     Folio::User.create!(email: credential, password: credential,
-                        first_name: 'test', last_name: 'test')
+                        first_name: "test", last_name: "test")
 
     print "Created Folio::User\n"
   end
@@ -74,7 +82,7 @@ if defined? Redside
     print "Folio::User exists\n"
   else
     Folio::User.create!(email: credential, password: credential,
-                        first_name: 'test', last_name: 'test')
+                        first_name: "test", last_name: "test")
 
     print "Created Folio::User\n"
   end
@@ -91,7 +99,7 @@ if defined? Infocz
     print "Infocz::User exists\n"
   else
     Infocz::User.create!(email: credential, password: credential,
-                         first_name: 'test', last_name: 'test')
+                         first_name: "test", last_name: "test")
 
     print "Created Infocz::User\n"
   end
@@ -107,8 +115,8 @@ if defined? Acb
   if Acb::User.where(email: credential).blank?
     Acb::User.create!(email: credential,
                       password: credential,
-                      first_name: 'test',
-                      last_name: 'test',
+                      first_name: "test",
+                      last_name: "test",
                       confirmed_at: DateTime.current,
                       confirmation_sent_at: DateTime.current - 1.hour)
 
@@ -126,11 +134,12 @@ end
 
 if defined? Notesvilla
   if Notesvilla::User.where(email: credential).present?
-    Notesvilla::User.where(email: credential).update(credits_non_withdrawable: 1000, credits_withdrawable: 1000)
+    Notesvilla::User.where(email: credential).update(credits_non_withdrawable: 1000,
+                                                     credits_withdrawable: 1000)
     print "Notesvilla::User exists\n"
   else
     Notesvilla::User.create!(email: credential, password: credential,
-                             first_name: 'test', last_name: 'test', phone: '724999999',
+                             first_name: "test", last_name: "test", phone: "724999999",
                              credits_non_withdrawable: 1000, credits_withdrawable: 1000)
 
     print "Created Notesvilla::User\n"
@@ -148,7 +157,7 @@ if defined? Nextpagemedia
     print "Folio::User exists\n"
   else
     Folio::User.create!(email: credential, password: credential,
-                        first_name: 'test', last_name: 'test', phone: '724999999',
+                        first_name: "test", last_name: "test", phone: "724999999",
                         confirmed_at: Time.now, confirmation_sent_at: 1.hour.ago, unconfirmed_email: false)
 
     print "Created Folio::User\n"

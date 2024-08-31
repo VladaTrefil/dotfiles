@@ -72,6 +72,9 @@ alias rs='r s -p 3000'
 alias rss='FORCE_SSL=1 r s -b "ssl://localhost:3000?key=/home/vlada/Documents/ssl-cert/localhost.key&cert=/home/vlada/Documents/ssl-cert/localhost.crt"'
 alias rr='bin/rake'
 alias rt='PARALLEL_WORKERS=3 r test'
+alias rmig='r db:migrate'
+alias rroll='r db:rollback'
+alias rremig='r db:rollback && r db:migrate'
 
 # Rails
 alias rgc="r g folio:cell"
@@ -103,4 +106,9 @@ alias codespell="$XDG_DATA_HOME/nvim/mason/bin/codespell --config $XDG_CONFIG_HO
 # Create a directory and cd into it
 mkcd() {
   mkdir "${1}" && cd "${1}" || exit
+}
+
+# Use: ffmpeg-cut input.mp4 output.mp4 00:00:00 00:01:00
+ffmpeg-cut() {
+  ffmpeg -i "${1}" -ss "${3}" -to "${4}" -c:v copy -c:a copy "${2}"
 }

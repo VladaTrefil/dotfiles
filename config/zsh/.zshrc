@@ -1,8 +1,8 @@
-#                   __         
-#                  /\ \        
-#     ____     ____\ \ \___    
-#    /\_ ,`\  /',__\\ \  _ `\  
-#    \/_/  /_/\__, `\\ \ \ \ \ 
+#                   __
+#                  /\ \
+#     ____     ____\ \ \___
+#    /\_ ,`\  /',__\\ \  _ `\
+#    \/_/  /_/\__, `\\ \ \ \ \
 #      /\____\/\____/ \ \_\ \_\
 #      \/____/\/___/   \/_/\/_/
 #
@@ -157,6 +157,8 @@ if [ -d "$BIN_PATH" ]; then
   PATH="$BIN_PATH:$PATH"
   PATH="$BIN_PATH/usr:$PATH"
 fi
+
+export PATH="$GOPATH/bin:$PATH"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$GEM_HOME/bin" # Add gem home

@@ -5,6 +5,10 @@ local extensions = require('telescope').extensions
 M.base = {
 	n = {
 		['<leader>pm'] = { '<cmd> Telescope <CR>', 'Menu [telescope]' },
+		['<C-p>'] = {
+			'<cmd> Telescope resume <CR>',
+			'Resume previous picker',
+		},
 		['<leader>pp'] = {
 			'<cmd> Telescope find_files follow=true hidden=true <CR>',
 			'Search in project',

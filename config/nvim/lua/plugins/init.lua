@@ -51,3 +51,7 @@ packer.startup({
 		compile_on_sync = true,
 	},
 })
+
+vim.defer_fn(function()
+	vim.api.nvim_exec_autocmds('User', { pattern = 'PackLoad' })
+end, 10)

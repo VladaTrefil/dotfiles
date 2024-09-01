@@ -222,7 +222,7 @@ if [ ! -f "$(which rofi)" ]; then
   cd ./tmp || exit
 
   if [ ! -f "/usr/local/lib/libcheck.la" ]; then
-    git clone git@github.com:libcheck/check.git
+    git clone https://github.com/libcheck/check.git
     git checkout 673dce1d61781c32b449bef0ee8711dc7e689170
     git submodule update --init
 
@@ -237,7 +237,7 @@ if [ ! -f "$(which rofi)" ]; then
     sudo ldconfig
   fi
 
-  git clone git@github.com:davatorium/rofi.git
+  git clone https://github.com/davatorium/rofi.git
   git checkout 48ea818c699cd6d1424f4e98ec9236da4483f951
   git submodule update --init
 

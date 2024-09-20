@@ -81,6 +81,9 @@ Style/Lambda:
 
 Style/IfUnlessModifier:
   Enabled: false
+
+Style/ArgumentsForwarding:
+  UseAnonymousForwarding: false
 #
 # Minitest/EmptyLineBeforeAssertionMethods:
 #   Enabled: false

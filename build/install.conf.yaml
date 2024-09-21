@@ -2,26 +2,6 @@
     link:
       create: true
 
-- shell:
-    - command: ./build/install-zsh.sh
-      stdin: true
-      stdout: true
-      stderr: true
-      description: Installing ZSH
-      quiet: true
-
-- clean:
-    [
-      '~/.zsh*',
-      '~/.bash*',
-      '~/.config/oh-my-zsh/custom/',
-      '~/.config/oh-my-zsh/custom/plugins/',
-      '~/.config/oh-my-zsh/custom/themes/',
-      '~/.local/share/fonts',
-      '~/.local/bin',
-      '~/.local/lib',
-    ]
-
 - create:
     - ~/.config/pg
     - ~/.config/yarn
@@ -130,12 +110,6 @@
       force: true
       path: local/bin
 
-- shell:
-    - command: git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch v0.14.2
-      description: Installing ASDF
-      stderr: true
-      quiet: true
-    - [source $ASDF_DIR/asdf.sh, Source ASDF]
 - asdf:
     - plugin: nodejs
       url: https://github.com/asdf-vm/asdf-nodejs.git
@@ -160,7 +134,3 @@
       global: openjdk-17.0.2
       versions:
         - openjdk-17.0.2
-    - plugin: glab
-      versions:
-        - latest
-

@@ -4,4 +4,4 @@ solargraph
 rubocop
 rails:6.1.4
 neovim
-slim-lint
+slim_lint

@@ -5,46 +5,6 @@ mkdir ./tmp
 BASE_DIR="$(pwd)"
 
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
-# Brew: {{{
-
-if [ ! -f "$(which brew)" ]; then
-  echo 'Installing Homebrew...'
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
-
-if [ -s "$HOMEBREW_PREFIX/bin/brew" ]; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-  if [ -f "$(which brew)" ]; then
-    if [ ! -f "$HOMEBREW_PREFIX/bin/nvim" ]; then
-      echo 'Installing Nvim...,'
-      brew install -q neovim
-
-      # use version in apt
-      brew uninstall --ignore-dependencies readline
-    fi
-
-    if [ ! -f "$HOMEBREW_PREFIX/bin/lazygit" ]; then
-      echo 'Installing lazygit...,'
-      brew install -q lazygit
-    fi
-
-    if [ ! -f "$HOMEBREW_PREFIX/bin/bat" ]; then
-      echo 'Installing bat...,'
-      brew install -q bat
-      bat cache --build
-    fi
-  else
-    echo "brew isn't a command"
-  fi
-else
-  echo "$HOMEBREW_PREFIX not found"
-fi
-
-# }}}
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
-
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Python: {{{
 
 printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
@@ -72,32 +32,6 @@ fi
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
-# Youtube-dl: {{{
-
-if [ ! -f "$(which youtube-dl)" ]; then
-  echo 'Installing Youtube-DL...'
-  sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
-  sudo chmod a+rx /usr/local/bin/youtube-dl
-fi
-
-# }}}
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
-
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
-# Dunst: {{{
-
-if [ ! -f "$(which dunst)" ]; then
-  git clone https://github.com/dunst-project/dunst.git tmp/dunst
-  cd tmp/dunst || ! echo "dunst installer not found"
-  make
-  sudo make install
-  cd ../..
-fi
-
-# }}}
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
-
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Etcher: {{{
 
 ETCHER_PATH="$HOME/Images/balenaEtcher.AppImage"
@@ -108,19 +42,6 @@ if [ ! -f "$ETCHER_PATH" ]; then
   curl -L $ETCHER_URL -o ./tmp/etcher.zip
   unzip -o ./tmp/etcher.zip '*' -d ./tmp  && mv ./tmp/balena* "$ETCHER_PATH"
   chmod a+rx "$ETCHER_PATH"
-fi
-
-# }}}
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
-
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
-# Syncthing: {{{
-
-SYNCTHING_KEY_DIR=/usr/share/keyrings/syncthing-archive-keyring.gpg
-
-if [ ! -f "$SYNCTHING_KEY_DIR" ]; then
-  echo 'Adding Synthing GPG...'
-  sudo curl -s -o $SYNCTHING_KEY_DIR https://syncthing.net/release-key.gpg
 fi
 
 # }}}
@@ -212,59 +133,6 @@ fi
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
-# Rofi: {{{
-
-printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
-echo "──  Rofi:"
-
-if [ ! -f "$(which rofi)" ]; then
-  cd ./tmp || exit
-
-  if [ ! -f "/usr/local/lib/libcheck.la" ]; then
-    git clone https://github.com/libcheck/check.git
-    git checkout 673dce1d61781c32b449bef0ee8711dc7e689170
-    git submodule update --init
-
-    mkdir ./check/build
-    cd ./check/build || exit
-
-    autoreconf --install
-    ../configure
-
-    make
-    sudo make install
-    sudo ldconfig
-  fi
-
-  git clone https://github.com/davatorium/rofi.git
-  git checkout 48ea818c699cd6d1424f4e98ec9236da4483f951
-  git submodule update --init
-
-  if [ -d "./rofi" ]; then
-    printf "\n─ installing rofi:\n"
-
-    mkdir ./rofi/build
-    cd ./rofi/build || exit
-
-    autoreconf -i
-    ../configure
-
-    make
-    sudo make install
-  else
-    echo "file not found"
-  fi
-
-  cd "$BASE_DIR" || exit
-else
-  echo "  installed"
-fi
-
-
-# }}}
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
-
 printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
 echo "──  QMK:"
 
@@ -278,19 +146,6 @@ if [ ! -f "$BIN_PATH/qmk" ]; then
     qmk setup -y -H "$XDG_DATA_HOME/qmk"
     qmk config user.keyboard=ergodox_ez/glow
   fi
-else
-  echo "  installed"
-fi
-
-printf "\n────────────────────────────────────────────────────────────────────────────────────────────────────\n"
-echo "──  AWS:"
-
-if [ ! -f "$(which aws)" ]; then
-  echo "Installing AWS"
-
-  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "tmp/awscliv2.zip"
-  unzip tmp/awscliv2.zip
-  sudo ./tmp/aws/install
 else
   echo "  installed"
 fi

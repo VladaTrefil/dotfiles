@@ -114,16 +114,6 @@ function vim() {
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
-#  Brew {{{
-
-emulate sh -c 'source /etc/profile'
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# }}}
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
-
-# ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Aliases
 source "$XDG_CONFIG_HOME/shell/aliases.sh"
 
@@ -145,7 +135,9 @@ export NVM_DIR="$XDG_CONFIG_HOME/nvm"
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # Rust
 
-. "$CARGO_HOME/env"
+if [ -d "$CARGO_HOME/env" ]; then
+  . "$CARGO_HOME/env"
+fi
 
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 # PATH
@@ -154,8 +146,8 @@ export PATH="$ASDF_DIR/shims:$PATH"
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$BIN_PATH" ]; then
-  PATH="$BIN_PATH:$PATH"
-  PATH="$BIN_PATH/usr:$PATH"
+  export PATH="$BIN_PATH:$PATH"
+  export PATH="$BIN_PATH/usr:$PATH"
 fi
 
 export PATH="$GOPATH/bin:$PATH"

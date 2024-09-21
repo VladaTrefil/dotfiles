@@ -92,7 +92,9 @@
     ~/.config/nvim: config/nvim
     ~/.config/npm: config/npm
     ~/.config/bat: config/bat
-    ~/.config/i3: config/i3
+    ~/.config/i3:
+      path: config/i3
+      force: true
     ~/.config/rofi: config/rofi
     ~/.config/lazygit: config/lazygit
     ~/.config/dunst: config/dunst
@@ -129,15 +131,6 @@
       path: local/bin
 
 - shell:
-    - [source $HOME/.zprofile, Source profile]
-    - command: ./build/install-apt.sh
-      stdin: true
-      stdout: true
-      stderr: true
-      description: Installing APT Packages
-      quiet: true
-
-- shell:
     - command: git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch v0.14.2
       description: Installing ASDF
       stderr: true
@@ -171,17 +164,3 @@
       versions:
         - latest
 
-- shell:
-    - command: ./build/install-independent.sh
-      stdin: true
-      stdout: true
-      stderr: true
-      description: Installing Independent Software
-      quiet: true
-
-    - command: ./build/setup-env.sh
-      stdin: true
-      stdout: true
-      stderr: true
-      description: Running Setup ENV Script
-      quiet: true

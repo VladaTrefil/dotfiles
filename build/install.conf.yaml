@@ -2,14 +2,6 @@
     link:
       create: true
 
-- shell:
-    - command: ./build/install-zsh.sh
-      stdin: true
-      stdout: true
-      stderr: true
-      description: Installing ZSH
-      quiet: true
-
 - clean:
     [
       '~/.zsh*',
@@ -130,21 +122,6 @@
       force: true
       path: local/bin
 
-- shell:
-    - [source $HOME/.zprofile, Source profile]
-    - command: ./build/install-apt.sh
-      stdin: true
-      stdout: true
-      stderr: true
-      description: Installing APT Packages
-      quiet: true
-
-- shell:
-    - command: git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch v0.14.2
-      description: Installing ASDF
-      stderr: true
-      quiet: true
-    - [source $ASDF_DIR/asdf.sh, Source ASDF]
 - asdf:
     - plugin: nodejs
       url: https://github.com/asdf-vm/asdf-nodejs.git
@@ -172,18 +149,3 @@
     - plugin: glab
       versions:
         - latest
-
-- shell:
-    - command: ./build/install-independent.sh
-      stdin: true
-      stdout: true
-      stderr: true
-      description: Installing Independent Software
-      quiet: true
-
-    - command: ./build/setup-env.sh
-      stdin: true
-      stdout: true
-      stderr: true
-      description: Running Setup ENV Script
-      quiet: true

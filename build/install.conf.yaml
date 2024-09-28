@@ -275,6 +275,3 @@
       global: openjdk-17.0.2
       versions:
         - openjdk-17.0.2
-    - plugin: glab
-      versions:
-        - latest

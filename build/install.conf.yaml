@@ -122,6 +122,133 @@
       force: true
       path: local/bin
 
+- pacaur:
+    - readline
+    - alsa-utils
+    - curl
+    - ca-certificates
+    - git
+    - gnupg
+
+    - zsh
+    - oh-my-zsh-git
+
+    - i3
+    - picom
+    - feh
+    - dunst
+    - eww # AUR
+    - rofi
+
+    - konsole
+    - inkscape
+    - brave-bin # AUR
+    - thunderbird
+    - spectacle
+    - dolphin
+    - picard
+    - qbittorrent
+    - ark
+    - libreoffice-fresh
+    - libreoffice-fresh-cs
+    - libreoffice-fresh-en-gb
+    - vlc
+    - mpv
+    - skanlite
+    - gnome-system-monitor
+    - partitionmanager
+    - telegram-desktop
+    - krita
+    - spotify-launcher
+    - lens
+    - strawberry
+    - anki # AUR
+    - docker
+    - docker-compose
+    - docker-buildx
+    - docker-desktop
+    - virtualbox
+    - virtualbox-guest-iso
+    - virtualbox-guest-utils
+    # - virtualbox-guest-x11
+    - balena-etcher # AUR
+
+    - syncthing
+
+    # Terminal functions
+    - ffmpeg
+    - bat
+    - bc
+    - ripgrep
+    - unzip
+    - xclip
+    - ifstat #AUR
+    - jq
+    - moreutils
+    - perl-rename
+    - speedtest-cli
+    # - mason
+    - playerctl
+    - aws-cli
+    - brightnessctl
+    - networkmanager
+    - yt-dlp
+
+    - neovim
+    - lazygit
+    - ranger
+
+    # Terminal code interpreters
+    - python
+    - python-pip
+    - python-devtools
+    - python-virtualenv
+    # - python-is-python3
+    - lua
+    - rust
+
+    # Sinfin libs
+    - postgresql
+    - postgresql-libs
+    - libpqxx
+    - imagemagick-full
+    # - imagemagick
+    # - libmagick++-dev
+    # - libmagickwand-dev
+    # - libmagickcore-dev
+    - perl-image-exiftool
+    - rubber
+    - texlive-xetex
+    - libsodium
+    - pdftk
+    - ghostscript
+    - redis
+    - libvips
+    # - libvips-dev
+    - gifsicle
+    - libwebp-dev
+    # - webp
+
+    # Language tools
+    # language-pack-cs
+    # language-pack-en-base
+    # language-pack-en
+    # language-pack-ja-base
+    # language-pack-ja
+    #
+    # Drivers
+    # ubuntu-drivers-common
+    # printer-driver-brlaser
+    # printer-driver-c2esp
+    # printer-driver-foo2zjs
+    # printer-driver-m2300w
+    # printer-driver-min12xxw
+    # printer-driver-pnm2ppa
+    # printer-driver-ptouch
+    # printer-driver-pxljr
+    # printer-driver-sag-gdi
+    # printer-driver-splix
+
 - asdf:
     - plugin: nodejs
       url: https://github.com/asdf-vm/asdf-nodejs.git

@@ -10,7 +10,7 @@ cd "${BASEDIR}"
 git submodule update --init --recursive
 
 DOTBOT_BIN="${BASEDIR}/${DOTBOT_DIR}/bin/dotbot"
-ASDF_DIR="${BASEDIR}/build/dotbot-asdf"
-YAY_DIR="${BASEDIR}/build/dotbot-yay"
+ASDF_BIN="${BASEDIR}/build/dotbot-asdf/asdf.py"
+YAY_BIN="${BASEDIR}/build/dotbot-yay/yay.py"
 
-"${DOTBOT_BIN}" -d "${BASEDIR}" --plugin-dir "${ASDF_DIR}" -p "${YAY_DIR}/yay.py" -c "${CONFIG}" "${@}"
+"${DOTBOT_BIN}" -d "${BASEDIR}" -p "${ASDF_BIN}" -p "${YAY_BIN}" -c "${CONFIG}" "${@}"

@@ -137,7 +137,7 @@
     - picom
     - feh
     - dunst
-    - eww # AUR
+    - eww # AUR - hangs indefinitely
     - rofi
 
     - konsole
@@ -149,9 +149,6 @@
     - picard
     - qbittorrent
     - ark
-    - libreoffice-fresh
-    - libreoffice-fresh-cs
-    - libreoffice-fresh-en-gb
     - vlc
     - mpv
     - skanlite
@@ -160,18 +157,23 @@
     - telegram-desktop
     - krita
     - spotify-launcher
-    - lens
     - strawberry
     - anki # AUR
     - docker
     - docker-compose
     - docker-buildx
     - docker-desktop
-    - virtualbox
-    - virtualbox-guest-iso
-    - virtualbox-guest-utils
+    - protonmail-bridge
+    - lens-bin
+
+    - libreoffice-fresh # doesn't work
+    - libreoffice-fresh-cs # doesn't work
+    - libreoffice-fresh-en-gb # doesn't work
+    - virtualbox # doesn't work
+    - virtualbox-guest-iso # doesn't work
+    - virtualbox-guest-utils # doesn't work
     # - virtualbox-guest-x11
-    - balena-etcher # AUR
+    - balena-etcher # AUR - doesn't work
 
     - syncthing
 

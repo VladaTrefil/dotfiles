@@ -11,6 +11,5 @@ git submodule update --init --recursive
 
 DOTBOT_BIN="${BASEDIR}/${DOTBOT_DIR}/bin/dotbot"
 ASDF_DIR="${BASEDIR}/build/dotbot-asdf"
-PACMAN_BIN="${BASEDIR}/build/dotbot-pacaur/pacaur.py"
 
-"${DOTBOT_BIN}" -d "${BASEDIR}" --plugin-dir "${ASDF_DIR}" -p "${PACMAN_BIN}" -c "${CONFIG}" "${@}"
+"${DOTBOT_BIN}" -d "${BASEDIR}" --plugin-dir "${ASDF_DIR}" -c "${CONFIG}" "${@}"

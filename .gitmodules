@@ -19,6 +19,3 @@
 [submodule "config/ranger/plugins/ranger_archives"]
 	path = config/ranger/plugins/ranger_archives
 	url = https://github.com/maximtrp/ranger-archives.git
-[submodule "build/dotbot-pacaur"]
-	path = build/dotbot-pacaur
-	url = https://github.com/ajlende/dotbot-pacaur

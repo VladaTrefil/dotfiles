@@ -19,3 +19,6 @@
 [submodule "config/ranger/plugins/ranger_archives"]
 	path = config/ranger/plugins/ranger_archives
 	url = https://github.com/maximtrp/ranger-archives.git
+[submodule "build/dotbot-yay"]
+	path = build/dotbot-yay
+	url = https://github.com/oxson/dotbot-yay

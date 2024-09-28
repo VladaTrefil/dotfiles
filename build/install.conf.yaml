@@ -279,3 +279,7 @@
     - plugin: rust
       url: https://github.com/asdf-community/asdf-rust.git
       global: 1.62.0
+
+- shell:
+    - [pip install -r build/pip-requirements.txt]
+    - [cargo install stylua]

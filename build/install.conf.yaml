@@ -181,7 +181,9 @@
     - ffmpeg
     - bat
     - bc
+    - mercurial
     - ripgrep
+    - fd
     - unzip
     - xclip
     - ifstat #AUR
@@ -275,3 +277,6 @@
       global: openjdk-17.0.2
       versions:
         - openjdk-17.0.2
+    - plugin: rust
+      url: https://github.com/asdf-community/asdf-rust.git
+      global: 1.62.0

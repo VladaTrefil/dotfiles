@@ -1,6 +1,5 @@
 pynvim
 yarp
-mercurial
 i3ipc
 blue
 pylint

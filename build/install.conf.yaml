@@ -204,10 +204,13 @@
 
     # Terminal code interpreters
     - python
-    - python-pip
-    - python-pipx
+    - python-pylint
+    - python-i3ipc
+    - python-pynvim
+    - python-isort
     - python-devtools
     - python-virtualenv
+    - mypy
     # - python-is-python3
     - lua
 
@@ -282,5 +285,4 @@
       global: 1.62.0
 
 - shell:
-    - [pipx install -r ./build/pip-requirements.txt]
     - [cargo install stylua]

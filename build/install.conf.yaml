@@ -230,7 +230,7 @@
     - ghostscript
     - redis
     - libvips
-    # - libvips-dev
+    - openslide # libvips dependency
     - gifsicle
     - libwebp
     # - webp

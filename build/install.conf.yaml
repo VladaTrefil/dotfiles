@@ -173,7 +173,6 @@
     - virtualbox-guest-iso # doesn't work
     - virtualbox-guest-utils # doesn't work
     # - virtualbox-guest-x11
-    - balena-etcher # AUR - doesn't work
 
     - syncthing
 
@@ -218,7 +217,7 @@
     - postgresql
     - postgresql-libs
     - libpqxx
-    - imagemagick-full
+    - imagemagick
     # - imagemagick
     # - libmagick++-dev
     # - libmagickwand-dev
@@ -233,7 +232,7 @@
     - libvips
     # - libvips-dev
     - gifsicle
-    - libwebp-dev
+    - libwebp
     # - webp
 
     # Language tools

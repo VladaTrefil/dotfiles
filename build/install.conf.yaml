@@ -177,6 +177,7 @@
     - syncthing
 
     # Terminal functions
+    - bluetoothctl
     - ffmpeg
     - bat
     - bc
@@ -200,6 +201,9 @@
     - neovim
     - lazygit
     - ranger
+
+    - ibus
+    - ibus-mozc-with-jp-dict
 
     # Terminal code interpreters
     - python

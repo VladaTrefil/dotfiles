@@ -130,6 +130,9 @@
     - git
     - gnupg
 
+    - bluez
+    - bluez-utils
+
     - zsh
     - oh-my-zsh-git
 
@@ -177,7 +180,6 @@
     - syncthing
 
     # Terminal functions
-    - bluetoothctl
     - ffmpeg
     - bat
     - bc

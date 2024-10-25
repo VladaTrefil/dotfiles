@@ -28,6 +28,9 @@ local formatters = {
 	},
 	rubocop = rubocop,
 	stylua = stylua,
+	trim_whitespace = {
+		disabled_filetypes = { 'eruby' },
+	},
 }
 
 local autoformat_opts = {

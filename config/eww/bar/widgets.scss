@@ -236,7 +236,7 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
 }
 
 .language {
-  @include widget-icon;
+  @include widget;
   border: 5px solid $background;
 
   &--jap {
@@ -247,12 +247,12 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
     border: 5px solid $blue;
   }
 
-  &__image {
-    padding-right: $m;
+  &__button {
+    padding: $widget-icon-padding;
   }
 
-  &__label {
-    margin-left: $m * 3;
+  &__image {
+    padding-right: $m;
   }
 }
 

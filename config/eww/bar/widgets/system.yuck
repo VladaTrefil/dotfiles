@@ -12,25 +12,26 @@
 (defvar circle_thickness_lg 9)
 
 (defwidget system_widget []
-  (button :class "system-widget"
-          :tooltip "system menu"
-          :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop system"
-    (box :orientation "h"
-      (system_widget_circle
-        :key "cpu"
-        :percentage cpu
-        :icon ""
-        :tooltip "using ${cpu}% CPU")
-      (system_widget_circle
-        :key "memory"
-        :percentage memory
-        :icon ""
-        :tooltip "using ${memory}% RAM")
-      (system_widget_circle
-        :key "disk"
-        :percentage {EWW_DISK["/"]["used_perc"]}
-        :icon ""
-        :tooltip "${round(EWW_DISK["/"]["used"]/1000000000, 0)}/${round(EWW_DISK["/"]["total"]/1000000000, 0)} GB"))))
+  (eventbox :cursor 'pointer'
+    (button :class "system-widget"
+            :tooltip "system menu"
+            :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop system"
+      (box :orientation "h"
+        (system_widget_circle
+          :key "cpu"
+          :percentage cpu
+          :icon ""
+          :tooltip "using ${cpu}% CPU")
+        (system_widget_circle
+          :key "memory"
+          :percentage memory
+          :icon ""
+          :tooltip "using ${memory}% RAM")
+        (system_widget_circle
+          :key "disk"
+          :percentage {EWW_DISK["/"]["used_perc"]}
+          :icon ""
+          :tooltip "${round(EWW_DISK["/"]["used"]/1000000000, 0)}/${round(EWW_DISK["/"]["total"]/1000000000, 0)} GB")))))
 
 (defwidget system_widget_circle [key percentage icon tooltip]
   (box :class "system-widget__circle system-widget-${key}" :vexpand "false" :hexpand "false"

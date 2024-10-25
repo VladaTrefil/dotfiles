@@ -23,9 +23,10 @@
       (revealer :transition "slideleft"
                 :reveal date_reveal
                 :duration "350ms"
-        (button :class "clock__date"
-                :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop calendar"
-          clock_date)))))
+        (eventbox :cursor 'pointer'
+          (button :class "clock__date"
+                  :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop calendar"
+          clock_date))))))
 
 (defwidget cal []
   (box :class "cal" :orientation "v"

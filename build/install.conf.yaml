@@ -130,6 +130,8 @@
     - git
     - gnupg
 
+    - asdf-vm
+
     - bluez
     - bluez-utils
 

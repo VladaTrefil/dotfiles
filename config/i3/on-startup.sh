@@ -37,6 +37,3 @@ feh --bg-scale -g 3840x1440 ~/.background/mountains-blue-and-beige.jpg \
 # Launch picom compositor
 killall -q picom && sleep 1
 picom --experimental-backends --config "$XDG_CONFIG_HOME/i3/picom.conf" && sleep 1
-
-# Launch eww bar
-sh "$XDG_CONFIG_HOME/eww/bar/launch_bar"

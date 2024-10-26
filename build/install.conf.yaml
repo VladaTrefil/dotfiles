@@ -70,6 +70,7 @@
     ~/.config/shell: config/shell
 
     ~/.config/x11: config/x11
+    ~/.xsession: config/x11/xsession
 
     # Zsh
     ~/.config/zsh: config/zsh

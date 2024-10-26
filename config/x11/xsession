@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# VBoxClient --clipboard
+
+/usr/bin/eww daemon
+/usr/bin/eww open bar

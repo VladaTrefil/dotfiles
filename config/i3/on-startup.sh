@@ -7,12 +7,10 @@ function notify() {
 function start_initial() {
   # Start XDG autostart .desktop files using dex. See also
   # https://wiki.archlinux.org/index.php/XDG_Autostart
-  dex --autostart --environment i3
 
   # Launch ibus
   ibus-daemon -d
 
-  pulseaudio --start
   bluetoothctl power on
 
   # protonmail-bridge &

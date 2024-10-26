@@ -292,4 +292,4 @@
       global: 1.62.0
 
 - shell:
-    - [cargo install stylua]
+    - [./build/post-install.sh]

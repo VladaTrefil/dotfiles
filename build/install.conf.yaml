@@ -149,6 +149,7 @@
     - konsole
     - inkscape
     - brave-bin # AUR
+    - chromium
     - thunderbird
     - spectacle
     - dolphin
@@ -171,6 +172,7 @@
     - docker-desktop
     - protonmail-bridge
     - lens-bin
+    - ark
 
     - libreoffice-fresh # doesn't work
     - libreoffice-fresh-cs # doesn't work
@@ -202,13 +204,16 @@
     - brightnessctl
     - networkmanager
     - yt-dlp
+    - qmk
 
     - neovim
     - lazygit
     - ranger
 
     - ibus
-    - ibus-mozc-with-jp-dict
+    - ibus-mozc
+
+    - openrgb
 
     # Terminal code interpreters
     - python

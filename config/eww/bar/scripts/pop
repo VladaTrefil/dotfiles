@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EWW_BIN="$HOME/.local/bin/usr/eww"
+EWW_BIN="/usr/bin/eww"
 
 hide_windows() {
   ${EWW_BIN} close system calendar system audio bluetooth_menu language_menu

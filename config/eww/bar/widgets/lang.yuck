@@ -1,5 +1,5 @@
-(deflisten lang "$XDG_CONFIG_HOME/eww/bar/scripts/langs current")
-(deflisten lang_data "$XDG_CONFIG_HOME/eww/bar/scripts/langs data")
+(deflisten lang "./bar/scripts/langs current")
+(deflisten lang_data "./bar/scripts/langs data")
 
 (defwidget language_widget []
   (box :class "module language language--${lang.css_class}"
@@ -7,7 +7,7 @@
        :orientation "h"
        :spacing spacing
     (eventbox :cursor 'pointer'
-      (button :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop language"
+      (button :onclick "./bar/scripts/pop language"
               :class "language__button"
         (image :path "${lang.flag_src}"
                :class "language__image"
@@ -31,7 +31,7 @@
        :orientation "v"
        :space-evenly "false"
     (eventbox :cursor 'pointer'
-      (button :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/langs choose ${lang.name_ibus}"
+      (button :onclick "./bar/scripts/langs choose ${lang.name_ibus}"
               :class "language-menu__button"
         (box :class "language-menu__button-inner"
              :orientation "h"

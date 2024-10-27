@@ -1,9 +1,9 @@
-(defpoll cpu :interval "1s" "$XDG_CONFIG_HOME/eww/bar/scripts/cpu")
+(defpoll cpu :interval "1s" "./bar/scripts/cpu")
 
-(defpoll memory :interval "1s" "$XDG_CONFIG_HOME/eww/bar/scripts/memory used_perc")
-(defpoll memory_used_gb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/memory used")
-(defpoll memory_total_gb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/memory total")
-(defpoll memory_free_gb :interval "2m" "$XDG_CONFIG_HOME/eww/bar/scripts/memory free")
+(defpoll memory :interval "1s" "./bar/scripts/memory used_perc")
+(defpoll memory_used_gb :interval "2m" "./bar/scripts/memory used")
+(defpoll memory_total_gb :interval "2m" "./bar/scripts/memory total")
+(defpoll memory_free_gb :interval "2m" "./bar/scripts/memory free")
 
 (defpoll disk_user_perc :interval "1s" 10)
 (defpoll disk_used_gb :interval "2m" 10)
@@ -15,7 +15,7 @@
   (eventbox :cursor 'pointer'
     (button :class "system-widget"
             :tooltip "system menu"
-            :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop system"
+            :onclick "./bar/scripts/pop system"
       (box :orientation "h"
         (system_widget_circle
           :key "cpu"

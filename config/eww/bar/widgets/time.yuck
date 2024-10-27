@@ -1,9 +1,9 @@
 (defpoll clock_time :interval "1s" "date +\%I")
 (defpoll clock_minute :interval "1s" "date +\%M")
-(defpoll clock_date :interval "1s" "date '+%d/%m'")
+(defpoll clock_date :interval "60s" "date '+%d/%m'")
 
-(defpoll calendar_day :interval "1s" "date '+%d'")
-(defpoll calendar_year :interval "1s" "date '+%Y'")
+(defpoll calendar_day :interval "60s" "date '+%d'")
+(defpoll calendar_year :interval "60s" "date '+%Y'")
 
 (defvar date_reveal false)
 
@@ -25,7 +25,7 @@
                 :duration "350ms"
         (eventbox :cursor 'pointer'
           (button :class "clock__date"
-                  :onclick "$XDG_CONFIG_HOME/eww/bar/scripts/pop calendar"
+                  :onclick "./bar/scripts/pop calendar"
           clock_date))))))
 
 (defwidget cal []

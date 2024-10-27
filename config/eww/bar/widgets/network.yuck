@@ -1,5 +1,5 @@
-(defpoll network_down :interval "1m" "$XDG_CONFIG_HOME/eww/bar/scripts/network down")
-(defpoll network_up :interval "1m" "$XDG_CONFIG_HOME/eww/bar/scripts/network up")
+(defpoll network_down :interval "1m" "./bar/scripts/network down")
+(defpoll network_up :interval "1m" "./bar/scripts/network up")
 
 (defwidget sep []
   (box :class "separator" :vexpand "false" :hexpand "false"

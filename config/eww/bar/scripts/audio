@@ -3,18 +3,18 @@
 shopt -s expand_aliases
 
 function get-pulse-master-metadata() {
-  amixer -D pulse sget Master | grep 'Left:'
+wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o '\[MUTED\]' | awk '{print ($1 == "[MUTED]" ? 1 : 0)}'
 }
 
 function a-volume-percent() {
-  get-pulse-master-metadata | awk -F'[][]' '{ print $2 }' | tr -d '%' | bc
+  wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -oP '\d\.\d{2}' | awk '{print $1 * 100}' | bc 
 }
 
 function a-status() {
-  power=$(get-pulse-master-metadata | awk -F'[][]' '{ print $4 }')
+  muted=$(get-pulse-master-metadata)
   volume=$(a-volume-percent)
 
-  if [ "$power" = "off" ] || [ "$volume" -lt 1 ]; then
+  if [ "$muted" = 1 ]; then
     echo "muted"
   elif [ "$volume" -lt 50 ]; then
     echo "low"

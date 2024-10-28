@@ -12,3 +12,10 @@ if [ ! -d "$ZSH" ]; then
 fi
 
 sudo systemctl enable bluetooth
+
+sudo chmod 775 /var/lib/postgres
+sudo chown postgres /var/lib/postgres
+sudo -u postgres initdb -D '/var/lib/postgres/data'
+sudo systemctl enable postgresql
+sudo systemctl start postgresql
+sudo -u postgres createuser -s -P vlada

@@ -4,7 +4,7 @@
 (defvar window_y "3%")
 
 (include "./bar/widgets/workspaces.yuck")
-(include "./bar/widgets/mediaplayer.yuck")
+;; (include "./bar/widgets/mediaplayer.yuck")
 
 (include "./bar/widgets/time.yuck")
 
@@ -20,7 +20,8 @@
        :halign "start"
        :class "bar__left"
     (workspaces)
-    (mediaplayer)))
+    ;; (mediaplayer)
+    ))
 
 (defwidget center []
   (box

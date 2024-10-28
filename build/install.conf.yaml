@@ -208,6 +208,7 @@
     - neovim
     - lazygit
     - ranger
+    - lf # ranger replacement
 
     - ibus
     - ibus-mozc

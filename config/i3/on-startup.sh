@@ -15,6 +15,9 @@ function start_initial() {
 
   # protonmail-bridge &
   syncthing
+
+  /usr/bin/eww daemon
+  /usr/bin/eww open bar
 }
 
 if [ "$1" == "initial" ]
@@ -32,6 +35,7 @@ killall dunst && sleep 1 && dunst
 feh --bg-scale -g 3840x1440 ~/.background/mountains-blue-and-beige.jpg \
   -g 1920x1080 ~/.background/mountains-blue-and-gold.jpg
 
+picom --config "/home/vlada/.config/i3/picom.conf"
+
 # Launch picom compositor
-killall -q picom && sleep 1
-picom --experimental-backends --config "$XDG_CONFIG_HOME/i3/picom.conf" && sleep 1
+eww reload

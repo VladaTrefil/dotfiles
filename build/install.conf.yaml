@@ -32,7 +32,6 @@
 
     - ~/.local/bin
     - ~/.local/lib
-    - ~/.local/share/fonts
     - ~/.local/share/bundle
     - ~/.local/share/node
     # - ~/.local/share/gem doesn't work

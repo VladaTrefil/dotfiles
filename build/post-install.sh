@@ -19,3 +19,6 @@ sudo -u postgres initdb -D '/var/lib/postgres/data'
 sudo systemctl enable postgresql
 sudo systemctl start postgresql
 sudo -u postgres createuser -s -P vlada
+
+# create autostart for ibus
+ibus-daemon -rxRd

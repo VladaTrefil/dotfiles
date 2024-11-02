@@ -138,6 +138,9 @@
 
     - asdf-vm
 
+    - pipewire
+    - pipewire-pulse
+    - pipewire-audio
     - bluez
     - bluez-utils
 
@@ -180,6 +183,7 @@
     - protonmail-bridge
     - lens-bin
     - ark
+    - timeshift
 
     - libreoffice-fresh # doesn't work
     - libreoffice-fresh-cs # doesn't work
@@ -205,13 +209,13 @@
     - moreutils
     - perl-rename
     - speedtest-cli
-    # - mason
     - playerctl
     - aws-cli
     - brightnessctl
     - networkmanager
     - yt-dlp
     - qmk
+    - neofetch
 
     - neovim
     - lazygit

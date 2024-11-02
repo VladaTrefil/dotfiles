@@ -22,3 +22,9 @@ sudo -u postgres createuser -s -P vlada
 
 # create autostart for ibus
 ibus-daemon -rxRd
+
+# create autostart for redis
+sudo systemctl enable redis
+
+# create autostart for bluetooth
+sudo systemctl enable bluetooth

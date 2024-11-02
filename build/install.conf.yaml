@@ -128,10 +128,6 @@
       force: true
       path: local/bin
 
-- shell:
-    - [sudo pacman -S --needed git base-devel &&]
-    - [git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si]
-
 - yay:
     - readline
     - alsa-utils
@@ -149,7 +145,6 @@
     - bluez-utils
 
     - zsh
-    - oh-my-zsh-git
 
     - i3
     - picom
@@ -157,8 +152,8 @@
     - dunst
     - eww # AUR - hangs indefinitely
     - rofi
-    - gt5ct # QT5 config tool
-    - gt6ct # QT6 config tool
+    - qt5ct # QT5 config tool
+    - qt6ct # QT6 config tool
 
     - konsole
     - inkscape

@@ -7,6 +7,8 @@ export XMODIFIERS="@im=ibus"
 
 export QTWEBENGINE_REMOTE_DEBUGGING=8080
 
+export QT_QPA_PLATFORMTHEME=qt6ct
+
 # export GDK_SCALE=2
 # export GDK_DPI_SCALE=0.5
 # export QT_AUTO_SCREEN_SET_FACTOR=0

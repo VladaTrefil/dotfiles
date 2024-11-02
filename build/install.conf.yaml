@@ -87,6 +87,12 @@
     ~/.config/i3:
       force: true
       path: config/i3
+    ~/.config/qt5ct:
+      force: true
+      path: config/qt5ct
+    ~/.config/qt6ct:
+      force: true
+      path: config/qt6ct
     ~/.config/rofi: config/rofi
     ~/.config/lazygit: config/lazygit
     ~/.config/dunst: config/dunst
@@ -144,6 +150,8 @@
     - dunst
     - eww # AUR - hangs indefinitely
     - rofi
+    - gt5ct # QT5 config tool
+    - gt6ct # QT6 config tool
 
     - konsole
     - inkscape

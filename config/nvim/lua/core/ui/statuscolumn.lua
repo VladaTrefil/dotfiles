@@ -13,7 +13,7 @@ autocmd('FileType', {
 })
 
 M.hide = function()
-	opt.statuscolumn = nil
+	opt.statuscolumn = ''
 end
 
 -- Custom status column

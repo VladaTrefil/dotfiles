@@ -13,6 +13,7 @@ local config = {
 	CurSearch = { fg = colors.bright_orange, bg = colors.dark0, reverse = true, bold = true },
 	Underlined = { fg = colors.bright_blue, underline = true },
 	VertSplit = { fg = colors.dark2, bg = colors.dark0 },
+	WinSeparator = { fg = colors.dark2, bg = colors.dark0 },
 	WildMenu = { fg = colors.bright_blue, bg = colors.dark2, bold = true },
 	ErrorMsg = { fg = colors.dark0, bg = colors.bright_red, bold = true },
 

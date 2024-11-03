@@ -107,12 +107,6 @@ return {
 		end,
 	},
 
-	-- ['kelly-lin/ranger.nvim'] = {
-	-- 	config = function()
-	-- 		require('plugins.config.ranger')
-	-- 	end,
-	-- },
-
 	['nvim-neotest/neotest'] = {
 		requires = {
 			'nvim-lua/plenary.nvim',

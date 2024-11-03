@@ -90,13 +90,15 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
 
 .workspace {
   @include widget-row;
-  font-size: $bar-icon-size-lg * 1.1;
+  font-size: $bar-icon-size-lg;
   font-weight: normal;
   background-color: $background;
+  padding-right: $m * 4;
+  padding-left: $m * 2;
 
   &__button {
     color: $gray;
-    margin: 0 $m * 1.5;
+    margin: 0 $m * 2;
 
     &--occupied {
       color: rgba($blue, 0.8);
@@ -184,17 +186,14 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
   }
 
   &__icon {
-    font-size: $bar-icon-size * 0.65;
-    margin: $m * 2;
+    font-size: $bar-icon-size * 0.55;
+    margin: $m * 2.5;
+    margin-left: $m * 2;
   }
 
   .system-widget-cpu &__bar,
   .system-widget-cpu &__icon {
     color: $red-500;
-  }
-
-  .system-widget-cpu &__icon {
-    margin-top: $m * 2;
   }
 
   .system-widget-memory &__bar,
@@ -205,11 +204,6 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
   .system-widget-disk &__bar,
   .system-widget-disk &__icon {
     color: $red-300;
-  }
-
-  .system-widget-disk &__icon {
-    margin-top: $m * 2;
-    margin-right: $m * 2;
   }
 }
 

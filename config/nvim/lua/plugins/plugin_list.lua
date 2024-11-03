@@ -49,6 +49,7 @@ return {
 
 	['akinsho/bufferline.nvim'] = {
 		tag = 'v2.*',
+		commit = '2cd39842c6426fb6c9a79fa57420121cc81c9804',
 		config = function()
 			require('plugins.config._bufferline')
 		end,

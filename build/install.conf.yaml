@@ -215,6 +215,7 @@
     - yt-dlp
     - qmk
     - neofetch
+    - lsof
 
     - neovim
     - lazygit

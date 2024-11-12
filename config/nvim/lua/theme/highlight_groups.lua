@@ -30,13 +30,13 @@ local config = {
 	Orange = { fg = colors.bright_orange },
 	OrangeBold = { fg = colors.bright_orange, bold = true },
 
-	RedSign = { fg = colors.bright_red, bg = colors.dark, reverse = true, bold = true },
-	GreenSign = { fg = colors.bright_green, bg = colors.dark, reverse = true, bold = true },
-	YellowSign = { fg = colors.bright_yellow, bg = colors.dark, reverse = true, bold = true },
-	BlueSign = { fg = colors.blue, bg = colors.dark, reverse = true, bold = true },
-	PurpleSign = { fg = colors.bright_purple, bg = colors.dark, reverse = true, bold = true },
-	AquaSign = { fg = colors.bright_aqua, bg = colors.dark, reverse = true, bold = true },
-	OrangeSign = { fg = colors.orange, bg = colors.dark, reverse = true, bold = true },
+	RedSign = { fg = colors.bright_red, bold = true },
+	GreenSign = { fg = colors.bright_green, bold = true },
+	YellowSign = { fg = colors.bright_yellow, bold = true },
+	BlueSign = { fg = colors.blue, bold = true },
+	PurpleSign = { fg = colors.bright_purple, bold = true },
+	AquaSign = { fg = colors.bright_aqua, bold = true },
+	OrangeSign = { fg = colors.orange, bold = true },
 }
 
 return config

@@ -56,10 +56,11 @@ M.register = function()
 	vim.diagnostic.handlers.signs = {
 		show = function(namespace, bufnr, ns_diagnostics, opts)
 			local all_diagnostics = vim.diagnostic.get(bufnr)
+
 			local filtered_diagnostics = find_most_severe(all_diagnostics)
 
 			local diagnostics = vim.tbl_filter(function(d)
-				return vim.tbl_contains(ns_diagnostics, d)
+				return d.namespace == namespace
 			end, filtered_diagnostics)
 
 			unplace_placeholder_signs(namespace, bufnr)

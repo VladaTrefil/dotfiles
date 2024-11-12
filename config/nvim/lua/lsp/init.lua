@@ -2,12 +2,14 @@ local lsp = {}
 
 local user_config = require('lsp.config')
 local on_attach_func = require('lsp.on_attach')
-local lspconfig = require('lspconfig')
 local sign_handler = require('lsp.sign_handler')
+
+local lspconfig = require('lspconfig')
 
 local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 local extend = vim.tbl_deep_extend
 
+vim.diagnostic.config(user_config.diagnostic_config)
 -- Register a handler for displaying diagnostic signs
 sign_handler.register()
 
@@ -19,17 +21,6 @@ lsp.setup = function(server)
 	end
 
 	lsp.setup_server(server)
-	vim.diagnostic.config(user_config.diagnostic_config)
-
-	for type, icon in pairs(user_config.signs) do
-		local hl = 'Diagnostic' .. type
-
-		vim.fn.sign_define('DiagnosticSign' .. type, {
-			text = icon,
-			texthl = hl,
-			numhl = hl,
-		})
-	end
 end
 
 --- Get the server settings for a given language server to be provided to the server's `setup()` call

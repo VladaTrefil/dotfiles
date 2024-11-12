@@ -46,14 +46,26 @@ M.signs = {
 M.diagnostic_config = {
 	signs = {
 		priority = 10,
+		text = {
+			[vim.diagnostic.severity.ERROR] = icons.Error:gsub('%s$', ''),
+			[vim.diagnostic.severity.WARN] = icons.Warning:gsub('%s$', ''),
+			[vim.diagnostic.severity.HINT] = icons.Hint:gsub('%s$', ''),
+			[vim.diagnostic.severity.INFO] = icons.Info:gsub('%s$', ''),
+		},
+		numhl = {
+			[vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
+			[vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+			[vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
+			[vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo',
+		},
 	},
 	underline = {
-		severity = vim.diagnostic.severity.WARN,
+		severity = { vim.diagnostic.severity.WARN, vim.diagnostic.severity.ERROR },
 	},
 	update_in_insert = false,
 	severity_sort = true,
 	virtual_text = {
-		severity = vim.diagnostic.severity.WARN,
+		severity = { vim.diagnostic.severity.WARN, vim.diagnostic.severity.ERROR },
 		spacing = 1,
 	},
 	float = {

@@ -38,6 +38,9 @@ linters.codespell = {
 		vim.fn.expand('$XDG_CONFIG_HOME/codespell/codespellrc'),
 		'--regex',
 		"(?<![a-z])[a-z'`]+|[A-Z][a-z'`]*|[a-z]+'[a-z]*|[a-z]+(?=[_-])|[a-z]+(?=[A-Z])|\\d+",
+		function()
+			return vim.fn.expand('%:p')
+		end,
 	},
 }
 

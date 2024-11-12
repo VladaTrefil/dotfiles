@@ -57,6 +57,7 @@ return {
 
 	['nvim-telescope/telescope.nvim'] = {
 		tag = '0.1.4',
+		commit = '47ab113de540d1d1d9cdf7dba76dc60ddd808bb8',
 		requires = {
 			'nvim-lua/plenary.nvim',
 			'nvim-telescope/telescope-live-grep-args.nvim',

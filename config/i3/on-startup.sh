@@ -9,16 +9,25 @@ function start_initial() {
   # https://wiki.archlinux.org/index.php/XDG_Autostart
 
   # Launch ibus
-  ibus-daemon -d
+  ibus-daemon -d &
 
-  bluetoothctl power on
+  bluetoothctl power on &
 
   # protonmail-bridge &
-  syncthing
+  syncthing &
 
-  /usr/bin/eww daemon
-  /usr/bin/eww open bar
+  eww daemon &> /dev/null
+  while [ -z  "$(eww ping 2> /dev/null)" ]; do
+    sleep 0.2s
+  done
+
+  # Open window
+  eww open bar &> /dev/null
+
+  touch "$HOME/testing-eww.txt"
 }
+
+picom --config "/home/vlada/.config/i3/picom.conf" &
 
 if [ "$1" == "initial" ]
 then
@@ -29,13 +38,16 @@ else
   notify "Reloading Desktop Environment ..."
 fi
 
-killall dunst && sleep 1 && dunst
+killall dunst && sleep 1 && dunst &
 
-# Set desktop wallpapers
-feh --bg-scale -g 3840x1440 ~/.background/mountains-blue-and-beige.jpg \
-  -g 1920x1080 ~/.background/mountains-blue-and-gold.jpg
-
-picom --config "/home/vlada/.config/i3/picom.conf"
+# Set desktop wallpapers, if fehbg exists
+if [ -f ~/.fehbg ]; then
+  ~/.fehbg &
+else
+  feh --bg-scale -g 3840x1440 ~/.background/mountains-blue-and-beige.jpg \
+    -g 1920x1080 ~/.background/mountains-blue-and-gold.jpg &
+fi
+echo "feh"
 
 # Launch picom compositor
-eww reload
+eww reload &

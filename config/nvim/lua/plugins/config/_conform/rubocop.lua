@@ -3,6 +3,8 @@ local function server_argument()
 
 	if not output:match('--server') then
 		return '--server'
+	else
+		return nil
 	end
 end
 
@@ -19,22 +21,39 @@ local function condition()
 	return vim.fn.executable('bundle') > 0
 end
 
+-- print(table.concat({
+-- 	'exec',
+-- 	'rubocop',
+-- 	'-a',
+-- 	'-f',
+-- 	'quiet',
+-- 	'--force-exclusion',
+-- 	'--config',
+-- 	vim.fn.expand('$XDG_CONFIG_HOME/rubocop/rubocop.yml'),
+-- 	server_argument(),
+-- 	'--stderr',
+-- 	'--stdin',
+-- 	'$FILENAME',
+-- }, ' '))
+
 return {
 	command = 'bundle',
 	args = {
 		'exec',
 		'rubocop',
-		'-a',
-		'-f',
+		'--autocorrect',
+		'--format',
 		'quiet',
 		'--force-exclusion',
 		'--config',
 		vim.fn.expand('$XDG_CONFIG_HOME/rubocop/rubocop.yml'),
 		-- config_path(),
-		server_argument(),
+		-- server_argument(),
+		'--server',
 		'--stderr',
 		'--stdin',
 		'$FILENAME',
 	},
 	condition = condition,
+	exit_codes = { 0, 1 },
 }

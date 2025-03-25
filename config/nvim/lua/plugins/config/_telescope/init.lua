@@ -28,6 +28,9 @@ FILE_IGNORE_PATTERNS = {
 	'%.woff2',
 	'.git/',
 	'react.js',
+	'.venv',
+	'.mypy_cache',
+	'.keep',
 }
 
 local utils = require('core.utils')

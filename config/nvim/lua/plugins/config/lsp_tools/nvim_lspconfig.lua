@@ -12,10 +12,10 @@ vim.cmd('silent! do FileType')
 mason_lspconfig.setup({
 	ensure_installed = {
 		'eslint',
-		'cssls',
+		-- 'cssls',
 		'yamlls',
 		'lua_ls',
-		'pylsp',
+		-- 'pylsp',
 
 		-- TODO: ensure installed non-lsp
 		-- 'prettier',
@@ -28,6 +28,10 @@ mason_lspconfig.setup({
 
 mason_lspconfig.setup_handlers({
 	function(server)
+		if server == 'pylsp' then
+			return
+		end
+
 		lsp.setup(server)
 	end,
 })

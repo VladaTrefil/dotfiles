@@ -67,7 +67,7 @@ conform.setup({
 	formatters_by_ft = {
 		lua = { 'stylua' },
 		ruby = { 'rubocop' },
-		python = { 'isort', 'blue' },
+		python = { 'isort', 'black' },
 		-- sass = { 'prettier' },
 		scss = { 'prettier' },
 		javascript = { 'standardjs' },
@@ -77,9 +77,7 @@ conform.setup({
 		c = { 'clang-format' },
 		['_'] = { 'trim_whitespace' },
 	},
-
 	formatters = formatters,
-
-	log_level = vim.log.levels.WARN,
+	log_level = vim.log.levels.DEBUG,
 	format_on_save = format_on_save,
 })

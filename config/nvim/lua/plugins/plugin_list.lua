@@ -97,6 +97,12 @@ return {
 		end,
 	},
 
+	['nvim-pack/nvim-spectre'] = {
+		config = function()
+			require('plugins.config.spectre')
+		end,
+	},
+
 	-- ['gelguy/wilder.nvim'] = {
 	-- 	config = function()
 	-- 		require('plugins.config.wilder')
@@ -104,6 +110,7 @@ return {
 	-- },
 
 	['SirVer/ultisnips'] = {
+		commit = 'f6d1501b630cb783b0af8507c5588328f826d40f',
 		config = function()
 			require('plugins.config.ultisnips')
 		end,

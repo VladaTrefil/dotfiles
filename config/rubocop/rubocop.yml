@@ -58,9 +58,6 @@ Lint/MissingSuper:
 Naming/BlockForwarding:
   EnforcedStyle: explicit
 
-Style/HashAsLastArrayItem:
-  EnforcedStyle: no_braces
-
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma
 
@@ -84,6 +81,19 @@ Style/IfUnlessModifier:
 
 Style/ArgumentsForwarding:
   UseAnonymousForwarding: false
+
+Style/SoleNestedConditional:
+  Enabled: false
+
+Style/HashAsLastArrayItem:
+  Enabled: false
 #
 # Minitest/EmptyLineBeforeAssertionMethods:
 #   Enabled: false
+#
+Rails/UnknownEnv:
+  Environments:
+    - test
+    - development
+    - production
+    - staging

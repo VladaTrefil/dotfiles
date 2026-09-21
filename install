@@ -1,0 +1,142 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+dry_run=false
+
+usage() {
+    cat <<'EOF'
+Usage: ./install [link|packages|system|all] [options]
+
+  link        Initialize pinned submodules and create links (default).
+  packages    Print a dnf command; confirmation and root are needed to run it.
+  system      Describe future privileged steps; currently does nothing.
+  all         Run packages, link, system, then show docs/manual-steps.md.
+
+Options for packages and all:
+  --group base,dev    Read only the named packages/<group>.txt files.
+  --dry-run           Preview without installing packages or changing links.
+  -h, --help          Show help (also accepted by every subcommand).
+
+No command invokes sudo. Run a printed package command as root when needed.
+EOF
+}
+
+die() {
+    printf 'Error: %s\n' "$*" >&2
+    usage >&2
+    exit 2
+}
+
+install_packages() {
+    local groups='' group file line answer
+    local -a files=() names=() packages=() command=()
+    local -A seen=()
+    while (($#)); do
+        case "$1" in
+            --dry-run) dry_run=true; shift ;;
+            --group)
+                (($# >= 2)) || die '--group requires a comma-separated list'
+                [[ $2 =~ ^[a-zA-Z0-9_-]+(,[a-zA-Z0-9_-]+)*$ ]] || die 'Invalid group list'
+                groups=$2
+                shift 2
+                ;;
+            *) die "Unknown package option: $1" ;;
+        esac
+    done
+
+    if [[ -n $groups ]]; then
+        IFS=',' read -r -a names <<< "$groups"
+        for group in "${names[@]}"; do
+            file="$repo_dir/packages/$group.txt"
+            [[ -f $file ]] || die "Unknown package group: $group"
+            files+=("$file")
+        done
+    else
+        shopt -s nullglob
+        files=("$repo_dir"/packages/*.txt)
+        shopt -u nullglob
+    fi
+
+    for file in "${files[@]}"; do
+        while IFS= read -r line || [[ -n $line ]]; do
+            line=${line%%#*}
+            # Trim whitespace without word splitting or command evaluation.
+            line=${line#"${line%%[![:space:]]*}"}
+            line=${line%"${line##*[![:space:]]}"}
+            [[ -n $line ]] || continue
+            [[ $line =~ ^[a-zA-Z0-9][a-zA-Z0-9._+-]*$ ]] || die "Invalid package name in $file: $line"
+            if [[ ! ${seen[$line]+present} ]]; then
+                packages+=("$line")
+                seen[$line]=1
+            fi
+        done < "$file"
+    done
+
+    if ((${#packages[@]} == 0)); then
+        printf 'No packages selected; nothing to run.\n'
+        return
+    fi
+    command=(dnf install -- "${packages[@]}")
+    printf '%q' "${command[0]}"
+    printf ' %q' "${command[@]:1}"
+    printf '\n'
+    if "$dry_run"; then
+        return
+    fi
+    if ((EUID != 0)); then
+        printf 'Root is required. Run the command printed above as root.\n' >&2
+        return 1
+    fi
+    printf 'Run this exact command? Type yes: '
+    if ! IFS= read -r answer || [[ $answer != yes ]]; then
+        printf 'Cancelled.\n' >&2
+        return 1
+    fi
+    "${command[@]}"
+}
+
+install_link() {
+    git -C "$repo_dir" submodule update --init --recursive
+    PYTHONDONTWRITEBYTECODE=1 "$repo_dir/modules/dotbot/bin/dotbot" \
+        --base-directory "$repo_dir" --config-file "$repo_dir/install.conf.yaml" \
+        --no-color --verbose
+}
+
+install_system() {
+    printf 'System stub: future blocks will document login-shell and service setup.\n'
+    printf 'No system changes are implemented. See docs/manual-steps.md.\n'
+}
+
+subcommand=${1:-link}
+if (($#)); then shift; fi
+case "$subcommand" in
+    -h|--help) usage; exit 0 ;;
+    link|packages|system|all) ;;
+    *) die "Unknown subcommand: $subcommand" ;;
+esac
+for argument in "$@"; do
+    case "$argument" in -h|--help) usage; exit 0 ;; esac
+done
+
+case "$subcommand" in
+    link)
+        (($# == 0)) || die 'link accepts only --help'
+        install_link
+        ;;
+    packages) install_packages "$@" ;;
+    system)
+        (($# == 0)) || die 'system accepts only --help'
+        install_system
+        ;;
+    all)
+        install_packages "$@"
+        if "$dry_run"; then
+            printf 'Would run link, then system (stub), then show manual steps.\n'
+        else
+            install_link
+            install_system
+        fi
+        cat -- "$repo_dir/docs/manual-steps.md"
+        ;;
+esac

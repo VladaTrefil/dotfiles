@@ -1,0 +1,13 @@
+- defaults:
+    link:
+      relink: false
+      force: false
+
+- create:
+    # Parent of the single config link below.
+    - ~/.config
+    # Shared XDG state root; app-specific state directories arrive with each app.
+    - ~/.local/state
+
+- link:
+    ~/.config/git: config/git

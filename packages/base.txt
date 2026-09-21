@@ -1,0 +1,3 @@
+# Only the scaffold's runtime prerequisites. Fedora package choices arrive later.
+git
+python3

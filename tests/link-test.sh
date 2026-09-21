@@ -9,12 +9,17 @@ for tool in bwrap git python3 tar; do
 done
 [[ -f $repo_dir/modules/dotbot/lib/pyyaml/lib/yaml/__init__.py ]] ||
     fail 'Initialize submodules first: git submodule update --init --recursive'
+[[ -f $repo_dir/modules/nvim/init.lua && -e $repo_dir/modules/nvim/.git ]] ||
+    fail 'Initialize Neovim first: git submodule update --init --recursive'
 
 test_home=$(mktemp -d)
 trap 'rm -rf -- "$test_home"' EXIT
 mkdir -p "$test_home/repo" "$test_home/tmp" "$test_home/logs"
 # Keep the working copy (including uncommitted changes), with independent Git
 # metadata so submodule initialization cannot write back to the source repo.
+# Seed both submodules and their complete .git/modules object databases from
+# the initialized local checkout. The installer needs no GitHub clone, and its
+# normal recursive submodule update still runs with networking disabled.
 # Never copy excluded secret files, even if a later block adds local ones.
 tar -C "$repo_dir" --exclude='*secret*env*' --exclude='*SECRET*ENV*' \
     --exclude=Documents --exclude=.state --exclude=.cache --exclude=__pycache__ \
@@ -39,6 +44,11 @@ sandbox+=(--dev-bind /dev/null /dev/null --bind "$test_home" "$test_home"
 run_link() {
     "${sandbox[@]}" ./install "$@"
 }
+
+# Verify that every recorded submodule commit is available inside the fixture,
+# with no source checkout mounted and before the installer initializes anything.
+# shellcheck disable=SC2016 # Git's per-submodule shell supplies sha1.
+"${sandbox[@]}" git submodule foreach --recursive 'git cat-file -e "$sha1^{commit}"'
 
 snapshot() {
     python3 - "$test_home" <<'PY'
@@ -80,8 +90,11 @@ cat "$test_home/logs/first"
 [[ -L $test_home/.config/git ]] || fail 'Git target is not a symlink'
 [[ $(readlink -f -- "$test_home/.config/git") == "$test_home/repo/config/git" ]] ||
     fail 'Git symlink points to the wrong source'
+[[ -L $test_home/.config/nvim ]] || fail 'Neovim target is not a symlink'
+[[ $(readlink -f -- "$test_home/.config/nvim") == "$test_home/repo/modules/nvim" ]] ||
+    fail 'Neovim symlink points to the wrong source'
 [[ -d $test_home/.config && -d $test_home/.local/state ]] || fail 'Missing expected directories'
-printf 'PASS: clean/default run creates the Git link and XDG directories (exit 0).\n'
+printf 'PASS: clean/default run creates the Git and Neovim links and XDG directories (exit 0).\n'
 
 snapshot > "$test_home/logs/before.json"
 if ! run_link link > "$test_home/logs/second" 2>&1; then
@@ -93,17 +106,21 @@ snapshot > "$test_home/logs/after.json"
 cmp -s "$test_home/logs/before.json" "$test_home/logs/after.json" || fail 'Second run changed installed state'
 printf 'PASS: idempotence (exit 0; paths, bytes, link targets, inodes, modes, owners, mtime and ctime unchanged).\n'
 
-rm -- "$test_home/.config/git"
-printf 'unmanaged Git target\nkeep these bytes\000\377\n' > "$test_home/logs/expected-conflict"
-cp -- "$test_home/logs/expected-conflict" "$test_home/.config/git"
-if run_link link > "$test_home/logs/conflict" 2>&1; then
-    fail 'Conflict run unexpectedly succeeded'
-fi
-cat "$test_home/logs/conflict"
-[[ -f $test_home/.config/git && ! -L $test_home/.config/git ]] || fail 'Conflict file was replaced'
-cmp -s "$test_home/logs/expected-conflict" "$test_home/.config/git" || fail 'Conflict file bytes changed'
-grep -q 'already exists' "$test_home/logs/conflict" || fail 'Conflict was not reported'
-printf 'PASS: conflict refused (nonzero exit); unmanaged file is byte-for-byte unchanged.\n'
+for app in git nvim; do
+    rm -- "$test_home/.config/$app"
+    printf 'unmanaged %s target\nkeep these bytes\000\377\n' "$app" > "$test_home/logs/expected-conflict"
+    cp -- "$test_home/logs/expected-conflict" "$test_home/.config/$app"
+    if run_link link > "$test_home/logs/conflict" 2>&1; then
+        fail 'Conflict run unexpectedly succeeded'
+    fi
+    cat "$test_home/logs/conflict"
+    [[ -f $test_home/.config/$app && ! -L $test_home/.config/$app ]] || fail "$app conflict file was replaced"
+    cmp -s "$test_home/logs/expected-conflict" "$test_home/.config/$app" || fail "$app conflict file bytes changed"
+    grep -q 'already exists' "$test_home/logs/conflict" || fail 'Conflict was not reported'
+    printf 'PASS: %s conflict refused (nonzero exit); unmanaged file is byte-for-byte unchanged.\n' "$app"
+    rm -- "$test_home/.config/$app"
+    run_link link > "$test_home/logs/restore" 2>&1 || fail "Failed to restore $app link after conflict check"
+done
 
 # A negative control proves the same sandbox used above rejects an actual write
 # outside HOME, rather than just relying on HOME/XDG environment variables.

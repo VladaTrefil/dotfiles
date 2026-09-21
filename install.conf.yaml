@@ -4,10 +4,11 @@
       force: false
 
 - create:
-    # Parent of the single config link below.
+    # Parent of the config links below.
     - ~/.config
     # Shared XDG state root; app-specific state directories arrive with each app.
     - ~/.local/state
 
 - link:
     ~/.config/git: config/git
+    ~/.config/nvim: modules/nvim

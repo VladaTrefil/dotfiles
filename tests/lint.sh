@@ -3,11 +3,16 @@ set -euo pipefail
 
 repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 cd -- "$repo_dir"
+test_home=$(mktemp -d)
+trap 'rm -rf -- "$test_home"' EXIT
+export HOME="$test_home" XDG_CONFIG_HOME="$test_home/.config"
+export XDG_CACHE_HOME="$test_home/.cache" XDG_STATE_HOME="$test_home/.local/state"
+export XDG_DATA_HOME="$test_home/.local/share"
 
 lint_shell() {
     if ! command -v shellcheck >/dev/null 2>&1; then
-        printf 'SKIP: shellcheck is not on PATH; shell lint was not run.\n'
-        return
+        printf 'FAIL: shellcheck is required (Fedora: ShellCheck).\n' >&2
+        return 1
     fi
 
     local path first_line
@@ -41,5 +46,9 @@ lint_shell() {
 }
 
 lint_shell
-# Add independent config checks here as their application blocks land:
-# lint_sway (sway -C), lint_zsh (zsh -n), etc.
+# ShellCheck does not support Zsh; parse our startup/config files with Zsh.
+for path in config/zsh/.zshenv config/zsh/.zprofile config/zsh/.zshrc config/zsh/p10k.zsh; do
+    env -i HOME=/nonexistent PATH=/usr/bin:/bin zsh -dfn "$path"
+done
+shellcheck -s sh config/shell/profile
+printf 'PASS: portable profile lint and Zsh syntax (4 files).\n'

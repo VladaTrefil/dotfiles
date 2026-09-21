@@ -16,7 +16,8 @@ mkdir -p "$test_home/repo" "$test_home/tmp" "$test_home/logs"
 # Never copy excluded secret files, even if a later block adds local ones.
 tar -C "$repo_dir" --exclude='*secret*env*' --exclude='*SECRET*ENV*' \
     --exclude=Documents --exclude=.state --exclude=.cache --exclude=__pycache__ \
-    --exclude=.git --exclude=./modules \
+    --exclude=.git --exclude=./modules --exclude=./config/zsh/custom \
+    --exclude=./config/zsh/oh-my-zsh \
     -cf - . | tar -C "$test_home/repo" -xf -
 
 # No real HOME or its config is mounted. Only the fixture is writable; even
@@ -51,12 +52,14 @@ run_link() {
 
 # Only the superproject's pinned gitlink entries cross into the empty index.
 "${sandbox[@]}" git -c init.templateDir= init -q
-git -C "$repo_dir" ls-files --stage -- modules/dotbot modules/nvim |
+git -C "$repo_dir" ls-files --stage -- modules/dotbot modules/nvim config/zsh/custom config/zsh/oh-my-zsh |
     "${sandbox[@]}" git update-index --index-info
 "${sandbox[@]}" python3 - <<'PY'
 from pathlib import Path
 
 assert not Path('modules').exists(), 'Fixture contains submodule content'
+assert not Path('config/zsh/custom').exists(), 'Fixture contains shell submodules'
+assert not Path('config/zsh/oh-my-zsh').exists(), 'Fixture contains Oh My Zsh'
 assert not Path('.git/modules').exists(), 'Fixture contains submodule metadata'
 assert not any(p.is_file() for p in Path('.git/objects').rglob('*')), 'Fixture contains Git objects'
 print('PASS: fresh fixture has no submodule content, metadata, or Git objects; clones must use HTTPS remotes.')
@@ -100,7 +103,7 @@ def visit(path):
         for child in sorted(path.iterdir()):
             visit(child)
 
-for name in ['.config', '.local']:
+for name in ['.config', '.local', '.cache', '.zshenv']:
     visit(home / name)
 print(json.dumps(rows, indent=2))
 PY
@@ -127,6 +130,20 @@ fi
     fail 'Neovim symlink points to the wrong source'
 [[ -d $test_home/.config && -d $test_home/.local/state ]] || fail 'Missing expected directories'
 printf 'PASS: clean/default run creates the Git and Neovim links and XDG directories (exit 0).\n'
+links=(.config/git .config/nvim .config/shell/profile .config/shell/aliases.sh
+    .config/shell/inputrc .config/zsh .config/wgetrc .zshenv)
+sources=(config/git modules/nvim config/shell/profile config/shell/aliases.sh
+    config/shell/inputrc config/zsh config/wgetrc config/zsh/.zshenv)
+for index in "${!links[@]}"; do
+    target="$test_home/${links[$index]}"
+    [[ -L $target && $(readlink -f -- "$target") == "$test_home/repo/${sources[$index]}" ]] ||
+        fail "Wrong link: ${links[$index]}"
+done
+for directory in .config/shell .config/bundle .local/state/zsh .local/state/less .cache/zsh; do
+    [[ -d $test_home/$directory ]] || fail "Missing shell directory: $directory"
+done
+printf 'PASS: all eight links and shell history, cache and Bundler directories exist.\n'
+
 
 snapshot > "$test_home/logs/before.json"
 if run_link link > "$test_home/logs/second" 2>&1; then
@@ -139,20 +156,20 @@ snapshot > "$test_home/logs/after.json"
 cmp -s "$test_home/logs/before.json" "$test_home/logs/after.json" || fail 'Second run changed installed state'
 printf 'PASS: idempotence (exit 0; paths, bytes, link targets, inodes, modes, owners, mtime and ctime unchanged).\n'
 
-for app in git nvim; do
-    rm -- "$test_home/.config/$app"
+for app in "${links[@]}"; do
+    rm -- "$test_home/$app"
     printf 'unmanaged %s target\nkeep these bytes\000\377\n' "$app" > "$test_home/logs/expected-conflict"
-    cp -- "$test_home/logs/expected-conflict" "$test_home/.config/$app"
+    cp -- "$test_home/logs/expected-conflict" "$test_home/$app"
     if run_link link > "$test_home/logs/conflict" 2>&1; then
         fail 'Conflict run unexpectedly succeeded'
     else
         check_run_failure "$?" "$test_home/logs/conflict"
     fi
-    [[ -f $test_home/.config/$app && ! -L $test_home/.config/$app ]] || fail "$app conflict file was replaced"
-    cmp -s "$test_home/logs/expected-conflict" "$test_home/.config/$app" || fail "$app conflict file bytes changed"
+    [[ -f $test_home/$app && ! -L $test_home/$app ]] || fail "$app conflict file was replaced"
+    cmp -s "$test_home/logs/expected-conflict" "$test_home/$app" || fail "$app conflict file bytes changed"
     grep -q 'already exists' "$test_home/logs/conflict" || fail 'Conflict was not reported'
     printf 'PASS: %s conflict refused (nonzero exit); unmanaged file is byte-for-byte unchanged.\n' "$app"
-    rm -- "$test_home/.config/$app"
+    rm -- "$test_home/$app"
     if run_link link > "$test_home/logs/restore" 2>&1; then
         :
     else
@@ -160,6 +177,19 @@ for app in git nvim; do
         fail "Failed to restore $app link after conflict check"
     fi
 done
+
+# A legacy Bundler file must be preserved, not accepted as the new directory.
+rmdir -- "$test_home/.config/bundle"
+printf 'bundler fixture\n' > "$test_home/logs/bundle-conflict"
+cp -- "$test_home/logs/bundle-conflict" "$test_home/.config/bundle"
+if run_link link > "$test_home/logs/bundle" 2>&1; then
+    fail 'Installer accepted a file where the Bundler directory belongs'
+fi
+cmp -s "$test_home/logs/bundle-conflict" "$test_home/.config/bundle" || fail 'Legacy Bundler file changed'
+grep -q 'migrate its settings to bundle/config separately' "$test_home/logs/bundle" || fail 'Bundler migration was not explained'
+printf 'PASS: legacy Bundler file refused and preserved byte-for-byte.\n'
+rm -- "$test_home/.config/bundle"
+run_link link > "$test_home/logs/bundle-restored" 2>&1 || fail 'Bundler directory restore'
 
 # A negative control proves the same sandbox used above rejects an actual write
 # outside HOME, rather than just relying on HOME/XDG environment variables.
@@ -172,4 +202,4 @@ grep -q 'Read-only file system' "$test_home/logs/escape" || {
     fail 'Write probe failed for an unexpected reason'
 }
 printf 'PASS: all installer runs confined to temporary HOME; outside write probe rejected by read-only filesystem.\n'
-printf 'PASS: link-test (4/4 checks).\n'
+printf 'PASS: link-test (original assertions plus all shell links and conflicts).\n'

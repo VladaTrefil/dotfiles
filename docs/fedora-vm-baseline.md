@@ -84,3 +84,41 @@ A fresh superproject clone would not contain that copied local override.
 
 The transition report `../dotfiles-transition/reports/B0-vm-baseline.md` contains the
 command transcripts, deviations and final repository/VM state. No remote push was run.
+
+## Graphics: VirtualBox needs software rendering (found during B0 manual validation)
+
+The VM could not run a Wayland compositor in either of its default graphics states. Both failures are
+**VirtualBox-only**; neither exists on the physical machine, which has a Radeon RX 9070 on `amdgpu`.
+
+| VM setting | Result |
+|---|---|
+| VMSVGA, `accelerate3d=on` (original) | SwayFX starts but stalls for ~1 minute. Kernel logs `vmwgfx […] This configuration is likely broken. Please switch to a supported graphics device`, plus repeated `vmw_msg_ioctl: Failed to open channel`. |
+| VMSVGA, `accelerate3d=off` | No hardware GL at all. `MESA-EGL: egl: failed to create dri2 screen`, `EGL_NOT_INITIALIZED`, `fx_renderer: Could not initialize EGL`, `sway/server.c: Failed to create renderer`. Compositor exits immediately. |
+| VMSVGA, `accelerate3d=off` + software GL | **Works.** Clean start, no vmwgfx warnings, `Initialized vmwgfx 2.21.0` only. |
+
+Host-side setting (applied):
+```
+VBoxManage modifyvm "Fedora dotfiles clean" --accelerate3d off
+```
+VMSVGA itself must stay — it is the only controller providing the KMS that Wayland requires.
+
+Guest-side, the session needs:
+```
+WLR_RENDERER_ALLOW_SOFTWARE=1   # wlroots may accept a software renderer
+LIBGL_ALWAYS_SOFTWARE=1         # Mesa selects llvmpipe instead of the failing vmwgfx DRI driver
+```
+Provided by `mesa-dri-drivers` (`swrast_dri.so`, `kms_swrast_dri.so`) and `libgallium`, already installed.
+
+**These two variables belong only in the VirtualBox machine profile**, never the physical one — on real
+hardware they would force a Radeon to render on the CPU. They live beside the `VBoxClient` clipboard
+command in the VM-only fragment.
+
+### Consequence for Blocks 5–7
+Everything is CPU-rendered in the VM, so those blocks can verify that SwayFX configuration is
+**correct** — that blur, shadows, rounded corners and opacity are configured and visibly applied — but
+they cannot say anything about **performance**. A sluggish session in the VM is not a signal to tune
+effect settings. Effect cost is measured on physical hardware, separately, as the plan already states.
+
+## B0 manual validation: PASSED (user, 2026-09-21)
+SwayFX starts from a TTY · kitty opens, `Super+Enter` spawns another · VirtualBox clipboard verified
+in **both** directions with `wl-copy`/`wl-paste` · `Super+Shift+E` exits cleanly.

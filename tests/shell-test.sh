@@ -153,7 +153,12 @@ for layout in default inherited; do
     theme_cache="$cache/zsh/powerlevel10k-$revision"
     mkdir -p "$theme_cache"
     git -C "$repo_dir/config/zsh/custom/themes/powerlevel10k" archive HEAD | tar -xf - -C "$theme_cache"
-    "${sandbox[@]}" "${env_args[@]}" "XDG_CACHE_HOME=$cache" sh "$theme_cache/gitstatus/install"
+    # No gitstatus provisioning: the config sets POWERLEVEL9K_DISABLE_GITSTATUS=true so
+    # p10k uses its pure-zsh git backend. Running p10k's installer here would fetch an
+    # unpinned prebuilt binary from GitHub - the behaviour this configuration removes.
+    if [[ -e "$cache/gitstatus" ]]; then
+        fail 'gitstatus cache created; the runtime binary download was not disabled'
+    fi
     snapshot > "$fixture/logs/before-$layout"
     for mode in -ic -lic; do
         # Each probe needs a fresh HOME-local new-directory success case.

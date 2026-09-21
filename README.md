@@ -2,9 +2,9 @@
 
 An incremental replacement for the legacy dotfiles, intended for Fedora VM
 testing. This is the orchestration scaffold. `config/git/config` and
-`config/git/ignore` were copied verbatim as a link fixture; their existing
-settings have not been audited or corrected. Neovim is a standalone repository
-linked directly from the `modules/nvim` submodule's working copy.
+`config/git/ignore` began as a link fixture; their legacy settings have not been
+audited or corrected. Git adds an SSH push rule for Neovim. Neovim is a standalone
+repository linked directly from the `modules/nvim` submodule's working copy.
 
 Dotbot is pinned as a submodule to v1.24.0,
 `08ba8ac31b931a098c6ca8608dd452927d77f945`. It requires Python 3.7 or newer.
@@ -37,7 +37,13 @@ It never cleans directories or replaces an existing link. Python bytecode is
 disabled during linking, so it leaves no interpreter cache in the repository.
 Git may update its own submodule metadata during initialization.
 
-The Neovim submodule tracks `main` at `git@github.com:VladaTrefil/nvim.git`.
+The Neovim submodule tracks `main` at `https://github.com/VladaTrefil/nvim.git`.
+Public submodules clone over HTTPS without credentials. The linked Git config
+uses `pushInsteadOf` for this Neovim URL so pushes use
+`git@github.com:VladaTrefil/nvim.git` and the SSH key set up during day-zero
+bootstrap. The private `dotfiles-next` repository still needs SSH for its own
+initial clone. Existing checkouts can adopt the HTTPS URL with
+`git submodule sync -- modules/nvim`.
 Edit it in place in `modules/nvim`, then commit and push from that directory;
 the running Neovim sees those edits through `~/.config/nvim`. For upstream
 updates, run `bin/sync-nvim`: it fetches and fast-forwards `main`, then commits
@@ -57,14 +63,20 @@ tests/sync-nvim-test.sh
 tests/lint.sh
 ```
 
-The link test needs Linux, Bubblewrap (`bwrap`), Git, Python 3, and GNU tar. It
-copies the scaffold into a temporary HOME, disables network access, exposes only
-runtime system directories read-only, and makes that HOME the only writable
-filesystem tree. It checks clean linking, idempotence, conflict bytes, and the
-write boundary, then removes the fixture with a trap. Initialize the pinned
-submodules first with `git submodule update --init --recursive` if necessary.
-The fixture copies their working trees and complete Git object databases, so
-recursive initialization uses local objects even with the network disabled.
+The link test needs Linux, Bubblewrap (`bwrap`), Git, Python 3, GNU tar and
+`timeout`, CA certificates, and network access to GitHub. It copies the scaffold
+into a temporary HOME without submodule files or Git objects. The real installer
+clones the configured HTTPS remotes, including nested submodules, on every test
+run; the test prints clone output and verifies the pinned commits. The source
+checkout does not need initialized submodules. Runtime directories, DNS config,
+and CA certificates are exposed read-only; the temporary HOME is the only
+writable filesystem tree. No real HOME or SSH credentials are exposed.
+It checks clean linking, idempotence, conflict bytes for both links, and the write
+boundary, then removes the fixture with a trap. Network/remote failures and the
+five-minute limit per installer run report `ERROR [NETWORK/REMOTE]` and exit 2;
+assertion failures report `FAIL` and exit 1. Unreachable remotes never skip checks
+or pass the test. These real downloads can make the test slower or fail during
+a GitHub/network outage.
 The sync test uses disposable local repositories, allows only Git's file
 transport, and never pushes.
 

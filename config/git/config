@@ -25,6 +25,9 @@
 [push]
 	default = upstream
 
+[url "git@github.com:VladaTrefil/nvim.git"]
+	pushInsteadOf = https://github.com/VladaTrefil/nvim.git
+
 [credential]
 	helper = cache --timeout=3600
 

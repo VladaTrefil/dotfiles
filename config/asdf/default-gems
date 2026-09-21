@@ -2,5 +2,9 @@ bundler
 spring
 solargraph
 rubocop
+rubocop-rails
+rubocop-performance
+rubocop-minitest
+rubocop-rake
 neovim
 slim_lint

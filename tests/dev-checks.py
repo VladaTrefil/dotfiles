@@ -28,7 +28,7 @@ for package in (root / 'config/asdf/default-npm-packages').read_text().splitline
 for gem in (root / 'config/asdf/default-gems').read_text().splitlines():
     result = run('ruby', '-rrubygems', '-e', 's=Gem::Specification.find_by_name(ARGV[0]); puts "#{s.name} #{s.version}"', gem)
     print('GEM', result.stdout.strip())
-assert 'rails' not in (root / 'config/asdf/default-gems').read_text()
+assert 'rails' not in (root / 'config/asdf/default-gems').read_text().splitlines()
 
 stylelint = config / 'stylelint/stylelintrc.json'
 assert '/home/' not in stylelint.read_text() and '/installs/' not in stylelint.read_text()
@@ -70,12 +70,36 @@ for tool, version in [('stylua', '2.5.2'), ('selene', '0.31.0'), ('lf', 'r42')]:
     output = run(tool, '-version' if tool == 'lf' else '--version').stdout.strip()
     assert version in output, (tool, output)
     print('RELEASE', output)
-Path('scratch.rb').write_text('puts "hello"\n')
+Path('scratch.rb').write_text("# frozen_string_literal: true\n\nputs 'hello'\n")
 discovery = run('ruby', '-rrubocop', '-e', 'puts RuboCop::ConfigFinder.find_config_path(Dir.pwd)').stdout.strip()
 assert Path(discovery).resolve() == (config / 'rubocop/config.yml').resolve(), discovery
-result = run('rubocop', '--cache', 'false', '--format', 'json', 'scratch.rb', statuses=(0, 1))
+registry = run('ruby', '-rrubocop', '-rjson', '-e', r'''
+path = RuboCop::ConfigFinder.find_config_path(Dir.pwd)
+RuboCop::ConfigLoader.load_file(path)
+sections = YAML.load_file(path).keys.grep(%r{\A(?:Rails|Performance|Minitest|Rake)/})
+registered = RuboCop::Cop::Registry.global.map(&:cop_name)
+puts JSON.generate({
+  sections: sections.size,
+  departments: sections.group_by { |name| name.split('/').first }.transform_values(&:size),
+  missing: sections - registered,
+  loaded_extensions: Gem.loaded_specs.keys.grep(/\Arubocop-(rails|performance|minitest|rake)\z/).sort,
+  folio_loaded: Gem.loaded_specs.key?('folio')
+})
+''')
+loaded = json.loads(registry.stdout)
+assert loaded['sections'] == 38 and not loaded['missing'], loaded
+assert loaded['loaded_extensions'] == ['rubocop-minitest', 'rubocop-performance', 'rubocop-rails', 'rubocop-rake'], loaded
+assert not loaded['folio_loaded'], loaded
+print('RUBOCOP_REGISTRY', registry.stdout.strip())
+print('RUBOCOP_SCRATCH_DIR', Path.cwd())
+result = run('rubocop', '--cache', 'false', '--format', 'json', 'scratch.rb')
+print('$ rubocop --cache false --format json scratch.rb')
+print(result.stdout.strip())
+print('RUBOCOP_STDERR', repr(result.stderr))
+print('RUBOCOP_EXIT', result.returncode)
 assert json.loads(result.stdout)['summary']['inspected_file_count'] == 1
 assert 'MissingSpec' not in result.stderr and 'Unable to find gem' not in result.stderr
-print('PASS: RuboCop discovers XDG config.yml itself and inspects a non-project Ruby file')
+assert not re.search(r'unrecognized cop|unknown cop|supports plugin', result.stderr, re.IGNORECASE), result.stderr
+print('PASS: RuboCop discovers XDG config.yml, loads all 38 extension cop sections without Folio, and inspects a non-project Ruby file')
 
 print('PASS: development config integration')

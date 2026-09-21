@@ -69,6 +69,7 @@ when the runtime is already installed, then refreshes shims. This means rerunnin
 | gem `spring` | Existing Rails project preloader convenience |
 | gem `solargraph` | Existing optional Ruby analysis workflow; global config retained |
 | gem `rubocop` | Ruby LSP and global CLI; projects supply their own bundle |
+| gems `rubocop-rails`, `rubocop-performance`, `rubocop-minitest`, `rubocop-rake` | Public plugins supplying the global config's 38 extension cop sections |
 | gem `neovim` | Existing optional Ruby provider |
 | gem `slim_lint` | Active Slim lint adapter |
 | npm `yarn` | Existing project package-manager convenience |
@@ -96,11 +97,13 @@ keeps Stylelint's normal project discovery and local dependency resolution.
 There is no Node-version path or installer-maintained node_modules symlink.
 The Sass allowance is `trough`, matching SCSS and GTK selector intent.
 
-RuboCop's XDG filename is `rubocop/config.yml`. Folio inheritance and its four
-extension requires are removed. **Unresolved decision conflict:** preserving
-extension-specific cop selections makes RuboCop reject this config without those
-extensions. The integration test intentionally fails until the user selects
-removing those sections or restoring explicitly provisioned extensions.
+RuboCop's XDG filename is `rubocop/config.yml`. Folio inheritance is removed;
+projects supply employer-specific rules in their own bundles. The four public
+extensions (`rubocop-rails`, `rubocop-performance`, `rubocop-minitest` and
+`rubocop-rake`) are declared in `default-gems` and loaded with `plugins:`, the
+directive supported by the installed RuboCop 1.91.0. They supply all 38 retained
+extension cop sections. The integration test checks their actual registration
+and global XDG discovery on a scratch Ruby file outside a project, without Folio.
 
 Codespell's checked-in `codespellrc` is a template containing its own ignore and
 exclude inputs. `install link` renders `@CONFIG_HOME@` into absolute paths in the

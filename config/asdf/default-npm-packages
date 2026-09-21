@@ -1,0 +1,12 @@
+yarn
+neovim
+prettier
+postcss
+postcss-scss
+postcss-sass
+stylelint
+stylelint-config-standard
+stylelint-scss
+jsonlint
+standard
+vscode-langservers-extracted

@@ -1,0 +1,435 @@
+AllCops:
+  TargetRubyVersion: ~
+  NewCops: enable
+  DisabledByDefault: false
+  Exclude:
+    - 'app/assets/**/*'
+    - 'bin/*'
+    - 'data/**/*'
+    - 'db/schema.rb'
+    - 'frontend/**/*'
+    - 'lib/tasks/auto_annotate_models.rake'
+    - 'lib/templates/lib/tasks/auto_annotate_models.rake'
+    - 'node_modules/**/*'
+    - 'public/**/*'
+    - 'react/**/*'
+    - 'test/dummy/db/schema.rb'
+    - 'test/dummy/public/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+
+Rails/UnknownEnv:
+  Environments:
+    - test
+    - development
+    - production
+    - staging
+
+# Lint only
+
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
+
+Layout/LineLength:
+  Enabled: false
+  Max: 110
+
+Layout/HashAlignment:
+  EnforcedLastArgumentHashStyle: always_inspect
+  EnforcedColonStyle: key
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Lint/UselessAssignment:
+  Exclude:
+    - 'db/seeds.rb'
+    - 'lib/tasks/developer_tools.rake'
+
+Lint/MissingSuper:
+  Exclude:
+    - 'test/**/*'
+    - '**/*_component.rb'
+
+Naming/BlockForwarding:
+  EnforcedStyle: explicit
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: 'literal'
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/ArgumentsForwarding:
+  UseAnonymousForwarding: false
+
+Style/SoleNestedConditional:
+  Enabled: false
+
+Style/FormatString:
+  Enabled: false
+
+Style/HashAsLastArrayItem:
+  Enabled: false
+
+Style/RedundantCondition:
+  Enabled: false
+
+Style/RedundantSelf:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: true
+  AllowConsecutiveConditionals: true
+
+Minitest/EmptyLineBeforeAssertionMethods:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Minitest/MultipleAssertions:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+  CountAsOne: ['array', 'heredoc', 'method_call']
+  Max: 15
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Minitest/AssertOperator:
+  Enabled: false
+
+Minitest/AssertInDelta:
+  Enabled: false
+
+Minitest/AssertPredicate:
+  Enabled: false
+
+Performance/CollectionLiteralInLoop:
+  Enabled: false
+
+Lint/ScriptPermission:
+  Enabled: false
+
+Style/RedundantConstantBase:
+  Enabled: false
+
+Rails/StrongParametersExpect:
+  Enabled: false
+
+Naming/RescuedExceptionsVariableName:
+  Enabled: false
+
+Rails/SquishedSQLHeredocs:
+  Enabled: false
+
+Rails/WhereNotWithMultipleConditions:
+  Enabled: false
+
+# ===========================================================================================================
+# Don't use
+Rails/DurationArithmetic:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false
+
+Style/WhileUntilModifier:
+  Enabled: false
+
+# Doesn't take into account inheritance or overrides properly
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+# Weird alignment with begin in variable declarations
+Layout/RescueEnsureAlignment:
+  Enabled: false
+
+# ===========================================================================================================
+# Potentially useful
+Style/FetchEnvVar:
+  Enabled: false
+
+Style/OpenStructUse:
+  Enabled: false
+
+Style/AccessorGrouping:
+  Enabled: false
+
+Rake/Desc:
+  Enabled: false
+
+Style/ParallelAssignment:
+  Enabled: false
+
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: false
+
+Naming/PredicatePrefix:
+  Enabled: false
+
+Minitest/SkipWithoutReason:
+  Enabled: false
+
+Rails/ResponseParsedBody:
+  Enabled: false
+
+Style/SpecialGlobalVars:
+  Enabled: false
+
+# techincally could disable on components
+Metrics/ParameterLists:
+  Enabled: false
+
+Rails/EnvLocal:
+  Enabled: false
+
+Style/GlobalStdStream:
+  Enabled: false
+
+Style/Proc:
+  Enabled: false
+
+Style/RaiseArgs:
+  Enabled: false
+
+Style/SuperArguments:
+  Enabled: false
+
+# Potentially dangerous; don't know if it takes into account overrides
+Style/RedundantInitialize:
+  Enabled: false
+
+Style/FormatStringToken:
+  Enabled: false
+
+Performance/RangeInclude:
+  Enabled: false
+
+Rails/WhereRange:
+  Enabled: false
+
+# ===========================================================================================================
+# very good
+Minitest/AssertionInLifecycleHook:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Rails/TimeZone:
+  Enabled: false
+
+Rails/Date:
+  Enabled: false
+
+Style/RescueModifier:
+  Enabled: false
+
+Minitest/AssertRaisesCompoundBody:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Style/RedundantRegexpArgument:
+  Enabled: false
+
+Rake/MethodDefinitionInTask:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Rails/LinkToBlank:
+  Enabled: false
+
+Performance/RedundantBlockCall:
+  Enabled: false
+
+# apparently faster logging with object instead of a string
+Rails/EagerEvaluationLogMessage:
+  Enabled: false
+
+# URI.open is a security risk
+Security/Open:
+  Enabled: false
+
+# makes sense to refrain from return in iterators
+Lint/NonLocalExitFromIterator:
+  Enabled: false
+
+# "===": ("faa".."fzz") === "foo"  #=> true
+Style/CaseEquality:
+  Enabled: false
+
+Rails/Output:
+  Enabled: false
+  Exclude:
+    - 'lib/tasks/**/*.rake'
+    - 'test/**/*.rb'
+    - 'db/seeds.rb'
+    - 'db/migrate/*.rb'
+
+Rails/OutputSafety:
+  Enabled: false
+  Exclude:
+    - 'lib/tasks/**/*.rake'
+    - 'test/**/*.rb'
+    - 'db/seeds.rb'
+    - 'db/migrate/*.rb'
+
+Metrics/CollectionLiteralLength:
+  Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+Style/SafeNavigationChainLength:
+  Enabled: false
+
+# deprecated in favor of Naming/PredicatePrefix
+# Naming/PredicateName:
+#   Enabled: false
+
+# ===========================================================================================================
+# Must use in new project (warning only)
+Metrics/BlockNesting:
+  Enabled: false
+
+Lint/UnusedBlockArgument:
+  Enabled: false
+
+Lint/RedundantCopDisableDirective:
+  Enabled: false
+
+Lint/DuplicateBranch:
+  Enabled: false
+
+Lint/EmptyBlock:
+  Enabled: false
+
+Lint/UnusedMethodArgument:
+  Enabled: false
+
+Lint/NonAtomicFileOperation:
+  Enabled: false
+
+Minitest/TestFileName:
+  Enabled: false
+
+Naming/MethodName:
+  Enabled: false
+
+Rails/ThreeStateBooleanColumn:
+  Enabled: false
+
+Performance/MapMethodChain:
+  Enabled: false
+
+Rails/ReversibleMigration:
+  Enabled: false
+
+Naming/PredicateMethod:
+  Enabled: false
+
+Rails/RakeEnvironment:
+  Enabled: false
+
+Lint/IneffectiveAccessModifier:
+  Enabled: false
+
+Lint/Void:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Lint/SuppressedException:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Lint/UselessAccessModifier:
+  Enabled: false
+
+Lint/UselessOr:
+  Enabled: false
+
+Style/HashLikeCase:
+  Enabled: false
+
+Lint/NoReturnInBeginEndBlocks:
+  Enabled: false
+
+Bundler/DuplicatedGroup:
+  Enabled: false
+
+Lint/EmptyConditionalBody:
+  Enabled: false
+
+Lint/UnreachableCode:
+  Enabled: false
+
+Lint/LiteralAsCondition:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/EmptyElse:
+  Enabled: false
+
+Layout/BlockAlignment:
+  Enabled: false
+
+Rails/DuplicateScope:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: false
+  Exclude:
+    - 'lib/tasks/**/*.rake'
+    - 'test/**/*.rb'
+    - 'db/seeds.rb'
+    - 'db/migrate/*.rb'

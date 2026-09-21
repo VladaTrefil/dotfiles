@@ -1,0 +1,2 @@
+[tool.pylint.main]
+ignore-paths = (^|.*/)([.]git|[.]venv|build|dist)(/|$)

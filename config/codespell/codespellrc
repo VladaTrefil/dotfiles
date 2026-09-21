@@ -1,0 +1,11 @@
+# vim set ft=toml
+
+[codespell]
+builtin = clear,informal,en-GB_to_en-US
+quiet-level = 3
+check-filenames =
+check-hidden =
+skip = *.log,*.min.js,*.chunk.js*,*.lock,*.snippets,./.git/*,*/sprockets/*,*/bower_components/*,*/node_modules/*,*config/codespell/*,./tmp/*,schema.rb,react.js,zsh-history,*/codespell/ignore.txt
+# Rendered by install link: codespell does not expand shell variables or ~.
+ignore-words = @CONFIG_HOME@/codespell/ignore.txt
+exclude-file = @CONFIG_HOME@/codespell/exclude-file.txt

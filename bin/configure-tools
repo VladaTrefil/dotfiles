@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""Render codespell paths and rebuild bat's cache when source/version changes."""
+import hashlib
+import os
+from pathlib import Path
+import shutil
+import subprocess
+
+root = Path(__file__).resolve().parent.parent
+home = Path.home()
+config = Path(os.environ.get('XDG_CONFIG_HOME', str(home / '.config')))
+cache = Path(os.environ.get('XDG_CACHE_HOME', str(home / '.cache')))
+state = cache / 'dotfiles'
+state.mkdir(parents=True, exist_ok=True)
+template = (root / 'config/codespell/codespellrc').read_text()
+content = template.replace('@CONFIG_HOME@', str(config))
+target = config / 'codespell/codespellrc'
+stamp = state / 'codespell.sha256'
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+if target.is_symlink():
+    raise SystemExit(f'Refusing to replace symlink: {target}')
+if target.exists() and target.read_text() != content:
+    if not stamp.exists() or sha(target.read_bytes()) != stamp.read_text().strip():
+        raise SystemExit(f'Refusing to overwrite unmanaged config: {target}')
+if not target.exists() or target.read_text() != content:
+    target.write_text(content)
+checksum = sha(content.encode()) + '\n'
+if not stamp.exists() or stamp.read_text() != checksum:
+    stamp.write_text(checksum)
+print('CONFIGURED codespell: absolute XDG ignore and exclusion inputs')
+if not shutil.which('bat'):
+    raise SystemExit('bat is required to build its asset cache (install packages --group dev)')
+version = subprocess.check_output(['bat', '--version'])
+assets = root / 'config/bat'
+fingerprint = hashlib.sha256(version)
+for path in sorted(assets.rglob('*')):
+    if path.is_file():
+        fingerprint.update(str(path.relative_to(assets)).encode())
+        fingerprint.update(path.read_bytes())
+stamp = state / 'bat.sha256'
+checksum = fingerprint.hexdigest() + '\n'
+bat_cache = Path(subprocess.check_output(['bat', '--cache-dir'], text=True).strip())
+if not stamp.exists() or stamp.read_text() != checksum or not (bat_cache / 'themes.bin').exists() or not (bat_cache / 'syntaxes.bin').exists():
+    subprocess.run(['bat', 'cache', '--build'], check=True)
+    subprocess.run(['bat', '--list-themes', '--color=never'], check=True, stdout=subprocess.DEVNULL)
+    stamp.write_text(checksum)
+print('CONFIGURED bat: asset cache matches sources and binary version')
+# Fedora packages the correct Pylint implementation as pylint-3. Preserve the
+# editor's portable command name, without hiding an existing PATH implementation.
+if not shutil.which('pylint') and shutil.which('pylint-3'):
+    source = Path(shutil.which('pylint-3')).resolve()
+    provider = subprocess.check_output(['rpm', '-qf', '--qf', '%{NAME}', str(source)], text=True)
+    if provider != 'python3-pylint':
+        raise SystemExit(f'Refusing unexpected pylint-3 provider: {provider}')
+    target = home / '.local/bin/pylint'
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.is_symlink() and target.resolve() == source:
+        pass
+    elif target.exists() or target.is_symlink():
+        raise SystemExit(f'Refusing to replace existing Pylint command: {target}')
+    else:
+        target.symlink_to(source)
+    print(f'CONFIGURED pylint -> {source} (RPM: {provider})')

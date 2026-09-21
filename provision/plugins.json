@@ -1,0 +1,4 @@
+{
+  "nodejs": {"url": "https://github.com/asdf-vm/asdf-nodejs.git", "revision": "779c8dc84b3bdab38c2c80622d315c2c3267f74b"},
+  "ruby": {"url": "https://github.com/asdf-vm/asdf-ruby.git", "revision": "8904117921fed2b703bcec3fd6aa21f5703a7a7c"}
+}

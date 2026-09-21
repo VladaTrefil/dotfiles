@@ -6,12 +6,14 @@ dry_run=false
 
 usage() {
     cat <<'EOF'
-Usage: ./install [link|packages|system|all] [options]
+Usage: ./install [link|packages|tools|runtimes|system|all] [options]
 
   link        Initialize pinned submodules and create links (default).
   packages    Print a dnf command; confirmation and root are needed to run it.
+  tools       Install checksum-pinned asdf, StyLua, Selene and lf release binaries.
+  runtimes    Provision tool-versions and its npm/gem defaults with Go-asdf.
   system      Describe future privileged steps; currently does nothing.
-  all         Run packages, link, system, then show docs/manual-steps.md.
+  all         Run packages, link, tools, runtimes, system, then show docs/manual-steps.md.
 
 Options for packages and all:
   --group base,dev    Read only the named packages/<group>.txt files.
@@ -131,6 +133,7 @@ install_link() {
     PYTHONDONTWRITEBYTECODE=1 "$repo_dir/modules/dotbot/bin/dotbot" \
         --base-directory "$repo_dir" --config-file "$repo_dir/install.conf.yaml" \
         --no-color --verbose
+    "$repo_dir/bin/configure-tools"
 }
 
 install_system() {
@@ -142,7 +145,7 @@ subcommand=${1:-link}
 if (($#)); then shift; fi
 case "$subcommand" in
     -h|--help) usage; exit 0 ;;
-    link|packages|system|all) ;;
+    link|packages|tools|runtimes|system|all) ;;
     *) die "Unknown subcommand: $subcommand" ;;
 esac
 for argument in "$@"; do
@@ -155,6 +158,14 @@ case "$subcommand" in
         install_link
         ;;
     packages) install_packages "$@" ;;
+    tools|runtimes)
+        (($# == 0)) || die "$subcommand accepts only --help"
+        if [[ $subcommand == tools ]]; then
+            "$repo_dir/bin/install-releases"
+        else
+            "$repo_dir/bin/install-runtimes"
+        fi
+        ;;
     system)
         (($# == 0)) || die 'system accepts only --help'
         install_system
@@ -162,9 +173,11 @@ case "$subcommand" in
     all)
         install_packages "$@"
         if "$dry_run"; then
-            printf 'Would run link, then system (stub), then show manual steps.\n'
+            printf 'Would run link, tools, runtimes, then system (stub), then show manual steps.\n'
         else
             install_link
+            "$repo_dir/bin/install-releases"
+            "$repo_dir/bin/install-runtimes"
             install_system
         fi
         cat -- "$repo_dir/docs/manual-steps.md"

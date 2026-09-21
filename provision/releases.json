@@ -1,0 +1,26 @@
+{
+  "asdf": {
+    "version": "0.20.0",
+    "url": "https://github.com/asdf-vm/asdf/releases/download/v0.20.0/asdf-v0.20.0-linux-amd64.tar.gz",
+    "sha256": "9c25e1af7cc4c9d59ff3736eba14fd000480c32929258f80d8c5a8b290ebee14",
+    "member": "asdf"
+  },
+  "stylua": {
+    "version": "2.5.2",
+    "url": "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.5.2/stylua-linux-x86_64-musl.zip",
+    "sha256": "ca6f1cf52eaf69e6632b81acef9c197aa24b85eb30d2455a35e7dbe28ae77c72",
+    "member": "stylua"
+  },
+  "selene": {
+    "version": "0.31.0",
+    "url": "https://github.com/Kampfkarren/selene/releases/download/0.31.0/selene-0.31.0-linux.zip",
+    "sha256": "dac452422747999ec4919bbb8bb52992b66aae533b60022bf005669de8616671",
+    "member": "selene"
+  },
+  "lf": {
+    "version": "r42",
+    "url": "https://github.com/gokcehan/lf/releases/download/r42/lf-linux-amd64.tar.gz",
+    "sha256": "c6abe6c0c11a0a4ae89754884aad67de18decc113935cbc5eaa57dc0d1850fb4",
+    "member": "lf"
+  }
+}

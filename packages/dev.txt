@@ -1,2 +1,16 @@
 # Fedora capitalization (docs/fedora-packages.md); provides shellcheck.
 ShellCheck
+# Viewer cache is compiled by install link.
+bat
+# asdf-ruby / ruby-build and native gems (system build dependencies).
+gcc
+make
+patch
+bzip2
+openssl-devel
+libyaml-devel
+readline-devel
+zlib-ng-compat-devel
+libffi-devel
+gdbm-devel
+perl-FindBin

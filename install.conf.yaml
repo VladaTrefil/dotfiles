@@ -8,6 +8,7 @@
 - create:
     # Parent of all config links; install supplies the default XDG paths.
     - $XDG_CONFIG_HOME
+    - $XDG_CONFIG_HOME/codespell
     # Individual shell links leave room for private work.sh outside the checkout.
     - $XDG_CONFIG_HOME/shell
     # Shell and less must be able to persist their history on first use.
@@ -29,3 +30,16 @@
     $XDG_CONFIG_HOME/zsh: config/zsh
     $XDG_CONFIG_HOME/wgetrc: config/wgetrc
     ~/.zshenv: config/zsh/.zshenv
+    $XDG_CONFIG_HOME/asdf: config/asdf
+    ~/.tool-versions: config/asdf/tool-versions
+    $XDG_CONFIG_HOME/stylelint: config/stylelint
+    $XDG_CONFIG_HOME/stylua: config/stylua
+    $XDG_CONFIG_HOME/rubocop: config/rubocop
+    $XDG_CONFIG_HOME/solargraph: config/solargraph
+    $XDG_CONFIG_HOME/codespell/ignore.txt: config/codespell/ignore.txt
+    $XDG_CONFIG_HOME/codespell/exclude-file.txt: config/codespell/exclude-file.txt
+    $XDG_CONFIG_HOME/npm: config/npm
+    $XDG_CONFIG_HOME/pry: config/pry
+    $XDG_CONFIG_HOME/bat: config/bat
+    $XDG_CONFIG_HOME/lazygit: config/lazygit
+    $XDG_CONFIG_HOME/pylintrc: config/pylintrc

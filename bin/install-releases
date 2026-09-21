@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+"""Install checksum-pinned upstream Linux x86_64 executables, never archive paths."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import platform
+import subprocess
+import tarfile
+import tempfile
+import zipfile
+
+root = Path(__file__).resolve().parent.parent
+if platform.system() != 'Linux' or platform.machine() != 'x86_64':
+    raise SystemExit('Pinned releases support Linux x86_64 only; no implicit fallback.')
+cache = Path(os.environ.get('XDG_CACHE_HOME', str(Path.home() / '.cache'))) / 'dotfiles/releases'
+bindir = Path.home() / '.local/bin'
+cache.mkdir(parents=True, exist_ok=True)
+bindir.mkdir(parents=True, exist_ok=True)
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+for name, spec in json.loads((root / 'provision/releases.json').read_text()).items():
+    archive = cache / (spec['sha256'] + Path(spec['url']).name)
+    if not archive.exists():
+        with tempfile.NamedTemporaryFile(dir=cache) as download:
+            subprocess.run(['curl', '--fail', '--location', '--retry', '3', '--proto', '=https',
+                            '--tlsv1.2', '--output', download.name, spec['url']], check=True)
+            data = Path(download.name).read_bytes()
+            if digest(data) != spec['sha256']:
+                raise SystemExit(f'{name}: downloaded SHA-256 mismatch; nothing installed')
+            archive.write_bytes(data)
+    if digest(archive.read_bytes()) != spec['sha256']:
+        raise SystemExit(f'{name}: cached SHA-256 mismatch; remove {archive} and retry')
+    if spec['url'].endswith('.zip'):
+        with zipfile.ZipFile(archive) as package:
+            executable = package.read(spec['member'])
+    else:
+        with tarfile.open(archive) as package:
+            member = package.getmember(spec['member'])
+            if not member.isfile():
+                raise SystemExit(f'{name}: expected a regular archive member')
+            executable = package.extractfile(member).read()
+    target = bindir / name
+    stamp = cache / (name + '.installed-sha256')
+    installed = digest(executable)
+    if target.is_symlink():
+        raise SystemExit(f'Refusing to replace symlink: {target}')
+    if target.exists() and target.read_bytes() != executable:
+        if not stamp.exists() or stamp.read_text().strip() != digest(target.read_bytes()):
+            raise SystemExit(f'Refusing to replace unmanaged executable: {target}')
+    if not target.exists() or target.read_bytes() != executable:
+        with tempfile.NamedTemporaryFile(dir=bindir, delete=False) as staging:
+            staging.write(executable)
+            staging_path = Path(staging.name)
+        staging_path.chmod(0o755)
+        staging_path.replace(target)
+    if not stamp.exists() or stamp.read_text() != installed + '\n':
+        stamp.write_text(installed + '\n')
+    print(f'VERIFIED {name} {spec["version"]} SHA-256 {spec["sha256"]}', flush=True)

@@ -1,0 +1,7 @@
+**/.claude/settings.local.json
+
+# Local installer/test state and Python bytecode (never committed).
+/.state/
+/.cache/
+__pycache__/
+*.py[cod]

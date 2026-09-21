@@ -2,7 +2,7 @@
 	email = vladislav.trefil@protonmail.com
 	name = Vlada
 [core]
-	editor = /usr/local/bin/nvim
+	editor = nvim
 [alias]
 	br = branch -vv
 	bra = branch -vv --all
@@ -15,10 +15,10 @@
 	co = checkout
 	pullrb = pull --rebase
 	lg = log -p
-	gr = log --graph --format=line # graph
-	grd = log --graph --format=detail # graph detail
-	gra = log --graph --format=line --all # graph all
-	grad = log --graph --format=detail --all # graph all in detail
+	gr = log --graph --format=oneline # graph
+	grd = log --graph --format=fuller # graph detail
+	gra = log --graph --format=oneline --all # graph all
+	grad = log --graph --format=fuller --all # graph all in detail
 	update-submodules = submodule update --init --recursive
 	upgrade-submodules = submodule update --init --remote
 
@@ -34,10 +34,7 @@
 [grep]
 	lineNumber = true
 
-[http]
-	cookieFile = ~/.gitcookies
-
-[core]
-	excludesfile = ~/.config/git/ignore
+[init]
+	defaultBranch = main
 [pull]
 	rebase = true

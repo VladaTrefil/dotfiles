@@ -1,0 +1,19 @@
+# Portable shell, Oh My Zsh utilities, editor and Wayland clipboard.
+# Runtime managers and application tools belong to Block 2.
+zsh
+git
+coreutils
+findutils
+grep
+sed
+gawk
+tar
+gzip
+curl
+less
+ncurses
+neovim
+wl-clipboard
+# GNU Wget under /usr/bin/wget; Fedora's generic wget provider can be Wget2.
+# https://packages.fedoraproject.org/pkgs/wget1/wget1-wget/
+wget1-wget

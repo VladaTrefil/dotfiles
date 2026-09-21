@@ -97,7 +97,37 @@ install_packages() {
 }
 
 install_link() {
+    # New cache parents must also pass Zsh's completion ownership/mode checks.
+    umask 077
+    # Dotbot expands environment variables, but not shell default expressions.
+    export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+    export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+    export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+    export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+    if [[ -e $XDG_CONFIG_HOME/bundle && ! -d $XDG_CONFIG_HOME/bundle ]]; then
+        printf 'Error: %s/bundle is a file; migrate its settings to bundle/config separately before linking.\n' "$XDG_CONFIG_HOME" >&2
+        return 1
+    fi
     git -C "$repo_dir" submodule update --init --recursive
+    # This pinned p10k compiles beside its sources. Give it a runtime copy in
+    # cache so interactive startup never writes into the submodule checkout.
+    local theme_source theme_revision theme_cache staging
+    theme_source="$repo_dir/config/zsh/custom/themes/powerlevel10k"
+    theme_revision=$(git -C "$theme_source" rev-parse HEAD)
+    theme_cache="$XDG_CACHE_HOME/zsh/powerlevel10k-$theme_revision"
+    if [[ ! -d $theme_cache ]]; then
+        mkdir -p -- "$XDG_CACHE_HOME/zsh"
+        staging=$(mktemp -d "$XDG_CACHE_HOME/zsh/.powerlevel10k.XXXXXX")
+        if git -C "$theme_source" archive HEAD | tar -xf - -C "$staging"; then
+            mv -- "$staging" "$theme_cache"
+        else
+            rm -rf -- "$staging"
+            return 1
+        fi
+    fi
+    # Fetch the checksum-pinned daemon during installation, so the first real
+    # prompt does not download binaries or print gitstatus bootstrap messages.
+    sh "$theme_cache/gitstatus/install"
     PYTHONDONTWRITEBYTECODE=1 "$repo_dir/modules/dotbot/bin/dotbot" \
         --base-directory "$repo_dir" --config-file "$repo_dir/install.conf.yaml" \
         --no-color --verbose

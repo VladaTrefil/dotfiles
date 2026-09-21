@@ -2,13 +2,30 @@
     link:
       relink: false
       force: false
+    create:
+      mode: 0700
 
 - create:
-    # Parent of the config links below.
-    - ~/.config
-    # Shared XDG state root; app-specific state directories arrive with each app.
-    - ~/.local/state
+    # Parent of all config links; install supplies the default XDG paths.
+    - $XDG_CONFIG_HOME
+    # Individual shell links leave room for private work.sh outside the checkout.
+    - $XDG_CONFIG_HOME/shell
+    # Shell and less must be able to persist their history on first use.
+    - $XDG_STATE_HOME/zsh
+    - $XDG_STATE_HOME/less
+    # Completion dumps and the pinned theme's compiled runtime copy live here.
+    - $XDG_CACHE_HOME/zsh
+    # wgetrc uses Wget's tilde expansion and the fixed default HSTS cache.
+    - ~/.cache
+    # BUNDLE_USER_CONFIG names a file; this is its containing directory.
+    - $XDG_CONFIG_HOME/bundle
 
 - link:
-    ~/.config/git: config/git
-    ~/.config/nvim: modules/nvim
+    $XDG_CONFIG_HOME/git: config/git
+    $XDG_CONFIG_HOME/nvim: modules/nvim
+    $XDG_CONFIG_HOME/shell/profile: config/shell/profile
+    $XDG_CONFIG_HOME/shell/aliases.sh: config/shell/aliases.sh
+    $XDG_CONFIG_HOME/shell/inputrc: config/shell/inputrc
+    $XDG_CONFIG_HOME/zsh: config/zsh
+    $XDG_CONFIG_HOME/wgetrc: config/wgetrc
+    ~/.zshenv: config/zsh/.zshenv

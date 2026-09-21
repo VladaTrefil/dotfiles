@@ -5,3 +5,6 @@
 /.cache/
 __pycache__/
 *.py[cod]
+
+# Supplied only by the separate private dotfiles-work checkout.
+/config/shell/work.sh

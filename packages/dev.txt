@@ -1,1 +1,2 @@
-# Reserved for a later development-tools block; no packages selected yet.
+# Fedora capitalization (docs/fedora-packages.md); provides shellcheck.
+ShellCheck

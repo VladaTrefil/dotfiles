@@ -33,10 +33,6 @@
 ehthumbs.db
 Thumbs.db
 
-# ASDF               #
-######################
-.tool-versions
-
 # SyncThing          #
 ######################
 .sync-conflict

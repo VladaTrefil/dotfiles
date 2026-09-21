@@ -1,0 +1,128 @@
+# shellcheck shell=sh
+# Portable environment; sourced by login and interactive Zsh startup.
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+#  ENV Variables
+
+export EDITOR="nvim"
+export TERMINAL="kitty"
+export BROWSER="chromium"
+export EXPLORER="lf"
+
+export DEV_PATH="$HOME/Development"
+export DOTFILES_PATH="${DOTFILES_PATH:-$HOME/Development/dotfiles}"
+export IMAGES_PATH="$HOME/Images"
+
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+export BIN_PATH="$HOME/.local/bin"
+
+# proton bridge and pass
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+#  ASDF
+
+export ASDF_DATA_DIR="${ASDF_DATA_DIR:-$XDG_DATA_HOME/asdf}"
+
+export ASDF_CONFIG_FILE="${ASDF_CONFIG_FILE:-$XDG_CONFIG_HOME/asdf/asdfrc}"
+
+export ASDF_GEM_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-gems"
+export ASDF_NPM_DEFAULT_PACKAGES_FILE="$XDG_CONFIG_HOME/asdf/default-npm-packages"
+
+# explicitly include go.mod and go.work
+export ASDF_GOLANG_MOD_VERSION_ENABLED=true
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+#  ZSH
+
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export HISTFILE="$XDG_STATE_HOME/zsh/history"
+export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump"
+export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh/"
+
+export ZSH="$ZDOTDIR/oh-my-zsh"
+export ZSH_CUSTOM="$ZDOTDIR/custom"
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+#  LESS
+
+export LESSHISTFILE="$XDG_STATE_HOME/less/history"
+export LESSKEY="$XDG_CONFIG_HOME/less/keys"
+
+# Keep less history in XDG state; allow ANSI color escapes.
+export LESS=-R
+
+# colorize manual pages
+LESS_TERMCAP_mb="$(printf '%b' '\033[1;31m')"
+LESS_TERMCAP_md="$(printf '%b' '\033[1;36m')"
+LESS_TERMCAP_me="$(printf '%b' '\033[0m')"
+LESS_TERMCAP_so="$(printf '%b' '\033[01;44;33m')"
+LESS_TERMCAP_se="$(printf '%b' '\033[0m')"
+LESS_TERMCAP_us="$(printf '%b' '\033[1;32m')"
+LESS_TERMCAP_ue="$(printf '%b' '\033[0m')"
+export LESS_TERMCAP_mb LESS_TERMCAP_md LESS_TERMCAP_me LESS_TERMCAP_so
+export LESS_TERMCAP_se LESS_TERMCAP_us LESS_TERMCAP_ue
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+#  Node
+
+export NODE_REPL_HISTORY="$XDG_DATA_HOME/node/node_repl_history"
+
+# NPM
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+#  Python
+
+export PIPENV_VENV_IN_PROJECT=1
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+#  PHP
+
+# PHP ENV PATH
+# export PATH="/usr/local/opt/php@7.2/bin:$PATH"
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+#  PostgreSQL
+
+export PSQLRC="$XDG_CONFIG_HOME/pg/psqlrc"
+export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
+export PGPASSFILE="$XDG_CONFIG_HOME/pg/pgpass"
+export PGSERVICEFILE="$XDG_CONFIG_HOME/pg/pg_service.conf"
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+#  Ruby
+
+export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle/config"
+export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
+export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
+
+export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
+
+export SOLARGRAPH_CACHE="$XDG_CACHE_HOME/solargraph"
+
+# Ruby options - require bundle/setup library to compile gems
+# export RUBYOPT="-rbundler/setup"
+
+# ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+export INPUTRC="$XDG_CONFIG_HOME/shell/inputrc"
+
+export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
+
+export RUSTUP_HOME="$XDG_CONFIG_HOME/rustup"
+export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
+
+export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
+export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
+
+export W3M_DIR="$XDG_STATE_HOME/w3m"
+
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+
+export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+
+export RANGER_LOAD_DEFAULT_RC=false

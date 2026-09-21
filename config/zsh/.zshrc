@@ -48,6 +48,12 @@ bindkey '^F' autosuggest-accept
 # Prompt settings are versioned in $ZDOTDIR/p10k.zsh.
 [[ ! -f "$ZDOTDIR/p10k.zsh" ]] || source "$ZDOTDIR/p10k.zsh"
 
+# Must follow p10k.zsh: its line 27 unsets every POWERLEVEL9K_* variable, so anything
+# set earlier is discarded. gitstatus ships no binary and p10k would otherwise fetch an
+# unpinned prebuilt gitstatusd from GitHub on first prompt - network required before the
+# shell is usable, and an unverified binary installed at startup. Use the pure-zsh backend.
+POWERLEVEL9K_DISABLE_GITSTATUS=true
+
 # }}}
 # ────────────────────────────────────────────────────────────────────────────────────────────────────
 

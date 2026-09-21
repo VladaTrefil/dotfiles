@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+nvim_dir="$repo_dir/modules/nvim"
+dry_run=false
+push=false
+
+usage() {
+    cat <<'HELP'
+Usage: bin/sync-nvim [--dry-run] [--push] [--help]
+
+Fetch and fast-forward modules/nvim on main, then commit its updated pointer.
+Local changes, detached HEAD, other branches, and unpublished commits are
+preserved by refusing to sync. The parent index must have no staged changes.
+
+  --dry-run  Print the planned actions without fetching or changing anything.
+  --push     After syncing, push nvim main, then the parent branch to origin.
+  --help     Show this help.
+
+Without --push, neither repository is pushed. Initialize submodules first
+with ./install link if needed. Commit or stash local changes before syncing.
+HELP
+}
+
+die() { printf 'Error: %s\n' "$*" >&2; exit 1; }
+
+for argument in "$@"; do
+    case "$argument" in
+        --dry-run) dry_run=true ;;
+        --push) push=true ;;
+        -h|--help) usage; exit 0 ;;
+        *) die "Unknown option: $argument (see --help)" ;;
+    esac
+done
+
+[[ -e $nvim_dir/.git ]] || die 'modules/nvim is not initialized; run ./install link first.'
+branch=$(git -C "$nvim_dir" symbolic-ref --quiet --short HEAD) ||
+    die 'modules/nvim has a detached HEAD; switch to main before syncing.'
+[[ $branch == main ]] || die "modules/nvim is on branch '$branch', not main; refusing to move local work."
+[[ -z $(git -C "$nvim_dir" status --porcelain --untracked-files=all --ignore-submodules=none) ]] ||
+    die 'modules/nvim has uncommitted changes (including untracked files); commit or stash them first.'
+git -C "$repo_dir" diff --cached --quiet --ignore-submodules=none ||
+    die 'The parent repository has staged changes; commit or unstage them before syncing.'
+parent_branch=$(git -C "$repo_dir" symbolic-ref --quiet --short HEAD) ||
+    die 'The parent repository has a detached HEAD; switch to a branch before syncing.'
+recorded=$(git -C "$repo_dir" rev-parse HEAD:modules/nvim)
+
+if "$dry_run"; then
+    printf 'Would fetch origin/main in modules/nvim.\n'
+    printf 'Would fast-forward modules/nvim main to origin/main, refusing unpublished or divergent local commits.\n'
+    printf 'Would compare with parent pointer %s and, if changed, stage modules/nvim and commit "Update nvim submodule to <new-short-SHA>".\n' "${recorded:0:7}"
+    if "$push"; then
+        printf 'Would push modules/nvim main to origin, then parent branch %s to origin.\n' "$parent_branch"
+    else
+        printf 'No pushes requested.\n'
+    fi
+    exit 0
+fi
+
+git -C "$nvim_dir" fetch origin refs/heads/main:refs/remotes/origin/main
+git -C "$nvim_dir" merge-base --is-ancestor HEAD refs/remotes/origin/main ||
+    die 'modules/nvim main has unpublished or divergent commits; reconcile them with origin/main before syncing.'
+git -C "$nvim_dir" merge --ff-only refs/remotes/origin/main
+updated=$(git -C "$nvim_dir" rev-parse HEAD)
+short_sha=$(git -C "$nvim_dir" rev-parse --short HEAD)
+if [[ $recorded == "$updated" ]]; then
+    printf 'No change: modules/nvim is already recorded at %s.\n' "$short_sha"
+else
+    git -C "$repo_dir" add -- modules/nvim
+    git -C "$repo_dir" commit -m "Update nvim submodule to $short_sha" --only -- modules/nvim
+fi
+
+if "$push"; then
+    git -C "$nvim_dir" push origin main:refs/heads/main
+    git -C "$repo_dir" push origin "HEAD:refs/heads/$parent_branch"
+fi

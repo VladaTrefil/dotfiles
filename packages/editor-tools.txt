@@ -18,6 +18,7 @@ sed
 python3
 python3-neovim
 ShellCheck
+shfmt
 python3-mypy
 python3-pylint
 codespell

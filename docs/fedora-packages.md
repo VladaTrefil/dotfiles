@@ -112,7 +112,7 @@ inventory. The last nine rows describe dormant configuration or old lists, not m
 | `isort` | `python3-isort` — `7.0.0-2.fc44` (fedora) | Repository availability verified; feature integration not assessed. |
 | `black` | `black` — `26.5.1-1.fc44` (updates) | Package is black, not python3-black; /usr/bin/black provider verified. |
 | `prettier` | **Missing in queried Fedora metadata**; names: `prettier`, `nodejs-prettier` | Missing native candidate/provider; npm prettier candidate, unverified. |
-| `beautysh` | **Missing in queried Fedora metadata**; names: `beautysh`, `python3-beautysh` | Missing native candidate/provider; PyPI beautysh in an isolated environment candidate, unverified. |
+| `shfmt` | `shfmt` — `3.7.0-5.fc41` (fedora) | B2d: `/usr/bin/shfmt` owned by this RPM; upstream `mvdan/sh` and Conform formatting with `-i 2` verified on Fedora 44. |
 | `clang-format` | `clang-tools-extra` — `22.1.8-4.fc44` (updates) | /usr/bin/clang-format provider verified as clang-tools-extra. |
 | `lua-language-server` | **Missing in queried Fedora metadata**; names: `lua-language-server` | Inactive. Missing native candidate/provider; upstream LuaLS binary/source candidate, unverified. |
 | `vscode-css-language-server` (old `css-lsp`) | **Missing in queried Fedora metadata**; names: `vscode-langservers-extracted` | Inactive. Missing native candidate/provider; npm vscode-langservers-extracted candidate, unverified. |

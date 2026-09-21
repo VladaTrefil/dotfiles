@@ -95,6 +95,12 @@
     "ShellCheck",
     "shellcheck"
   ],
+  "shfmt": [
+    "shfmt",
+    "--help",
+    "shfmt formats shell programs",
+    "mvdan/sh"
+  ],
   "python3-mypy": [
     "mypy",
     "--version",

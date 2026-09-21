@@ -22,7 +22,7 @@ uses explicit `asdf plugin add`, `plugin update REF`, `install NAME VERSION` and
 `packages/editor-tools.txt` contains active editor dependencies and parser/test
 prerequisites, separately from `dev.txt` (Ruby build dependencies and Bat).
 `tests/providers.json` describes the intended executable and upstream for each
-of the 22 RPMs. `tests/providers.py` runs its CLI, checks RPM file ownership and
+of the 23 RPMs. `tests/providers.py` runs its CLI, checks RPM file ownership and
 package upstream metadata on Fedora, and records Arch ownership on the host.
 Fedora git-core owns `git`; the higher-level git RPM is a metapackage. Fedora
 ships Pylint as `pylint-3`; `install link` creates `~/.local/bin/pylint` only after
@@ -83,8 +83,8 @@ when the runtime is already installed, then refreshes shims. This means rerunnin
 
 Rails is no longer globally installed: projects supply it. Dormant LuaLS, pylsp,
 TypeScript/Vim/YAML servers and unused rustfmt are not promoted to mandatory
-requirements. Beautysh remains an identified source gap: no verified Fedora RPM,
-and no Python-environment provisioning has been authorized for this block.
+requirements. Shell formatting uses Fedora's `shfmt` 3.7.0 with Conform's `-i 2`
+indent setting; its executable ownership, upstream identity and formatting were verified on Fedora 44.
 LazyGit's clean config is retained; enabling a COPR is not part of this change.
 Desktop tools remain in their later blocks.
 

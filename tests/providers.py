@@ -31,4 +31,4 @@ for package, (binary, flag, marker, upstream) in inventory.items():
         metadata = result.stdout.strip() if result.returncode == 0 else 'temporary test venv (pip codespell/shellcheck-py)'
         assert result.returncode == 0 or binary in {'codespell', 'shellcheck'}, (binary, result.stderr)
     print(f'PROVIDER {package}: {next(line.strip() for line in output.splitlines() if marker.lower() in line.lower())} | {metadata}', flush=True)
-print('PASS: all 22 editor package implementations and providers')
+print(f'PASS: all {len(inventory)} editor package implementations and providers')

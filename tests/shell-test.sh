@@ -15,7 +15,9 @@ mkdir -p "$fixture/repo/modules/nvim" "$fixture/logs"
 tar -C "$repo_dir" --exclude='*secret*env*' --exclude='*SECRET*ENV*' \
     --exclude=Documents --exclude=work.sh -cf - \
     config/shell/profile config/shell/aliases.sh config/shell/inputrc \
-    config/zsh config/git config/wgetrc install.conf.yaml |
+    config/zsh config/git config/wgetrc install.conf.yaml \
+    config/asdf config/stylelint config/stylua config/rubocop config/solargraph \
+    config/codespell config/npm config/pry config/bat config/lazygit config/pylintrc |
     tar -C "$fixture/repo" -xf -
 
 sandbox=(bwrap --die-with-parent --unshare-pid)

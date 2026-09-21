@@ -22,7 +22,7 @@ tar -C "$repo_dir" --exclude='*secret*env*' --exclude='*SECRET*ENV*' \
 
 # No real HOME or its config is mounted. Only the fixture is writable; even
 # /tmp outside the fixture belongs to the read-only sandbox root.
-sandbox=(bwrap --die-with-parent)
+sandbox=(bwrap --die-with-parent --dir /tmp)
 for runtime in /usr /bin /lib /lib64; do
     if [[ -d $runtime ]]; then
         sandbox+=(--ro-bind "$runtime" "$runtime")
@@ -134,6 +134,12 @@ links=(.config/git .config/nvim .config/shell/profile .config/shell/aliases.sh
     .config/shell/inputrc .config/zsh .config/wgetrc .zshenv)
 sources=(config/git modules/nvim config/shell/profile config/shell/aliases.sh
     config/shell/inputrc config/zsh config/wgetrc config/zsh/.zshenv)
+for name in asdf stylelint stylua rubocop solargraph npm pry bat lazygit; do
+    links+=(".config/$name")
+    sources+=("config/$name")
+done
+links+=(.tool-versions .config/pylintrc .config/codespell/ignore.txt .config/codespell/exclude-file.txt)
+sources+=(config/asdf/tool-versions config/pylintrc config/codespell/ignore.txt config/codespell/exclude-file.txt)
 for index in "${!links[@]}"; do
     target="$test_home/${links[$index]}"
     [[ -L $target && $(readlink -f -- "$target") == "$test_home/repo/${sources[$index]}" ]] ||
@@ -142,7 +148,8 @@ done
 for directory in .config/shell .config/bundle .local/state/zsh .local/state/less .cache/zsh; do
     [[ -d $test_home/$directory ]] || fail "Missing shell directory: $directory"
 done
-printf 'PASS: all eight links and shell history, cache and Bundler directories exist.\n'
+[[ -f $test_home/.config/codespell/codespellrc ]] || fail 'Generated codespell rc missing'
+printf 'PASS: all %s links, generated codespell rc and shell directories exist.\n' "${#links[@]}"
 
 
 snapshot > "$test_home/logs/before.json"

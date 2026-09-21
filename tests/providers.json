@@ -1,0 +1,134 @@
+{
+  "neovim": [
+    "nvim",
+    "--version",
+    "NVIM",
+    "neovim"
+  ],
+  "git-core": [
+    "git",
+    "--version",
+    "git version",
+    "git"
+  ],
+  "curl": [
+    "curl",
+    "--version",
+    "curl",
+    "curl"
+  ],
+  "tar": [
+    "tar",
+    "--version",
+    "GNU tar",
+    "gnu.org"
+  ],
+  "gzip": [
+    "gzip",
+    "--version",
+    "gzip",
+    "gzip"
+  ],
+  "gcc": [
+    "gcc",
+    "--version",
+    "gcc",
+    "gcc.gnu.org"
+  ],
+  "tree-sitter-cli": [
+    "tree-sitter",
+    "--version",
+    "tree-sitter",
+    "tree-sitter"
+  ],
+  "bash": [
+    "bash",
+    "--version",
+    "GNU bash",
+    "gnu.org"
+  ],
+  "coreutils": [
+    "env",
+    "--version",
+    "GNU coreutils",
+    "gnu.org"
+  ],
+  "ripgrep": [
+    "rg",
+    "--version",
+    "ripgrep",
+    "ripgrep"
+  ],
+  "fd-find": [
+    "fd",
+    "--version",
+    "fd",
+    "crates.io/crates/fd-find"
+  ],
+  "findutils": [
+    "find",
+    "--version",
+    "GNU findutils",
+    "gnu.org"
+  ],
+  "sed": [
+    "sed",
+    "--version",
+    "GNU sed",
+    "sed.sourceforge.net"
+  ],
+  "python3": [
+    "python3",
+    "--version",
+    "Python 3",
+    "python.org"
+  ],
+  "python3-neovim": [
+    "python3",
+    "-c",
+    "pynvim",
+    "neovim"
+  ],
+  "ShellCheck": [
+    "shellcheck",
+    "--version",
+    "ShellCheck",
+    "shellcheck"
+  ],
+  "python3-mypy": [
+    "mypy",
+    "--version",
+    "mypy",
+    "mypy"
+  ],
+  "python3-pylint": [
+    "pylint",
+    "--version",
+    "pylint",
+    "pylint"
+  ],
+  "codespell": [
+    "codespell",
+    "--version",
+    "2.",
+    "codespell"
+  ],
+  "python3-isort": [
+    "isort",
+    "--version",
+    "isort",
+    "isort"
+  ],
+  "black": [
+    "black",
+    "--version",
+    "black",
+    "black"
+  ],
+  "clang-tools-extra": [
+    "clang-format",
+    "--version",
+    "clang-format",
+    "llvm"
+  ]
+}

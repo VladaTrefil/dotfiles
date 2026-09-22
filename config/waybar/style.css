@@ -1,0 +1,56 @@
+/* Legacy GTK3 palette and simple widget rules, resolved to GTK CSS. */
+@define-color background #0c0c18;
+@define-color foreground #cdd6f4;
+@define-color foreground_soft #a6adc8;
+@define-color border #2f2f47;
+@define-color blue #31748f;
+@define-color blue_bluetooth #0a61b8;
+@define-color aqua #94e2d5;
+@define-color purple #b4befe;
+@define-color red #eb6f92;
+@define-color pink #f2c8c7;
+@define-color green #9cd8a5;
+@define-color gray #585b70;
+
+* {
+  font-family: "Iosevka", "Font Awesome 5 Pro";
+  font-size: 14px;
+  border: none;
+  min-height: 0;
+}
+window#waybar {
+  background: transparent;
+  color: @foreground;
+}
+#workspaces, #clock, #network, #cpu, #memory, #disk,
+#bluetooth, #pulseaudio, #tray {
+  background: @background;
+  border: 1px solid @border;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 8px 12px;
+}
+#workspaces { padding: 0 5px; }
+#workspaces button {
+  color: @gray;
+  padding: 0 8px;
+  border-radius: 10px;
+}
+#workspaces button.focused { color: @blue; background: @border; }
+#workspaces button.urgent { color: @red; }
+#clock { color: @pink; font-size: 16px; font-weight: bold; }
+#network { color: @green; }
+#cpu { color: @red; }
+#memory { color: @pink; }
+#disk { color: @foreground_soft; }
+#bluetooth { color: @blue_bluetooth; }
+#pulseaudio { color: @purple; }
+#pulseaudio.muted, #network.disconnected { color: @red; }
+#tray { padding: 5px 10px; }
+tooltip {
+  background: @background;
+  color: @foreground;
+  border: 1px solid @border;
+  border-radius: 10px;
+}
+tooltip label { padding: 5px; }

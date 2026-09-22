@@ -17,7 +17,10 @@ tar -C "$repo_dir" --exclude='*secret*env*' --exclude='*SECRET*ENV*' \
     config/shell/profile config/shell/aliases.sh config/shell/inputrc \
     config/zsh config/git config/wgetrc install.conf.yaml \
     config/asdf config/stylelint config/stylua config/rubocop config/solargraph \
-    config/codespell config/npm config/pry config/bat config/lazygit config/pylintrc |
+    config/codespell config/npm config/pry config/bat config/lazygit config/pylintrc \
+    config/sway config/waybar config/qt6ct config/qt-palette config/rofi config/dunst \
+    config/kitty config/gtk-3.0 config/gtk-4.0 config/environment.d \
+    config/mimeapps.list config/compose |
     tar -C "$fixture/repo" -xf -
 
 sandbox=(bwrap --die-with-parent --unshare-pid)

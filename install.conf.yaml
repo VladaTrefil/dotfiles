@@ -10,6 +10,8 @@
     - $XDG_CONFIG_HOME
     - $XDG_CONFIG_HOME/codespell
     - $XDG_CONFIG_HOME/ibus
+    - $XDG_CONFIG_HOME/qt5ct/colors
+    - $XDG_CONFIG_HOME/qt6ct/colors
     - $XDG_CONFIG_HOME/gtk-3.0
     - $XDG_CONFIG_HOME/gtk-4.0
     - $XDG_CONFIG_HOME/environment.d
@@ -48,6 +50,10 @@
     $XDG_CONFIG_HOME/lazygit: config/lazygit
     $XDG_CONFIG_HOME/pylintrc: config/pylintrc
     $XDG_CONFIG_HOME/sway: config/sway
+    $XDG_CONFIG_HOME/waybar: config/waybar
+    $XDG_CONFIG_HOME/qt6ct/qt6ct.conf: config/qt6ct/qt6ct.conf
+    $XDG_CONFIG_HOME/qt6ct/colors/Catppuccin-Mocha.conf: config/qt-palette/Catppuccin-Mocha.conf
+    $XDG_CONFIG_HOME/qt5ct/colors/Catppuccin-Mocha.conf: config/qt-palette/Catppuccin-Mocha.conf
     $XDG_CONFIG_HOME/rofi: config/rofi
     $XDG_CONFIG_HOME/dunst: config/dunst
     $XDG_CONFIG_HOME/kitty: config/kitty

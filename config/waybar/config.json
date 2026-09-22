@@ -1,0 +1,54 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 40,
+  "spacing": 5,
+  "modules-left": ["sway/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["network", "cpu", "memory", "disk", "bluetooth", "pulseaudio", "tray"],
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": false,
+    "format": "{name}"
+  },
+  "clock": {
+    "interval": 1,
+    "format": "{:%H:%M}",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "weeks-pos": "right",
+      "format": {
+        "today": "<span color='#f2c8c7'><b>{}</b></span>"
+      }
+    }
+  },
+  "network": {
+    "interval": 2,
+    "format-wifi": " {bandwidthDownBits}   {bandwidthUpBits}",
+    "format-ethernet": " {bandwidthDownBits}   {bandwidthUpBits}",
+    "format-linked": " linked",
+    "format-disconnected": " offline",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%) · {ifname}",
+    "tooltip-format-ethernet": "{ifname} · {ipaddr}/{cidr}"
+  },
+  "cpu": {"interval": 2, "format": " {usage}%"},
+  "memory": {"interval": 5, "format": " {percentage}%"},
+  "disk": {"interval": 30, "path": "/", "format": " {percentage_used}%"},
+  "bluetooth": {
+    "format": " {status}",
+    "format-disabled": " off",
+    "format-off": " off",
+    "format-connected": " {num_connections}",
+    "format-no-controller": " absent",
+    "tooltip-format": "{controller_alias}: {status}",
+    "tooltip-format-connected": "{device_enumerate}"
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": " muted",
+    "format-icons": {"headphone": "", "headset": "", "default": ["", "", ""]},
+    "scroll-step": 2
+  },
+  "tray": {"spacing": 10}
+}

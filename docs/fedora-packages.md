@@ -205,7 +205,7 @@ inventory. The last nine rows describe dormant configuration or old lists, not m
 | `neofetch` | **Missing in queried Fedora metadata**; names: `neofetch` | Missing; fastfetch 2.68.1-1.fc44 is available as a replacement candidate, not installed. |
 | `lsof` | `lsof` — `4.98.0-9.fc44` (fedora) | Repository availability verified; feature integration not assessed. |
 | `neovim` | `neovim` — `0.12.5-1.fc44` (updates) | Repository availability verified; feature integration not assessed. |
-| `lazygit` | **Missing in queried Fedora metadata**; names: `lazygit` | Missing; upstream binary/source or a separately verified COPR candidate (unverified). |
+| `lazygit` | **Missing in queried Fedora metadata**; names: `lazygit` | Resolved for the editor by the checksum-pinned official LazyGit 0.65.1 Linux x86_64 release; the third-party COPR candidate remains unverified and is not enabled. |
 | `ranger` | `ranger` — `1.9.4-9.fc44` (fedora) | Repository availability verified; feature integration not assessed. |
 | `lf` | **Missing in queried Fedora metadata**; names: `lf` | Missing; upstream binary/source candidate (unverified). |
 | `ibus` | `ibus` — `1.5.34-4.fc44` (updates) | Repository availability verified; feature integration not assessed. |
@@ -223,7 +223,7 @@ inventory. The last nine rows describe dormant configuration or old lists, not m
 | `postgresql` | `postgresql` — `18.6-1.fc44` (updates) | Repository availability verified; feature integration not assessed. |
 | `postgresql-libs` | `libpq` — `18.0-4.fc44` (fedora) | Fedora client library package is libpq; postgresql-private-libs is separate and is not a general client dependency. |
 | `libpqxx` | `libpqxx` — `1:7.10.5-2.fc44` (fedora) | Repository availability verified; feature integration not assessed. |
-| `imagemagick` | `ImageMagick` — `1:7.1.2.31-1.fc44` (updates) | Repository availability verified; feature integration not assessed. |
+| `imagemagick` | `ImageMagick` — `1:7.1.2.31-1.fc44` (updates) | Selected to provide `magick`/`convert` for Snacks image conversion and previews. |
 | `perl-image-exiftool` | `perl-Image-ExifTool` — `13.50-1.fc44` (updates) | Repository availability verified; feature integration not assessed. |
 | `rubber` | `rubber` — `1.6.1-14.fc44` (fedora) | Repository availability verified; feature integration not assessed. |
 | `texlive-xetex` | `texlive-xetex` — `12:svn77830-111.fc44` (updates) | Repository availability verified; feature integration not assessed. |

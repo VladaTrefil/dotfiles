@@ -25,3 +25,4 @@ codespell
 python3-isort
 black
 clang-tools-extra
+ImageMagick

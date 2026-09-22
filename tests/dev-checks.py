@@ -21,14 +21,22 @@ assert all(line.split()[-1] == 'true' for line in actual), actual
 print('PASS: declared and provisioned runtimes are exactly nodejs 24.21.0 / ruby 3.4.10')
 
 npm_root = run('npm', 'root', '-g').stdout.strip()
-for package in (root / 'config/asdf/default-npm-packages').read_text().splitlines():
+for entry in (root / 'config/asdf/default-npm-packages').read_text().splitlines():
+    package, separator, pinned = entry.rpartition('@')
+    assert separator and package and pinned, f'Unpinned npm global: {entry}'
     metadata = json.loads((Path(npm_root) / package / 'package.json').read_text())
-    assert metadata['name'] == package
-    print('NPM', package, metadata['version'])
-for gem in (root / 'config/asdf/default-gems').read_text().splitlines():
-    result = run('ruby', '-rrubygems', '-e', 's=Gem::Specification.find_by_name(ARGV[0]); puts "#{s.name} #{s.version}"', gem)
-    print('GEM', result.stdout.strip())
-assert 'rails' not in (root / 'config/asdf/default-gems').read_text().splitlines()
+    assert metadata['name'] == package and metadata['version'] == pinned, (entry, metadata)
+    print('NPM', package, metadata['version'], 'PIN', pinned)
+gem_names = []
+for entry in (root / 'config/asdf/default-gems').read_text().splitlines():
+    gem, separator, pinned = entry.rpartition(':')
+    assert separator and gem and pinned, f'Unpinned gem global: {entry}'
+    result = run('ruby', '-rrubygems', '-e',
+                 's=Gem::Specification.find_by_name(ARGV[0]); puts "#{s.name} #{s.version}"', gem)
+    assert result.stdout.strip() == f'{gem} {pinned}', (entry, result.stdout)
+    gem_names.append(gem)
+    print('GEM', result.stdout.strip(), 'PIN', pinned)
+assert 'rails' not in gem_names
 
 stylelint = config / 'stylelint/stylelintrc.json'
 assert '/home/' not in stylelint.read_text() and '/installs/' not in stylelint.read_text()
@@ -66,7 +74,8 @@ for value, expected in [('xgit/a.py', False), ('building.py', False), ('src/buil
                         ('/tmp/.venv/a.py', True), ('src/dist/a.py', True), ('/tmp/.git/a.py', True)]:
     assert any(pattern.match(value) for pattern in patterns) == expected, value
 print('PASS: Pylint exclusions match directory components, including nested/absolute paths')
-for tool, version in [('stylua', '2.5.2'), ('selene', '0.31.0'), ('lf', 'r42')]:
+for tool, version in [('stylua', '2.5.2'), ('selene', '0.31.0'), ('lf', 'r42'),
+                      ('lazygit', '0.65.1')]:
     output = run(tool, '-version' if tool == 'lf' else '--version').stdout.strip()
     assert version in output, (tool, output)
     print('RELEASE', output)

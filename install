@@ -10,7 +10,7 @@ Usage: ./install [link|packages|tools|runtimes|system|all] [options]
 
   link        Initialize pinned submodules and create links (default).
   packages    Print a dnf command; confirmation and root are needed to run it.
-  tools       Install checksum-pinned asdf, StyLua, Selene and lf release binaries.
+  tools       Install checksum-pinned asdf, StyLua, Selene, lf and LazyGit release binaries.
   runtimes    Provision tool-versions and its npm/gem defaults with Go-asdf.
   system      Describe future privileged steps; currently does nothing.
   all         Run packages, link, tools, runtimes, system, then show docs/manual-steps.md.

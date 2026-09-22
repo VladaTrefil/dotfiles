@@ -22,7 +22,7 @@ uses explicit `asdf plugin add`, `plugin update REF`, `install NAME VERSION` and
 `packages/editor-tools.txt` contains active editor dependencies and parser/test
 prerequisites, separately from `dev.txt` (Ruby build dependencies and Bat).
 `tests/providers.json` describes the intended executable and upstream for each
-of the 23 RPMs. `tests/providers.py` runs its CLI, checks RPM file ownership and
+of the 24 RPMs. `tests/providers.py` runs its CLI, checks RPM file ownership and
 package upstream metadata on Fedora, and records Arch ownership on the host.
 Fedora git-core owns `git`; the higher-level git RPM is a metapackage. Fedora
 ships Pylint as `pylint-3`; `install link` creates `~/.local/bin/pylint` only after
@@ -31,11 +31,12 @@ already resolves. The Python provider is verified by importing **pynvim**, not b
 name. `clang-tools-extra` must provide LLVM clang-format; `fd-find` must provide
 sharkdp/fd. JSON linting is deliberately **npm jsonlint**, never Fedora demjson;
 the integration test checks `--compact` and the actual line/column diagnostics.
+ImageMagick supplies `magick`/`convert` for Snacks image conversion and previews.
 
-One mechanism installs **StyLua 2.5.2, Selene 0.31.0 and lf r42**: upstream release
-binaries, downloaded over HTTPS, verified against the fixed SHA-256 hashes in
-`provision/releases.json`, then installed to `~/.local/bin`. Go-asdf 0.20.0 uses
-the same mechanism. The digests were obtained from the upstream GitHub release
+One mechanism installs **StyLua 2.5.2, Selene 0.31.0, lf r42 and LazyGit 0.65.1**:
+upstream release binaries, downloaded over HTTPS, verified against the fixed SHA-256
+hashes in `provision/releases.json`, then installed to `~/.local/bin`. Go-asdf 0.20.0
+uses the same mechanism. The digests were obtained from the upstream GitHub release
 asset metadata on 2026-09-22 and independently compared with downloaded bytes.
 The lock contains exact source URLs. Cached archives are reverified on every run;
 only the named executable member is extracted, never archive paths. Unmanaged
@@ -44,24 +45,27 @@ previous installed checksum still matches. `tests/release-test.py` tests a corru
 cache and requires failure before any executable is installed.
 
 Trade-off: this avoids Cargo/Go build time and system toolchain dependencies for
-these three utilities, at the cost of trusting upstream release builds and
+these four utilities, at the cost of trusting upstream release builds and
 maintaining download hashes. The pinned set is Linux **x86_64 only**, covering
 both machines in this migration; other architectures fail explicitly. Ruby still
 builds from source using system C tooling. The asdf plugin Git revisions are pinned
 in `provision/plugins.json`; their builders verify the runtime archives against
-upstream checksums. Runtime-package lists intentionally track available compatible
-packages rather than forming a transitive package lock.
+upstream checksums. The npm and gem default-package lists pin every requested
+top-level global; their transitive dependencies remain ecosystem-resolved.
 
 Upstream sources: [asdf](https://github.com/asdf-vm/asdf/releases/tag/v0.20.0),
 [StyLua](https://github.com/JohnnyMorganz/StyLua/releases/tag/v2.5.2),
 [Selene](https://github.com/Kampfkarren/selene/releases/tag/0.31.0),
-[lf](https://github.com/gokcehan/lf/releases/tag/r42).
+[lf](https://github.com/gokcehan/lf/releases/tag/r42),
+[LazyGit](https://github.com/jesseduffield/lazygit/releases/tag/v0.65.1).
 
 ## Runtime-scoped packages
 
-Both default-package hooks remain deliberate. The installer also reconciles them
-when the runtime is already installed, then refreshes shims. This means rerunning
-`install runtimes` may update the unpinned ecosystem tools.
+Both default-package hooks remain deliberate. Every npm entry uses `name@version` and
+every gem entry uses `name:version`; these are the exact versions that resolved on the
+verified Fedora VM on 2026-09-22. The installer reconciles those pins even when the
+runtime is already installed, then refreshes shims. Rerunning `install runtimes` does
+not intentionally advance a top-level global package.
 
 | Entry | Retained purpose |
 |---|---|
@@ -85,8 +89,16 @@ Rails is no longer globally installed: projects supply it. Dormant LuaLS, pylsp,
 TypeScript/Vim/YAML servers and unused rustfmt are not promoted to mandatory
 requirements. Shell formatting uses Fedora's `shfmt` 3.7.0 with Conform's `-i 2`
 indent setting; its executable ownership, upstream identity and formatting were verified on Fedora 44.
-LazyGit's clean config is retained; enabling a COPR is not part of this change.
+Fedora's enabled repositories do not provide LazyGit, so its official Linux x86_64
+release is checksum-pinned instead of enabling the unverified third-party COPR candidate.
 Desktop tools remain in their later blocks.
+
+To update a pin later, choose and install an explicit candidate in the matching pinned
+runtime (`npm install --global name@version` or `gem install --no-document name:version`).
+Confirm it with `npm list --global --depth=0` or
+`ruby -rrubygems -e 's=Gem::Specification.find_by_name(ARGV[0]); puts s.version' name`,
+edit only that entry, then rerun `./install runtimes` and `tests/dev-test.sh "$HOME"`.
+Commit a pin bump as a deliberate tooling update; never replace a pin with a bare name.
 
 ## Shared configuration
 

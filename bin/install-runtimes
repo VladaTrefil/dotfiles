@@ -39,8 +39,7 @@ for name, runtime in rows:
         run(asdf, 'plugin', 'add', name, spec['url'])
     run(asdf, 'plugin', 'update', name, spec['revision'])
     run(asdf, 'install', name, runtime)
-    # Reconcile defaults on repeat runs too: plugin hooks run only on fresh installs.
-    # Pinning a runtime does not pin these deliberately runtime-scoped package lists.
+    # Reconcile exact package pins on repeat runs too: plugin hooks run only on fresh installs.
     runtime_bin = data / 'installs' / name / runtime / 'bin'
     runtime_env = dict(env, PATH=str(runtime_bin) + ':' + env['PATH'])
     defaults = config / 'asdf' / ('default-gems' if name == 'ruby' else 'default-npm-packages')

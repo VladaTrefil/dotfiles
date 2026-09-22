@@ -25,7 +25,7 @@ assert 'idle_inhibitor' not in str(bar)
 
 session = (root / 'config/sway/conf.d/60-session.conf').read_text()
 assert re.search(r'^exec dex-autostart --autostart --environment sway$', session, re.M)
-assert re.search(r'^exec waybar$', session, re.M)
+assert re.search(r'^exec waybar -c "\$HOME/\.config/waybar/config\.json"$', session, re.M)
 assert 'QT_QPA_PLATFORMTHEME=qt6ct' in (root / 'config/environment.d/50-desktop.conf').read_text()
 assert 'QT_QPA_PLATFORMTHEME' not in session
 assert 'color_scheme_path=~/.config/qt6ct/colors/Catppuccin-Mocha.conf' in (root / 'config/qt6ct/qt6ct.conf').read_text()
@@ -34,7 +34,9 @@ assert 'qt5ct.conf' not in (root / 'install.conf.yaml').read_text()
 # Git's file list excludes third-party submodule contents. Docs intentionally
 # describe the old configuration, but owned live files may not refer to it.
 paths = subprocess.check_output(
-    ['git', 'ls-files', '-co', '--exclude-standard', '-z'], cwd=root,
+    ['git', 'ls-files', '-co', '--exclude-standard', '-z', '--', '.',
+     ':(exclude,glob)**/*secret*env*', ':(exclude,glob)*secret*env*',
+     ':(exclude,glob)**/*SECRET*ENV*', ':(exclude,glob)*SECRET*ENV*'], cwd=root,
 ).decode().split('\0')
 for name in paths:
     if not name or name.startswith('docs/') or name == '.secret-env':

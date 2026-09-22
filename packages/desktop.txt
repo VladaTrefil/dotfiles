@@ -13,4 +13,11 @@ qt6ct
 ibus
 rofi
 pulseaudio-utils
+# Fedora Minimal has no sound server; pactl and Waybar's pulseaudio module need the PulseAudio shim.
+pipewire
+pipewire-pulseaudio
+pipewire-alsa
+wireplumber
 papirus-icon-theme
+# Waybar's module icons use Font Awesome private-use glyphs.
+fontawesome-6-free-fonts

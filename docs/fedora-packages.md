@@ -65,6 +65,26 @@ an `--assumeno` transaction against that repository. Installation then succeeded
 The binary reports `swayfx version 0.5.2 (based on sway 1.10.1)`; no plain `sway` RPM is installed.
 Graphical rendering still needs the user's TTY test.
 
+## Font packages
+
+Rechecked against the Fedora 44 `fedora` and `updates` metadata on
+**2026-09-22**. Package names alone were not treated as proof: DNF's generated
+font capabilities and `fc-list` after installation confirmed the requested
+families.
+
+| Required family | Fedora 44 result | Verification |
+|---|---|---|
+| `Noto Sans JP` | `google-noto-sans-jp-fonts` — `1:2.004-10.fc44` (`fedora`) | Provides `font(notosansjp)`; installed family is exactly `Noto Sans JP`. |
+| `Noto Color Emoji` | `google-noto-color-emoji-fonts` — `20250623-4.fc44` (`fedora`) | Provides `font(notocoloremoji)`; installed family is exactly `Noto Color Emoji`. |
+| `Iosevka Nerd Font` | **No Fedora 44 provider found** | Neither `font(iosevkanerdfont)` nor `font(iosevkanerdfontmono)` resolves. |
+| `MesloLGS NF` | **No Fedora 44 provider found** | `font(meslolgsnf)` does not resolve. |
+
+The only Fedora 44 package name matching a broad Nerd-font search was
+`texlive-inconsolata-nerd-font`; it is not either required family and was not
+substituted. `packages/fonts.txt` therefore contains only the two exact native
+providers. The unpackaged Nerd Fonts remain an explicit manual/future decision
+in `docs/manual-steps.md`; no download was improvised.
+
 Guest additions are `7.2.16-1.fc44`, host VirtualBox reports `7.2.18r175117`: same 7.2 series,
 not an exact patch match. `vboxservice` is enabled/active and the target remains `multi-user.target`.
 See [VM handoff](fedora-vm-baseline.md) for clipboard setup and the graphical checks.

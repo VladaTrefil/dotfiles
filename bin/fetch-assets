@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_url=${DOTFILES_ASSETS_REPO_URL:-git@github.com:VladaTrefil/dotfiles-assets.git}
+data_home=${XDG_DATA_HOME:-$HOME/.local/share}
+assets_dir="$data_home/dotfiles-assets"
+font_link="$data_home/fonts/dotfiles-assets"
+wallpaper_link="$HOME/.background"
+offline=false
+
+usage() {
+    cat <<'HELP'
+Usage: bin/fetch-assets [--offline] [--help]
+
+Clone or fast-forward the private dotfiles-assets repository, expose its fonts
+and wallpapers, and refresh the per-user font cache.
+
+  --offline  Use an already populated asset directory without contacting Git.
+             This is intended for a checkout copied onto a machine that has no
+             access to the private repository; it fails if the assets are absent.
+  --help     Show this help.
+
+The default checkout is $XDG_DATA_HOME/dotfiles-assets (or
+$HOME/.local/share/dotfiles-assets). Fonts are linked below the standard user
+font directory, and wallpapers are linked as $HOME/.background.
+
+The default online mode requires SSH access to
+git@github.com:VladaTrefil/dotfiles-assets.git. Authentication is deliberately
+noninteractive: a missing key fails with instructions instead of prompting.
+For unusual SSH setups, DOTFILES_ASSETS_SSH_COMMAND may name the ssh command
+and options to use. DOTFILES_ASSETS_REPO_URL exists for isolated testing.
+HELP
+}
+
+die() {
+    printf 'Error: %s\n' "$*" >&2
+    exit 1
+}
+
+for argument in "$@"; do
+    case "$argument" in
+        --offline) offline=true ;;
+        -h|--help) usage; exit 0 ;;
+        *) die "Unknown option: $argument (see --help)" ;;
+    esac
+done
+
+for tool in fc-cache find git ln mkdir readlink timeout; do
+    command -v "$tool" >/dev/null 2>&1 || die "Required command is missing: $tool"
+done
+
+ssh_command=${DOTFILES_ASSETS_SSH_COMMAND:-ssh}
+network_git() {
+    local status
+    if timeout --foreground --kill-after=5s 60s \
+        env GIT_TERMINAL_PROMPT=0 GIT_ASKPASS=/bin/false SSH_ASKPASS=/bin/false \
+        GIT_SSH_COMMAND="$ssh_command -o BatchMode=yes -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no -o NumberOfPasswordPrompts=0 -o ConnectTimeout=10 -o ConnectionAttempts=1 -o StrictHostKeyChecking=accept-new" \
+        git "$@"; then
+        return
+    else
+        status=$?
+    fi
+
+    printf '%s\n' \
+        "Error: could not access the private assets repository:" \
+        "  $repo_url" \
+        'Configure a GitHub SSH key with access to VladaTrefil/dotfiles-assets,' \
+        'verify it with "ssh -T git@github.com", and run bin/fetch-assets again.' \
+        'The base dotfiles install remains usable without these paid assets.' >&2
+    if ((status == 124 || status == 137)); then
+        printf '%s\n' 'The noninteractive Git operation timed out after 60 seconds.' >&2
+    fi
+    return "$status"
+}
+
+if "$offline"; then
+    [[ -d $assets_dir ]] ||
+        die "Offline asset directory is absent: $assets_dir (copy the private checkout there first)."
+else
+    if [[ -e $assets_dir ]]; then
+        [[ -d $assets_dir/.git ]] ||
+            die "$assets_dir exists but is not a Git checkout; move it aside or use --offline."
+        checkout_root=$(git -C "$assets_dir" rev-parse --show-toplevel)
+        [[ $(readlink -f -- "$checkout_root") == $(readlink -f -- "$assets_dir") ]] ||
+            die "$assets_dir is not the root of its Git checkout."
+        [[ $(git -C "$assets_dir" remote get-url origin) == "$repo_url" ]] ||
+            die "$assets_dir has an unexpected origin; expected $repo_url."
+        branch=$(git -C "$assets_dir" symbolic-ref --quiet --short HEAD) ||
+            die "$assets_dir has a detached HEAD; switch it to main before updating."
+        [[ $branch == main ]] ||
+            die "$assets_dir is on branch '$branch', not main; refusing to move local work."
+        [[ -z $(git -C "$assets_dir" status --porcelain --untracked-files=all) ]] ||
+            die "$assets_dir has local changes; commit, stash, or remove them before updating."
+        network_git -C "$assets_dir" fetch origin refs/heads/main:refs/remotes/origin/main
+        git -C "$assets_dir" merge-base --is-ancestor HEAD refs/remotes/origin/main ||
+            die "$assets_dir has unpublished or divergent commits; reconcile them manually."
+        git -C "$assets_dir" merge --ff-only refs/remotes/origin/main
+    else
+        mkdir -p -- "$data_home"
+        network_git clone --branch main --single-branch -- "$repo_url" "$assets_dir"
+    fi
+fi
+
+[[ -d $assets_dir/fonts/monolisa ]] || die "Missing asset directory: $assets_dir/fonts/monolisa"
+[[ -d $assets_dir/fonts/fontawesome-pro ]] ||
+    die "Missing asset directory: $assets_dir/fonts/fontawesome-pro"
+[[ -d $assets_dir/wallpapers ]] || die "Missing asset directory: $assets_dir/wallpapers"
+[[ -n $(find "$assets_dir/fonts/monolisa" -maxdepth 1 -type f -name '*.ttf' -print -quit) ]] ||
+    die 'The MonoLisa asset directory contains no TTF fonts.'
+[[ -n $(find "$assets_dir/fonts/fontawesome-pro" -maxdepth 1 -type f -name '*.ttf' -print -quit) ]] ||
+    die 'The Font Awesome Pro asset directory contains no TTF fonts.'
+[[ -n $(find "$assets_dir/wallpapers" -maxdepth 1 -type f \
+    \( -name '*.jpg' -o -name '*.jpeg' \) -print -quit) ]] ||
+    die 'The wallpaper asset directory contains no JPEG images.'
+
+link_directory() {
+    local source=$1 target=$2 actual
+    if [[ -L $target ]]; then
+        actual=$(readlink -f -- "$target" || true)
+        [[ $actual == "$(readlink -f -- "$source")" ]] ||
+            die "$target points to '$actual', not '$source'; refusing to replace it."
+    elif [[ -e $target ]]; then
+        die "$target already exists and is not the managed link; move it aside first."
+    else
+        ln -s -- "$source" "$target"
+        printf 'Linked %s -> %s\n' "$target" "$source"
+    fi
+}
+
+mkdir -p -- "$data_home/fonts"
+link_directory "$assets_dir/fonts" "$font_link"
+link_directory "$assets_dir/wallpapers" "$wallpaper_link"
+fc-cache "$font_link"
+
+printf 'Assets ready at %s.\n' "$assets_dir"

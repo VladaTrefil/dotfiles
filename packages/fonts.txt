@@ -1,0 +1,6 @@
+# Fedora 44 family providers verified with DNF repoquery and fc-list.
+google-noto-sans-jp-fonts
+google-noto-color-emoji-fonts
+
+# Fedora 44 has no package providing the Iosevka Nerd Font or MesloLGS NF
+# families. See docs/manual-steps.md for the deliberately unautomated options.

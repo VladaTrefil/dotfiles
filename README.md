@@ -20,6 +20,7 @@ access; subsequent runs use the recorded commits.
 ./install all                     # packages, link, system, then manual steps
 ./install all --dry-run           # preview; no packages or links are changed
 ./install --help                  # also supported on every subcommand
+bin/fetch-assets                  # optional private fonts and wallpapers
 ```
 
 Package groups are `packages/<group>.txt`: one package name per line, with blank
@@ -60,6 +61,7 @@ Run the checks from the repository:
 ```sh
 tests/link-test.sh
 tests/sync-nvim-test.sh
+tests/fetch-assets-test.sh
 tests/lint.sh
 ```
 

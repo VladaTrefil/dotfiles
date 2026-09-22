@@ -142,5 +142,11 @@
     "--version",
     "ImageMagick",
     "imagemagick.org"
+  ],
+  "ghostscript": [
+    "gs",
+    "--version",
+    "10.",
+    "ghostscript"
   ]
 }

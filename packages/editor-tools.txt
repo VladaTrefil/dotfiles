@@ -26,3 +26,5 @@ python3-isort
 black
 clang-tools-extra
 ImageMagick
+# Snacks PDF preview (`gs`); user keeps PDF+image rendering, LaTeX excluded.
+ghostscript

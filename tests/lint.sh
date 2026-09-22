@@ -56,6 +56,29 @@ if ! command -v sway >/dev/null 2>&1; then
     printf 'FAIL: sway is required for config validation.\n' >&2
     exit 1
 fi
-sway -C -c "$repo_dir/config/sway/config"
-sway -C -c "$repo_dir/config/sway/config.virtualbox"
+# `sway -C` still initialises a wlroots backend, so without these it fails on any
+# machine with no seat (SSH, CI) for reasons unrelated to the config. A headless
+# backend plus software rendering lets the parser run anywhere; verified that it
+# still reports real errors (unknown directives, bad keysyms) under these settings.
+sway_check() {
+    local config="$1" log status
+    log=$(mktemp)
+    WLR_BACKENDS=headless WLR_LIBINPUT_NO_DEVICES=1 \
+    WLR_RENDERER_ALLOW_SOFTWARE=1 LIBGL_ALWAYS_SOFTWARE=1 \
+        sway -C -c "$config" >"$log" 2>&1 || true
+    # sway -C exits 0 even on config errors, so match the parser's own messages and
+    # ignore backend/renderer noise, which says nothing about config validity.
+    if grep -qE '\[sway/config\.c:[0-9]+\] Error' "$log"; then
+        printf 'FAIL: sway config errors in %s\n' "$config" >&2
+        grep -E '\[sway/config\.c:[0-9]+\] Error' "$log" >&2
+        status=1
+    else
+        status=0
+    fi
+    rm -f "$log"
+    return "$status"
+}
+sway_check "$repo_dir/config/sway/config"
+sway_check "$repo_dir/config/sway/config.virtualbox"
+printf 'PASS: sway config parses (both entry points).\n'
 python3 "$repo_dir/tests/sway-checks.py"

@@ -140,11 +140,22 @@ for name in asdf stylelint stylua rubocop solargraph npm pry bat lazygit; do
 done
 links+=(.tool-versions .config/pylintrc .config/codespell/ignore.txt .config/codespell/exclude-file.txt)
 sources+=(config/asdf/tool-versions config/pylintrc config/codespell/ignore.txt config/codespell/exclude-file.txt)
+links+=(.config/sway .config/rofi .config/dunst .config/kitty
+    .config/gtk-3.0/settings.ini .config/gtk-4.0/settings.ini
+    .config/environment.d/50-desktop.conf .config/mimeapps.list
+    .XCompose)
+sources+=(config/sway config/rofi config/dunst config/kitty
+    config/gtk-3.0/settings.ini config/gtk-4.0/settings.ini
+    config/environment.d/50-desktop.conf config/mimeapps.list
+    config/compose/XCompose)
 for index in "${!links[@]}"; do
     target="$test_home/${links[$index]}"
     [[ -L $target && $(readlink -f -- "$target") == "$test_home/repo/${sources[$index]}" ]] ||
         fail "Wrong link: ${links[$index]}"
 done
+[[ -L $test_home/.config/ibus/Compose &&
+   $(readlink -f -- "$test_home/.config/ibus/Compose") == "$test_home/repo/config/compose/XCompose" ]] ||
+    fail 'IBus Compose does not share the XCompose source'
 for directory in .config/shell .config/bundle .local/state/zsh .local/state/less .cache/zsh; do
     [[ -d $test_home/$directory ]] || fail "Missing shell directory: $directory"
 done
@@ -184,6 +195,15 @@ for app in "${links[@]}"; do
         fail "Failed to restore $app link after conflict check"
     fi
 done
+
+# IBus rewrites Compose itself, so this one target intentionally replaces a file.
+rm -- "$test_home/.config/ibus/Compose"
+printf 'IBus generated compose\n' > "$test_home/.config/ibus/Compose"
+run_link link > "$test_home/logs/ibus-force" 2>&1 || fail 'IBus Compose force relink failed'
+[[ -L $test_home/.config/ibus/Compose &&
+   $(readlink -f -- "$test_home/.config/ibus/Compose") == "$test_home/repo/config/compose/XCompose" ]] ||
+    fail 'IBus Compose force relink did not replace its generated file'
+printf 'PASS: IBus generated Compose is replaced by the shared managed link.\n'
 
 # A legacy Bundler file must be preserved, not accepted as the new directory.
 rmdir -- "$test_home/.config/bundle"

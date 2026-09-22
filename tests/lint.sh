@@ -52,3 +52,10 @@ for path in config/zsh/.zshenv config/zsh/.zprofile config/zsh/.zshrc config/zsh
 done
 shellcheck -s sh config/shell/profile
 printf 'PASS: portable profile lint and Zsh syntax (4 files).\n'
+if ! command -v sway >/dev/null 2>&1; then
+    printf 'FAIL: sway is required for config validation.\n' >&2
+    exit 1
+fi
+sway -C -c "$repo_dir/config/sway/config"
+sway -C -c "$repo_dir/config/sway/config.virtualbox"
+python3 "$repo_dir/tests/sway-checks.py"

@@ -1,0 +1,8 @@
+# Selected by bin/start-virtualbox before SwayFX starts.
+include conf.d/10-appearance.conf
+include conf.d/20-input.conf
+include conf.d/30-workspaces.conf
+include conf.d/40-bindings.conf
+include conf.d/50-windows.conf
+include conf.d/60-session.conf
+include profiles/virtualbox.conf

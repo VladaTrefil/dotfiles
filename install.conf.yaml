@@ -9,6 +9,10 @@
     # Parent of all config links; install supplies the default XDG paths.
     - $XDG_CONFIG_HOME
     - $XDG_CONFIG_HOME/codespell
+    - $XDG_CONFIG_HOME/ibus
+    - $XDG_CONFIG_HOME/gtk-3.0
+    - $XDG_CONFIG_HOME/gtk-4.0
+    - $XDG_CONFIG_HOME/environment.d
     # Individual shell links leave room for private work.sh outside the checkout.
     - $XDG_CONFIG_HOME/shell
     # Shell and less must be able to persist their history on first use.
@@ -43,3 +47,15 @@
     $XDG_CONFIG_HOME/bat: config/bat
     $XDG_CONFIG_HOME/lazygit: config/lazygit
     $XDG_CONFIG_HOME/pylintrc: config/pylintrc
+    $XDG_CONFIG_HOME/sway: config/sway
+    $XDG_CONFIG_HOME/rofi: config/rofi
+    $XDG_CONFIG_HOME/dunst: config/dunst
+    $XDG_CONFIG_HOME/kitty: config/kitty
+    $XDG_CONFIG_HOME/gtk-3.0/settings.ini: config/gtk-3.0/settings.ini
+    $XDG_CONFIG_HOME/gtk-4.0/settings.ini: config/gtk-4.0/settings.ini
+    $XDG_CONFIG_HOME/environment.d/50-desktop.conf: config/environment.d/50-desktop.conf
+    $XDG_CONFIG_HOME/mimeapps.list: config/mimeapps.list
+    ~/.XCompose: config/compose/XCompose
+    $XDG_CONFIG_HOME/ibus/Compose:
+      path: config/compose/XCompose
+      force: true

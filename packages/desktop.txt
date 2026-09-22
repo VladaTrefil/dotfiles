@@ -1,0 +1,13 @@
+# Standalone SwayFX session dependencies; enable the swayfx/swayfx COPR first.
+swayfx
+swayidle
+swaylock
+grim
+slurp
+wl-clipboard
+kitty
+dunst
+ibus
+rofi
+pulseaudio-utils
+papirus-icon-theme

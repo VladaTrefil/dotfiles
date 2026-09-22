@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+set -a
+# shellcheck source=/dev/null
+. "$HOME/.config/environment.d/50-desktop.conf"
+set +a
+export XDG_CURRENT_DESKTOP=sway XDG_SESSION_DESKTOP=sway XDG_SESSION_TYPE=wayland
+export WLR_RENDERER_ALLOW_SOFTWARE=1
+export LIBGL_ALWAYS_SOFTWARE=1
+exec sway -c "$HOME/.config/sway/config.virtualbox"

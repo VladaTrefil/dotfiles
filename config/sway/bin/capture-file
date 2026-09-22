@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+dir=${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots
+mkdir -p -- "$dir"
+exec grim "$dir/$(date +%Y-%m-%d_%H-%M-%S).png"

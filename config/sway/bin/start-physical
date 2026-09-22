@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# environment.d also serves systemd user services; source it for this TTY process.
+set -a
+# shellcheck source=/dev/null
+. "$HOME/.config/environment.d/50-desktop.conf"
+set +a
+export XDG_CURRENT_DESKTOP=sway XDG_SESSION_DESKTOP=sway XDG_SESSION_TYPE=wayland
+exec sway -c "$HOME/.config/sway/config"

@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 repo_url=${DOTFILES_ASSETS_REPO_URL:-git@github.com:VladaTrefil/dotfiles-assets.git}
 data_home=${XDG_DATA_HOME:-$HOME/.local/share}
 assets_dir="$data_home/dotfiles-assets"
 font_link="$data_home/fonts/dotfiles-assets"
+release_font_dir="$data_home/fonts/dotfiles-releases"
 wallpaper_link="$HOME/.background"
 offline=false
 
@@ -12,21 +14,21 @@ usage() {
     cat <<'HELP'
 Usage: bin/fetch-assets [--offline] [--help]
 
-Clone or fast-forward the private dotfiles-assets repository, expose its fonts
-and wallpapers, and refresh the per-user font cache.
+Install the checksum-pinned public Nerd Fonts, optionally clone or fast-forward
+the private dotfiles-assets repository, and refresh the per-user font cache.
 
-  --offline  Use an already populated asset directory without contacting Git.
-             This is intended for a checkout copied onto a machine that has no
-             access to the private repository; it fails if the assets are absent.
+  --offline  Use verified cached release archives and, when present, an already
+             populated private asset directory without contacting the network.
   --help     Show this help.
 
-The default checkout is $XDG_DATA_HOME/dotfiles-assets (or
-$HOME/.local/share/dotfiles-assets). Fonts are linked below the standard user
+The public fonts are installed below $XDG_DATA_HOME/fonts/dotfiles-releases (or
+$HOME/.local/share/fonts/dotfiles-releases). The optional private checkout is
+$XDG_DATA_HOME/dotfiles-assets; paid fonts are linked below the standard user
 font directory, and wallpapers are linked as $HOME/.background.
 
-The default online mode requires SSH access to
-git@github.com:VladaTrefil/dotfiles-assets.git. Authentication is deliberately
-noninteractive: a missing key fails with instructions instead of prompting.
+Private assets require SSH access to git@github.com:VladaTrefil/dotfiles-assets.git.
+Authentication is deliberately noninteractive: a missing key skips paid assets
+with instructions instead of prompting. Public Nerd Fonts still install.
 For unusual SSH setups, DOTFILES_ASSETS_SSH_COMMAND may name the ssh command
 and options to use. DOTFILES_ASSETS_REPO_URL exists for isolated testing.
 HELP
@@ -45,13 +47,18 @@ for argument in "$@"; do
     esac
 done
 
-for tool in fc-cache find git ln mkdir readlink timeout; do
+for tool in fc-cache find git ln mkdir python3 readlink timeout; do
     command -v "$tool" >/dev/null 2>&1 || die "Required command is missing: $tool"
 done
 
 ssh_command=${DOTFILES_ASSETS_SSH_COMMAND:-ssh}
 network_git() {
-    local status
+    local optional=false severity=Error status
+    if [[ ${1:-} == --optional ]]; then
+        optional=true
+        severity=Warning
+        shift
+    fi
     if timeout --foreground --kill-after=5s 60s \
         env GIT_TERMINAL_PROMPT=0 GIT_ASKPASS=/bin/false SSH_ASKPASS=/bin/false \
         GIT_SSH_COMMAND="$ssh_command -o BatchMode=yes -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no -o NumberOfPasswordPrompts=0 -o ConnectTimeout=10 -o ConnectionAttempts=1 -o StrictHostKeyChecking=accept-new" \
@@ -62,20 +69,35 @@ network_git() {
     fi
 
     printf '%s\n' \
-        "Error: could not access the private assets repository:" \
+        "$severity: could not access the private assets repository:" \
         "  $repo_url" \
         'Configure a GitHub SSH key with access to VladaTrefil/dotfiles-assets,' \
-        'verify it with "ssh -T git@github.com", and run bin/fetch-assets again.' \
-        'The base dotfiles install remains usable without these paid assets.' >&2
+        'verify it with "ssh -T git@github.com", and run bin/fetch-assets again.' >&2
+    if "$optional"; then
+        printf '%s\n' \
+            'Continuing without MonoLisa, Font Awesome Pro, or private wallpapers.' >&2
+    else
+        printf '%s\n' \
+            'Use --offline to retain the existing verified private checkout without updating it.' >&2
+    fi
     if ((status == 124 || status == 137)); then
         printf '%s\n' 'The noninteractive Git operation timed out after 60 seconds.' >&2
     fi
     return "$status"
 }
 
+release_arguments=(--fonts)
 if "$offline"; then
-    [[ -d $assets_dir ]] ||
-        die "Offline asset directory is absent: $assets_dir (copy the private checkout there first)."
+    release_arguments+=(--offline)
+fi
+"$repo_dir/install-releases" "${release_arguments[@]}"
+
+private_available=true
+if "$offline"; then
+    if [[ ! -d $assets_dir ]]; then
+        private_available=false
+        printf 'Warning: optional private asset directory is absent: %s\n' "$assets_dir" >&2
+    fi
 else
     if [[ -e $assets_dir ]]; then
         [[ -d $assets_dir/.git ]] ||
@@ -97,21 +119,25 @@ else
         git -C "$assets_dir" merge --ff-only refs/remotes/origin/main
     else
         mkdir -p -- "$data_home"
-        network_git clone --branch main --single-branch -- "$repo_url" "$assets_dir"
+        if ! network_git --optional clone --branch main --single-branch -- "$repo_url" "$assets_dir"; then
+            private_available=false
+        fi
     fi
 fi
 
-[[ -d $assets_dir/fonts/monolisa ]] || die "Missing asset directory: $assets_dir/fonts/monolisa"
-[[ -d $assets_dir/fonts/fontawesome-pro ]] ||
-    die "Missing asset directory: $assets_dir/fonts/fontawesome-pro"
-[[ -d $assets_dir/wallpapers ]] || die "Missing asset directory: $assets_dir/wallpapers"
-[[ -n $(find "$assets_dir/fonts/monolisa" -maxdepth 1 -type f -name '*.ttf' -print -quit) ]] ||
-    die 'The MonoLisa asset directory contains no TTF fonts.'
-[[ -n $(find "$assets_dir/fonts/fontawesome-pro" -maxdepth 1 -type f -name '*.ttf' -print -quit) ]] ||
-    die 'The Font Awesome Pro asset directory contains no TTF fonts.'
-[[ -n $(find "$assets_dir/wallpapers" -maxdepth 1 -type f \
-    \( -name '*.jpg' -o -name '*.jpeg' \) -print -quit) ]] ||
-    die 'The wallpaper asset directory contains no JPEG images.'
+if "$private_available"; then
+    [[ -d $assets_dir/fonts/monolisa ]] || die "Missing asset directory: $assets_dir/fonts/monolisa"
+    [[ -d $assets_dir/fonts/fontawesome-pro ]] ||
+        die "Missing asset directory: $assets_dir/fonts/fontawesome-pro"
+    [[ -d $assets_dir/wallpapers ]] || die "Missing asset directory: $assets_dir/wallpapers"
+    [[ -n $(find "$assets_dir/fonts/monolisa" -maxdepth 1 -type f -name '*.ttf' -print -quit) ]] ||
+        die 'The MonoLisa asset directory contains no TTF fonts.'
+    [[ -n $(find "$assets_dir/fonts/fontawesome-pro" -maxdepth 1 -type f -name '*.ttf' -print -quit) ]] ||
+        die 'The Font Awesome Pro asset directory contains no TTF fonts.'
+    [[ -n $(find "$assets_dir/wallpapers" -maxdepth 1 -type f \
+        \( -name '*.jpg' -o -name '*.jpeg' \) -print -quit) ]] ||
+        die 'The wallpaper asset directory contains no JPEG images.'
+fi
 
 link_directory() {
     local source=$1 target=$2 actual
@@ -128,8 +154,13 @@ link_directory() {
 }
 
 mkdir -p -- "$data_home/fonts"
-link_directory "$assets_dir/fonts" "$font_link"
-link_directory "$assets_dir/wallpapers" "$wallpaper_link"
-fc-cache "$font_link"
+fc-cache "$release_font_dir"
 
-printf 'Assets ready at %s.\n' "$assets_dir"
+if "$private_available"; then
+    link_directory "$assets_dir/fonts" "$font_link"
+    link_directory "$assets_dir/wallpapers" "$wallpaper_link"
+    fc-cache "$font_link"
+    printf 'Public fonts and private assets are ready.\n'
+else
+    printf 'Public fonts are ready; optional private assets were not installed.\n'
+fi

@@ -1,54 +1,75 @@
 #!/usr/bin/env python3
-"""Install checksum-pinned upstream Linux x86_64 executables, never archive paths."""
+"""Install checksum-pinned upstream executables or selected font faces."""
+import argparse
 import hashlib
 import json
 import os
 from pathlib import Path
 import platform
+import shutil
 import subprocess
 import tarfile
 import tempfile
 import zipfile
 
-root = Path(__file__).resolve().parent.parent
-if platform.system() != 'Linux' or platform.machine() != 'x86_64':
-    raise SystemExit('Pinned releases support Linux x86_64 only; no implicit fallback.')
-cache = Path(os.environ.get('XDG_CACHE_HOME', str(Path.home() / '.cache'))) / 'dotfiles/releases'
-bindir = Path.home() / '.local/bin'
-cache.mkdir(parents=True, exist_ok=True)
-bindir.mkdir(parents=True, exist_ok=True)
 
-def digest(data):
+def digest_file(path):
+    checksum = hashlib.sha256()
+    with path.open('rb') as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            checksum.update(chunk)
+    return checksum.hexdigest()
+
+
+def digest_bytes(data):
     return hashlib.sha256(data).hexdigest()
 
-for name, spec in json.loads((root / 'provision/releases.json').read_text()).items():
+
+def archive_member(archive, member):
+    if archive.name.endswith('.zip'):
+        with zipfile.ZipFile(archive) as package:
+            return package.read(member)
+    with tarfile.open(archive) as package:
+        entry = package.getmember(member)
+        if not entry.isfile():
+            raise SystemExit(f'Expected a regular archive member: {member}')
+        extracted = package.extractfile(entry)
+        if extracted is None:
+            raise SystemExit(f'Could not read archive member: {member}')
+        return extracted.read()
+
+
+def acquire_archive(name, spec, cache, offline):
     archive = cache / (spec['sha256'] + Path(spec['url']).name)
     if not archive.exists():
-        with tempfile.NamedTemporaryFile(dir=cache) as download:
-            subprocess.run(['curl', '--fail', '--location', '--retry', '3', '--proto', '=https',
-                            '--tlsv1.2', '--output', download.name, spec['url']], check=True)
-            data = Path(download.name).read_bytes()
-            if digest(data) != spec['sha256']:
+        if offline:
+            raise SystemExit(f'{name}: verified archive is absent in offline mode: {archive}')
+        with tempfile.NamedTemporaryFile(dir=cache, delete=False) as download:
+            download_path = Path(download.name)
+        try:
+            subprocess.run([
+                'curl', '--fail', '--location', '--retry', '3', '--proto', '=https',
+                '--tlsv1.2', '--output', str(download_path), spec['url']
+            ], check=True)
+            if digest_file(download_path) != spec['sha256']:
                 raise SystemExit(f'{name}: downloaded SHA-256 mismatch; nothing installed')
-            archive.write_bytes(data)
-    if digest(archive.read_bytes()) != spec['sha256']:
+            download_path.replace(archive)
+        finally:
+            download_path.unlink(missing_ok=True)
+    if digest_file(archive) != spec['sha256']:
         raise SystemExit(f'{name}: cached SHA-256 mismatch; remove {archive} and retry')
-    if spec['url'].endswith('.zip'):
-        with zipfile.ZipFile(archive) as package:
-            executable = package.read(spec['member'])
-    else:
-        with tarfile.open(archive) as package:
-            member = package.getmember(spec['member'])
-            if not member.isfile():
-                raise SystemExit(f'{name}: expected a regular archive member')
-            executable = package.extractfile(member).read()
+    return archive
+
+
+def install_executable(name, spec, archive, bindir, cache):
+    executable = archive_member(archive, spec['member'])
     target = bindir / name
     stamp = cache / (name + '.installed-sha256')
-    installed = digest(executable)
+    installed = digest_bytes(executable)
     if target.is_symlink():
         raise SystemExit(f'Refusing to replace symlink: {target}')
     if target.exists() and target.read_bytes() != executable:
-        if not stamp.exists() or stamp.read_text().strip() != digest(target.read_bytes()):
+        if not stamp.exists() or stamp.read_text().strip() != digest_file(target):
             raise SystemExit(f'Refusing to replace unmanaged executable: {target}')
     if not target.exists() or target.read_bytes() != executable:
         with tempfile.NamedTemporaryFile(dir=bindir, delete=False) as staging:
@@ -58,4 +79,118 @@ for name, spec in json.loads((root / 'provision/releases.json').read_text()).ite
         staging_path.replace(target)
     if not stamp.exists() or stamp.read_text() != installed + '\n':
         stamp.write_text(installed + '\n')
-    print(f'VERIFIED {name} {spec["version"]} SHA-256 {spec["sha256"]}', flush=True)
+
+
+def font_directory_state(directory):
+    state = {}
+    for path in sorted(directory.iterdir()):
+        if path.is_symlink() or not path.is_file():
+            raise SystemExit(f'Refusing unmanaged entry in font directory: {path}')
+        state[path.name] = digest_file(path)
+    return state
+
+
+def install_fonts(name, spec, archive, font_root, cache):
+    members = spec['members']
+    if not members:
+        raise SystemExit(f'{name}: font release has no selected members')
+    if any(Path(member).name != member or not member.endswith('.ttf') for member in members):
+        raise SystemExit(f'{name}: font members must be top-level TTF files')
+    if len(set(members)) != len(members):
+        raise SystemExit(f'{name}: duplicate font member')
+
+    desired = {member: archive_member(archive, member) for member in members}
+    desired_state = {member: digest_bytes(data) for member, data in desired.items()}
+    target = font_root / name
+    stamp = cache / (name + '.fonts-installed.json')
+    serialized = json.dumps(desired_state, sort_keys=True, indent=2) + '\n'
+
+    if target.is_symlink() or (target.exists() and not target.is_dir()):
+        raise SystemExit(f'Refusing to replace unmanaged font path: {target}')
+    if target.exists():
+        actual_state = font_directory_state(target)
+        if actual_state == desired_state:
+            if not stamp.exists() or stamp.read_text() != serialized:
+                stamp.write_text(serialized)
+            return
+        if not stamp.exists():
+            raise SystemExit(f'Refusing to replace unmanaged font directory: {target}')
+        try:
+            stamped_state = json.loads(stamp.read_text())
+        except (json.JSONDecodeError, OSError) as error:
+            raise SystemExit(f'Invalid managed-font stamp {stamp}: {error}') from error
+        if actual_state != stamped_state:
+            raise SystemExit(f'Refusing to replace modified font directory: {target}')
+
+    staging = Path(tempfile.mkdtemp(dir=font_root, prefix=f'.{name}.'))
+    backup = None
+    try:
+        staging.chmod(0o755)
+        for member, data in desired.items():
+            font = staging / member
+            font.write_bytes(data)
+            font.chmod(0o644)
+        if target.exists():
+            backup = Path(tempfile.mkdtemp(dir=font_root, prefix=f'.{name}.old.'))
+            backup.rmdir()
+            target.replace(backup)
+        staging.replace(target)
+        if backup is not None:
+            shutil.rmtree(backup)
+        stamp.write_text(serialized)
+    except BaseException:
+        if backup is not None and backup.exists() and not target.exists():
+            backup.replace(target)
+        raise
+    finally:
+        if staging.exists():
+            shutil.rmtree(staging)
+
+
+parser = argparse.ArgumentParser(
+    description='Install checksum-pinned release executables (the default) or fonts.'
+)
+parser.add_argument('--fonts', action='store_true', help='install only pinned font faces')
+parser.add_argument('--offline', action='store_true', help='use verified cached archives only')
+args = parser.parse_args()
+
+root = Path(__file__).resolve().parent.parent
+if platform.system() != 'Linux' or platform.machine() != 'x86_64':
+    raise SystemExit('Pinned releases support Linux x86_64 only; no implicit fallback.')
+cache = Path(os.environ.get('XDG_CACHE_HOME', str(Path.home() / '.cache'))) / 'dotfiles/releases'
+cache.mkdir(parents=True, exist_ok=True)
+releases = json.loads((root / 'provision/releases.json').read_text())
+selected_kind = 'font' if args.fonts else 'executable'
+selected = [
+    (name, spec) for name, spec in releases.items()
+    if spec.get('kind', 'executable') == selected_kind
+]
+if not selected:
+    raise SystemExit(f'No {selected_kind} releases are configured.')
+
+# Verify every selected archive before creating or replacing any installation target.
+archives = {
+    name: acquire_archive(name, spec, cache, args.offline)
+    for name, spec in selected
+}
+
+if args.fonts:
+    data_home = Path(os.environ.get('XDG_DATA_HOME', str(Path.home() / '.local/share')))
+    font_root = data_home / 'fonts/dotfiles-releases'
+    if font_root.is_symlink() or (font_root.exists() and not font_root.is_dir()):
+        raise SystemExit(f'Refusing unmanaged font root: {font_root}')
+    font_root.mkdir(parents=True, exist_ok=True)
+    font_root.chmod(0o755)
+    for name, spec in selected:
+        install_fonts(name, spec, archives[name], font_root, cache)
+        print(
+            f'VERIFIED {name} {spec["version"]} SHA-256 {spec["sha256"]} '
+            f'({len(spec["members"])} fonts)',
+            flush=True,
+        )
+else:
+    bindir = Path.home() / '.local/bin'
+    bindir.mkdir(parents=True, exist_ok=True)
+    for name, spec in selected:
+        install_executable(name, spec, archives[name], bindir, cache)
+        print(f'VERIFIED {name} {spec["version"]} SHA-256 {spec["sha256"]}', flush=True)

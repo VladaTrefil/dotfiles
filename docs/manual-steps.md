@@ -14,27 +14,34 @@ the printed command as root, or explicitly confirm `packages` in a root session.
 This repository does not invoke sudo, run downloaded installers, or remove
 unmanaged files. Existing link conflicts require a manual decision.
 
-Private fonts and wallpapers are also a separate, optional step:
+Public Nerd Fonts and private assets are a separate step:
 
 ```sh
 bin/fetch-assets
 ```
 
-This requires a GitHub SSH key with access to the private
-`VladaTrefil/dotfiles-assets` repository. A machine without that access should
-skip the command; the rest of the install remains usable without MonoLisa, Font
-Awesome Pro, and the curated wallpapers. The command installs no system files:
-it clones to `~/.local/share/dotfiles-assets`, links the fonts below
-`~/.local/share/fonts`, links the wallpapers at `~/.background`, and refreshes
-the user font cache. `bin/fetch-assets --offline` performs only validation,
-linking, and cache refresh for a checkout already copied to that location; it
-does not turn missing credentials into a silent success.
+The command downloads the Nerd Fonts v3.5.1 Iosevka and Meslo archives, verifies
+their pinned SHA-256 digests, and installs only the Regular, Bold, and Italic
+faces below `~/.local/share/fonts/dotfiles-releases`. It does not install the
+Mono or Propo variants, other weights, oblique faces, or Bold Italic because no
+configuration in this repository or the audited legacy desktop configuration
+selects them. The user font cache is refreshed after installation.
+
+MonoLisa, Font Awesome 5 Pro, and the curated wallpapers remain optional paid
+assets. When a GitHub SSH key can access the private
+`VladaTrefil/dotfiles-assets` repository, the same command clones it to
+`~/.local/share/dotfiles-assets`, links its fonts below
+`~/.local/share/fonts`, and links its wallpapers at `~/.background`. Missing
+private-repository access produces an actionable warning but does not prevent
+the public fonts from installing.
+
+`bin/fetch-assets --offline` performs no network access. It requires both Nerd
+Fonts archives to be present in the verified release cache and uses the private
+checkout only when one is already present.
 
 Fedora 44 packages `google-noto-sans-jp-fonts` and
-`google-noto-color-emoji-fonts` provide the exact `Noto Sans JP` and
-`Noto Color Emoji` families and are listed in `packages/fonts.txt`. Fedora 44
-does not package the required `Iosevka Nerd Font` or `MesloLGS NF` families.
-Leave those unavailable for now, choose a packaged terminal font, or add a
-separately reviewed and checksum-pinned upstream Nerd Fonts installation in a
-future change. Powerlevel10k also documents its own MesloLGS NF installer; this
-repository does not invoke it or improvise an unverified download.
+`google-noto-color-emoji-fonts`, which provide the exact `Noto Sans JP` and
+`Noto Color Emoji` families and are listed in `packages/fonts.txt`. Fedora does
+not package the required Iosevka or MesloLGS Nerd Font families, so those two
+are automated by the checksum-pinned release path above. Powerlevel10k's own
+interactive font downloader is not invoked.

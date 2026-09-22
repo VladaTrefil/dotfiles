@@ -76,14 +76,16 @@ families.
 |---|---|---|
 | `Noto Sans JP` | `google-noto-sans-jp-fonts` — `1:2.004-10.fc44` (`fedora`) | Provides `font(notosansjp)`; installed family is exactly `Noto Sans JP`. |
 | `Noto Color Emoji` | `google-noto-color-emoji-fonts` — `20250623-4.fc44` (`fedora`) | Provides `font(notocoloremoji)`; installed family is exactly `Noto Color Emoji`. |
-| `Iosevka Nerd Font` | **No Fedora 44 provider found** | Neither `font(iosevkanerdfont)` nor `font(iosevkanerdfontmono)` resolves. |
-| `MesloLGS NF` | **No Fedora 44 provider found** | `font(meslolgsnf)` does not resolve. |
+| `Iosevka Nerd Font` | **No Fedora 44 provider found** | Automated by `bin/fetch-assets`: Nerd Fonts v3.5.1 Iosevka archive, pinned SHA-256; Regular, Bold, and Italic only. |
+| `MesloLGS Nerd Font` | **No Fedora 44 provider found** | Automated by `bin/fetch-assets`: Nerd Fonts v3.5.1 Meslo archive, pinned SHA-256; Regular, Bold, and Italic only. |
 
 The only Fedora 44 package name matching a broad Nerd-font search was
 `texlive-inconsolata-nerd-font`; it is not either required family and was not
 substituted. `packages/fonts.txt` therefore contains only the two exact native
-providers. The unpackaged Nerd Fonts remain an explicit manual/future decision
-in `docs/manual-steps.md`; no download was improvised.
+providers. The unpackaged Nerd Fonts are now installed in the user font
+directory by `bin/fetch-assets` from exact release URLs after SHA-256
+verification; no third-party Fedora repository or interactive downloader is
+used.
 
 Guest additions are `7.2.16-1.fc44`, host VirtualBox reports `7.2.18r175117`: same 7.2 series,
 not an exact patch match. `vboxservice` is enabled/active and the target remains `multi-user.target`.

@@ -27,7 +27,7 @@
   # Draw a line between multiple notifications
   separator_height = 4
 
-  font = "Iosevka 12"
+  font = "Iosevka Nerd Font 12"
 
   separator_color = "#0c0c18"
   background = "#191724"

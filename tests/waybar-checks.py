@@ -7,7 +7,8 @@ import subprocess
 
 root = Path(__file__).resolve().parents[1]
 assert not (root / 'config' / ('ew' + 'w')).exists()
-bar = json.loads((root / 'config/waybar/config.json').read_text())
+assert not (root / 'config/waybar/config.json').exists(), 'Waybar ignores config.json'
+bar = json.loads((root / 'config/waybar/config.jsonc').read_text())
 layout = [name for side in ('left', 'center', 'right')
           for name in bar[f'modules-{side}']]
 expected = {'sway/workspaces', 'clock', 'network', 'cpu', 'memory', 'disk',
@@ -25,7 +26,7 @@ assert 'idle_inhibitor' not in str(bar)
 
 session = (root / 'config/sway/conf.d/60-session.conf').read_text()
 assert re.search(r'^exec dex-autostart --autostart --environment sway$', session, re.M)
-assert re.search(r'^exec waybar -c "\$HOME/\.config/waybar/config\.json"$', session, re.M)
+assert re.search(r'^exec waybar$', session, re.M)
 assert 'QT_QPA_PLATFORMTHEME=qt6ct' in (root / 'config/environment.d/50-desktop.conf').read_text()
 assert 'QT_QPA_PLATFORMTHEME' not in session
 assert 'color_scheme_path=~/.config/qt6ct/colors/Catppuccin-Mocha.conf' in (root / 'config/qt6ct/qt6ct.conf').read_text()

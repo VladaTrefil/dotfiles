@@ -4,3 +4,6 @@ google-noto-color-emoji-fonts
 
 # Fedora 44 has no package providing Iosevka Nerd Font or MesloLGS. They are
 # installed from checksum-pinned Nerd Fonts releases by bin/fetch-assets.
+# private-font-family: MonoLisa (dotfiles-assets, installed by bin/fetch-assets)
+# private-font-family: Font Awesome 5 Pro (dotfiles-assets, installed by bin/fetch-assets)
+# private-font-family: Font Awesome 5 Pro Solid (solid face in dotfiles-assets)

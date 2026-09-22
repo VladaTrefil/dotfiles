@@ -84,3 +84,4 @@ printf 'PASS: sway config parses (both entry points).\n'
 python3 "$repo_dir/tests/sway-checks.py"
 python3 "$repo_dir/tests/sway-bindings.py"
 python3 "$repo_dir/tests/waybar-checks.py"
+python3 "$repo_dir/tests/font-families.py"

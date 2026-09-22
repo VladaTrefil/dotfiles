@@ -19,5 +19,3 @@ pipewire-pulseaudio
 pipewire-alsa
 wireplumber
 papirus-icon-theme
-# Waybar's module icons use Font Awesome private-use glyphs.
-fontawesome-6-free-fonts

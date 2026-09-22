@@ -36,6 +36,9 @@ bindings = (sway / 'conf.d/40-bindings.conf').read_text()
 idle = (sway / 'conf.d/60-session.conf').read_text()
 power = (root / 'rofi/power_menu/script.sh').read_text()
 assert f'exec {lock}' in bindings
+assert f'bindsym $mod+Shift+l move right' in bindings
+assert f'bindsym $mod+Ctrl+l exec {lock}' in bindings
+assert f'    bindsym l exec {lock}, mode "default"' in bindings
 assert idle.count(lock) == 2, 'Idle and before-sleep must use one lock path'
 assert lock in power
 assert 'swaylock' not in bindings + idle + power

@@ -82,3 +82,4 @@ sway_check "$repo_dir/config/sway/config"
 sway_check "$repo_dir/config/sway/config.virtualbox"
 printf 'PASS: sway config parses (both entry points).\n'
 python3 "$repo_dir/tests/sway-checks.py"
+python3 "$repo_dir/tests/sway-bindings.py"

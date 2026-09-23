@@ -36,6 +36,7 @@ make_fakes() {
     # shellcheck disable=SC2016
     write_executable "$fake_bin/ssh" \
         '#!/bin/sh' \
+        'printf "%s\n" "$*" >> "$TEST_STATE/ssh.log"' \
         'if [ "${TEST_SSH_AUTHENTICATED:-yes}" = yes ]; then' \
         "    printf '%s\\n' 'Hi VladaTrefil! You have successfully authenticated, but GitHub does not provide shell access.' >&2" \
         '    exit 1' \
@@ -87,6 +88,18 @@ run_bootstrap() {
         TEST_STATE="$state" TEST_LOG="$log" \
         DOTFILES_REPO_DIR="$home/Development/dotfiles" "$@" \
         /bin/bash "$bootstrap" > "$output" 2>&1 <<< "$input"
+    run_status=$?
+    set -e
+}
+
+run_bootstrap_with_closed_stdin() {
+    local home=$1 fake_bin=$2 state=$3 log=$4 output=$5
+    shift 5
+    set +e
+    env HOME="$home" PATH="$fake_bin${TEST_SYSTEM_PATH:+:$TEST_SYSTEM_PATH}" \
+        TEST_STATE="$state" TEST_LOG="$log" \
+        DOTFILES_REPO_DIR="$home/Development/dotfiles" "$@" \
+        /bin/bash "$bootstrap" > "$output" 2>&1 </dev/null
     run_status=$?
     set -e
 }
@@ -178,6 +191,7 @@ test_missing_public_key_refuses_to_continue() {
     run_bootstrap "$home" "$fake_bin" "$state" "$log" "$output"
     ((run_status != 0)) || fail 'missing public key was accepted'
     grep -q 'public key is missing' "$output" || fail 'missing public key error was not actionable'
+    [[ ! -e $state/ssh.log ]] || fail 'SSH authentication ran after the public-key prerequisite failed'
     [[ ! -e $log ]] || fail 'Git ran after the public-key prerequisite failed'
     printf 'PASS: an incomplete SSH keypair stops before authentication or clone.\n'
 }
@@ -223,12 +237,14 @@ test_failed_github_authentication_stops_before_git() {
 }
 
 test_new_key_is_printed_and_gated() {
-    local case_dir="$fixture/new-key" home fake_bin state log output
-    home="$case_dir/home"
+    local case_dir="$fixture/new-key" blocked_home confirmed_home fake_bin state log blocked_output confirmed_output
+    blocked_home="$case_dir/blocked-home"
+    confirmed_home="$case_dir/confirmed-home"
     fake_bin="$case_dir/bin"
     state="$case_dir/state"
     log="$case_dir/git.log"
-    output="$case_dir/output"
+    blocked_output="$case_dir/blocked.out"
+    confirmed_output="$case_dir/confirmed.out"
     mkdir -p "$case_dir"
     make_fakes "$fake_bin"
     # These variables expand in the generated ssh-keygen fake.
@@ -245,11 +261,20 @@ test_new_key_is_printed_and_gated() {
         'chmod 644 "$key_path.pub"'
     mark_route_up "$state"
 
-    run_bootstrap "$home" "$fake_bin" "$state" "$log" "$output" $'\n'
-    ((run_status == 0)) || { cat "$output"; fail "new-key run exited $run_status"; }
-    grep -q 'ssh-ed25519 AAAANEW bootstrap@test' "$output" || fail 'new public key was not printed'
-    grep -q 'https://github.com/settings/keys' "$output" || fail 'GitHub key settings URL was not printed'
-    grep -q 'Press Enter after adding the key' "$output" || fail 'new key did not pause for confirmation'
+    run_bootstrap_with_closed_stdin \
+        "$blocked_home" "$fake_bin" "$state" "$log" "$blocked_output"
+    ((run_status != 0)) || fail 'new-key confirmation gate accepted closed stdin'
+    grep -q 'ssh-ed25519 AAAANEW bootstrap@test' "$blocked_output" || fail 'new public key was not printed'
+    grep -q 'https://github.com/settings/keys' "$blocked_output" || fail 'GitHub key settings URL was not printed'
+    grep -q 'Press Enter after adding the key' "$blocked_output" || fail 'new key confirmation prompt was not printed'
+    grep -q 'confirmation was not received; refusing to continue' "$blocked_output" ||
+        fail 'closed stdin did not produce the confirmation refusal'
+    [[ ! -e $state/ssh.log ]] || fail 'SSH authentication ran before new-key confirmation'
+    [[ ! -e $log ]] || fail 'Git ran before new-key confirmation'
+
+    run_bootstrap "$confirmed_home" "$fake_bin" "$state" "$log" "$confirmed_output" $'\n'
+    ((run_status == 0)) || { cat "$confirmed_output"; fail "confirmed new-key run exited $run_status"; }
+    [[ -e $state/ssh.log ]] || fail 'SSH authentication did not run after new-key confirmation'
     [[ -e $log ]] || fail 'Git did not run after key confirmation and authentication'
     printf 'PASS: a new key is shown to the user and gated before authentication.\n'
 }

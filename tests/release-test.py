@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pinned font releases install idempotently and corrupt archives fail closed."""
+"""Pinned releases install idempotently and corrupt artifacts fail closed."""
 import hashlib
 import json
 import os
@@ -36,6 +36,13 @@ assert len(production['qmk']['artifacts']) == 7
 assert production['qmk']['artifacts'][0]['sha256'] == (
     '77fa04a24d36feb7f19f19f190eaf350b78a5caf5ef6a783251902e853fd1809'
 )
+assert production['op'] == {
+    'version': '2.39.0',
+    'url': 'https://cache.agilebits.com/dist/1P/op2/pkg/v2.39.0/op_linux_amd64_v2.39.0.zip',
+    'sha256': '6fba7f376b6c6dec49f41b06408930a43ad064cce103c6a2ce5b3d0413a86434',
+    'size': 14997542,
+    'member': 'op',
+}
 assert production['iosevka-nerd-font'] == {
     'kind': 'font',
     'version': 'v3.5.1',
@@ -135,6 +142,20 @@ with tempfile.TemporaryDirectory() as directory:
         'member': 'asdf',
     }
     source_by_release['asdf'] = tool_archive
+    op_source = source_archives / 'op'
+    op_source.write_bytes(b'#!/bin/sh\nprintf "fixture op 2.39.0\\n"\n')
+    op_archive = source_archives / 'op.zip'
+    with zipfile.ZipFile(op_archive, 'w') as package:
+        package.write(op_source, arcname='op')
+        package.writestr('op.sig', 'fixture signature')
+    releases['op'] = {
+        'version': '2.39.0',
+        'url': 'https://example.invalid/op.zip',
+        'sha256': checksum(op_archive),
+        'size': op_archive.stat().st_size,
+        'member': 'op',
+    }
+    source_by_release['op'] = op_archive
     wheel_source = source_archives / 'qmk-fixture.whl'
     with zipfile.ZipFile(wheel_source, 'w') as package:
         package.writestr(
@@ -225,6 +246,9 @@ with tempfile.TemporaryDirectory() as directory:
     installed_tool = home / '.local/bin/asdf'
     assert installed_tool.read_bytes() == tool_source.read_bytes(), installed_tool
     assert os.access(installed_tool, os.X_OK), 'installed executable is not executable'
+    installed_op = home / '.local/bin/op'
+    assert installed_op.read_bytes() == op_source.read_bytes(), installed_op
+    assert os.access(installed_op, os.X_OK), 'installed op is not executable'
     qmk = subprocess.run(
         [str(home / '.local/bin/qmk')], env=env, text=True, capture_output=True,
     )
@@ -258,6 +282,23 @@ with tempfile.TemporaryDirectory() as directory:
     )
     assert corrupt_rpm.returncode != 0 and 'mismatch' in corrupt_rpm.stderr, corrupt_rpm
     print('PASS: corrupt RPM is rejected before dnf can receive its path')
+
+    corrupt_op_home = prepare_home('corrupt-op-home', corrupt='op')
+    corrupt_op_env = dict(
+        os.environ,
+        HOME=str(corrupt_op_home),
+        XDG_CACHE_HOME=str(corrupt_op_home / '.cache'),
+        XDG_DATA_HOME=str(corrupt_op_home / '.local/share'),
+    )
+    corrupt_op = subprocess.run(
+        [str(fixture_repo / 'bin/install-releases'), '--offline'],
+        env=corrupt_op_env, text=True, capture_output=True,
+    )
+    assert corrupt_op.returncode != 0 and 'SHA-256 mismatch' in corrupt_op.stderr, corrupt_op
+    assert not (corrupt_op_home / '.local/bin').exists(), (
+        'an executable was installed before the corrupt op archive was rejected'
+    )
+    print('PASS: a corrupt op archive is rejected before any executable installation')
 
     corrupt_home = prepare_home('corrupt-home', corrupt='meslolgs-nerd-font')
     corrupt_env = dict(

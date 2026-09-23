@@ -1,65 +1,94 @@
 # Legacy path ledger
 
-Track each legacy path here as its migration block is completed. This is a stub,
-not a completed inventory. Use **migrated**, **rewritten**, or **dropped**, with a
-reason and verification evidence.
+This ledger accounts for every path in the legacy repository's Git index at
+`1d979ad37b451b81ad864ed2a410899c58365214`. The inventory was generated from
+the read-only checkout, not from earlier findings. Gitlinks count as one path,
+matching Git's index. Ignored local tool state and the policy-forbidden personal
+environment file are not repository content and were not inspected.
 
-| Legacy path | Destination | Status | Reason / verification |
-|---|---|---|---|
-| `config/git/config` | `config/git/config` | **migrated (verbatim + 1 documented addition)** | Copied byte-for-byte in A4 as the link-mechanism fixture; still awaits its Block 1 audit. **A6b appended one 3-line block** (`[url "git@github.com:VladaTrefil/nvim.git"] pushInsteadOf = https://github.com/VladaTrefil/nvim.git`) so the Neovim submodule clones over HTTPS without credentials while pushes still use the SSH key. Everything above that block is untouched legacy content. `diff` against the legacy file shows exactly this addition and nothing else. |
-| `config/git/ignore` | `config/git/ignore` | **migrated (verbatim)** | Byte-for-byte; awaits Block 1 audit. |
+The rows below are disjoint. A `/**` row covers every indexed path below that
+prefix; brace rows enumerate only the named paths; “remaining” means the prefix
+after the preceding exceptions. Counts total **388 of 388 tracked paths**, with
+**0 unaccounted paths**.
 
-## Desktop layer inventory (Blocks 5–6)
+| Legacy path or complete set | Count | Destination | Status | One-line reason |
+|---|---:|---|---|---|
+| `.agents` | 1 | none | **dropped** | Host-specific worker instruction is not machine configuration. |
+| `.ascii` | 1 | none | **dropped** | Unreferenced novelty art duplicated the separate ASCII asset. |
+| `.gitignore` | 1 | `.gitignore` | **rewritten** | Target-only state, bytecode, and private-shell exclusions replace the legacy ignore policy. |
+| `.gitmodules` | 1 | `.gitmodules` | **rewritten** | Only current Dotbot, Neovim, Oh My Zsh, and shell plugin Gitlinks remain, all with portable remotes. |
+| `.prettierignore` | 1 | none | **dropped** | There is no repository-wide Prettier scope in the Fedora target. |
+| `.prettierrc` | 1 | `modules/nvim/.prettierrc` | **migrated** | Neovim-owned formatter policy moved byte-for-byte into the extracted Neovim repository. |
+| `.ruby-version` | 1 | `config/asdf/tool-versions` | **rewritten** | Runtime selection is centralized in the reviewed asdf version manifest. |
+| `HANDOFF.md` | 1 | transition reports and current docs | **dropped** | Historical handoff state is superseded by the audited block reports and current documentation. |
+| `README.md` | 1 | `README.md` | **rewritten** | Fedora install, test, submodule, and manual workflows replace the Arch instructions. |
+| `install` | 1 | `install` | **rewritten** | The Fedora entrypoint separates package, link, tool, and system phases with dry-run safeguards. |
+| `install-base.sh` | 1 | none | **dropped** | Unsafe mixed bootstrap and credential handling were replaced by explicit manifests and phases. |
+| `{neovim.yml,selene.toml}` | 2 | `modules/nvim/{neovim.yml,selene.toml}` | **migrated** | Both Neovim lint policies moved byte-for-byte into the extracted repository. |
+| `assets/ascii-art.txt` | 1 | none | **dropped** | No surviving shell, desktop, or installer path consumes the decorative file. |
+| `background/**` | 4 | private `dotfiles-assets` wallpapers | **moved-to-assets** | Curated wallpapers are optional personal assets fetched outside the public configuration repo. |
+| `build/dotbot` | 1 | `modules/dotbot` | **migrated** | Dotbot remains a pinned Gitlink at the supported v1.24.0 revision. |
+| `build/{dotbot-asdf,dotbot-yay}` | 2 | none | **dropped** | Fedora package manifests and `bin/install-runtimes` replace the Arch-specific Dotbot plugins. |
+| `build/install.conf.yaml` | 1 | `install.conf.yaml`, `packages/**`, `provision/**` | **rewritten** | Links, packages, and pinned upstream releases are now explicit and independently testable. |
+| `build/pip-requirements.txt` | 1 | `packages/editor-tools.txt`, `provision/releases.json` | **rewritten** | Fedora providers and reviewed pinned artifacts replace ambient pip installation. |
+| `build/{install-zsh.sh,post-install.sh,setup-env.sh,standalone/_git.sh}` | 4 | `install`, `bin/system-setup`, shell config | **rewritten** | Idempotent Fedora phases replace Arch bootstrap scripts and ad-hoc Git setup. |
+| `config/asdf/**` | 4 | `config/asdf/**` | **rewritten** | asdf settings remain while runtime pins and default packages were audited for Fedora. |
+| `config/bat/**` | 8 | `config/bat/**` | **migrated** | Config, two syntaxes, and five themes are byte-for-byte sources for the managed Bat cache. |
+| `config/codespell/**` | 3 | `config/codespell/**` | **rewritten** | Word lists remain and the rc is generated with portable repository-relative paths. |
+| `config/dunst/dunstrc` | 1 | `config/dunst/dunstrc` | **rewritten** | Notification styling and commands were ported to the standalone Wayland session. |
+| `config/eww/assets/langs/**` | 3 | none | **dropped** | The obsolete language picker and its flag images are not part of the selected bar. |
+| `config/eww/bar/scripts/{langs,mediaplayer}` | 2 | none | **dropped** | The unused language and media watchers were deliberately removed with their widgets. |
+| `config/eww/bar/widgets/{lang.yuck,langs.json,mediaplayer.yuck}` | 3 | none | **dropped** | These widgets had no selected Fedora-session role. |
+| remaining `config/eww/**` paths | 25 | `config/eww/**` | **rewritten** | Eww styling/assets were retained while Sway IPC, PipeWire, network, Bluetooth, tray, and monitor behavior were repaired and tested. |
+| `config/git/**` | 2 | `config/git/**` | **rewritten** | PATH-based Neovim, valid log formats, main defaults, safer credential policy, and Neovim HTTPS-clone/SSH-push behavior replace legacy assumptions. |
+| `config/hosts` | 1 | none | **dropped** | Host-file changes remain a manual machine-owner decision and are never linked by dotfiles. |
+| `config/i3/auto_scratchpad.py` | 1 | none | **dropped** | The i3-specific IPC helper has no role in SwayFX. |
+| `config/i3/{config,on-startup.sh}` | 2 | `config/sway/**`, `bin/system-setup` | **rewritten** | Sway bindings/session policy and explicit service setup replace i3 startup behavior. |
+| `config/i3/picom.conf` | 1 | `config/sway/conf.d/10-appearance.conf` | **rewritten** | SwayFX compositor effects replace X11 picom. |
+| `config/konsole/konsolerc` | 1 | `config/kitty/**` | **rewritten** | Kitty is the selected terminal, so Konsole-specific state is not carried. |
+| `config/lazygit/config.yml` | 1 | `config/lazygit/config.yml` | **migrated** | The portable LazyGit configuration is retained byte-for-byte. |
+| `config/npm/npmrc` | 1 | `config/npm/npmrc` | **rewritten** | The selected npm policy remains without legacy machine assumptions. |
+| `config/nvim/**` | 141 | `modules/nvim/**` | **migrated** | The full indexed Neovim tree and its history were extracted, then portability and provider paths were repaired in the dedicated repository. |
+| `config/pry/pryrc` | 1 | `config/pry/pryrc` | **migrated** | The Pry configuration is retained byte-for-byte. |
+| `config/pulse/daemon.conf` | 1 | none | **dropped** | The PulseAudio idle tweak is obsolete under Fedora PipeWire. |
+| `config/qt5ct/colors/Catppuccin-Mocha.conf` | 1 | `config/qt-palette/Catppuccin-Mocha.conf` | **migrated** | The identical Qt5/Qt6 palette is deduplicated to one linked source. |
+| `config/qt5ct/qt5ct.conf` | 1 | none | **dropped** | No selected application requires a Qt5 platform-theme configuration. |
+| `config/qt6ct/colors/Catppuccin-Mocha.conf` | 1 | `config/qt-palette/Catppuccin-Mocha.conf` | **migrated** | The byte-identical palette is shared with both Qt native color paths. |
+| `config/qt6ct/qt6ct.conf` | 1 | `config/qt6ct/qt6ct.conf` | **rewritten** | Qt6 Fusion and the selected shared palette remain in a portable config. |
+| `config/ranger/**` | 5 | none | **dropped** | The pinned `lf` workflow replaces Ranger and its devicons Gitlink. |
+| `config/rofi/**` | 5 | `config/rofi/**` | **rewritten** | Launcher and power-menu scripts/styles were ported to the Wayland session. |
+| `config/rubocop/rubocop.yml` | 1 | `config/rubocop/config.yml` | **rewritten** | The policy was normalized and linked under the path expected by current tooling. |
+| `config/shell/**` | 3 | `config/shell/**` | **rewritten** | Profile, aliases, and input settings were audited for XDG paths, Fedora tools, and removed scripts. |
+| `config/solargraph/config.yml` | 1 | `config/solargraph/config.yml` | **migrated** | The portable Solargraph configuration is retained byte-for-byte. |
+| `config/stylelint/stylelintrc.json` | 1 | `config/stylelint/stylelintrc.json` | **rewritten** | Current formatter/linter integration replaces stale legacy plugin assumptions. |
+| `config/stylua/stylua.toml` | 1 | `config/stylua/stylua.toml`, `modules/nvim/stylua.toml` | **migrated** | The byte-identical Lua formatting policy is available to dotfiles and Neovim tests. |
+| `config/wgetrc` | 1 | `config/wgetrc` | **rewritten** | Cache and certificate behavior now uses portable user paths. |
+| `config/x11/**` | 4 | `config/sway/**`, `config/environment.d/50-desktop.conf` | **rewritten** | Standalone SwayFX and environment.d replace Plasma/i3 session, Xresources, xprofile, and xsession files. |
+| `config/zed/{keymap.json,settings.json,tasks.json}` | 3 | same paths | **rewritten** | Zed settings were retained with PATH-based Zsh, normalized task labels, and the tutorial task removed. |
+| `config/zed/keymap_backup.json` | 1 | none | **dropped** | The stale backup used older action names and was not live configuration. |
+| `config/zsh/**` | 6 | `config/zsh/**` | **rewritten** | Startup files were ported and the three shell dependencies remain explicit pinned Gitlinks; `p10k.zsh` stays byte-for-byte. |
+| `local/applications/lf.desktop` | 1 | `local/applications/lf.desktop` | **rewritten** | The desktop entry now launches PATH-resolved `lf` in Kitty instead of a dead Go/asdf path. |
+| `local/bin/{clear-git-branches.sh,kill-rails-server.sh}` | 2 | none | **dropped** | One cannot parse and performs remote deletion; the other can target the wrong process with SIGKILL. |
+| `local/bin/{folio-test-account.rb,generate-rails-sitemaps.sh,init-sinfin-project.sh}` | 3 | intended private `dotfiles-work` repo | **dropped** | Employer-specific or credential-bearing workflows are excluded from the public target; private review/migration remains open. |
+| `local/bin/ydl-clip.sh` | 1 | `local/bin/ydl-clip.sh` | **rewritten** | The workflow now uses Wayland clipboard input, validated arguments, quoted paths, and yt-dlp archive semantics. |
+| `local/fonts/FontAwesome-*.ttf` | 3 | private `dotfiles-assets` fonts | **moved-to-assets** | Paid Font Awesome Pro binaries are optional private assets, never public-repo content. |
+| `local/fonts/JoyPixels.ttf` | 1 | `google-noto-color-emoji-fonts` package | **dropped** | Fedora's maintained Noto Color Emoji replaces the bundled third-party emoji font. |
+| `local/fonts/MesloNerd-regular.ttf` | 1 | pinned MesloLGS Nerd Font release | **rewritten** | A verified upstream archive supplies the selected Regular, Bold, and Italic faces. |
+| `local/fonts/iosevka-mono/**` | 42 | none | **dropped** | No audited configuration selects Mono/Term or the many legacy weight/oblique variants. |
+| `local/fonts/iosevka/**` | 42 | pinned Iosevka Nerd Font release | **rewritten** | A verified upstream archive replaces bundled binaries with the three actually selected faces. |
+| `local/fonts/monolisa/**` | 14 | private `dotfiles-assets` fonts | **moved-to-assets** | Licensed MonoLisa faces remain optional private assets outside the public repo. |
+| `local/fonts/noto-sans-jp/**` | 9 | `google-noto-sans-jp-fonts` package | **rewritten** | Fedora's maintained exact family replaces all bundled Noto Sans JP weights. |
+| `local/konsole/**` | 4 | `config/kitty/**` | **dropped** | Konsole profiles/color schemes are obsolete after choosing Kitty. |
 
-The original two Git rows remain subject to their own audit. This inventory covers the remaining
-legacy desktop paths so Block 7 can distinguish installed applications from session config.
+## Accounted external state
 
-| Legacy path / state | Destination | Status | Reason / verification |
-|---|---|---|---|
-| `config/i3/` | `config/sway/` | **rewritten** | Block 5 moved bindings, profiles, input, workspace and session policy to SwayFX. i3 IPC is not used in the new session. Both Sway entry points have parser and static checks. |
-| `config/x11/` | `config/sway/`, `config/environment.d/50-desktop.conf` | **rewritten / dropped** | Plasma/i3 X11 session and Xresources setup are superseded by standalone SwayFX; locale, cursor and Qt6 theme are in the environment file. Guest rendering remains to be verified. |
-| `config/picom/` (legacy compositor, no config directory in this checkout) | SwayFX effects in `config/sway/conf.d/10-appearance.conf` | **dropped** | SwayFX is the compositor; picom is X11-only. No picom package in `packages/desktop.txt`. |
-| `config/eww/` | `config/eww/` | **migrated and repaired in B6e** | The Waybar port was reversed. The original SCSS and active widgets are restored; Sway IPC, PipeWire audio, actual network throughput, Bluetooth dispatch, monitor selection, and Wayland exclusivity were repaired. The unused media player and obsolete language picker were dropped. The Fedora 44 Wayland RPM is SHA-256 pinned. `tests/eww-checks.py`, guest widget values, and a `grim` screenshot verify the VM session. Physical output names and hardware remain open. |
-| `config/qt6ct/` | `config/qt6ct/qt6ct.conf`, `config/qt-palette/Catppuccin-Mocha.conf` | **migrated; palette deduplicated** | Fusion and the legacy palette retained. `QT_QPA_PLATFORMTHEME=qt6ct` was already set in Block 5 and remains singular. One palette source is linked to the Qt6 native path and the Qt5 native path. |
-| `config/qt5ct/` | palette link only at `~/.config/qt5ct/colors/` | **config dropped; palette shared** | No named Qt5 application requiring qt5ct is yet established in the target inventory, so no qt5ct config or package is selected. The second palette link keeps the byte-identical source available if Block 7 confirms one. |
-| `config/konsole/` | `config/kitty/` | **dropped / rewritten** | Block 5 chose Kitty as the terminal and ported terminal styling there. Konsole is an application decision outside this desktop layer. |
-| `config/pulse/daemon.conf` | none | **dropped** | Legacy PulseAudio idle tweak is not carried into the target PipeWire stack. `pulseaudio-utils` remains for existing volume bindings and the eww audio widget; the guest reports PulseAudio on PipeWire 1.6.9. |
-| `config/rofi/`, `config/dunst/` | same paths | **rewritten** | Block 5 ported launcher, power menu and notification styling to the Wayland session. Dunst remains the notification daemon. |
-| legacy GTK and terminal settings | `config/gtk-3.0/`, `config/gtk-4.0/`, `config/kitty/` | **rewritten** | Block 5 selected GTK theme, icons, fonts, cursor and Kitty. Live appearance is pending guest validation. |
-| host `~/.config/autostart/Proton Mail Bridge.desktop` | XDG autostart via `dex-autostart` in `config/sway/conf.d/60-session.conf` | **session integration added; application pending Block 7** | The host entry starts Bridge `--no-window`. The standalone session runs XDG autostart and eww owns the tray; an IBus tray item was verified on the VM. Bridge is not yet installed or verified on the VM. |
-| `config/ranger/`, `config/zed/` | none yet | **outstanding for Block 7** | Application configs exist in legacy but are absent from the new link map; decide with the application/package inventory. |
+The legacy package block inside `build/install.conf.yaml` is part of that one
+indexed path and is covered above. Its 109 source rows were separately audited
+in Block 7: selected software maps to Fedora/RPM Fusion/Flatpak manifests or
+checksum-pinned releases, while 21 obsolete rows were explicitly dropped.
 
-## Applications and system integration (Block 7)
-
-This section supersedes the two Block 6 rows that left Proton Bridge and Zed
-outstanding.
-
-| Legacy path / state | Destination | Status | Reason / verification |
-|---|---|---|---|
-| `build/install.conf.yaml` package block (109 rows, 108 distinct) | `packages/apps.txt`, `packages/flatpak.txt`, existing manifests, and pinned releases | **accounted** | The full findings table is implemented. Twenty-seven rows were already covered: `readline`, `curl`, `git`, `asdf-vm`, the PipeWire trio, `zsh`, `dunst`, `eww`, `rofi`, `qt6ct`, guest additions, `bat`, `ripgrep`, `fd`, `neovim`, `lazygit`, `lf`, `ibus`, Python/Pylint/Pynvim/isort/mypy, ImageMagick, and Ghostscript. The remaining kept/replaced applications are native Fedora/RPM Fusion packages, the four reviewed Flatpaks, or the pinned Lens/QMK paths. Both `ark` source rows map to one `xarchiver` entry. The guest reports zero missing entries across the 70-package native manifest and all four Flatpak IDs. |
-| same package block: obsolete/unwanted rows | none | **dropped (21 source rows)** | `alsa-utils`, i3, picom, feh, qt5ct, Konsole, Spectacle, Skanlite, Docker Desktop, host VirtualBox/guest ISO packages, xclip, ifstat, playerctl, ranger, python-i3ipc, python-devtools, python-virtualenv, system Lua, Brave, and Redis are absent. Brave is explicitly dropped because Chromium remains native and is already `$BROWSER`. Redis/Valkey is per-project state, not workstation provisioning. |
-| same package block: `telegram-desktop`, `ffmpeg` | native RPM Fusion free packages | **replaced / migrated** | The approved repo is enabled idempotently. Telegram uses its native RPM and full `ffmpeg` replaces `ffmpeg-free`; the guest proves `telegram-desktop`/`ffmpeg` present and `ffmpeg-free` absent. |
-| same package block: `gparted` replacement | `gparted` + `lxqt-policykit` | **replaced with constrained policy agent** | Naming the Qt policy agent prevented DNF from selecting its GNOME alternative. Guest `rpm -q` proves both requested packages installed while `gnome-shell` and `gdm` are absent. |
-| same package block: `lens-bin` | Lens RPM record in `provision/releases.json` | **migrated, separately pinned** | Official Lens RPM repository metadata supplied the exact artifact SHA-256. The package phase verifies size/hash before DNF; guest package is `lens-2026.9.181013~latest-1.x86_64`. No installer script is used. |
-| same package block: `qmk` | QMK wheel-set record in `provision/releases.json` | **migrated, separately pinned** | QMK and its PyPI-only runtime wheels are individually SHA-256 pinned and extracted by `bin/install-releases`; Fedora dependencies remain native RPMs. No pip or shell installer runs. Guest `qmk --version` reports `1.2.0`, and the second tools run is idempotent. |
-| `local/applications/lf.desktop` | `local/applications/lf.desktop` | **rewritten** | Removed the dead asdf/Go 1.18 binary path. The linked entry now launches `kitty --class lf -e lf %f` through PATH with `TryExec=lf`. Link tests cover it. |
-| `local/bin/ydl-clip.sh` | `local/bin/ydl-clip.sh` | **rewritten** | Retained personal workflow using `wl-paste`, strict input validation, quoted paths, one consistent yt-dlp archive, and yt-dlp's archive semantics instead of broad timestamp deletion. Fixed DISPLAY, UID, and X11 dependencies are gone; ShellCheck passes. |
-| `local/bin/kill-rails-server.sh` | none | **dropped** | Unquoted PID extraction and unconditional SIGKILL could target the wrong process. The stale public alias was removed. |
-| `local/bin/clear-git-branches.sh` | none | **dropped** | The unmatched backtick fails parsing before execution; the script also performs unsafe remote branch deletion. |
-| `local/bin/generate-rails-sitemaps.sh` | intended private `dotfiles-work` repository | **move pending / not copied** | Employer/project-specific and needs repair. No local private checkout was available and remote authentication failed, so inventing a destination or exposing it publicly was rejected. |
-| `local/bin/folio-test-account.rb` | intended private `dotfiles-work` repository | **move pending / not copied** | Employer/client-specific privileged account creation. Credential values were not read, copied, or reproduced. |
-| `local/bin/init-sinfin-project.sh` | intended private `dotfiles-work` repository | **move pending / not copied** | Employer-specific destructive database bootstrap. Credential values were not read or copied; reuse requires target and independently verified backup/restore checks. |
-| `config/shell/aliases.sh` references to the local scripts | `config/shell/aliases.sh` | **rewritten** | Removed the dropped Rails killer alias and changed the retained downloader path to the managed `~/.local/bin/ydl-clip.sh`. |
-| host `~/.config/autostart/Proton Mail Bridge.desktop` | `local/autostart/protonmail-bridge.desktop` | **rewritten and migrated** | Generic Dex-compatible Flatpak entry starts `ch.protonmail.protonmail-bridge --no-window`; GNOME-only metadata was removed. In the tty2 session Bridge ran and Eww's watcher reported two tray items. |
-| `config/zed/settings.json` | `config/zed/settings.json` | **migrated with portability repair** | Terminal program is PATH-based `zsh`; the rest of the selected settings were retained. Linked to `~/.config/zed`. |
-| `config/zed/tasks.json` | `config/zed/tasks.json` | **migrated and pruned** | Retained the LazyGit task and dropped the tutorial example. |
-| `config/zed/keymap.json` | `config/zed/keymap.json` | **migrated and normalized** | LazyGit task labels now match exact case. |
-| `config/zed/keymap_backup.json` | none | **dropped** | Stale backup with older action names is not live configuration. |
-| `config/ranger/` | none | **dropped** | `lf` is the settled checksum-pinned terminal file manager; no Ranger package or config is carried. |
-| legacy `config/i3/on-startup.sh` system actions | `bin/system-setup`, Sway session config | **rewritten** | IBus already starts through the Wayland session. The new explicit user/root phases manage Zsh, Syncthing, Bluetooth, Docker group membership, and Docker service with state checks, dry-run, and idempotent output. Fedora requires password authentication for unprivileged `chsh`, so shell mutation moved to the explicit root phase. PostgreSQL initialization remains manual; Redis/Valkey is dropped. |
-| `nvim-next/lua/core/mappings.lua` Dolphin mapping | separate `nvim-next` commit `027b0d2` | **rewritten; gitlink pending publication** | `<Leader>E` now uses detached `vim.system` with `pcmanfm-qt` and the current directory. Neovim tests pass. `modules/nvim` remains on published `2214baf`: pushing was forbidden, and an attempted `bin/sync-nvim` could not fetch because the host rejected `/etc/ssh/ssh_config.d/20-systemd-ssh-proxy.conf` ownership/permissions. Do not hand-edit the gitlink; fix that host issue, publish the Neovim commit, then rerun the supported sync command. |
-
-The manifest regression test has deliberate provider mappings for linked script
-commands that previously failed silently. Its negative run failed for both
-`bluetoothctl`/`bluez` and `jq`; after adding `bluez` and `jq`, guest lint and
-the live workspace/Bluetooth probes pass.
+The former host Proton Mail Bridge autostart entry was not a legacy repository
+path, so it is outside the 388-path denominator; its behavior was rewritten as
+`local/autostart/protonmail-bridge.desktop`. The unpublished Neovim PCManFM-Qt
+mapping follow-up likewise belongs to the separate Neovim repository and does
+not change this path count.

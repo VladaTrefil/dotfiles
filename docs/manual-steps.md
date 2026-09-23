@@ -31,10 +31,31 @@ that it skipped OpenPGP checks for these local RPMs; the recorded SHA-256 is
 the integrity control. `./install tools` assembles QMK from an exact set of
 checksum-pinned wheels without invoking pip or an upstream installer.
 
-An upstream repository may remove a pinned eww, Lens, or QMK artifact. If that
+An upstream repository may remove a pinned eww, Lens, QMK, or `op` artifact. If that
 happens, review a replacement artifact and its published checksum, update its
 complete release record, and rerun the appropriate phase. Never bypass a size
 or checksum mismatch and never substitute `curl | sh`.
+
+## 1Password and the secrets manifest
+
+`./install tools` installs only the checksum-pinned 1Password CLI. The
+1Password desktop application is deliberately not installed; install it
+manually if desktop integration or biometric unlock is wanted, then enable its
+CLI integration and sign in.
+
+Keep the real manifest at
+`${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/secrets.tsv`, outside this checkout.
+It is personal rather than secret, but its vault/item layout is machine- and
+account-specific and does not belong in shared dotfiles. Start from
+`config/secrets.tsv.example`, replace every placeholder `op://` reference, and
+run `bin/check-secrets`. The command prints only `OK` or `MISSING` plus the
+variable name; it never prints a resolved value or forwards `op` diagnostics.
+
+`GITHUB_USERNAME` and `GITHUB_KEY_NAME` are included so one command checks the
+whole credential set even though those two values are not secrets. Review the
+remaining need for `GITHUB_PASSWORD`: if a current consumer still exists now
+that `install-base.sh` is gone, a least-privilege fine-grained GitHub token is a
+better fit than an account password.
 
 ## Block 7 follow-up
 

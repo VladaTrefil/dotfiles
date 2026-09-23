@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+render() {
+    local workspaces focused number occupied focus icon buttons=''
+    workspaces=$(swaymsg -t get_workspaces -r)
+    for number in {1..6}; do
+        focused=$(jq -r --argjson number "$number" '.[] | select(.num == $number) | .focused' <<< "$workspaces")
+        occupied=''
+        focus=''
+        icon=''
+        if [[ -n $focused ]]; then
+            occupied=' workspace__button--occupied'
+            if [[ $focused == true ]]; then
+                focus=' workspace__button--focused'
+                icon=''
+            fi
+        fi
+        buttons+=" (button :onclick \"swaymsg workspace $number\" :class \"workspace__button$occupied$focus\" \"$icon\")"
+    done
+    printf '(box :halign "center" :valign "center" :space-evenly false %s)\n' "$buttons"
+}
+
+render
+while IFS= read -r _event; do
+    render
+done < <(swaymsg -t subscribe -m '["workspace"]')

@@ -50,7 +50,7 @@
     $XDG_CONFIG_HOME/lazygit: config/lazygit
     $XDG_CONFIG_HOME/pylintrc: config/pylintrc
     $XDG_CONFIG_HOME/sway: config/sway
-    $XDG_CONFIG_HOME/waybar: config/waybar
+    $XDG_CONFIG_HOME/eww: config/eww
     $XDG_CONFIG_HOME/qt6ct/qt6ct.conf: config/qt6ct/qt6ct.conf
     $XDG_CONFIG_HOME/qt6ct/colors/Catppuccin-Mocha.conf: config/qt-palette/Catppuccin-Mocha.conf
     $XDG_CONFIG_HOME/qt5ct/colors/Catppuccin-Mocha.conf: config/qt-palette/Catppuccin-Mocha.conf

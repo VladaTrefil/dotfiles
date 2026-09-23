@@ -1,0 +1,49 @@
+$iosevka: 'Iosevka Nerd Font';
+$awesome: 'Font Awesome 5 Pro';
+
+$blue: #31748f;
+$blue-dark: desaturate(darken($blue, 25%), 35%);
+$blue-bt: #0a61b8;
+$blue-faint: #9ccfd8;
+$gray-blue: #858ba0;
+
+$aqua: #94e2d5;
+$purple: #b4befe;
+
+$red: #eb6f92;
+$red-hover: #e64d78;
+
+$red-500: $red;
+$red-400: lighten($red, 10%);
+$red-300: lighten($red, 20%);
+
+$light-pink: #f2c8c7;
+
+$green: #9cd8a5;
+
+$background: #0c0c18;
+$fg: #cdd6f4;
+$fg1: #a6adc8;
+
+$gray: #585b70;
+
+$border-color: #2f2f47;
+$bar-color: #3e3e5a;
+
+$scale-gradient: linear-gradient(
+  to right,
+  $blue-bt 15%,
+  $blue 60%,
+  $blue-faint 100%
+);
+
+$box-shadow-window: 0px 5px 15px rgba(0, 0, 0, 0.1);
+
+$m: 5px;
+
+$bar-icon-size: 18px;
+$bar-icon-size-lg: 22px;
+$bar-icon-size-xl: 30px;
+
+$font-size: 14px;
+$font-size-lg: 16px;

@@ -9,7 +9,7 @@ usage() {
 Usage: ./install [link|packages|tools|runtimes|system|all] [options]
 
   link        Initialize pinned submodules and create links (default).
-  packages    Print a dnf command; confirmation and root are needed to run it.
+  packages    Install selected packages and the SHA-256-pinned desktop RPM as root.
   tools       Install checksum-pinned asdf, StyLua, Selene, lf and LazyGit release binaries.
   runtimes    Provision tool-versions and its npm/gem defaults with Go-asdf.
   system      Describe future privileged steps; currently does nothing.
@@ -31,7 +31,7 @@ die() {
 }
 
 install_packages() {
-    local groups='' group file line answer
+    local groups='' group file line answer rpm_path desktop_selected=false
     local -a files=() names=() packages=() command=()
     local -A seen=()
     while (($#)); do
@@ -61,6 +61,9 @@ install_packages() {
     fi
 
     for file in "${files[@]}"; do
+        if [[ $file == "$repo_dir/packages/desktop.txt" ]]; then
+            desktop_selected=true
+        fi
         while IFS= read -r line || [[ -n $line ]]; do
             line=${line%%#*}
             # Trim whitespace without word splitting or command evaluation.
@@ -78,6 +81,15 @@ install_packages() {
     if ((${#packages[@]} == 0)); then
         printf 'No packages selected; nothing to run.\n'
         return
+    fi
+    if "$desktop_selected"; then
+        if "$dry_run"; then
+            printf 'Desktop group includes the SHA-256-pinned eww RPM in provision/releases.json.\n'
+        elif ((EUID == 0)); then
+            rpm_path=$("$repo_dir/bin/install-releases" --rpm)
+            packages+=("$rpm_path")
+            printf 'Verified pinned eww RPM before dnf; its SHA-256 pin is the integrity control.\n'
+        fi
     fi
     command=(dnf install -- "${packages[@]}")
     printf '%q' "${command[0]}"

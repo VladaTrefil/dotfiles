@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export LC_ALL=C
+
+interface=$(awk 'NR > 1 && $2 == "00000000" { print $1; exit }' /proc/net/route)
+if [[ -z $interface ]]; then
+    printf 'No default network interface\n' >&2
+    exit 1
+fi
+rx_path="/sys/class/net/$interface/statistics/rx_bytes"
+tx_path="/sys/class/net/$interface/statistics/tx_bytes"
+[[ -r $rx_path && -r $tx_path ]] || { printf 'Missing counters for %s\n' "$interface" >&2; exit 1; }
+read -r previous_rx < "$rx_path"
+read -r previous_tx < "$tx_path"
+while sleep 1; do
+    read -r current_rx < "$rx_path"
+    read -r current_tx < "$tx_path"
+    awk -v rx="$((current_rx - previous_rx))" -v tx="$((current_tx - previous_tx))" \
+        'BEGIN { printf "{\"down\":\"%.2f\",\"up\":\"%.2f\"}\n", rx * 8 / 1000000, tx * 8 / 1000000 }'
+    previous_rx=$current_rx
+    previous_tx=$current_tx
+done

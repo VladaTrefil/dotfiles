@@ -1,0 +1,9 @@
+(deflisten workspace "./bar/scripts/workspace")
+
+(defwidget workspaces []
+  (box
+    :orientation "h"
+    :space-evenly false
+    :valign "center"
+    :class "module workspace"
+  (literal :content workspace)))

@@ -1,0 +1,45 @@
+(defpoll clock_time :interval "1s" "date +\%I")
+(defpoll clock_minute :interval "1s" "date +\%M")
+(defpoll clock_date :interval "60s" "date '+%d/%m'")
+
+(defpoll calendar_day :interval "60s" "date '+%d'")
+(defpoll calendar_year :interval "60s" "date '+%Y'")
+
+(defvar date_reveal false)
+
+(defwidget clock []
+  (eventbox :onhover "${eww} update date_reveal=true"
+            :onhoverlost "${eww} update date_reveal=false"
+    (box :class "module clock"
+         :space-evenly "false"
+         :orientation "h"
+         :spacing spacing
+      (label :text clock_time
+             :class "clock__time" )
+      (label :text ""
+             :class "clock__sep" )
+      (label :text clock_minute
+             :class "clock__minute")
+      (revealer :transition "slideleft"
+                :reveal date_reveal
+                :duration "350ms"
+        (eventbox :cursor 'pointer'
+          (button :class "clock__date"
+                  :onclick "./bar/scripts/pop calendar"
+          clock_date))))))
+
+(defwidget cal []
+  (box :class "cal" :orientation "v"
+    (box :class "cal-in"
+      (calendar :class "cal"
+                :day calendar_day
+                :year calendar_year))))
+
+(defwindow calendar [monitor]
+  :monitor monitor
+  :geometry (geometry :x "-20px"
+  :y "4%"
+  :anchor "top right"
+  :width "270px"
+  :height "60px")
+  (cal))

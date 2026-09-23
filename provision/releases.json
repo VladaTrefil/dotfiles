@@ -50,5 +50,12 @@
       "MesloLGSNerdFont-Bold.ttf",
       "MesloLGSNerdFont-Italic.ttf"
     ]
+  },
+  "eww": {
+    "kind": "rpm",
+    "version": "0.6.0^20260705g4ded063-1.fc44",
+    "url": "https://download.copr.fedorainfracloud.org/results/dturner/eww/fedora-44-x86_64/10704169-eww/eww-0.6.0%5E20260705g4ded063-1.fc44.x86_64.rpm",
+    "sha256": "cdea82650b8b485b65cfbeac31299a3103f81db499ae2741cc81ba214d6fdc96",
+    "size": 4351828
   }
 }

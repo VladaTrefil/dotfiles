@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+case "${1:-}" in
+    calendar|system|bluetooth) ;;
+    *) printf 'Usage: %s {calendar|system|bluetooth}\n' "$0" >&2; exit 2 ;;
+esac
+window=$1
+[[ $window == bluetooth ]] && window=bluetooth_menu
+is_open() {
+    eww active-windows | grep -q "^${1}:"
+}
+
+if is_open "$window"; then
+    eww close "$window"
+else
+    for other in calendar system bluetooth_menu; do
+        if is_open "$other"; then
+            eww close "$other"
+        fi
+    done
+    eww open --arg "monitor=$(eww get bar_monitor)" "$window"
+fi

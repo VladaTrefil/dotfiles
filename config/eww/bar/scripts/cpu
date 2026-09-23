@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}/eww
+mkdir -p -- "$cache_dir"
+state_file=$cache_dir/cpu-state
+read -r -a fields < /proc/stat
+idle=$((fields[4] + fields[5]))
+total=0
+for value in "${fields[@]:1}"; do
+    total=$((total + value))
+done
+usage=0
+if [[ -r $state_file ]]; then
+    read -r previous_total previous_idle < "$state_file"
+    delta=$((total - previous_total))
+    if ((delta > 0)); then
+        usage=$(((delta - idle + previous_idle) * 100 / delta))
+    fi
+fi
+printf '%s %s\n' "$total" "$idle" > "$state_file"
+printf '%s\n' "$usage"

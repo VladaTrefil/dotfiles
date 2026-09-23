@@ -1,0 +1,57 @@
+(defvar eww "/usr/bin/eww -c $HOME/.config/eww")
+(defvar bar_monitor "Virtual-1")
+
+(defvar spacing "3")
+(defvar window_y "3%")
+
+(defvar bar_class "bar-2560")
+
+(include "./bar/widgets/workspaces.yuck")
+
+(include "./bar/widgets/time.yuck")
+
+(include "./bar/widgets/network.yuck")
+(include "./bar/widgets/system.yuck")
+(include "./bar/widgets/bluetooth.yuck")
+(include "./bar/widgets/audio.yuck")
+
+(defwidget left []
+  (box :orientation "h"
+       :space-evenly false
+       :halign "start"
+       :class "bar__left"
+    (workspaces)
+    ))
+
+(defwidget center []
+  (box
+    :orientation "h"
+    :space-evenly false
+    :halign "center"
+    :class "center_modules"
+    (clock)))
+
+(defwidget right []
+  (box :orientation "h"
+       :space-evenly false
+       :halign "end"
+       :class "bar__right"
+    (volume)
+    (bluetooth)
+    (systray)
+    (network)
+    (system_widget)))
+
+(defwindow bar [monitor]
+  :monitor monitor
+  :geometry (geometry :x "0%" :y "0%" :width "98%" :height "30px" :anchor "top center")
+  :stacking "fg"
+  :exclusive true
+  (box :class "bar"
+       :class bar_class
+       :orientation "h"
+    (box :class "bar__inner"
+         :orientation "h"
+      (left)
+      (center)
+      (right))))

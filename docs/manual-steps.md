@@ -10,9 +10,20 @@ performs these actions automatically:
 - Create a GitHub repository, configure its remote, or push it.
 
 Package installation is separate: inspect `./install packages --dry-run` and run
-the printed command as root, or explicitly confirm `packages` in a root session.
-This repository does not invoke sudo, run downloaded installers, or remove
-unmanaged files. Existing link conflicts require a manual decision.
+`./install packages` as root, confirming the printed dnf command. The desktop
+group downloads the pinned Fedora 44 Wayland eww RPM in `provision/releases.json`,
+checks its size and SHA-256 before giving the local file to dnf, and lets dnf
+resolve GTK dependencies from Fedora repositories. Dnf warns that it skipped
+OpenPGP checks for this local RPM; the recorded SHA-256 is the integrity control.
+The repository does not invoke sudo. Existing link conflicts require a manual
+decision.
+
+COPR may garbage-collect the pinned eww build and make its URL return 404.
+If that happens, find a current Fedora 44 Wayland eww RPM, review its origin,
+update `url`, `sha256`, `size`, and `version` in `provision/releases.json`, then
+rerun `./install packages`. Do not bypass a checksum mismatch. The VM confirms
+the current build, but the physical machine's multi-output names and audio and
+Bluetooth hardware still need direct checks.
 
 Public Nerd Fonts and private assets are a separate step:
 

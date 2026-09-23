@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+volume_percent() {
+    pactl get-sink-volume @DEFAULT_SINK@ | awk 'match($0, /[0-9]+%/) { print substr($0, RSTART, RLENGTH - 1); exit }'
+}
+
+status() {
+    local volume
+    if [[ $(pactl get-sink-mute @DEFAULT_SINK@) == *yes ]]; then
+        printf 'muted\n'
+        return
+    fi
+    volume=$(volume_percent)
+    if ((volume < 50)); then
+        printf 'low\n'
+    else
+        printf 'high\n'
+    fi
+}
+
+case "${1:-}" in
+    volume-percent) volume_percent ;;
+    status) status ;;
+    icon)
+        case "$(status)" in
+            muted) printf '\n' ;;
+            low) printf '\n' ;;
+            high) printf '\n' ;;
+        esac
+        ;;
+    *) printf 'Usage: %s {volume-percent|status|icon}\n' "$0" >&2; exit 2 ;;
+esac

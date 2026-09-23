@@ -12,6 +12,13 @@ import tempfile
 
 root = Path(__file__).resolve().parent.parent
 production = json.loads((root / 'provision/releases.json').read_text())
+assert production['eww'] == {
+    'kind': 'rpm',
+    'version': '0.6.0^20260705g4ded063-1.fc44',
+    'url': 'https://download.copr.fedorainfracloud.org/results/dturner/eww/fedora-44-x86_64/10704169-eww/eww-0.6.0%5E20260705g4ded063-1.fc44.x86_64.rpm',
+    'sha256': 'cdea82650b8b485b65cfbeac31299a3103f81db499ae2741cc81ba214d6fdc96',
+    'size': 4351828,
+}
 assert production['iosevka-nerd-font'] == {
     'kind': 'font',
     'version': 'v3.5.1',
@@ -111,6 +118,16 @@ with tempfile.TemporaryDirectory() as directory:
         'member': 'asdf',
     }
     source_by_release['asdf'] = tool_archive
+    rpm_source = source_archives / 'eww.rpm'
+    rpm_source.write_bytes(b'fixture RPM bytes')
+    releases['eww'] = {
+        'kind': 'rpm',
+        'version': 'fixture',
+        'url': 'https://example.invalid/eww.rpm',
+        'sha256': checksum(rpm_source),
+        'size': rpm_source.stat().st_size,
+    }
+    source_by_release['eww'] = rpm_source
     (fixture_repo / 'provision/releases.json').write_text(json.dumps(releases))
 
     def prepare_home(name, corrupt=None):
@@ -169,6 +186,24 @@ with tempfile.TemporaryDirectory() as directory:
     assert installed_tool.read_bytes() == tool_source.read_bytes(), installed_tool
     assert os.access(installed_tool, os.X_OK), 'installed executable is not executable'
     print('PASS: the default release mode retains executable-only installation')
+
+    rpm = subprocess.run(
+        [str(fixture_repo / 'bin/install-releases'), '--rpm', '--offline'],
+        env=env, text=True, capture_output=True,
+    )
+    assert rpm.returncode == 0, rpm
+    assert Path(rpm.stdout.strip()).read_bytes() == rpm_source.read_bytes()
+    print('PASS: packages phase receives only a verified pinned RPM path')
+
+    corrupt_rpm_home = prepare_home('corrupt-rpm-home', corrupt='eww')
+    corrupt_rpm_env = dict(env, HOME=str(corrupt_rpm_home),
+                           XDG_CACHE_HOME=str(corrupt_rpm_home / '.cache'))
+    corrupt_rpm = subprocess.run(
+        [str(fixture_repo / 'bin/install-releases'), '--rpm', '--offline'],
+        env=corrupt_rpm_env, text=True, capture_output=True,
+    )
+    assert corrupt_rpm.returncode != 0 and 'mismatch' in corrupt_rpm.stderr, corrupt_rpm
+    print('PASS: corrupt RPM is rejected before dnf can receive its path')
 
     corrupt_home = prepare_home('corrupt-home', corrupt='meslolgs-nerd-font')
     corrupt_env = dict(

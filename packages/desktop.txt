@@ -7,7 +7,6 @@ slurp
 wl-clipboard
 kitty
 dunst
-waybar
 dex-autostart
 qt6ct
 ibus

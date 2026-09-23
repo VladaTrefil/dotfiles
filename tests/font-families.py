@@ -29,9 +29,19 @@ for release, family in release_families.items():
 def read(path):
     return (root / path).read_text()
 
+scss_variables = dict(re.findall(
+    r'^\$([\w-]+):\s*[\'"]([^\'"]+)[\'"]', read('config/eww/variables.scss'), re.M))
+eww_fonts = {}
+for stylesheet in sorted((root / 'config/eww').rglob('*.scss')):
+    values = re.findall(r'font-family:\s*([^;]+);', stylesheet.read_text())
+    if values:
+        eww_fonts[str(stylesheet.relative_to(root))] = [
+            scss_variables[value.strip()[1:]] if value.strip().startswith('$')
+            else value.strip().strip('\'"') for value in values
+        ]
+
 uses = {
-    'waybar/style.css': re.findall(
-        r'font-family:\s*([^;]+);', read('config/waybar/style.css')),
+    **eww_fonts,
     'dunst/dunstrc': re.findall(
         r'^\s*font\s*=\s*"(.+?)"', read('config/dunst/dunstrc'), re.M),
     'sway/conf.d/10-appearance.conf': re.findall(
@@ -47,7 +57,7 @@ missing = []
 for path, values in uses.items():
     assert values, f'No font setting parsed in {path}'
     for value in values:
-        for family in value.split(',') if path == 'waybar/style.css' else [value]:
+        for family in value.split(',') if path.startswith('config/eww/') else [value]:
             family = re.sub(r'\s+\d+(?:\.\d+)?$', '', family.strip().strip('"'))
             if family not in provided:
                 missing.append(f'{path}: {family}')

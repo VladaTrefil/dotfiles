@@ -140,13 +140,13 @@ for name in asdf stylelint stylua rubocop solargraph npm pry bat lazygit; do
 done
 links+=(.tool-versions .config/pylintrc .config/codespell/ignore.txt .config/codespell/exclude-file.txt)
 sources+=(config/asdf/tool-versions config/pylintrc config/codespell/ignore.txt config/codespell/exclude-file.txt)
-links+=(.config/sway .config/waybar .config/qt6ct/qt6ct.conf
+links+=(.config/sway .config/eww .config/qt6ct/qt6ct.conf
     .config/qt6ct/colors/Catppuccin-Mocha.conf
     .config/qt5ct/colors/Catppuccin-Mocha.conf .config/rofi .config/dunst .config/kitty
     .config/gtk-3.0/settings.ini .config/gtk-4.0/settings.ini
     .config/environment.d/50-desktop.conf .config/mimeapps.list
     .XCompose)
-sources+=(config/sway config/waybar config/qt6ct/qt6ct.conf
+sources+=(config/sway config/eww config/qt6ct/qt6ct.conf
     config/qt-palette/Catppuccin-Mocha.conf
     config/qt-palette/Catppuccin-Mocha.conf config/rofi config/dunst config/kitty
     config/gtk-3.0/settings.ini config/gtk-4.0/settings.ini

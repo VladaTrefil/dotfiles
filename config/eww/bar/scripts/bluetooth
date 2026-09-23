@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+connected() {
+    local output
+    output=$(timeout 2 bluetoothctl devices Connected 2>/dev/null || true)
+    awk '/^Device / { count++ } END { print count + 0 }' <<< "$output"
+}
+
+devices() {
+    local line key name info icon button_class button_text icon_class entry result=''
+    while IFS= read -r line; do
+        [[ $line == Device\ * ]] || continue
+        key=${line#Device }
+        name=${key#* }
+        key=${key%% *}
+        info=$(timeout 2 bluetoothctl info "$key" 2>/dev/null || true)
+        if [[ $info == *'Connected: yes'* ]]; then
+            icon=''
+            icon_class='bluetooth-menu__icon--connected'
+            button_class='bluetooth-menu__button--disconnect'
+            button_text='disconnect'
+        else
+            icon=''
+            icon_class='bluetooth-menu__icon--paired'
+            button_class='bluetooth-menu__button--connect'
+            button_text='connect'
+        fi
+        entry=$(printf '(bluetooth_menu_device :key %s :icon %s :icon_class %s :name %s :button_class %s :button_text %s)' \
+            "$(jq -Rn --arg value "$key" '$value')" \
+            "$(jq -Rn --arg value "$icon" '$value')" \
+            "$(jq -Rn --arg value "$icon_class" '$value')" \
+            "$(jq -Rn --arg value "$name" '$value')" \
+            "$(jq -Rn --arg value "$button_class" '$value')" \
+            "$(jq -Rn --arg value "$button_text" '$value')")
+        result+=" $entry"
+    done < <(timeout 2 bluetoothctl devices 2>/dev/null || true)
+    if [[ -z $result ]]; then
+        printf '(label :class "bluetooth-menu__no-results-label" :text "No Devices :(")\n'
+    else
+        printf '(box :class "bluetooth-menu__devices" :orientation "v" %s)\n' "$result"
+    fi
+}
+
+subscribe() {
+    local previous='' current
+    while true; do
+        current=$(devices)
+        if [[ $current != "$previous" ]]; then
+            printf '%s\n' "$current"
+            previous=$current
+        fi
+        sleep 2
+    done
+}
+
+case "${1:-}" in
+    connected) connected ;;
+    devices) devices ;;
+    subscribe) subscribe ;;
+    device_button_click)
+        [[ ${2:-} =~ ^([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}$ ]] || exit 2
+        info=$(timeout 2 bluetoothctl info "$2" 2>/dev/null || true)
+        if [[ $info == *'Connected: yes'* ]]; then
+            timeout 10 bluetoothctl disconnect "$2"
+        else
+            timeout 10 bluetoothctl trust "$2"
+            timeout 10 bluetoothctl connect "$2"
+        fi
+        ;;
+    *) printf 'Usage: %s {connected|devices|subscribe|device_button_click MAC}\n' "$0" >&2; exit 2 ;;
+esac

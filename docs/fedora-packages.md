@@ -302,7 +302,7 @@ packages below are availability findings, not approval to replace pinned project
 `java-17-openjdk-devel` was queried and absent. Fedora's listed OpenJDK 25 package is not a
 substitute for the legacy Java 17 pin without a later compatibility decision.
 
-## Eww: correction to the brief; decision stays in Block 6
+## Eww: B0 survey and B6e resolution
 
 **Eww is not packaged in the queried Fedora 44 repositories.** However, the brief's
 “no COPR found” premise did not survive re-verification. The COPR search API returned multiple
@@ -316,8 +316,9 @@ trust/suitability and runtime behavior are **UNVERIFIED**. Other search hits wer
 Block 6 must choose whether to investigate a third-party package, use the
 [upstream source build](https://github.com/elkowar/eww/blob/master/docs/src/eww.md),
 or replace Eww (for example, evaluate the available Waybar package against the desired widgets).
-B0 makes no Eww installation or replacement decision. A source build or replacement remains
-necessary if Block 6 rejects the unverified third-party candidates.
+B0 made no Eww installation decision. B6e subsequently selected the Fedora 44 Wayland build
+from `dturner/eww` as a SHA-256-pinned RPM without enabling that COPR. The live VM session
+renders its tray and widgets; see `docs/manual-steps.md` for the pin and its expiry risk.
 
 ## Block 2 / Block 7 findings
 

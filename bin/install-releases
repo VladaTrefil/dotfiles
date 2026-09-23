@@ -47,10 +47,20 @@ def acquire_archive(name, spec, cache, offline):
         with tempfile.NamedTemporaryFile(dir=cache, delete=False) as download:
             download_path = Path(download.name)
         try:
-            subprocess.run([
+            result = subprocess.run([
                 'curl', '--fail', '--location', '--retry', '3', '--proto', '=https',
                 '--tlsv1.2', '--output', str(download_path), spec['url']
-            ], check=True)
+            ])
+            if result.returncode:
+                if spec.get('kind') == 'rpm':
+                    raise SystemExit(
+                        f'{name}: pinned RPM unavailable (COPR may have removed the build). '
+                        'Find a current Fedora Wayland RPM, update its URL, SHA-256 and size '
+                        'in provision/releases.json, then rerun ./install packages.'
+                    )
+                raise SystemExit(f'{name}: download failed: {spec["url"]}')
+            if 'size' in spec and download_path.stat().st_size != spec['size']:
+                raise SystemExit(f'{name}: downloaded size mismatch; nothing installed')
             if digest_file(download_path) != spec['sha256']:
                 raise SystemExit(f'{name}: downloaded SHA-256 mismatch; nothing installed')
             download_path.replace(archive)
@@ -58,6 +68,8 @@ def acquire_archive(name, spec, cache, offline):
             download_path.unlink(missing_ok=True)
     if digest_file(archive) != spec['sha256']:
         raise SystemExit(f'{name}: cached SHA-256 mismatch; remove {archive} and retry')
+    if 'size' in spec and archive.stat().st_size != spec['size']:
+        raise SystemExit(f'{name}: cached size mismatch; remove {archive} and retry')
     return archive
 
 
@@ -151,8 +163,11 @@ parser = argparse.ArgumentParser(
     description='Install checksum-pinned release executables (the default) or fonts.'
 )
 parser.add_argument('--fonts', action='store_true', help='install only pinned font faces')
+parser.add_argument('--rpm', action='store_true', help='verify and print the pinned RPM path for the packages phase')
 parser.add_argument('--offline', action='store_true', help='use verified cached archives only')
 args = parser.parse_args()
+if args.fonts and args.rpm:
+    parser.error('--fonts and --rpm are mutually exclusive')
 
 root = Path(__file__).resolve().parent.parent
 if platform.system() != 'Linux' or platform.machine() != 'x86_64':
@@ -160,7 +175,7 @@ if platform.system() != 'Linux' or platform.machine() != 'x86_64':
 cache = Path(os.environ.get('XDG_CACHE_HOME', str(Path.home() / '.cache'))) / 'dotfiles/releases'
 cache.mkdir(parents=True, exist_ok=True)
 releases = json.loads((root / 'provision/releases.json').read_text())
-selected_kind = 'font' if args.fonts else 'executable'
+selected_kind = 'rpm' if args.rpm else ('font' if args.fonts else 'executable')
 selected = [
     (name, spec) for name, spec in releases.items()
     if spec.get('kind', 'executable') == selected_kind
@@ -188,6 +203,11 @@ if args.fonts:
             f'({len(spec["members"])} fonts)',
             flush=True,
         )
+elif args.rpm:
+    if len(selected) != 1:
+        raise SystemExit('Exactly one RPM release is required for the packages phase')
+    name, spec = selected[0]
+    print(archives[name])
 else:
     bindir = Path.home() / '.local/bin'
     bindir.mkdir(parents=True, exist_ok=True)

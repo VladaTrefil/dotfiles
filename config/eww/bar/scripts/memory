@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+awk -v mode="${1:-used_perc}" '
+    /^MemTotal:/ { total = $2 }
+    /^MemAvailable:/ { available = $2 }
+    END {
+        if (total <= 0) exit 1
+        used = total - available
+        if (mode == "used") printf "%.2f\n", used / 1000000
+        else if (mode == "total") printf "%.2f\n", total / 1000000
+        else if (mode == "free") printf "%.2f\n", available / 1000000
+        else if (mode == "used_perc") printf "%.0f\n", used * 100 / total
+        else exit 2
+    }
+' /proc/meminfo

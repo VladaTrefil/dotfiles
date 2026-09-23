@@ -1,0 +1,24 @@
+(deflisten network_rates :initial '{"down":"0.00","up":"0.00"}' "./bar/scripts/network")
+
+(defwidget sep []
+  (box :class "separator" :vexpand "false" :hexpand "false"
+    (label :class "separator__text" :text "|")))
+
+
+(defwidget network []
+  (box :class "network"
+       :space-evenly "false"
+       :orientation "h"
+       :spacing spacing
+    (box :class "network__down"
+      :space-evenly "false"
+      (label :text ""
+             :class "network__icon" )
+      (label :text "${network_rates.down} Mb/s"
+             :class "network__label" ))
+    (box :class "network__up"
+       :space-evenly "false"
+      (label :text ""
+             :class "network__icon" )
+      (label :text "${network_rates.up} Mb/s"
+             :class "network__label" ))))

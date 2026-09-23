@@ -40,6 +40,10 @@ or checksum mismatch and never substitute `curl | sh`.
 
 The following remain machine- or account-specific:
 
+- Create and unlock GNOME Keyring's login keyring interactively on first use.
+  The Sway session starts Fedora's packaged Secret Service user unit before XDG
+  autostart, but portable dotfiles do not modify PAM or authselect. Login-time
+  auto-unlock belongs to the physical machine's login stack.
 - Sign in to Proton Mail Bridge and confirm mail-client integration. Its
   `--no-window` autostart and Eww tray registration work in the VM.
 - Sign in to Spotify, Anki, Lens, and Zed as needed. Confirm Zed's Flatpak can

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Bridge's XDG autostart entry needs Secret Service before it starts. Starting
+# the packaged user unit is synchronous, but its bus name can appear slightly
+# later, so bound the additional wait to five seconds.
+systemctl --user start gnome-keyring-daemon.service
+for ((attempt = 0; attempt < 50; attempt++)); do
+    if busctl --user list --no-pager --no-legend |
+        awk '$1 == "org.freedesktop.secrets" { found = 1 } END { exit !found }'; then
+        exec dex-autostart --autostart --environment sway
+    fi
+    sleep 0.1
+done
+
+printf 'Secret Service did not appear on the user bus within five seconds; refusing desktop autostart.\n' >&2
+exit 1

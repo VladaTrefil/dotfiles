@@ -22,7 +22,7 @@ for profile, output in [('physical', 'DP-1'), ('virtualbox', 'Virtual-1')]:
     startup = (root / f'config/sway/profiles/{profile}.conf').read_text()
     assert f'eww daemon && eww update bar_monitor={output} && eww open --arg monitor={output} bar' in startup
 session = (root / 'config/sway/conf.d/60-session.conf').read_text()
-assert re.search(r'^exec dex-autostart --autostart --environment sway$', session, re.M)
+assert re.search(r'^exec \$HOME/\.config/sway/bin/start-autostart$', session, re.M)
 assert 'waybar' not in session
 assert not (root / 'config/waybar').exists()
 assert 'waybar' not in (root / 'packages/desktop.txt').read_text()

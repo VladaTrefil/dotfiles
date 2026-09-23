@@ -11,6 +11,38 @@ Dotbot is pinned as a submodule to v1.24.0,
 The entrypoint requires Bash 4+ and Git. Initial submodule setup needs network
 access; subsequent runs use the recorded commits.
 
+## Fresh Fedora bootstrap
+
+On a fresh Fedora Minimal installation, fetch the small standalone bootstrap
+from the final public location:
+
+```sh
+curl -fL --proto '=https' --tlsv1.2 https://raw.githubusercontent.com/VladaTrefil/dotfiles/main/bootstrap -o /tmp/dotfiles-bootstrap
+```
+
+**Read the entire downloaded script before running it.** For example:
+
+```sh
+less /tmp/dotfiles-bootstrap
+chmod +x /tmp/dotfiles-bootstrap
+/tmp/dotfiles-bootstrap
+```
+
+The script first checks for a default route and, when needed, offers an
+interactive NetworkManager Wi-Fi or wired connection. Wi-Fi credentials are
+prompted by `nmcli --ask`; the bootstrap does not read or save the password.
+If `~/.ssh/id_ed25519` does not exist, `ssh-keygen` asks you whether to use a
+passphrase. The bootstrap then prints only the public key and pauses. Add that
+public key at <https://github.com/settings/keys>, return to the terminal, and
+press Enter. The script verifies the key with `ssh -T git@github.com`; it never
+uploads a key and never requests or handles a GitHub token.
+
+Missing system tools are not installed automatically. The script prints the
+`dnf install` command to run as root and stops. After cloning the private
+repository and initializing its public HTTPS submodules, it prints
+`cd ~/Development/dotfiles && ./install all` but does not run it, leaving the
+package lists available for review first.
+
 ```sh
 ./install                         # default: link
 ./install link                    # create directories and the Git/Neovim links
@@ -63,6 +95,7 @@ Run the checks from the repository:
 tests/link-test.sh
 tests/sync-nvim-test.sh
 tests/fetch-assets-test.sh
+tests/bootstrap-test.sh
 tests/lint.sh
 ```
 

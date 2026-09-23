@@ -1,0 +1,110 @@
+#!/bin/bash
+set -euo pipefail
+
+repo_url=${DOTFILES_REPO_URL:-git@github.com:VladaTrefil/dotfiles.git}
+repo_dir=${DOTFILES_REPO_DIR:-"$HOME/Development/dotfiles"}
+ssh_key="$HOME/.ssh/id_ed25519"
+
+die() {
+    printf 'Error: %s\n' "$*" >&2
+    exit 1
+}
+
+require_root_package() {
+    printf 'Required command is missing: %s\n' "$1" >&2
+    printf 'Run this as root, then run bootstrap again:\n' >&2
+    printf 'dnf install -y %s\n' "$2" >&2
+    exit 1
+}
+
+has_default_route() {
+    local routes
+    routes=$(ip route show default 2>/dev/null || true)
+    case "$routes" in
+        *default*) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+command -v ip >/dev/null 2>&1 || require_root_package ip iproute
+if has_default_route; then
+    printf 'Network: default route detected; no connection change needed.\n'
+else
+    command -v nmcli >/dev/null 2>&1 || require_root_package nmcli NetworkManager
+    printf 'Network: no default route detected.\n'
+    nmcli device status || true
+    printf 'Connect using: [1] Wi-Fi  [2] wired  [q] stop: '
+    IFS= read -r network_choice || die 'no network choice received; refusing to continue'
+    case "$network_choice" in
+        1)
+            printf 'Wi-Fi SSID: '
+            IFS= read -r wifi_ssid || die 'no Wi-Fi SSID received; refusing to continue'
+            [ -n "$wifi_ssid" ] || die 'Wi-Fi SSID cannot be empty'
+            printf 'nmcli will prompt for the Wi-Fi password; bootstrap never reads or stores it.\n'
+            nmcli --ask device wifi connect "$wifi_ssid"
+            ;;
+        2)
+            printf 'Wired device name (shown above): '
+            IFS= read -r wired_device || die 'no wired device received; refusing to continue'
+            [ -n "$wired_device" ] || die 'wired device cannot be empty'
+            nmcli device connect "$wired_device"
+            ;;
+        q|Q) die 'network setup stopped by user' ;;
+        *) die 'unknown network choice; refusing to continue' ;;
+    esac
+    has_default_route || die 'network command completed, but no default route exists'
+    printf 'Network: default route is now available.\n'
+fi
+
+key_created=false
+if [ -e "$ssh_key" ]; then
+    [ -f "$ssh_key" ] || die "$ssh_key exists but is not a regular file"
+    printf 'SSH key: existing Ed25519 key detected; no key change needed.\n'
+else
+    command -v ssh-keygen >/dev/null 2>&1 || require_root_package ssh-keygen openssh-clients
+    mkdir -p -- "$HOME/.ssh"
+    chmod 700 -- "$HOME/.ssh"
+    printf 'SSH key: generating %s. Choose whether to set a passphrase at the prompt.\n' "$ssh_key"
+    ssh-keygen -t ed25519 -f "$ssh_key"
+    key_created=true
+fi
+
+[ -f "$ssh_key.pub" ] ||
+    die "$ssh_key exists, but its public key is missing; restore or recreate the keypair before continuing"
+
+if "$key_created"; then
+    printf '\nAdd this public key at https://github.com/settings/keys:\n\n'
+    cat -- "$ssh_key.pub"
+    printf '\nBootstrap will not upload the key or ask for a GitHub token.\n'
+    printf 'Press Enter after adding the key to GitHub: '
+    IFS= read -r _confirmation || die 'confirmation was not received; refusing to continue'
+fi
+
+command -v ssh >/dev/null 2>&1 || require_root_package ssh openssh-clients
+printf 'SSH: verifying GitHub authentication with ssh -T git@github.com.\n'
+if ssh_output=$(ssh -T git@github.com 2>&1); then
+    ssh_status=0
+else
+    ssh_status=$?
+fi
+printf '%s\n' "$ssh_output"
+case "$ssh_output" in
+    *'successfully authenticated'*) printf 'SSH: GitHub authentication verified.\n' ;;
+    *) die "GitHub SSH authentication failed (ssh exit $ssh_status); fix the key or GitHub account and rerun" ;;
+esac
+
+command -v git >/dev/null 2>&1 || require_root_package git git
+if [ -e "$repo_dir" ]; then
+    [ -d "$repo_dir" ] || die "$repo_dir exists but is not a directory"
+    git -C "$repo_dir" rev-parse --git-dir >/dev/null 2>&1 ||
+        die "$repo_dir exists but is not a Git checkout; refusing to overwrite it"
+    printf 'Clone: existing checkout detected; skipping clone: %s\n' "$repo_dir"
+else
+    mkdir -p -- "${repo_dir%/*}"
+    git clone -- "$repo_url" "$repo_dir"
+fi
+
+git -C "$repo_dir" submodule update --init --recursive
+
+printf '\nBootstrap is complete. Review the package lists, then run:\n'
+printf 'cd ~/Development/dotfiles && ./install all\n'

@@ -16,7 +16,7 @@
          :spacing spacing
       (label :text clock_time
              :class "clock__time" )
-      (label :text ""
+      (label :text "⋮"
              :class "clock__sep" )
       (label :text clock_minute
              :class "clock__minute")

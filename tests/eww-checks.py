@@ -5,6 +5,10 @@ import re
 
 root = Path(__file__).resolve().parents[1]
 config = (root / 'config/eww')
+legacy_clock_separator = '\uf6d8'.encode()
+for path in config.rglob('*'):
+    if path.is_file():
+        assert legacy_clock_separator not in path.read_bytes(), path
 yuck = '\n'.join(path.read_text() for path in config.rglob('*.yuck'))
 windows = set(re.findall(r'^\(defwindow\s+(\w+)', yuck, re.M))
 assert windows == {'bar', 'calendar', 'system', 'bluetooth_menu'}, windows

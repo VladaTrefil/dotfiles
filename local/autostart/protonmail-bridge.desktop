@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Proton Mail Bridge
+TryExec=flatpak
+Exec=flatpak run ch.protonmail.protonmail-bridge --no-window
+Terminal=false
+

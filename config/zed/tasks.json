@@ -1,0 +1,12 @@
+[
+  {
+    "label": "Lazygit",
+    "command": "lazygit",
+    "args": [],
+    "env": {},
+    "reveal": "always",
+    "reveal_target": "center",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false
+  }
+]

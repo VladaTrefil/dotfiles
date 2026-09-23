@@ -1,0 +1,13 @@
+[Desktop Entry]
+Icon=system-file-manager
+Name=LF
+GenericName=File Manager
+Comment=Terminal file manager with VI key bindings
+TryExec=lf
+Exec=kitty --class lf -e lf %f
+Terminal=false
+Type=Application
+Categories=System;FileTools;FileManager;Terminal;
+MimeType=inode/directory;
+StartupWMClass=lf-file-manager
+

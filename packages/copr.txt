@@ -1,0 +1,3 @@
+# DNF COPRs required by native package manifests. These are enabled only in the
+# privileged packages phase, after the complete action plan is printed.
+swayfx/swayfx

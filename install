@@ -9,10 +9,10 @@ usage() {
 Usage: ./install [link|packages|tools|runtimes|system|all] [options]
 
   link        Initialize pinned submodules and create links (default).
-  packages    Install selected packages and the SHA-256-pinned desktop RPM as root.
-  tools       Install checksum-pinned asdf, StyLua, Selene, lf and LazyGit release binaries.
+  packages    Enable approved repositories and install RPM/Flatpak manifests as root.
+  tools       Install checksum-pinned release tools, including the QMK wheel set.
   runtimes    Provision tool-versions and its npm/gem defaults with Go-asdf.
-  system      Describe future privileged steps; currently does nothing.
+  system      Configure user state; use --root --user NAME for privileged state.
   all         Run packages, link, tools, runtimes, system, then show docs/manual-steps.md.
 
 Options for packages and all:
@@ -30,9 +30,19 @@ die() {
     exit 2
 }
 
+print_command() {
+    printf '%q' "$1"
+    shift
+    printf ' %q' "$@"
+    printf '\n'
+}
+
 install_packages() {
-    local groups='' group file line answer rpm_path desktop_selected=false
-    local -a files=() names=() packages=() command=()
+    local groups='' group file line answer release_output fedora_release rpmfusion_url repo_id
+    local apps_selected=false desktop_selected=false flatpak_selected=false copr_selected=false
+    local rpmfusion_pending=false flathub_pending=false ffmpeg_swap=false
+    local -a files=() names=() packages=() flatpaks=() coprs=() command=() rpm_groups=() release_args=()
+    local -a pinned_rpms=() pending_coprs=()
     local -A seen=()
     while (($#)); do
         case "$1" in
@@ -61,9 +71,12 @@ install_packages() {
     fi
 
     for file in "${files[@]}"; do
-        if [[ $file == "$repo_dir/packages/desktop.txt" ]]; then
-            desktop_selected=true
-        fi
+        case "${file##*/}" in
+            apps.txt) apps_selected=true; rpm_groups+=(apps) ;;
+            desktop.txt) desktop_selected=true; rpm_groups+=(desktop) ;;
+            flatpak.txt) flatpak_selected=true; continue ;;
+            copr.txt) copr_selected=true; continue ;;
+        esac
         while IFS= read -r line || [[ -n $line ]]; do
             line=${line%%#*}
             # Trim whitespace without word splitting or command evaluation.
@@ -78,36 +91,145 @@ install_packages() {
         done < "$file"
     done
 
-    if ((${#packages[@]} == 0)); then
+    # A standalone special group remains usable on a minimal Fedora install.
+    if "$flatpak_selected" && [[ ! ${seen[flatpak]+present} ]]; then
+        packages+=(flatpak)
+        seen[flatpak]=1
+    fi
+    if "$copr_selected" && [[ ! ${seen[dnf5-plugins]+present} ]]; then
+        packages+=(dnf5-plugins)
+        seen[dnf5-plugins]=1
+    fi
+
+    if "$flatpak_selected"; then
+        while IFS= read -r line || [[ -n $line ]]; do
+            line=${line%%#*}
+            line=${line#"${line%%[![:space:]]*}"}
+            line=${line%"${line##*[![:space:]]}"}
+            [[ -n $line ]] || continue
+            [[ $line =~ ^[a-zA-Z0-9][a-zA-Z0-9._-]+$ ]] || die "Invalid Flatpak ID: $line"
+            flatpaks+=("$line")
+        done < "$repo_dir/packages/flatpak.txt"
+    fi
+    # The Sway package itself depends on this source, so selecting desktop also
+    # selects the reviewed COPR even when --group omits the bookkeeping file.
+    if "$desktop_selected"; then copr_selected=true; fi
+    if "$copr_selected"; then
+        if [[ ! ${seen[dnf5-plugins]+present} ]]; then
+            packages+=(dnf5-plugins)
+            seen[dnf5-plugins]=1
+        fi
+        while IFS= read -r line || [[ -n $line ]]; do
+            line=${line%%#*}
+            line=${line#"${line%%[![:space:]]*}"}
+            line=${line%"${line##*[![:space:]]}"}
+            [[ -n $line ]] || continue
+            [[ $line =~ ^[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+$ ]] || die "Invalid COPR name: $line"
+            coprs+=("$line")
+        done < "$repo_dir/packages/copr.txt"
+    fi
+
+    if ((${#packages[@]} == 0 && ${#flatpaks[@]} == 0 && ${#coprs[@]} == 0)); then
         printf 'No packages selected; nothing to run.\n'
         return
     fi
-    if "$desktop_selected"; then
+
+    if ((${#rpm_groups[@]})); then
+        release_args=(--rpm)
+        for group in "${rpm_groups[@]}"; do release_args+=(--group "$group"); done
         if "$dry_run"; then
-            printf 'Desktop group includes the SHA-256-pinned eww RPM in provision/releases.json.\n'
+            printf 'Selected groups include checksum-pinned RPMs from provision/releases.json.\n'
         elif ((EUID == 0)); then
-            rpm_path=$("$repo_dir/bin/install-releases" --rpm)
-            packages+=("$rpm_path")
-            printf 'Verified pinned eww RPM before dnf; its SHA-256 pin is the integrity control.\n'
+            release_output=$("$repo_dir/bin/install-releases" "${release_args[@]}")
+            while IFS= read -r line; do
+                [[ -n $line ]] && pinned_rpms+=("$line")
+            done <<< "$release_output"
+            packages+=("${pinned_rpms[@]}")
+            printf 'Verified pinned RPMs before dnf; recorded SHA-256 values are the integrity controls.\n'
         fi
     fi
-    command=(dnf install -- "${packages[@]}")
-    printf '%q' "${command[0]}"
-    printf ' %q' "${command[@]:1}"
-    printf '\n'
-    if "$dry_run"; then
-        return
+
+    if "$dry_run" || ((EUID != 0)); then
+        pending_coprs=("${coprs[@]}")
+        "$apps_selected" && rpmfusion_pending=true
+        "$flatpak_selected" && flathub_pending=true
+    else
+        for line in "${coprs[@]}"; do
+            repo_id="copr:copr.fedorainfracloud.org:${line//\//:}"
+            if dnf repolist --enabled 2>/dev/null | awk -v expected="$repo_id" '$1 == expected { found = 1 } END { exit !found }'; then
+                printf 'Already enabled: COPR %s\n' "$line"
+            else
+                pending_coprs+=("$line")
+            fi
+        done
+        if "$apps_selected"; then
+            if rpm -q rpmfusion-free-release >/dev/null 2>&1; then
+                printf 'Already enabled: RPM Fusion free\n'
+            else
+                rpmfusion_pending=true
+            fi
+        fi
+        if "$flatpak_selected" && command -v flatpak >/dev/null 2>&1 &&
+            flatpak remotes --system --columns=name 2>/dev/null | grep -Fxq flathub; then
+            printf 'Already enabled: system Flathub remote\n'
+        elif "$flatpak_selected"; then
+            flathub_pending=true
+        fi
+        if "$apps_selected" && rpm -q ffmpeg-free >/dev/null 2>&1 && ! rpm -q ffmpeg >/dev/null 2>&1; then
+            ffmpeg_swap=true
+        fi
     fi
+
+    printf 'Package phase plan:\n'
+    for line in "${pending_coprs[@]}"; do
+        print_command dnf copr enable -y "$line"
+    done
+    if "$rpmfusion_pending"; then
+        if "$dry_run" || ((EUID != 0)); then
+            rpmfusion_url='https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-<FEDORA_RELEASE>.noarch.rpm'
+        else
+            fedora_release=$(rpm -E %fedora)
+            [[ $fedora_release =~ ^[0-9]+$ ]] || die "Invalid Fedora release: $fedora_release"
+            rpmfusion_url="https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$fedora_release.noarch.rpm"
+        fi
+        print_command dnf install -y -- "$rpmfusion_url"
+    fi
+    if "$ffmpeg_swap"; then
+        print_command dnf swap -y --allowerasing ffmpeg-free ffmpeg
+    elif "$dry_run" && "$apps_selected"; then
+        printf 'If ffmpeg-free is installed, dnf swap -y --allowerasing ffmpeg-free ffmpeg\n'
+    fi
+    if ((${#packages[@]})); then
+        command=(dnf install -y -- "${packages[@]}")
+        if "$dry_run" && ((${#rpm_groups[@]})); then
+            command+=('<verified-pinned-RPMs-for-selected-groups>')
+        fi
+        print_command "${command[@]}"
+    fi
+    if "$flathub_pending"; then
+        print_command flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    fi
+    if ((${#flatpaks[@]})); then
+        print_command flatpak install --system -y flathub "${flatpaks[@]}"
+    fi
+    if "$dry_run"; then return; fi
     if ((EUID != 0)); then
-        printf 'Root is required. Run the command printed above as root.\n' >&2
+        printf 'Root is required. Run this packages phase as root.\n' >&2
         return 1
     fi
-    printf 'Run this exact command? Type yes: '
+    printf 'Run every action printed above? Type yes: '
     if ! IFS= read -r answer || [[ $answer != yes ]]; then
         printf 'Cancelled.\n' >&2
         return 1
     fi
-    "${command[@]}"
+    for line in "${pending_coprs[@]}"; do dnf copr enable -y "$line"; done
+    if "$rpmfusion_pending"; then dnf install -y -- "$rpmfusion_url"; fi
+    if "$ffmpeg_swap"; then dnf swap -y --allowerasing ffmpeg-free ffmpeg; fi
+    if ((${#packages[@]})); then "${command[@]}"; fi
+    if "$flathub_pending"; then
+        flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    fi
+    if ((${#flatpaks[@]})); then flatpak install --system -y flathub "${flatpaks[@]}"; fi
 }
 
 install_link() {
@@ -149,8 +271,7 @@ install_link() {
 }
 
 install_system() {
-    printf 'System stub: future blocks will document login-shell and service setup.\n'
-    printf 'No system changes are implemented. See docs/manual-steps.md.\n'
+    "$repo_dir/bin/system-setup" "$@"
 }
 
 subcommand=${1:-link}
@@ -160,9 +281,11 @@ case "$subcommand" in
     link|packages|tools|runtimes|system|all) ;;
     *) die "Unknown subcommand: $subcommand" ;;
 esac
-for argument in "$@"; do
-    case "$argument" in -h|--help) usage; exit 0 ;; esac
-done
+if [[ $subcommand != system ]]; then
+    for argument in "$@"; do
+        case "$argument" in -h|--help) usage; exit 0 ;; esac
+    done
+fi
 
 case "$subcommand" in
     link)
@@ -179,8 +302,7 @@ case "$subcommand" in
         fi
         ;;
     system)
-        (($# == 0)) || die 'system accepts only --help'
-        install_system
+        install_system "$@"
         ;;
     all)
         install_packages "$@"

@@ -144,13 +144,17 @@ links+=(.config/sway .config/eww .config/qt6ct/qt6ct.conf
     .config/qt6ct/colors/Catppuccin-Mocha.conf
     .config/qt5ct/colors/Catppuccin-Mocha.conf .config/rofi .config/dunst .config/kitty
     .config/gtk-3.0/settings.ini .config/gtk-4.0/settings.ini
-    .config/environment.d/50-desktop.conf .config/mimeapps.list
+    .config/environment.d/50-desktop.conf .config/mimeapps.list .config/zed
+    .config/autostart/protonmail-bridge.desktop .local/share/applications/lf.desktop
+    .local/bin/ydl-clip.sh
     .XCompose)
 sources+=(config/sway config/eww config/qt6ct/qt6ct.conf
     config/qt-palette/Catppuccin-Mocha.conf
     config/qt-palette/Catppuccin-Mocha.conf config/rofi config/dunst config/kitty
     config/gtk-3.0/settings.ini config/gtk-4.0/settings.ini
-    config/environment.d/50-desktop.conf config/mimeapps.list
+    config/environment.d/50-desktop.conf config/mimeapps.list config/zed
+    local/autostart/protonmail-bridge.desktop local/applications/lf.desktop
+    local/bin/ydl-clip.sh
     config/compose/XCompose)
 for index in "${!links[@]}"; do
     target="$test_home/${links[$index]}"

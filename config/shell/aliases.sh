@@ -56,12 +56,8 @@ clip() {
   fi
 }
 
-# clear-branches stays disabled until its helper is repaired in the script block.
-# Custom scripts (provisioned by a later block)
-alias kill-server="sh $BIN_PATH/usr/kill-rails-server.sh"
-
 # Youtube-DL download music
-alias ydl="bash $HOME/.local/bin/usr/ydl-clip.sh"
+alias ydl="$HOME/.local/bin/ydl-clip.sh"
 
 # NVIM
 alias vim="nvim"

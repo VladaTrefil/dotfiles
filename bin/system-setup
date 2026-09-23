@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+dry_run=false
+root_phase=false
+target_user=''
+
+usage() {
+    cat <<'EOF'
+Usage: bin/system-setup [--dry-run]
+       bin/system-setup --root --user NAME [--dry-run]
+
+User phase:
+  Enable/start Syncthing and report whether the login shell needs the root phase.
+
+Root phase:
+  Set NAME's login shell to Zsh, enable/start Bluetooth, add NAME to the
+  existing docker group, and enable/start Docker. Group membership takes
+  effect after a fresh login.
+
+Every mutation is preceded by a state check and printed before execution.
+This command never invokes sudo.
+EOF
+}
+
+die() { printf 'Error: %s\n' "$*" >&2; exit 2; }
+
+while (($#)); do
+    case "$1" in
+        --dry-run) dry_run=true; shift ;;
+        --root) root_phase=true; shift ;;
+        --user)
+            (($# >= 2)) || die '--user requires a name'
+            target_user=$2
+            shift 2
+            ;;
+        -h|--help) usage; exit 0 ;;
+        *) die "Unknown option: $1" ;;
+    esac
+done
+
+run_action() {
+    printf 'Will run:'
+    printf ' %q' "$@"
+    printf '\n'
+    if ! "$dry_run"; then "$@"; fi
+}
+
+resolve_zsh_path() {
+    local standard_path zsh_path
+    standard_path=$(getconf PATH) || die 'Could not resolve the system command path'
+    zsh_path=$(PATH="$standard_path" command -v zsh) || die 'zsh is not installed in the system command path'
+    [[ -r /etc/shells ]] || die '/etc/shells is not readable'
+    grep -Fxq "$zsh_path" /etc/shells || die "Resolved zsh is not an approved login shell: $zsh_path"
+    printf '%s\n' "$zsh_path"
+}
+
+unit_exists() {
+    local scope=$1 unit=$2
+    if [[ $scope == user ]]; then
+        systemctl --user list-unit-files --no-legend "$unit" 2>/dev/null |
+            awk -v expected="$unit" '$1 == expected { found = 1 } END { exit !found }'
+    else
+        systemctl list-unit-files --no-legend "$unit" 2>/dev/null |
+            awk -v expected="$unit" '$1 == expected { found = 1 } END { exit !found }'
+    fi
+}
+
+configure_service() {
+    local scope=$1 unit=$2 label=$3 allow_unmet_condition=${4:-false}
+    local enabled=false active=false condition_result
+    local -a systemctl_command=(systemctl)
+    if [[ $scope == user ]]; then systemctl_command+=(--user); fi
+
+    if ! unit_exists "$scope" "$unit"; then
+        printf 'Error: %s is unavailable; install its package first.\n' "$unit" >&2
+        return 1
+    fi
+    if "${systemctl_command[@]}" is-enabled --quiet "$unit"; then enabled=true; fi
+    if "${systemctl_command[@]}" is-active --quiet "$unit"; then active=true; fi
+    if "$enabled" && "$active"; then
+        printf 'Already enabled and active: %s\n' "$label"
+    elif "$enabled" && "$allow_unmet_condition"; then
+        condition_result=$("${systemctl_command[@]}" show --property=ConditionResult --value "$unit")
+        if [[ $condition_result == no ]]; then
+            printf 'Already enabled; inactive because its hardware condition is unmet: %s\n' "$label"
+            return
+        fi
+        printf '%s state: enabled=%s active=%s\n' "$label" "$enabled" "$active"
+        run_action "${systemctl_command[@]}" start "$unit"
+    else
+        printf '%s state: enabled=%s active=%s\n' "$label" "$enabled" "$active"
+        run_action "${systemctl_command[@]}" enable --now "$unit"
+    fi
+}
+
+if "$root_phase"; then
+    [[ -n $target_user ]] || die '--root requires --user NAME'
+    [[ $target_user =~ ^[a-z_][a-z0-9_-]*[$]?$ ]] || die 'Invalid target user name'
+    passwd_entry=$(getent passwd "$target_user") || die "Target user does not exist: $target_user"
+    IFS=: read -r _ _ target_uid _ _ _ _ <<< "$passwd_entry"
+    [[ $target_uid =~ ^[0-9]+$ && $target_uid -ne 0 ]] || die 'Target user must be a non-root account'
+    if ((EUID != 0)) && ! "$dry_run"; then
+        die 'The root phase must be run as root (or previewed with --dry-run)'
+    fi
+
+    zsh_path=$(resolve_zsh_path)
+    IFS=: read -r _ _ _ _ _ _ target_shell <<< "$passwd_entry"
+    if [[ $target_shell == "$zsh_path" ]]; then
+        printf 'Already the login shell for %s: %s\n' "$target_user" "$zsh_path"
+    else
+        run_action chsh -s "$zsh_path" "$target_user"
+    fi
+
+    configure_service system bluetooth.service Bluetooth true
+
+    getent group docker >/dev/null || die 'The docker group is missing; install moby-engine first'
+    in_docker_group=false
+    read -r -a user_groups <<< "$(id -nG "$target_user")"
+    for group in "${user_groups[@]}"; do
+        if [[ $group == docker ]]; then in_docker_group=true; break; fi
+    done
+    if "$in_docker_group"; then
+        printf 'Already a member: %s is in docker\n' "$target_user"
+    else
+        run_action usermod -aG docker "$target_user"
+    fi
+    configure_service system docker.service Docker
+    printf 'Docker group membership is effective only after %s starts a fresh login session.\n' "$target_user"
+else
+    [[ -z $target_user ]] || die '--user is valid only with --root'
+    current_user=$(id -un)
+    zsh_path=$(resolve_zsh_path)
+    passwd_entry=$(getent passwd "$current_user") || die "Current user is absent from passwd: $current_user"
+    IFS=: read -r _ _ _ _ _ _ current_shell <<< "$passwd_entry"
+    if [[ $current_shell == "$zsh_path" ]]; then
+        printf 'Already the login shell: %s\n' "$zsh_path"
+    else
+        printf 'Login shell pending root phase for %s: %s\n' "$current_user" "$zsh_path"
+    fi
+    if unit_exists user syncthing.service; then
+        configure_service user syncthing.service Syncthing
+    else
+        printf 'Skipped: syncthing.service is unavailable; install the apps group first.\n'
+    fi
+fi

@@ -1,0 +1,6 @@
+# Flathub applications with no preferred native Fedora/RPM Fusion package.
+com.spotify.Client # Spotify has no direct native Fedora package.
+net.ankiweb.Anki # Fedora has no Anki package.
+ch.protonmail.protonmail-bridge # Required by the no-window tray autostart entry.
+dev.zed.Zed # Avoids the unreviewed third-party Zed COPR and curl installer.
+

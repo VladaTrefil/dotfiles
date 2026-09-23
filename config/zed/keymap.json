@@ -1,0 +1,78 @@
+// Zed keymap
+[
+  {
+    "context": "(Editor && VimControl && !VimWaiting && !menu) || Workspace || (ProjectSearchBar > Editor) || Pane || Terminal || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView",
+    "bindings": {
+      "ctrl-q": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "Editor && !menu",
+    "bindings": {
+      "ctrl-i": "editor::Indent"
+    }
+  },
+  {
+    "context": "(Editor && VimControl && !VimWaiting && !menu) || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-g": ["task::Spawn", { "task_name": "Lazygit" }]
+    }
+  },
+  {
+    "context": "Editor && VimControl && !VimWaiting && !menu",
+    "bindings": {
+      "ctrl-g": ["task::Spawn", { "task_name": "Lazygit", "target": "center" }],
+      "ctrl-p": "file_finder::Toggle",
+      "shift-k": "editor::Hover",
+      "g c c": "editor::ToggleComments",
+      "g a": "editor::ToggleCodeActions",
+      "j": ["vim::Down", { "display_lines": true }],
+      "k": ["vim::Up", { "display_lines": true }],
+      "space": "editor::SelectLargerSyntaxNode",
+      "backspace": "editor::SelectSmallerSyntaxNode",
+      "space /": "workspace::NewSearch",
+      "space o": "tab_switcher::Toggle",
+      "space t j": "pane::ActivateNextItem",
+      "space t k": "pane::ActivatePreviousItem",
+      "ctrl-n": "editor::GoToDiagnostic",
+      "ctrl-m": "editor::GoToPreviousDiagnostic"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
+    "bindings": {
+      "ctrl-shift-j": "editor::MoveLineDown",
+      "ctrl-shift-k": "editor::MoveLineUp"
+    }
+  },
+  {
+    "context": "Editor && edit_prediction",
+    "bindings": {
+      "ctrl-i": "editor::AcceptEditPrediction"
+    }
+  },
+  {
+    "context": "Editor && showing_completions",
+    "bindings": {
+      "ctrl-i": "editor::ConfirmCompletion",
+      "ctrl-j": "editor::ContextMenuNext",
+      "ctrl-k": "editor::ContextMenuPrevious"
+    }
+  },
+  {
+    "context": "FileFinder > Picker > Editor",
+    "bindings": {
+      "ctrl-j": "menu::SelectNext",
+      "ctrl-k": "menu::SelectPrevious",
+      "ctrl-i": "menu::Confirm",
+      "ctrl-shift-h": "pane::SplitLeft",
+      "ctrl-shift-k": "pane::SplitUp",
+      "ctrl-shift-j": "pane::SplitDown",
+      "ctrl-shift-l": "pane::SplitRight"
+    }
+  }
+]

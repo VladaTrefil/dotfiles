@@ -1,0 +1,94 @@
+// Zed settings migrated from the legacy workstation configuration.
+{
+  "base_keymap": "VSCode",
+  "ui_font_size": 16,
+  "buffer_font_size": 16,
+  "vim_mode": false,
+  "scroll_beyond_last_line": "off",
+  "soft_wrap": "editor_width",
+  "relative_line_numbers": true,
+  "scrollbar": { "show": "never" },
+  "preferred_line_length": 100,
+  "pane_split_direction_vertical": "right",
+  "pane_split_direction_horizontal": "down",
+  "terminal": {
+    "shell": {
+      "with_arguments": {
+        "program": "zsh",
+        "args": ["--login"]
+      }
+    }
+  },
+  "vim": {
+    "use_multiline_find": true,
+    "use_smartcase_find": true,
+    "toggle_relative_line_numbers": true,
+    "vertical_scroll_margin": 10
+  },
+  "file_finder": {
+    "modal_width": "small",
+    "modal_max_width": "medium",
+    "file_icons": true,
+    "show_hidden_files": true
+  },
+  "theme": {
+    "mode": "system",
+    "light": "Catppuccin Mocha",
+    "dark": "Catppuccin Mocha"
+  },
+  "tabs": {
+    "file_icons": true,
+    "git_status": true
+  },
+  "toolbar": {
+    "breadcrumbs": true,
+    "quick_actions": false
+  },
+  "tab_bar": {
+    "show": true,
+    "show_nav_history_buttons": false
+  },
+  "project_panel": {
+    "indent_size": 16
+  },
+  "assistant": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-3-5-sonnet"
+    },
+    "version": "2"
+  },
+  "lsp": {
+    "solargraph": {
+      "initialization_options": {
+        "diagnostics": true,
+        "formatting": true
+      }
+    }
+  },
+  "languages": {
+    "Ruby": {
+      "tab_size": 4,
+      "hard_tabs": false,
+      "format_on_save": "on",
+      "language_servers": ["solargraph"],
+      "formatter": {
+        "external": {
+          "command": "bundle",
+          "arguments": [
+            "exec",
+            "rubocop",
+            "--server",
+            "--fail-level",
+            "error",
+            "--autocorrect",
+            "--stdin",
+            "corrected.rb",
+            "--stderr"
+          ]
+        }
+      }
+    }
+  }
+}
+

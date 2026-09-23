@@ -1,0 +1,79 @@
+# Native Fedora/RPM Fusion applications and workstation integration.
+ca-certificates
+gnupg2 # Fedora name for GnuPG command and key tooling.
+bluez # Provides bluetoothctl for the active Eww Bluetooth widget.
+jq # Renders Eww Bluetooth and Sway workspace state.
+
+inkscape
+chromium
+thunderbird
+pcmanfm-qt # Settled Dolphin replacement.
+gvfs # Trash and remote-location backends for PCManFM-Qt.
+picard
+qbittorrent
+xarchiver # Settled Ark replacement.
+vlc
+mpv
+gnome-system-monitor
+gparted
+lxqt-policykit # Explicit policy agent prevents GParted pulling GNOME Shell/GDM.
+telegram-desktop # Native RPM Fusion free package, preferred over Flatpak.
+krita
+strawberry
+timeshift # Snapshot configuration remains machine-specific and manual.
+libreoffice # Fedora replacement for Arch's libreoffice-fresh.
+libreoffice-langpack-cs
+libreoffice-langpack-en-GB
+
+moby-engine # Fedora's Docker-compatible engine and docker.service.
+docker-compose
+docker-buildx
+syncthing
+NetworkManager # Case-sensitive Fedora package name; provides nmcli.
+flatpak # Required for the separately declared Flathub applications.
+dnf5-plugins # Provides `dnf copr` for repository provisioning.
+ffmpeg # Full RPM Fusion build; replaces Fedora's codec-limited ffmpeg-free.
+
+bc
+mercurial
+unzip
+moreutils
+prename # Fedora's Perl rename implementation; not util-linux rename.
+speedtest-cli
+awscli2 # Fedora's AWS CLI v2 package.
+brightnessctl # Physical backlight hardware cannot be verified in the VM.
+yt-dlp
+fastfetch # Maintained native replacement for Neofetch.
+lsof
+ibus-mozc
+openrgb # Physical RGB hardware cannot be verified in the VM.
+
+postgresql
+postgresql-server # The client package alone does not provide the server.
+libpq # Fedora's general PostgreSQL client library.
+libpqxx
+perl-Image-ExifTool
+rubber
+texlive-xetex
+libsodium
+pdftk-java # Provides the pdftk-compatible command.
+vips # Fedora name for the libvips runtime library.
+openslide
+gifsicle
+libwebp
+freetds
+
+# Fedora dependencies for the checksum-pinned QMK wheel set installed by
+# bin/install-releases. PyPI-only QMK/MILC components are never installed by pip.
+python3-hid
+python3-platformdirs
+python3-pyusb
+python3-hjson
+python3-jsonschema
+python3-pillow
+python3-pygments
+python3-pyserial
+python3-argcomplete
+python3-colorama
+python3-termcolor
+

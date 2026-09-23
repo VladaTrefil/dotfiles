@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+"""Ensure runtime commands in linked scripts have explicit package providers."""
+from pathlib import Path
+import re
+
+
+root = Path(__file__).resolve().parent.parent
+
+
+def manifest_packages():
+    packages = set()
+    for manifest in (root / 'packages').glob('*.txt'):
+        if manifest.name in {'copr.txt', 'flatpak.txt'}:
+            continue
+        for raw_line in manifest.read_text().splitlines():
+            package = raw_line.split('#', 1)[0].strip()
+            if package:
+                packages.add(package)
+    return packages
+
+
+# Keep this inventory narrow and evidence-based: these commands are invoked by
+# linked desktop scripts, are not shell/core utilities, and previously failed
+# silently because their Fedora providers were absent from every manifest.
+requirements = {
+    'bluez': {
+        'binary': 'bluetoothctl',
+        'scripts': ['config/eww/bar/scripts/bluetooth'],
+    },
+    'jq': {
+        'binary': 'jq',
+        'scripts': [
+            'config/eww/bar/scripts/bluetooth',
+            'config/eww/bar/scripts/workspace',
+        ],
+    },
+}
+
+packages = manifest_packages()
+failures = []
+for package, requirement in requirements.items():
+    binary = requirement['binary']
+    pattern = re.compile(rf'(?<![A-Za-z0-9_.-]){re.escape(binary)}(?![A-Za-z0-9_.-])')
+    for relative in requirement['scripts']:
+        script = root / relative
+        if not script.is_file():
+            failures.append(f'{relative}: tracked runtime script is missing')
+        elif not pattern.search(script.read_text()):
+            failures.append(f'{relative}: expected invocation of {binary!r} is missing')
+    if package not in packages:
+        paths = ', '.join(requirement['scripts'])
+        failures.append(
+            f'{binary} is invoked by {paths}, but provider package {package!r} '
+            'is absent from packages/*.txt'
+        )
+
+if failures:
+    for failure in failures:
+        print(f'FAIL: {failure}')
+    raise SystemExit(1)
+
+print(
+    'PASS: linked script runtime dependencies have manifest providers: '
+    + ', '.join(sorted(requirements))
+)

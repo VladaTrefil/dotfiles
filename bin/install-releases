@@ -7,7 +7,9 @@ import os
 from pathlib import Path
 import platform
 import shutil
+import stat
 import subprocess
+import sys
 import tarfile
 import tempfile
 import zipfile
@@ -159,15 +161,134 @@ def install_fonts(name, spec, archive, font_root, cache):
             shutil.rmtree(staging)
 
 
+def directory_state(directory):
+    state = {}
+    for path in sorted(directory.rglob('*')):
+        relative = str(path.relative_to(directory))
+        if path.is_symlink():
+            raise SystemExit(f'Refusing symlink in managed Python wheel set: {path}')
+        if path.is_file():
+            state[relative] = digest_file(path)
+        elif not path.is_dir():
+            raise SystemExit(f'Refusing non-file in managed Python wheel set: {path}')
+    return state
+
+
+def wheel_contents(archives):
+    contents = {}
+    for archive in archives:
+        with zipfile.ZipFile(archive) as package:
+            for info in package.infolist():
+                path = Path(info.filename)
+                if path.is_absolute() or '..' in path.parts:
+                    raise SystemExit(f'Unsafe wheel member: {info.filename}')
+                mode = info.external_attr >> 16
+                if stat.S_ISLNK(mode):
+                    raise SystemExit(f'Refusing symlink in wheel: {info.filename}')
+                if info.is_dir():
+                    continue
+                data = package.read(info)
+                relative = str(path)
+                if relative in contents and contents[relative] != data:
+                    raise SystemExit(f'Conflicting wheel member: {relative}')
+                contents[relative] = data
+    return contents
+
+
+def install_python_wheel_set(name, spec, archives, bindir, data_home, cache):
+    contents = wheel_contents(archives)
+    desired_state = {path: digest_bytes(data) for path, data in sorted(contents.items())}
+    release_root = data_home / 'dotfiles-releases'
+    target = release_root / f'{name}-{spec["version"]}'
+    stamp = cache / (name + '.python-wheel-set-installed.json')
+    serialized = json.dumps(desired_state, sort_keys=True, indent=2) + '\n'
+
+    module, separator, function = spec['entry_point'].partition(':')
+    if not separator or not module or not function:
+        raise SystemExit(f'{name}: invalid Python entry point')
+    launcher_data = (
+        '#!/usr/bin/env python3\n'
+        'import sys\n'
+        'sys.dont_write_bytecode = True\n'
+        f'sys.path.insert(0, {str(target)!r})\n'
+        f'from {module} import {function}\n'
+        f'{function}()\n'
+    ).encode()
+    launcher = bindir / name
+    launcher_stamp = cache / (name + '.launcher-installed-sha256')
+    launcher_digest = digest_bytes(launcher_data)
+
+    if target.is_symlink() or (target.exists() and not target.is_dir()):
+        raise SystemExit(f'Refusing to replace unmanaged Python release path: {target}')
+    target_matches = target.exists() and directory_state(target) == desired_state
+    if target.exists() and not target_matches:
+        if not stamp.exists():
+            raise SystemExit(f'Refusing to replace unmanaged Python release directory: {target}')
+        try:
+            stamped_state = json.loads(stamp.read_text())
+        except (json.JSONDecodeError, OSError) as error:
+            raise SystemExit(f'Invalid Python release stamp {stamp}: {error}') from error
+        if directory_state(target) != stamped_state:
+            raise SystemExit(f'Refusing to replace modified Python release directory: {target}')
+    if launcher.is_symlink():
+        raise SystemExit(f'Refusing to replace symlink: {launcher}')
+    launcher_matches = launcher.exists() and launcher.read_bytes() == launcher_data
+    if launcher.exists() and not launcher_matches:
+        if not launcher_stamp.exists() or launcher_stamp.read_text().strip() != digest_file(launcher):
+            raise SystemExit(f'Refusing to replace unmanaged executable: {launcher}')
+
+    release_root.mkdir(parents=True, exist_ok=True)
+    release_root.chmod(0o755)
+    staging = None
+    backup = None
+    try:
+        if not target_matches:
+            staging = Path(tempfile.mkdtemp(dir=release_root, prefix=f'.{name}.'))
+            staging.chmod(0o755)
+            for relative, data in contents.items():
+                destination = staging / relative
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_bytes(data)
+                destination.chmod(0o644)
+            if target.exists():
+                backup = Path(tempfile.mkdtemp(dir=release_root, prefix=f'.{name}.old.'))
+                backup.rmdir()
+                target.replace(backup)
+            staging.replace(target)
+            if backup is not None:
+                shutil.rmtree(backup)
+
+        if not launcher_matches:
+            with tempfile.NamedTemporaryFile(dir=bindir, delete=False) as launcher_file:
+                launcher_file.write(launcher_data)
+                launcher_staging = Path(launcher_file.name)
+            launcher_staging.chmod(0o755)
+            launcher_staging.replace(launcher)
+        if not stamp.exists() or stamp.read_text() != serialized:
+            stamp.write_text(serialized)
+        if not launcher_stamp.exists() or launcher_stamp.read_text() != launcher_digest + '\n':
+            launcher_stamp.write_text(launcher_digest + '\n')
+    except BaseException:
+        if backup is not None and backup.exists() and not target.exists():
+            backup.replace(target)
+        raise
+    finally:
+        if staging is not None and staging.exists():
+            shutil.rmtree(staging)
+
+
 parser = argparse.ArgumentParser(
     description='Install checksum-pinned release executables (the default) or fonts.'
 )
 parser.add_argument('--fonts', action='store_true', help='install only pinned font faces')
 parser.add_argument('--rpm', action='store_true', help='verify and print the pinned RPM path for the packages phase')
+parser.add_argument('--group', action='append', help='with --rpm, select releases for this package group')
 parser.add_argument('--offline', action='store_true', help='use verified cached archives only')
 args = parser.parse_args()
 if args.fonts and args.rpm:
     parser.error('--fonts and --rpm are mutually exclusive')
+if args.group and not args.rpm:
+    parser.error('--group is only valid with --rpm')
 
 root = Path(__file__).resolve().parent.parent
 if platform.system() != 'Linux' or platform.machine() != 'x86_64':
@@ -175,17 +296,23 @@ if platform.system() != 'Linux' or platform.machine() != 'x86_64':
 cache = Path(os.environ.get('XDG_CACHE_HOME', str(Path.home() / '.cache'))) / 'dotfiles/releases'
 cache.mkdir(parents=True, exist_ok=True)
 releases = json.loads((root / 'provision/releases.json').read_text())
-selected_kind = 'rpm' if args.rpm else ('font' if args.fonts else 'executable')
+selected_kinds = {'rpm'} if args.rpm else ({'font'} if args.fonts else {'executable', 'python-wheel-set'})
 selected = [
     (name, spec) for name, spec in releases.items()
-    if spec.get('kind', 'executable') == selected_kind
+    if spec.get('kind', 'executable') in selected_kinds
+    and (not args.group or any(group in spec.get('groups', []) for group in args.group))
 ]
 if not selected:
-    raise SystemExit(f'No {selected_kind} releases are configured.')
+    raise SystemExit(f'No {", ".join(sorted(selected_kinds))} releases are configured.')
 
 # Verify every selected archive before creating or replacing any installation target.
 archives = {
-    name: acquire_archive(name, spec, cache, args.offline)
+    name: (
+        [acquire_archive(f'{name}/{index}', artifact, cache, args.offline)
+         for index, artifact in enumerate(spec['artifacts'], start=1)]
+        if spec.get('kind') == 'python-wheel-set'
+        else acquire_archive(name, spec, cache, args.offline)
+    )
     for name, spec in selected
 }
 
@@ -204,13 +331,18 @@ if args.fonts:
             flush=True,
         )
 elif args.rpm:
-    if len(selected) != 1:
-        raise SystemExit('Exactly one RPM release is required for the packages phase')
-    name, spec = selected[0]
-    print(archives[name])
+    for name, spec in selected:
+        print(f'VERIFIED {name} {spec["version"]} SHA-256 {spec["sha256"]}', file=sys.stderr)
+        print(archives[name])
 else:
     bindir = Path.home() / '.local/bin'
     bindir.mkdir(parents=True, exist_ok=True)
     for name, spec in selected:
-        install_executable(name, spec, archives[name], bindir, cache)
-        print(f'VERIFIED {name} {spec["version"]} SHA-256 {spec["sha256"]}', flush=True)
+        if spec.get('kind') == 'python-wheel-set':
+            data_home = Path(os.environ.get('XDG_DATA_HOME', str(Path.home() / '.local/share')))
+            install_python_wheel_set(name, spec, archives[name], bindir, data_home, cache)
+            hashes = ','.join(artifact['sha256'] for artifact in spec['artifacts'])
+            print(f'VERIFIED {name} {spec["version"]} SHA-256 set {hashes}', flush=True)
+        else:
+            install_executable(name, spec, archives[name], bindir, cache)
+            print(f'VERIFIED {name} {spec["version"]} SHA-256 {spec["sha256"]}', flush=True)

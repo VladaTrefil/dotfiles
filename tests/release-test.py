@@ -8,17 +8,34 @@ import shutil
 import subprocess
 import tarfile
 import tempfile
+import zipfile
 
 
 root = Path(__file__).resolve().parent.parent
 production = json.loads((root / 'provision/releases.json').read_text())
 assert production['eww'] == {
     'kind': 'rpm',
+    'groups': ['desktop'],
     'version': '0.6.0^20260705g4ded063-1.fc44',
     'url': 'https://download.copr.fedorainfracloud.org/results/dturner/eww/fedora-44-x86_64/10704169-eww/eww-0.6.0%5E20260705g4ded063-1.fc44.x86_64.rpm',
     'sha256': 'cdea82650b8b485b65cfbeac31299a3103f81db499ae2741cc81ba214d6fdc96',
     'size': 4351828,
 }
+assert production['lens'] == {
+    'kind': 'rpm',
+    'groups': ['apps'],
+    'version': '2026.9.181013~latest-1',
+    'url': 'https://downloads.k8slens.dev/rpm/packages/Lens-2026.9.181013-latest.x86_64.rpm',
+    'sha256': '6faf2a62a2f9ea26071effc5651f57411bef7229478676df4dbeaa349ee5736a',
+    'size': 170112665,
+}
+assert production['qmk']['kind'] == 'python-wheel-set'
+assert production['qmk']['version'] == '1.2.0'
+assert production['qmk']['entry_point'] == 'qmk_cli.script_qmk:main'
+assert len(production['qmk']['artifacts']) == 7
+assert production['qmk']['artifacts'][0]['sha256'] == (
+    '77fa04a24d36feb7f19f19f190eaf350b78a5caf5ef6a783251902e853fd1809'
+)
 assert production['iosevka-nerd-font'] == {
     'kind': 'font',
     'version': 'v3.5.1',
@@ -118,6 +135,24 @@ with tempfile.TemporaryDirectory() as directory:
         'member': 'asdf',
     }
     source_by_release['asdf'] = tool_archive
+    wheel_source = source_archives / 'qmk-fixture.whl'
+    with zipfile.ZipFile(wheel_source, 'w') as package:
+        package.writestr(
+            'fixture_cli.py',
+            'def main():\n    print("fixture qmk")\n',
+        )
+        package.writestr('qmk_fixture-1.0.dist-info/METADATA', 'Name: qmk-fixture\nVersion: 1.0\n')
+    releases['qmk'] = {
+        'kind': 'python-wheel-set',
+        'version': 'fixture',
+        'entry_point': 'fixture_cli:main',
+        'artifacts': [{
+            'url': 'https://example.invalid/qmk-fixture.whl',
+            'sha256': checksum(wheel_source),
+            'size': wheel_source.stat().st_size,
+        }],
+    }
+    source_by_release['qmk'] = [wheel_source]
     rpm_source = source_archives / 'eww.rpm'
     rpm_source.write_bytes(b'fixture RPM bytes')
     releases['eww'] = {
@@ -135,11 +170,16 @@ with tempfile.TemporaryDirectory() as directory:
         cache = home / '.cache/dotfiles/releases'
         cache.mkdir(parents=True)
         for release_name, spec in releases.items():
-            target = cache / (spec['sha256'] + Path(spec['url']).name)
-            if release_name == corrupt:
-                target.write_bytes(b'not the release archive')
-            else:
-                shutil.copy2(source_by_release[release_name], target)
+            artifacts = spec.get('artifacts', [spec])
+            sources = source_by_release[release_name]
+            if not isinstance(sources, list):
+                sources = [sources]
+            for artifact, source in zip(artifacts, sources, strict=True):
+                target = cache / (artifact['sha256'] + Path(artifact['url']).name)
+                if release_name == corrupt:
+                    target.write_bytes(b'not the release archive')
+                else:
+                    shutil.copy2(source, target)
         return home
 
     home = prepare_home('home')
@@ -185,7 +225,21 @@ with tempfile.TemporaryDirectory() as directory:
     installed_tool = home / '.local/bin/asdf'
     assert installed_tool.read_bytes() == tool_source.read_bytes(), installed_tool
     assert os.access(installed_tool, os.X_OK), 'installed executable is not executable'
-    print('PASS: the default release mode retains executable-only installation')
+    qmk = subprocess.run(
+        [str(home / '.local/bin/qmk')], env=env, text=True, capture_output=True,
+    )
+    assert qmk.returncode == 0 and qmk.stdout.strip() == 'fixture qmk', qmk
+    release_root = home / '.local/share/dotfiles-releases/qmk-fixture'
+    before_qmk = snapshot(release_root)
+    before_launcher = snapshot(home / '.local/bin')
+    repeated_tools = subprocess.run(
+        [str(fixture_repo / 'bin/install-releases'), '--offline'],
+        env=env, text=True, capture_output=True,
+    )
+    assert repeated_tools.returncode == 0, repeated_tools
+    assert snapshot(release_root) == before_qmk
+    assert snapshot(home / '.local/bin') == before_launcher
+    print('PASS: default release mode installs executable and pinned wheel-set tools idempotently')
 
     rpm = subprocess.run(
         [str(fixture_repo / 'bin/install-releases'), '--rpm', '--offline'],

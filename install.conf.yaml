@@ -15,6 +15,7 @@
     - $XDG_CONFIG_HOME/gtk-3.0
     - $XDG_CONFIG_HOME/gtk-4.0
     - $XDG_CONFIG_HOME/environment.d
+    - $XDG_CONFIG_HOME/autostart
     # Individual shell links leave room for private work.sh outside the checkout.
     - $XDG_CONFIG_HOME/shell
     # Shell and less must be able to persist their history on first use.
@@ -26,6 +27,8 @@
     - ~/.cache
     # BUNDLE_USER_CONFIG names a file; this is its containing directory.
     - $XDG_CONFIG_HOME/bundle
+    - $XDG_DATA_HOME/applications
+    - ~/.local/bin
 
 - link:
     $XDG_CONFIG_HOME/git: config/git
@@ -61,6 +64,10 @@
     $XDG_CONFIG_HOME/gtk-4.0/settings.ini: config/gtk-4.0/settings.ini
     $XDG_CONFIG_HOME/environment.d/50-desktop.conf: config/environment.d/50-desktop.conf
     $XDG_CONFIG_HOME/mimeapps.list: config/mimeapps.list
+    $XDG_CONFIG_HOME/zed: config/zed
+    $XDG_CONFIG_HOME/autostart/protonmail-bridge.desktop: local/autostart/protonmail-bridge.desktop
+    $XDG_DATA_HOME/applications/lf.desktop: local/applications/lf.desktop
+    ~/.local/bin/ydl-clip.sh: local/bin/ydl-clip.sh
     ~/.XCompose: config/compose/XCompose
     $XDG_CONFIG_HOME/ibus/Compose:
       path: config/compose/XCompose

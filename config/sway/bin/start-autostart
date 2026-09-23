@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# The packaged XDG entry is LXQt-only, so dex correctly skips it under Sway.
+# Start the authentication agent before the Secret Service gate and every
+# desktop autostart application that follows it.
+/usr/libexec/lxqt-policykit-agent &
+
 # Bridge's XDG autostart entry needs Secret Service before it starts. Starting
 # the packaged user unit is synchronous, but its bus name can appear slightly
 # later, so bound the additional wait to five seconds.

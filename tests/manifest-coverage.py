@@ -34,13 +34,26 @@ requirements = {
             'config/eww/bar/scripts/workspace',
         ],
     },
+    'lxqt-policykit': {
+        'binary': '/usr/libexec/lxqt-policykit-agent',
+        'active_command': True,
+        'scripts': ['config/sway/bin/start-autostart'],
+    },
 }
 
 packages = manifest_packages()
 failures = []
 for package, requirement in requirements.items():
     binary = requirement['binary']
-    pattern = re.compile(rf'(?<![A-Za-z0-9_.-]){re.escape(binary)}(?![A-Za-z0-9_.-])')
+    if requirement.get('active_command'):
+        pattern = re.compile(
+            rf'^[ \t]*(?:exec[ \t]+)?{re.escape(binary)}(?=[ \t]|$)',
+            re.MULTILINE,
+        )
+    else:
+        pattern = re.compile(
+            rf'(?<![A-Za-z0-9_.-]){re.escape(binary)}(?![A-Za-z0-9_.-])'
+        )
     for relative in requirement['scripts']:
         script = root / relative
         if not script.is_file():

@@ -45,6 +45,20 @@ make_fakes() {
         'exit 255'
 
     # shellcheck disable=SC2016
+    write_executable "$fake_bin/curl" \
+        '#!/bin/sh' \
+        'printf "%s\n" "$*" >> "$TEST_STATE/curl.log"' \
+        'if [ "${TEST_GITHUB_META_FETCH:-ok}" = fail ]; then' \
+        "    printf '%s\\n' 'curl: (22) requested URL returned error' >&2" \
+        '    exit 22' \
+        'fi' \
+        'if [ "${TEST_GITHUB_META_FETCH:-ok}" = malformed ]; then' \
+        "    printf '%s\\n' '{\"ssh_keys\":\"not an array\"}'" \
+        '    exit 0' \
+        'fi' \
+        "printf '%s\\n' '{\"ssh_keys\":[\"ssh-ed25519 QUFBQUZJWFRVUkU=\",\"ssh-rsa QkJCQkZJWFRVUkU=\"]}'"
+
+    # shellcheck disable=SC2016
     write_executable "$fake_bin/git" \
         '#!/bin/sh' \
         'printf "%s\n" "$*" >> "$TEST_LOG"' \
@@ -197,7 +211,7 @@ test_missing_public_key_refuses_to_continue() {
 }
 
 test_missing_git_prints_root_command_and_stops() {
-    local case_dir="$fixture/missing-git" home fake_bin state log output
+    local case_dir="$fixture/missing-git" home fake_bin state log output command_name
     home="$case_dir/home"
     fake_bin="$case_dir/bin"
     state="$case_dir/state"
@@ -208,6 +222,9 @@ test_missing_git_prints_root_command_and_stops() {
     printf '%s\n' 'ssh-ed25519 AAAAFIXTURE bootstrap@test' > "$home/.ssh/id_ed25519.pub"
     make_fakes "$fake_bin"
     rm -- "$fake_bin/git"
+    for command_name in chmod grep mkdir mktemp python3 rm tail; do
+        ln -s -- "$(command -v "$command_name")" "$fake_bin/$command_name"
+    done
     mark_route_up "$state"
 
     TEST_SYSTEM_PATH='' run_bootstrap "$home" "$fake_bin" "$state" "$log" "$output"
@@ -317,11 +334,131 @@ test_wifi_password_never_reaches_disk() {
     printf 'PASS: the Wi-Fi password is prompted by nmcli and never written by bootstrap.\n'
 }
 
-test_existing_checkout_is_idempotent
-test_new_clone_happens_only_once
-test_missing_public_key_refuses_to_continue
-test_missing_git_prints_root_command_and_stops
-test_failed_github_authentication_stops_before_git
-test_new_key_is_printed_and_gated
-test_wifi_password_never_reaches_disk
+test_github_host_key_seeding_is_idempotent() {
+    local case_dir="$fixture/host-key-idempotent" home fake_bin state log first second before after
+    home="$case_dir/home"
+    fake_bin="$case_dir/bin"
+    state="$case_dir/state"
+    log="$case_dir/git.log"
+    first="$case_dir/first.out"
+    second="$case_dir/second.out"
+    before="$case_dir/known-hosts.before"
+    after="$case_dir/known-hosts.after"
+    mkdir -p "$case_dir"
+    make_home "$home"
+    make_fakes "$fake_bin"
+    mark_route_up "$state"
+
+    run_bootstrap "$home" "$fake_bin" "$state" "$log" "$first"
+    ((run_status == 0)) || { cat "$first"; fail "initial host-key seeding run exited $run_status"; }
+    [[ -f $home/.ssh/known_hosts ]] || fail 'GitHub host keys were not seeded'
+    cp -- "$home/.ssh/known_hosts" "$before"
+    run_bootstrap "$home" "$fake_bin" "$state" "$log" "$second"
+    ((run_status == 0)) || { cat "$second"; fail "second host-key seeding run exited $run_status"; }
+    cp -- "$home/.ssh/known_hosts" "$after"
+
+    cmp -s "$before" "$after" || fail 'second run changed known_hosts'
+    [[ $(grep -Fxc 'github.com ssh-ed25519 QUFBQUZJWFRVUkU=' "$after") -eq 1 ]] ||
+        fail 'Ed25519 GitHub host key was missing or duplicated'
+    [[ $(grep -Fxc 'github.com ssh-rsa QkJCQkZJWFRVUkU=' "$after") -eq 1 ]] ||
+        fail 'RSA GitHub host key was missing or duplicated'
+    [[ $(stat -c %a "$home/.ssh") == 700 ]] || fail '.ssh permissions are not 700'
+    [[ $(stat -c %a "$after") == 600 ]] || fail 'known_hosts permissions are not 600'
+    grep -Fq -- "--proto =https --tlsv1.2 https://api.github.com/meta" "$state/curl.log" ||
+        fail 'GitHub metadata was not fetched with the required HTTPS restrictions'
+    ! grep -Eq -- '(^|[[:space:]])-k([[:space:]]|$)|--insecure' "$state/curl.log" ||
+        fail 'GitHub metadata fetch disabled certificate verification'
+    printf 'PASS: GitHub host-key seeding is HTTPS-only, permissioned, and idempotent.\n'
+}
+
+test_existing_known_hosts_is_preserved() {
+    local case_dir="$fixture/known-hosts-preserved" home fake_bin state log output original prefix
+    home="$case_dir/home"
+    fake_bin="$case_dir/bin"
+    state="$case_dir/state"
+    log="$case_dir/git.log"
+    output="$case_dir/output"
+    original="$case_dir/original"
+    prefix="$case_dir/prefix"
+    mkdir -p "$case_dir"
+    make_home "$home"
+    make_fakes "$fake_bin"
+    mark_route_up "$state"
+    printf '%s\n' \
+        'example.com ssh-ed25519 RVhBTVBMRQ==' \
+        'github.com ssh-ed25519 QUFBQUZJWFRVUkU=' \
+        'internal.example ssh-rsa SU5URVJOQUw=' > "$home/.ssh/known_hosts"
+    cp -- "$home/.ssh/known_hosts" "$original"
+
+    run_bootstrap "$home" "$fake_bin" "$state" "$log" "$output"
+    ((run_status == 0)) || { cat "$output"; fail "known_hosts preservation run exited $run_status"; }
+    head -n 3 "$home/.ssh/known_hosts" > "$prefix"
+
+    cmp -s "$original" "$prefix" || fail 'existing known_hosts entries were changed or reordered'
+    [[ $(grep -Fxc 'github.com ssh-ed25519 QUFBQUZJWFRVUkU=' "$home/.ssh/known_hosts") -eq 1 ]] ||
+        fail 'existing correct GitHub host key was changed or duplicated'
+    [[ $(grep -Fxc 'github.com ssh-rsa QkJCQkZJWFRVUkU=' "$home/.ssh/known_hosts") -eq 1 ]] ||
+        fail 'missing GitHub host key was not appended'
+    printf 'PASS: unrelated and existing correct known_hosts entries survive in place.\n'
+}
+
+test_failed_github_metadata_fetch_fails_closed() {
+    local case_dir="$fixture/metadata-fetch-failure" home fake_bin state log output
+    home="$case_dir/home"
+    fake_bin="$case_dir/bin"
+    state="$case_dir/state"
+    log="$case_dir/git.log"
+    output="$case_dir/output"
+    mkdir -p "$case_dir"
+    make_home "$home"
+    make_fakes "$fake_bin"
+    mark_route_up "$state"
+
+    run_bootstrap "$home" "$fake_bin" "$state" "$log" "$output" '' TEST_GITHUB_META_FETCH=fail
+    ((run_status != 0)) || fail 'failed GitHub metadata fetch was accepted'
+    grep -q 'could not fetch GitHub host keys' "$output" || fail 'metadata-fetch error was not actionable'
+    [[ ! -e $state/ssh.log ]] || fail 'SSH authentication ran after metadata fetch failed'
+    [[ ! -e $log ]] || fail 'Git ran after metadata fetch failed'
+    [[ ! -e $home/.ssh/known_hosts ]] || fail 'metadata fetch failure created known_hosts'
+    printf 'PASS: a failed GitHub metadata fetch stops before SSH or Git.\n'
+}
+
+test_malformed_github_metadata_fails_closed() {
+    local case_dir="$fixture/malformed-metadata" home fake_bin state log output
+    home="$case_dir/home"
+    fake_bin="$case_dir/bin"
+    state="$case_dir/state"
+    log="$case_dir/git.log"
+    output="$case_dir/output"
+    mkdir -p "$case_dir"
+    make_home "$home"
+    make_fakes "$fake_bin"
+    mark_route_up "$state"
+
+    run_bootstrap "$home" "$fake_bin" "$state" "$log" "$output" '' TEST_GITHUB_META_FETCH=malformed
+    ((run_status != 0)) || fail 'malformed GitHub metadata was accepted'
+    grep -q 'could not parse GitHub host keys' "$output" || fail 'metadata-parse error was not actionable'
+    [[ ! -e $state/ssh.log ]] || fail 'SSH authentication ran after metadata parsing failed'
+    [[ ! -e $log ]] || fail 'Git ran after metadata parsing failed'
+    printf 'PASS: malformed GitHub metadata stops before SSH or Git.\n'
+}
+
+run_test() {
+    local test_name=$1
+    if [[ -z ${BOOTSTRAP_TEST_ONLY:-} || $BOOTSTRAP_TEST_ONLY == "$test_name" ]]; then
+        "$test_name"
+    fi
+}
+
+run_test test_github_host_key_seeding_is_idempotent
+run_test test_existing_known_hosts_is_preserved
+run_test test_failed_github_metadata_fetch_fails_closed
+run_test test_malformed_github_metadata_fails_closed
+run_test test_existing_checkout_is_idempotent
+run_test test_new_clone_happens_only_once
+run_test test_missing_public_key_refuses_to_continue
+run_test test_missing_git_prints_root_command_and_stops
+run_test test_failed_github_authentication_stops_before_git
+run_test test_new_key_is_printed_and_gated
+run_test test_wifi_password_never_reaches_disk
 printf 'PASS: bootstrap behavior suite.\n'

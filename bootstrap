@@ -17,6 +17,96 @@ require_root_package() {
     exit 1
 }
 
+seed_github_host_keys() {
+    local metadata_file host_keys_file known_hosts host_key keys_added
+
+    command -v curl >/dev/null 2>&1 || require_root_package curl curl
+    command -v python3 >/dev/null 2>&1 || require_root_package python3 python3
+
+    metadata_file=$(mktemp) || die 'could not create a temporary file for GitHub metadata'
+    host_keys_file=$(mktemp) || {
+        rm -f -- "$metadata_file"
+        die 'could not create a temporary file for GitHub host keys'
+    }
+
+    printf 'SSH: fetching GitHub host keys over HTTPS.\n'
+    if ! curl -fsS --proto '=https' --tlsv1.2 https://api.github.com/meta > "$metadata_file"; then
+        rm -f -- "$metadata_file" "$host_keys_file"
+        die 'could not fetch GitHub host keys over verified HTTPS; check network and TLS, then rerun'
+    fi
+
+    if ! python3 - "$metadata_file" > "$host_keys_file" <<'PYTHON'
+import base64
+import binascii
+import json
+import re
+import sys
+
+try:
+    with open(sys.argv[1], encoding="utf-8") as metadata:
+        document = json.load(metadata)
+except (OSError, UnicodeError, json.JSONDecodeError) as error:
+    raise SystemExit(f"invalid GitHub metadata: {error}") from error
+
+keys = document.get("ssh_keys") if isinstance(document, dict) else None
+if not isinstance(keys, list) or not keys:
+    raise SystemExit("invalid GitHub metadata: ssh_keys is not a non-empty array")
+
+seen = set()
+for key in keys:
+    fields = key.split() if isinstance(key, str) else []
+    if len(fields) != 2:
+        raise SystemExit("invalid GitHub metadata: malformed SSH host key")
+    key_type, encoded_key = fields
+    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9@._+-]*", key_type) is None:
+        raise SystemExit("invalid GitHub metadata: malformed SSH key type")
+    try:
+        decoded_key = base64.b64decode(encoded_key, validate=True)
+    except (ValueError, binascii.Error) as error:
+        raise SystemExit("invalid GitHub metadata: malformed SSH key data") from error
+    if not decoded_key:
+        raise SystemExit("invalid GitHub metadata: empty SSH key data")
+    host_key = f"github.com {key_type} {encoded_key}"
+    if host_key not in seen:
+        print(host_key)
+        seen.add(host_key)
+PYTHON
+    then
+        rm -f -- "$metadata_file" "$host_keys_file"
+        die 'could not parse GitHub host keys from the metadata API; refusing unverified SSH'
+    fi
+    rm -f -- "$metadata_file"
+
+    known_hosts="$HOME/.ssh/known_hosts"
+    mkdir -p -- "$HOME/.ssh"
+    chmod 700 -- "$HOME/.ssh"
+    if [ -L "$known_hosts" ]; then
+        rm -f -- "$host_keys_file"
+        die "$known_hosts is a symbolic link; refusing to modify it"
+    elif [ -e "$known_hosts" ]; then
+        if [ ! -f "$known_hosts" ]; then
+            rm -f -- "$host_keys_file"
+            die "$known_hosts exists but is not a regular file"
+        fi
+    else
+        (umask 077 && : > "$known_hosts")
+    fi
+    chmod 600 -- "$known_hosts"
+
+    keys_added=0
+    while IFS= read -r host_key; do
+        if ! grep -Fqx -- "$host_key" "$known_hosts"; then
+            if [ -s "$known_hosts" ] && [ -n "$(tail -c 1 -- "$known_hosts")" ]; then
+                printf '\n' >> "$known_hosts"
+            fi
+            printf '%s\n' "$host_key" >> "$known_hosts"
+            keys_added=$((keys_added + 1))
+        fi
+    done < "$host_keys_file"
+    rm -f -- "$host_keys_file"
+    printf 'SSH: GitHub host keys ready (%s added).\n' "$keys_added"
+}
+
 has_default_route() {
     local routes
     routes=$(ip route show default 2>/dev/null || true)
@@ -81,6 +171,7 @@ if "$key_created"; then
 fi
 
 command -v ssh >/dev/null 2>&1 || require_root_package ssh openssh-clients
+seed_github_host_keys
 printf 'SSH: verifying GitHub authentication with ssh -T git@github.com.\n'
 if ssh_output=$(ssh -T git@github.com 2>&1); then
     ssh_status=0

@@ -4,24 +4,127 @@ set -euo pipefail
 
 repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 fail() { printf 'FAIL: %s\n' "$*" >&2; exit 1; }
-for tool in bwrap zsh git python3 tar nvim wget; do
+for tool in bwrap zsh git python3 sort tar nvim wget; do
     command -v "$tool" >/dev/null || fail "Required test tool is missing: $tool"
 done
 fixture=$(mktemp -d)
 trap 'rm -rf -- "$fixture"' EXIT
-mkdir -p "$fixture/repo/modules/nvim" "$fixture/logs"
-# Only named public shell inputs cross into the writable fixture. No host HOME
-# is mounted. The copied .git pointers resolve through read-only Git metadata.
-tar -C "$repo_dir" --exclude='*secret*env*' --exclude='*SECRET*ENV*' \
-    --exclude=Documents --exclude=work.sh -cf - \
-    config/shell/profile config/shell/aliases.sh config/shell/inputrc \
-    config/zsh config/git config/wgetrc install.conf.yaml \
-    config/asdf config/stylelint config/stylua config/rubocop config/solargraph \
-    config/codespell config/npm config/pry config/bat config/lazygit config/pylintrc \
-    config/sway config/eww config/qt6ct config/qt-palette config/rofi config/dunst \
-    config/kitty config/gtk-3.0 config/gtk-4.0 config/environment.d \
-    config/mimeapps.list config/compose |
+mkdir -p "$fixture/repo" "$fixture/logs"
+
+# Derive the writable fixture from the real link manifest. Dotbot's bundled
+# safe YAML loader avoids a host package dependency. Sources must stay relative
+# to the repository; environment expansion and globs would weaken that bound.
+if ! PYTHONPATH="$repo_dir/modules/dotbot/lib/pyyaml/lib" \
+    python3 - "$repo_dir/install.conf.yaml" > "$fixture/link-sources" <<'PY'
+from pathlib import Path, PurePosixPath
+import os
+import sys
+
+import yaml
+
+manifest_path = Path(sys.argv[1])
+try:
+    manifest = yaml.safe_load(manifest_path.read_text(encoding='utf-8'))
+except Exception as error:
+    raise SystemExit(f'FAIL: cannot read {manifest_path.name}: {error}') from error
+if not isinstance(manifest, list):
+    raise SystemExit(f'FAIL: {manifest_path.name} must contain a list of directives')
+
+default_glob = False
+sources = []
+for directive in manifest:
+    if not isinstance(directive, dict):
+        raise SystemExit(f'FAIL: invalid directive in {manifest_path.name}: {directive!r}')
+    defaults = directive.get('defaults')
+    if isinstance(defaults, dict) and isinstance(defaults.get('link'), dict):
+        default_glob = bool(defaults['link'].get('glob', default_glob))
+    links = directive.get('link')
+    if links is None:
+        continue
+    if not isinstance(links, dict):
+        raise SystemExit(f'FAIL: link directive in {manifest_path.name} must be a mapping')
+    for destination, spec in links.items():
+        use_glob = default_glob
+        if isinstance(spec, str):
+            source = spec
+        elif spec is None and isinstance(destination, str):
+            basename = os.path.basename(destination)
+            source = basename[1:] if basename.startswith('.') else basename
+        elif isinstance(spec, dict):
+            source = spec.get('path')
+            use_glob = bool(spec.get('glob', use_glob))
+            if source is None and isinstance(destination, str):
+                basename = os.path.basename(destination)
+                source = basename[1:] if basename.startswith('.') else basename
+        else:
+            source = None
+        if not isinstance(source, str) or not source:
+            raise SystemExit(
+                f'FAIL: {manifest_path.name} link {destination!r} has no usable source'
+            )
+        path = PurePosixPath(source)
+        unsafe = (
+            path.is_absolute()
+            or path == PurePosixPath('.')
+            or '..' in path.parts
+            or source.startswith('~')
+            or '$' in source
+        )
+        if unsafe:
+            raise SystemExit(
+                f'FAIL: {manifest_path.name} link source escapes the tracked fixture: {source}'
+            )
+        if use_glob:
+            raise SystemExit(
+                f'FAIL: {manifest_path.name} link source uses an unsupported fixture glob: {source}'
+            )
+        lowered = source.lower()
+        if path.parts[0] == 'Documents' or ('secret' in lowered and 'env' in lowered):
+            raise SystemExit(f'FAIL: forbidden fixture link source: {source}')
+        if source not in sources:
+            sources.append(source)
+
+sys.stdout.buffer.write(b''.join(os.fsencode(source) + b'\0' for source in sources))
+PY
+then
+    fail 'could not derive fixture inputs from install.conf.yaml'
+fi
+
+mapfile -d '' -t link_sources < "$fixture/link-sources"
+((${#link_sources[@]})) || fail 'install.conf.yaml has no link sources'
+tracked_inputs="$fixture/tracked-inputs"
+source_inputs="$fixture/source-inputs"
+printf 'install.conf.yaml\0' > "$tracked_inputs"
+pathspec_excludes=(
+    ':(exclude,glob)**/*secret*env*' ':(exclude,glob)*secret*env*'
+    ':(exclude,glob)**/*SECRET*ENV*' ':(exclude,glob)*SECRET*ENV*'
+    ':(exclude)Documents' ':(exclude,glob)Documents/**'
+)
+for source in "${link_sources[@]}"; do
+    if ! git -C "$repo_dir" ls-files --recurse-submodules -z -- \
+        "$source" "${pathspec_excludes[@]}" > "$source_inputs"; then
+        fail "could not enumerate tracked fixture source: $source"
+    fi
+    [[ -s $source_inputs ]] ||
+        fail "install.conf.yaml link source is not provided by tracked repository files: $source"
+    cat "$source_inputs" >> "$tracked_inputs"
+done
+LC_ALL=C sort -zu "$tracked_inputs" > "$fixture/tracked-inputs-sorted"
+
+# Only manifest-selected, Git-tracked paths cross into the writable fixture.
+# No host HOME is mounted, and tar never recurses into untracked directory data.
+tar -C "$repo_dir" --null --verbatim-files-from --no-recursion \
+    --files-from="$fixture/tracked-inputs-sorted" -cf - |
     tar -C "$fixture/repo" -xf -
+
+# Git-aware shell configuration must see the pinned identities of selected
+# submodules. Mount their pointer files read-only; do not copy metadata into the
+# writable fixture or expose submodules unrelated to manifest link sources.
+if ! git -C "$repo_dir" submodule foreach --recursive --quiet \
+    'printf "%s\0" "$displaypath"' > "$fixture/submodule-paths"; then
+    fail 'could not enumerate repository submodules'
+fi
+mapfile -d '' -t submodule_paths < "$fixture/submodule-paths"
 
 sandbox=(bwrap --die-with-parent --unshare-pid)
 for runtime in /usr /bin /lib /lib64 /etc; do
@@ -29,8 +132,23 @@ for runtime in /usr /bin /lib /lib64 /etc; do
 done
 sandbox+=(--proc /proc --dev /dev --bind "$fixture" "$fixture"
     --ro-bind "$repo_dir/.git" "$fixture/repo/.git"
-    --ro-bind "$repo_dir/modules/dotbot" "$fixture/repo/modules/dotbot"
-    --chdir "$fixture" --remount-ro / -- /usr/bin/env -i
+    --ro-bind "$repo_dir/modules/dotbot" "$fixture/repo/modules/dotbot")
+for submodule in "${submodule_paths[@]}"; do
+    selected=false
+    for source in "${link_sources[@]}"; do
+        if [[ $submodule == "$source" || $submodule == "$source/"* ]]; then
+            selected=true
+            break
+        fi
+    done
+    if [[ $selected == true ]]; then
+        [[ -e $repo_dir/$submodule/.git ]] ||
+            fail "selected submodule has no Git pointer: $submodule"
+        sandbox+=(--ro-bind "$repo_dir/$submodule/.git" \
+            "$fixture/repo/$submodule/.git")
+    fi
+done
+sandbox+=(--chdir "$fixture" --remount-ro / -- /usr/bin/env -i
     'PATH=/usr/bin:/bin' 'TERM=xterm-256color' 'LANG=C.UTF-8'
     'GIT_CONFIG_NOSYSTEM=1' 'GIT_TERMINAL_PROMPT=0'
     'PYTHONDONTWRITEBYTECODE=1')

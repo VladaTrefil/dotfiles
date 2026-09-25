@@ -16,6 +16,7 @@ vlc
 mpv
 gnome-system-monitor
 gnome-keyring # Provides Secret Service required by Proton Mail Bridge.
+gnome-keyring-pam # PAM auto-unlock for the login keyring; gnome-keyring alone only provides the Secret Service daemon.
 gparted
 lxqt-policykit # Explicit policy agent prevents GParted pulling GNOME Shell/GDM.
 telegram-desktop # Native RPM Fusion free package, preferred over Flatpak.

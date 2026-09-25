@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Render codespell paths and rebuild bat's cache when source/version changes."""
+"""Configure generated tool state after repository links are installed."""
 import hashlib
 import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 
 root = Path(__file__).resolve().parent.parent
 home = Path.home()
@@ -46,6 +47,63 @@ if not stamp.exists() or stamp.read_text() != checksum or not (bat_cache / 'them
     subprocess.run(['bat', '--list-themes', '--color=never'], check=True, stdout=subprocess.DEVNULL)
     stamp.write_text(checksum)
 print('CONFIGURED bat: asset cache matches sources and binary version')
+
+# Oh My Zsh compiles this dump during interactive startup.  Validate and remove
+# a corrupt compiled file before loading the linked config once, so the first
+# real login never tries to read the corrupt file itself.
+zsh = shutil.which('zsh')
+if not zsh:
+    print('SKIPPED zsh: command is absent; completion cache was not warmed')
+else:
+    zsh_cache = cache / 'zsh'
+    if zsh_cache.is_symlink() or (zsh_cache.exists() and not zsh_cache.is_dir()):
+        raise SystemExit(f'Refusing unexpected Zsh cache path: {zsh_cache}')
+    zsh_cache.mkdir(mode=0o700, parents=True, exist_ok=True)
+    dump = zsh_cache / '.zcompdump'
+    compiled_dump = zsh_cache / '.zcompdump.zwc'
+    for path in (dump, compiled_dump):
+        if path.is_symlink() or (path.exists() and not path.is_file()):
+            raise SystemExit(f'Refusing unexpected completion cache path: {path}')
+
+    def compiled_dump_is_valid():
+        if not compiled_dump.is_file():
+            return False
+        result = subprocess.run(
+            [zsh, '-fc', 'zcompile -t "$1"', 'configure-tools', str(compiled_dump)],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+        return result.returncode == 0
+
+    cache_ready = dump.is_file() and dump.stat().st_size > 0 and compiled_dump_is_valid()
+    if not cache_ready:
+        if compiled_dump.exists():
+            compiled_dump.unlink()
+        zsh_environment = os.environ.copy()
+        zsh_environment['ZDOTDIR'] = str(config / 'zsh')
+        result = subprocess.run(
+            [zsh, '-ic', 'exit'],
+            env=zsh_environment,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=False,
+        )
+        if result.returncode != 0 or result.stderr:
+            if result.stdout:
+                print(result.stdout, end='')
+            if result.stderr:
+                print(result.stderr, end='', file=sys.stderr)
+            raise SystemExit(
+                f'Zsh completion cache warm-up failed (exit {result.returncode})'
+            )
+    if not dump.is_file() or not compiled_dump_is_valid():
+        raise SystemExit(f'Zsh did not create a valid compiled completion cache: {compiled_dump}')
+    print(f'CONFIGURED zsh: valid completion cache at {compiled_dump}')
+
 # Fedora packages the correct Pylint implementation as pylint-3. Preserve the
 # editor's portable command name, without hiding an existing PATH implementation.
 if not shutil.which('pylint') and shutil.which('pylint-3'):

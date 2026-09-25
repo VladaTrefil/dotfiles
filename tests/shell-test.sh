@@ -94,7 +94,7 @@ mapfile -d '' -t link_sources < "$fixture/link-sources"
 ((${#link_sources[@]})) || fail 'install.conf.yaml has no link sources'
 tracked_inputs="$fixture/tracked-inputs"
 source_inputs="$fixture/source-inputs"
-printf 'install.conf.yaml\0' > "$tracked_inputs"
+printf 'install.conf.yaml\0bin/configure-tools\0config/codespell/codespellrc\0' > "$tracked_inputs"
 pathspec_excludes=(
     ':(exclude,glob)**/*secret*env*' ':(exclude,glob)*secret*env*'
     ':(exclude,glob)**/*SECRET*ENV*' ':(exclude,glob)*SECRET*ENV*'
@@ -282,6 +282,36 @@ for layout in default inherited; do
     if [[ -e "$cache/gitstatus" ]]; then
         fail 'gitstatus cache created; the runtime binary download was not disabled'
     fi
+    # install link runs configure-tools after linking.  Start from the corrupt
+    # first-login state seen on the acceptance VM and require the installer to
+    # replace it before any real interactive login can read it.
+    printf 'not a compiled zsh dump\n' > "$cache/zsh/.zcompdump.zwc"
+    if ! "${sandbox[@]}" "${env_args[@]}" "$fixture/repo/bin/configure-tools" \
+        > "$fixture/logs/configure-$layout" 2>&1; then
+        cat "$fixture/logs/configure-$layout"
+        fail 'configure-tools completion warm-up'
+    fi
+    if grep -Fq 'invalid zwc file' "$fixture/logs/configure-$layout"; then
+        cat "$fixture/logs/configure-$layout"
+        fail 'configure-tools read the invalid completion cache'
+    fi
+    [[ -s $cache/zsh/.zcompdump && -s $cache/zsh/.zcompdump.zwc ]] ||
+        fail 'configure-tools did not warm the completion cache'
+    zsh -fc 'zcompile -t "$1"' shell-test "$cache/zsh/.zcompdump.zwc" \
+        > "$fixture/logs/zcompile-$layout" 2>&1 || {
+        cat "$fixture/logs/zcompile-$layout"
+        fail 'configure-tools produced an invalid compiled completion cache'
+    }
+    completion_stat=$(stat -c '%i:%Y:%s' "$cache/zsh/.zcompdump" "$cache/zsh/.zcompdump.zwc")
+    "${sandbox[@]}" "${env_args[@]}" "$fixture/repo/bin/configure-tools" \
+        > "$fixture/logs/configure-again-$layout" 2>&1 ||
+        fail 'configure-tools second completion warm-up'
+    completion_stat_after=$(stat -c '%i:%Y:%s' "$cache/zsh/.zcompdump" "$cache/zsh/.zcompdump.zwc")
+    if [[ $completion_stat != "$completion_stat_after" ]]; then
+        printf 'BEFORE: %s\nAFTER: %s\n' "$completion_stat" "$completion_stat_after" >&2
+        fail 'configure-tools rewrote a valid completion cache'
+    fi
+    printf 'PASS: %s installer replaces an invalid completion cache and is idempotent.\n' "$layout"
     snapshot > "$fixture/logs/before-$layout"
     for mode in -ic -lic; do
         # Each probe needs a fresh HOME-local new-directory success case.

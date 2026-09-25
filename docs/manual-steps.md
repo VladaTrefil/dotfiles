@@ -57,14 +57,49 @@ remaining need for `GITHUB_PASSWORD`: if a current consumer still exists now
 that `install-base.sh` is gone, a least-privilege fine-grained GitHub token is a
 better fit than an account password.
 
+## GNOME Keyring login auto-unlock
+
+Chromium and Proton Mail Bridge use `org.freedesktop.secrets`, which this setup
+provides through `gnome-keyring-d`. 1Password cannot replace it: neither the
+desktop application nor `op` implements the Secret Service interface, and
+there is no supported mechanism for feeding a GNOME Keyring passphrase from a
+1Password item. Keep the account password in 1Password if desired, then let PAM
+pass that same password directly to GNOME Keyring during password login.
+
+The apps package group installs both halves: `gnome-keyring` provides the
+Secret Service daemon, while `gnome-keyring-pam` provides
+`pam_gnome_keyring.so`. After installing that group, review the active profile
+and enable Fedora's native feature manually:
+
+```sh
+authselect current
+authselect list-features local | grep -F with-pam-gnome-keyring
+sudo authselect enable-feature with-pam-gnome-keyring
+authselect current
+```
+
+Do not put this in the installer. Authselect and PAM are machine-wide,
+password-sensitive settings outside portable dotfiles. Auto-unlock also
+requires the **login keyring password to equal the account password** and a
+login method that supplies that password; passwordless or automatic login
+cannot pass a password to the keyring.
+
+If the keyring still prompts separately, install Fedora's `seahorse` package if
+the command is absent, then open Passwords and Keys (`seahorse`), select the
+Login keyring, choose **Change Password**, and set its new password to the
+current account password. If its old password is unknown and its stored secrets
+can be discarded, delete the Login keyring in Seahorse, log out, and log back
+in with the account password so it is recreated. Deleting a keyring permanently
+loses the secrets it contains; do not use that recovery path when those contents
+are needed.
+
 ## Block 7 follow-up
 
 The following remain machine- or account-specific:
 
-- Create and unlock GNOME Keyring's login keyring interactively on first use.
-  The Sway session starts Fedora's packaged Secret Service user unit before XDG
-  autostart, but portable dotfiles do not modify PAM or authselect. Login-time
-  auto-unlock belongs to the physical machine's login stack.
+- Complete the GNOME Keyring authselect and password-alignment procedure above
+  on each machine. The Sway session starts Fedora's packaged Secret Service user
+  unit before XDG autostart, but the installer never modifies PAM or authselect.
 - Sign in to Proton Mail Bridge and confirm mail-client integration. Its
   `--no-window` autostart and Eww tray registration work in the VM.
 - Sign in to Spotify, Anki, Lens, and Zed as needed. Confirm Zed's Flatpak can

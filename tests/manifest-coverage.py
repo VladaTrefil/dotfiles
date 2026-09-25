@@ -43,6 +43,20 @@ requirements = {
 
 packages = manifest_packages()
 failures = []
+
+# These packages implement two halves of one documented feature.  Keeping the
+# daemon while dropping its PAM module would leave Secret Service available but
+# make login-time auto-unlock impossible again.
+companions = {
+    'gnome-keyring': 'gnome-keyring-pam',
+}
+for package, companion in companions.items():
+    if package in packages and companion not in packages:
+        failures.append(
+            f'{package!r} is present, but required companion {companion!r} '
+            'is absent from packages/*.txt'
+        )
+
 for package, requirement in requirements.items():
     binary = requirement['binary']
     if requirement.get('active_command'):
@@ -75,4 +89,6 @@ if failures:
 print(
     'PASS: linked script runtime dependencies have manifest providers: '
     + ', '.join(sorted(requirements))
+    + '; package companions: '
+    + ', '.join(f'{package}+{companion}' for package, companion in companions.items())
 )

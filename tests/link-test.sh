@@ -110,12 +110,17 @@ PY
 }
 
 # The default subcommand must perform the same clean link operation.
+first_status=0
 if run_link > "$test_home/logs/first" 2>&1; then
     cat "$test_home/logs/first"
 else
-    check_run_failure "$?" "$test_home/logs/first"
-    fail 'Clean/default run failed'
+    first_status=$?
+    check_run_failure "$first_status" "$test_home/logs/first"
 fi
+grep -Fq 'SKIPPED zsh: completion cache warm-up command reported errors (exit 0); install continues' \
+    "$test_home/logs/first" ||
+    fail 'Restricted completion warm-up was not reported as skipped'
+[[ $first_status == 0 ]] || fail 'Clean/default run failed'
 [[ -f $test_home/repo/modules/dotbot/lib/pyyaml/lib/yaml/__init__.py &&
    -f $test_home/repo/modules/nvim/init.lua ]] || fail 'Recursive remote initialization is incomplete'
 # shellcheck disable=SC2016 # Git supplies sha1 to the per-submodule shell.

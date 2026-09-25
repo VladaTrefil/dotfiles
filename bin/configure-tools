@@ -55,54 +55,74 @@ zsh = shutil.which('zsh')
 if not zsh:
     print('SKIPPED zsh: command is absent; completion cache was not warmed')
 else:
-    zsh_cache = cache / 'zsh'
-    if zsh_cache.is_symlink() or (zsh_cache.exists() and not zsh_cache.is_dir()):
-        raise SystemExit(f'Refusing unexpected Zsh cache path: {zsh_cache}')
-    zsh_cache.mkdir(mode=0o700, parents=True, exist_ok=True)
-    dump = zsh_cache / '.zcompdump'
-    compiled_dump = zsh_cache / '.zcompdump.zwc'
-    for path in (dump, compiled_dump):
-        if path.is_symlink() or (path.exists() and not path.is_file()):
-            raise SystemExit(f'Refusing unexpected completion cache path: {path}')
+    try:
+        zsh_cache = cache / 'zsh'
+        if zsh_cache.is_symlink() or (zsh_cache.exists() and not zsh_cache.is_dir()):
+            raise SystemExit(f'Refusing unexpected Zsh cache path: {zsh_cache}')
+        zsh_cache.mkdir(mode=0o700, parents=True, exist_ok=True)
+        dump = zsh_cache / '.zcompdump'
+        compiled_dump = zsh_cache / '.zcompdump.zwc'
+        for path in (dump, compiled_dump):
+            if path.is_symlink() or (path.exists() and not path.is_file()):
+                raise SystemExit(f'Refusing unexpected completion cache path: {path}')
 
-    def compiled_dump_is_valid():
-        if not compiled_dump.is_file():
-            return False
-        result = subprocess.run(
-            [zsh, '-fc', 'zcompile -t "$1"', 'configure-tools', str(compiled_dump)],
-            stdin=subprocess.DEVNULL,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            check=False,
-        )
-        return result.returncode == 0
-
-    cache_ready = dump.is_file() and dump.stat().st_size > 0 and compiled_dump_is_valid()
-    if not cache_ready:
-        if compiled_dump.exists():
-            compiled_dump.unlink()
-        zsh_environment = os.environ.copy()
-        zsh_environment['ZDOTDIR'] = str(config / 'zsh')
-        result = subprocess.run(
-            [zsh, '-ic', 'exit'],
-            env=zsh_environment,
-            stdin=subprocess.DEVNULL,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            check=False,
-        )
-        if result.returncode != 0 or result.stderr:
-            if result.stdout:
-                print(result.stdout, end='')
-            if result.stderr:
-                print(result.stderr, end='', file=sys.stderr)
-            raise SystemExit(
-                f'Zsh completion cache warm-up failed (exit {result.returncode})'
+        def compiled_dump_is_valid():
+            if not compiled_dump.is_file():
+                return False
+            result = subprocess.run(
+                [zsh, '-fc', 'zcompile -t "$1"', 'configure-tools', str(compiled_dump)],
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                check=False,
             )
-    if not dump.is_file() or not compiled_dump_is_valid():
-        raise SystemExit(f'Zsh did not create a valid compiled completion cache: {compiled_dump}')
-    print(f'CONFIGURED zsh: valid completion cache at {compiled_dump}')
+            return result.returncode == 0
+
+        cache_ready = dump.is_file() and dump.stat().st_size > 0 and compiled_dump_is_valid()
+        skip_reason = None
+        if not cache_ready:
+            if compiled_dump.exists():
+                compiled_dump.unlink()
+            zsh_environment = os.environ.copy()
+            zsh_environment['ZDOTDIR'] = str(config / 'zsh')
+            result = subprocess.run(
+                [zsh, '-ic', 'exit'],
+                env=zsh_environment,
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                check=False,
+            )
+            if result.returncode != 0:
+                skip_reason = f'warm-up command failed (exit {result.returncode})'
+            elif result.stderr:
+                skip_reason = 'warm-up command reported errors (exit 0)'
+            else:
+                cache_ready = (
+                    dump.is_file()
+                    and dump.stat().st_size > 0
+                    and compiled_dump_is_valid()
+                )
+                if not cache_ready:
+                    skip_reason = (
+                        'warm-up command exited 0 without creating a valid compiled cache'
+                    )
+            if skip_reason:
+                if result.stdout:
+                    print(result.stdout, end='')
+                if result.stderr:
+                    print(result.stderr, end='', file=sys.stderr)
+        if cache_ready:
+            print(f'CONFIGURED zsh: valid completion cache at {compiled_dump}')
+        else:
+            print(f'SKIPPED zsh: completion cache {skip_reason}; install continues')
+    # Deliberate SystemExit refusals above are not Exception subclasses and stay fatal.
+    except Exception as error:
+        print(
+            'SKIPPED zsh: completion cache warm-up unavailable '
+            f'({type(error).__name__}: {error}); install continues'
+        )
 
 # Fedora packages the correct Pylint implementation as pylint-3. Preserve the
 # editor's portable command name, without hiding an existing PATH implementation.

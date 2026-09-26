@@ -5,7 +5,7 @@
 } "$XDG_CONFIG_HOME/shell/profile"
 
 typeset -U path PATH
-path=("$ASDF_DATA_DIR/shims" "$BIN_PATH" "$BIN_PATH/usr" $path)
+path=("$ASDF_DATA_DIR/shims" "$BIN_PATH" $path)
 export PATH
 
 # Optional private login settings, outside every repository-backed config link.

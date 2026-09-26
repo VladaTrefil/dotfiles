@@ -7,7 +7,7 @@
 # Go asdf is an executable on PATH. Never source a legacy asdf.sh.
 # Keep shims first and make repeated startup idempotent.
 typeset -U path PATH
-path=("$ASDF_DATA_DIR/shims" "$BIN_PATH" "$BIN_PATH/usr" $path)
+path=("$ASDF_DATA_DIR/shims" "$BIN_PATH" $path)
 export PATH
 
 # Updates are deliberate submodule changes; startup must not mutate the checkout.

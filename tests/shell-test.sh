@@ -184,7 +184,21 @@ fail() { print -u2 -r -- "FAIL: $*"; exit 1; }
 [[ $ZSH == $ZDOTDIR/oh-my-zsh && $ZSH_CUSTOM == $ZDOTDIR/custom ]] || fail 'framework paths'
 (( $+functions[_zsh_autosuggest_start] && $+functions[_zsh_highlight] && $+functions[p10k] )) || fail 'plugins/theme missing'
 [[ -o sharehistory && ! -o incappendhistorytime && ! -o incappendhistory ]] || fail 'history options'
-[[ $path[1] == $ASDF_DATA_DIR/shims ]] || fail 'shims are not first'
+# Only installer-owned locations may precede the inherited PATH. The link
+# manifest creates BIN_PATH; `install runtimes` creates the shims later, so a
+# fresh link-only install must not require the shims directory to exist yet.
+expected_startup_path=("$ASDF_DATA_DIR/shims" "$BIN_PATH" /usr/bin /bin)
+if (( $#path != $#expected_startup_path )); then
+  print -u2 -r -- "EXPECTED PATH: ${(j.:.)expected_startup_path}" "ACTUAL PATH: $PATH"
+  fail 'unexpected entries in startup PATH'
+fi
+for (( index = 1; index <= $#expected_startup_path; index++ )); do
+  [[ $path[index] == $expected_startup_path[index] ]] || {
+    print -u2 -r -- "EXPECTED PATH: ${(j.:.)expected_startup_path}" "ACTUAL PATH: $PATH"
+    fail "startup PATH entry $index differs"
+  }
+done
+[[ -d $BIN_PATH ]] || fail 'BIN_PATH was not created by the link manifest'
 [[ ! -v ASDF_DIR && ! -v NVM_DIR && ! -v GOPATH && ! -v ASDF_DEFAULT_TOOL_VERSIONS_FILENAME ]] || fail 'legacy environment'
 [[ ! -v XINITRC && ! -v KDEHOME && ! -v GTK2_RC_FILES && ! -v THEME_BACKGROUND ]] || fail 'desktop environment'
 [[ $BUNDLE_USER_CONFIG == $XDG_CONFIG_HOME/bundle/config && -d ${BUNDLE_USER_CONFIG:h} ]] || fail 'Bundler config path'

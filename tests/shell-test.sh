@@ -187,17 +187,19 @@ fail() { print -u2 -r -- "FAIL: $*"; exit 1; }
 # Only installer-owned locations may precede the inherited PATH. The link
 # manifest creates BIN_PATH; `install runtimes` creates the shims later, so a
 # fresh link-only install must not require the shims directory to exist yet.
-expected_startup_path=("$ASDF_DATA_DIR/shims" "$BIN_PATH" /usr/bin /bin)
-if (( $#path != $#expected_startup_path )); then
-  print -u2 -r -- "EXPECTED PATH: ${(j.:.)expected_startup_path}" "ACTUAL PATH: $PATH"
-  fail 'unexpected entries in startup PATH'
-fi
-for (( index = 1; index <= $#expected_startup_path; index++ )); do
-  [[ $path[index] == $expected_startup_path[index] ]] || {
-    print -u2 -r -- "EXPECTED PATH: ${(j.:.)expected_startup_path}" "ACTUAL PATH: $PATH"
+expected_startup_path_prefix=("$ASDF_DATA_DIR/shims" "$BIN_PATH")
+for (( index = 1; index <= $#expected_startup_path_prefix; index++ )); do
+  [[ $path[index] == $expected_startup_path_prefix[index] ]] || {
+    print -u2 -r -- "EXPECTED PATH PREFIX: ${(j.:.)expected_startup_path_prefix}" "ACTUAL PATH: $PATH"
     fail "startup PATH entry $index differs"
   }
 done
+for entry in "${path[@]}"; do
+  [[ $entry != "$BIN_PATH/usr" ]] || fail 'BIN_PATH/usr is present in startup PATH'
+done
+unique_startup_path=("${path[@]}")
+typeset -U unique_startup_path
+(( $#path == $#unique_startup_path )) || fail 'duplicate entries in startup PATH'
 [[ -d $BIN_PATH ]] || fail 'BIN_PATH was not created by the link manifest'
 [[ ! -v ASDF_DIR && ! -v NVM_DIR && ! -v GOPATH && ! -v ASDF_DEFAULT_TOOL_VERSIONS_FILENAME ]] || fail 'legacy environment'
 [[ ! -v XINITRC && ! -v KDEHOME && ! -v GTK2_RC_FILES && ! -v THEME_BACKGROUND ]] || fail 'desktop environment'

@@ -16,3 +16,24 @@ if [[ -f "$XDG_CONFIG_HOME/dotfiles-private/login.sh" ]]; then
     . "$1"
   } "$XDG_CONFIG_HOME/dotfiles-private/login.sh"
 fi
+
+# A password-authenticated console login still runs PAM before reaching here.
+# Never replace the login shell: a failed/exited compositor returns to a prompt.
+if [[ -o interactive && -t 0 && -t 1 &&
+      ${XDG_VTNR-} == 1 && ${TTY-} == /dev/tty1 &&
+      ! -v WAYLAND_DISPLAY && ! -v DISPLAY && ! -v SWAYSOCK &&
+      ! -v SSH_CONNECTION && ! -v SSH_CLIENT && ! -v SSH_TTY &&
+      ${DOTFILES_SWAY_AUTOSTART-} != 0 &&
+      ! -e "$XDG_CONFIG_HOME/dotfiles/sway-autostart-disabled" ]]; then
+  () {
+    local launcher
+    # Reuse the existing profile/launcher names; no machine detection or default.
+    case ${SWAY_PROFILE-} in
+      physical|virtualbox) launcher="$HOME/.config/sway/bin/start-$SWAY_PROFILE" ;;
+      *) return 0 ;;
+    esac
+    if [[ -x "$launcher" ]]; then
+      "$launcher" || true
+    fi
+  }
+fi

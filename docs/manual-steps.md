@@ -31,10 +31,81 @@ that it skipped OpenPGP checks for these local RPMs; the recorded SHA-256 is
 the integrity control. `./install tools` assembles QMK from an exact set of
 checksum-pinned wheels without invoking pip or an upstream installer.
 
-An upstream repository may remove a pinned eww, Lens, QMK, or `op` artifact. If that
-happens, review a replacement artifact and its published checksum, update its
-complete release record, and rerun the appropriate phase. Never bypass a size
-or checksum mismatch and never substitute `curl | sh`.
+## Refreshing eww and Lens pins
+
+Two records in `provision/releases.json` need particular attention:
+
+- **eww:** the `dturner/eww` COPR build URL includes a build directory. COPR
+  garbage-collects old builds, so a previously valid URL can return HTTP 404.
+  The desktop packages phase then reports `eww: pinned RPM unavailable` after
+  curl's HTTP error.
+- **Lens:** the vendor URL currently ends in
+  `Lens-2026.9.181013-latest.x86_64.rpm`. Treat the `-latest` artifact as
+  potentially replaceable in place, even though its filename includes a
+  version; this is a maintenance risk, not a confirmed vendor immutability
+  guarantee. Replacement bytes produce `lens: downloaded size mismatch;
+  nothing installed` or `lens: downloaded SHA-256 mismatch; nothing installed`.
+  Removal instead produces `lens: pinned RPM unavailable`; the shared error's
+  COPR hint applies to eww, not Lens.
+
+These failures are intentional: a missing download or mismatched size/digest
+stops the packages phase before that RPM reaches DNF. There is no fallback to
+an unpinned release or acceptance of new bytes. An already cached, verified RPM
+can still be used after its upstream URL disappears; cached files are checked
+again and fail with `cached size mismatch` or `cached SHA-256 mismatch` if
+altered. Thus a warm cache can hide URL expiry until a fresh install.
+
+Refresh a pin as one reviewed change:
+
+1. **Find the authoritative artifact and metadata.** For eww, start at the
+   [dturner/eww COPR project](https://copr.fedorainfracloud.org/coprs/dturner/eww/)
+   and its successful builds. Select the Wayland eww RPM for the target Fedora
+   release and `x86_64`, not a source/debug RPM or an unrelated X11 build.
+   For the current Fedora 44 target, the repository base is
+   `https://download.copr.fedorainfracloud.org/results/dturner/eww/fedora-44-x86_64/`.
+   For Lens, follow the vendor's
+   [RPM installation documentation](https://docs.lenshq.io/k8slens/getting-started/install-lens/)
+   to `https://downloads.k8slens.dev/rpm/lens.repo`; use its HTTPS `baseurl`
+   (currently `https://downloads.k8slens.dev/rpm/packages`) and select the
+   current stable `lens` package for `x86_64`.
+2. **Obtain the published checksum independently of the RPM.** At either
+   repository base, fetch `repodata/repomd.xml` over verified HTTPS, follow its
+   `data type="primary"` location, and verify that metadata download against
+   the checksum in `repomd.xml` before decompressing/reading it. The matching
+   package entry in primary XML supplies `location href`, `version` (`ver` and
+   `rel`), `size package` in bytes, and `checksum type="sha256"`. Resolve its
+   location relative to the repository base. Use authenticated signatures when
+   supplied and verify their key through the publisher's documented channel.
+   A publisher-signed checksum manifest is also acceptable. If authoritative
+   SHA-256 metadata is absent, stop and obtain it from the publisher.
+3. **Verify and update all four fields together:** `url`, `version` (RPM
+   `ver-rel`, preserving e.g. Lens's `~latest` spelling), `size`, and `sha256`.
+   Download the candidate RPM to a temporary directory and compare its size
+   and computed SHA-256 with that independently published metadata. Never
+   derive the expected checksum from the same unverified download it is
+   supposed to verify: running `sha256sum` on an arbitrary RPM and pasting the
+   result into the pin proves nothing about its authenticity. Record the
+   metadata source and selected build/release in the change's review evidence.
+4. Run `tests/release-test.py`, then verify the changed pin without installing
+   packages using an empty disposable cache:
+
+   ```sh
+   pin_cache=$(mktemp -d)
+   XDG_CACHE_HOME="$pin_cache" bin/install-releases --rpm --group desktop  # eww
+   XDG_CACHE_HOME="$pin_cache" bin/install-releases --rpm --group apps     # Lens
+   rm -rf -- "$pin_cache"
+   ```
+
+   Run only the relevant group if refreshing one pin. Inspect
+   `./install packages --dry-run --group desktop` (or `apps`) before rerunning
+   the corresponding packages phase with its normal confirmation.
+
+In contrast, **asdf, stylua, selene, lf, lazygit, op, and both Nerd Fonts** use
+versioned release URLs, without the COPR build-retention or suspected rolling
+pointer risk. They do not need refresh merely because a newer release appears.
+Versioned URLs are not a promise of permanent hosting: an upstream deletion or
+replacement can still fail closed. Review any replacement and its published
+checksum; never bypass size/SHA-256 checks or substitute `curl | sh`.
 
 ## 1Password and the secrets manifest
 
@@ -92,6 +163,46 @@ can be discarded, delete the Login keyring in Seahorse, log out, and log back
 in with the account password so it is recreated. Deleting a keyring permanently
 loses the secrets it contains; do not use that recovery path when those contents
 are needed.
+
+## Sway after a tty1 password login
+
+`.zprofile` starts Sway only for an interactive shell with terminal input and
+output, `XDG_VTNR=1`, and Zsh's `TTY=/dev/tty1`. `WAYLAND_DISPLAY`, `DISPLAY`,
+and `SWAYSOCK` must all be unset (even an empty set value prevents startup),
+as must `SSH_CONNECTION`, `SSH_CLIENT`, and `SSH_TTY`. SSH logins, other VTs,
+non-interactive commands, and existing graphical sessions keep their shell.
+
+The existing Sway profiles are explicit choices: `physical` uses
+`~/.config/sway/bin/start-physical` and `virtualbox` uses
+`~/.config/sway/bin/start-virtualbox`. There was no persisted machine selector
+or hardware detection in this setup. Select the same profile by adding
+`export SWAY_PROFILE=physical` or `export SWAY_PROFILE=virtualbox` to the
+machine's existing `${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles-private/login.sh`
+(create its parent directory/file if absent; preserve existing settings).
+That file is already sourced by `.zprofile` before the guard. No default is
+guessed: an unset/unknown profile or missing/non-executable launcher leaves a
+prompt. Launcher paths use `~/.config`, matching both existing launchers'
+configuration paths.
+
+The launcher runs as a child, so a failed Sway config or normal compositor exit
+returns to the same login shell without retrying. The usual console password
+login still happens first. No getty, login, PAM, authselect, or sudo setting is
+changed; **do not enable automatic/passwordless login**. PAM must receive the
+account password for the GNOME Keyring auto-unlock described above.
+
+To bypass autostart before another tty1 login, log in on tty2 (Ctrl+Alt+F2) or
+over SSH and create this marker outside the repository-backed Sway directory:
+
+```sh
+mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles"
+touch "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/sway-autostart-disabled"
+```
+
+The next tty1 login reaches a plain shell even if the profile is selected.
+Remove the marker to re-enable startup. Alternatively set
+`export DOTFILES_SWAY_AUTOSTART=0` in the machine's private login settings;
+remove that setting to re-enable. For an additional login shell started from
+an existing prompt, `DOTFILES_SWAY_AUTOSTART=0 zsh -l` bypasses startup too.
 
 ## Block 7 follow-up
 

@@ -7,6 +7,7 @@ fail() { printf 'FAIL: %s\n' "$*" >&2; exit 1; }
 for tool in bwrap zsh git python3 sort tar nvim wget; do
     command -v "$tool" >/dev/null || fail "Required test tool is missing: $tool"
 done
+python3 "$repo_dir/tests/sway-autostart.py"
 fixture=$(mktemp -d)
 trap 'rm -rf -- "$fixture"' EXIT
 mkdir -p "$fixture/repo" "$fixture/logs"

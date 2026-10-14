@@ -9,6 +9,7 @@ chromium
 thunderbird
 pcmanfm-qt # Settled Dolphin replacement.
 gvfs # Trash and remote-location backends for PCManFM-Qt.
+gvfs-mtp # Android MTP backend for PCManFM-Qt/GIO device discovery.
 picard
 qbittorrent
 xarchiver # Settled Ark replacement.

@@ -44,11 +44,12 @@ requirements = {
 packages = manifest_packages()
 failures = []
 
-# These packages implement two halves of one documented feature.  Keeping the
-# daemon while dropping its PAM module would leave Secret Service available but
-# make login-time auto-unlock impossible again.
+# Each package below needs its companion for the documented feature to work
+# end to end; retaining only the first package leaves a silently incomplete
+# desktop integration.
 companions = {
     'gnome-keyring': 'gnome-keyring-pam',
+    'gvfs': 'gvfs-mtp',
 }
 for package, companion in companions.items():
     if package in packages and companion not in packages:

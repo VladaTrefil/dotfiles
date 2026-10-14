@@ -2,6 +2,8 @@
 """Ensure runtime commands in linked scripts have explicit package providers."""
 from pathlib import Path
 import re
+import shlex
+import subprocess
 
 
 root = Path(__file__).resolve().parent.parent
@@ -43,6 +45,24 @@ requirements = {
 
 packages = manifest_packages()
 failures = []
+
+apps_plan = subprocess.run(
+    [str(root / 'install'), 'packages', '--group', 'apps', '--dry-run'],
+    cwd=root,
+    check=True,
+    capture_output=True,
+    text=True,
+).stdout
+dnf_commands = [
+    shlex.split(line)
+    for line in apps_plan.splitlines()
+    if line.startswith('dnf install -y -- ')
+]
+if not any('iwlwifi-mvm-firmware' in command for command in dnf_commands):
+    failures.append(
+        "the apps package plan omits 'iwlwifi-mvm-firmware', so the Intel "
+        'AX210 cannot load its Wi-Fi or Bluetooth firmware'
+    )
 
 # Each package below needs its companion for the documented feature to work
 # end to end; retaining only the first package leaves a silently incomplete

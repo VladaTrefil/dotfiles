@@ -1,5 +1,6 @@
 # Standalone SwayFX session dependencies; enable the swayfx/swayfx COPR first.
 swayfx
+sway-systemd
 swayidle
 swaylock
 grim

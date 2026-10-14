@@ -46,6 +46,17 @@ requirements = {
 packages = manifest_packages()
 failures = []
 
+sway_entrypoints = [
+    root / 'config/sway/config',
+    root / 'config/sway/config.virtualbox',
+]
+if any('include /etc/sway/config.d/*' in entry.read_text() for entry in sway_entrypoints):
+    if 'sway-systemd' not in packages:
+        failures.append(
+            "the Sway entrypoints include Fedora's session integration, but "
+            "provider package 'sway-systemd' is absent from packages/*.txt"
+        )
+
 apps_plan = subprocess.run(
     [str(root / 'install'), 'packages', '--group', 'apps', '--dry-run'],
     cwd=root,

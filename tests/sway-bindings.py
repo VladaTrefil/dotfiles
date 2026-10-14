@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Reject bindings that overwrite another binding in the same Sway mode."""
 from pathlib import Path
+from glob import glob
 import re
 import sys
 
@@ -36,7 +37,13 @@ def check(entry: Path) -> list[str]:
                 continue
             include = INCLUDE.match(line)
             if include:
-                read(path.parent / include.group(1))
+                include_path = Path(include.group(1))
+                pattern = include_path if include_path.is_absolute() else path.parent / include_path
+                matches = [Path(match) for match in sorted(glob(str(pattern)))]
+                if not matches:
+                    raise FileNotFoundError(pattern)
+                for match in matches:
+                    read(match)
                 continue
             setting = SET.match(line)
             if setting:
@@ -56,10 +63,12 @@ def check(entry: Path) -> list[str]:
             key = (mode, canonical(chord))
             if key in seen:
                 old_path, old_line, old_command = seen[key]
+                old_display = old_path.relative_to(SWAY) if old_path.is_relative_to(SWAY) else old_path
+                path_display = path.relative_to(SWAY) if path.is_relative_to(SWAY) else path
                 errors.append(
                     f"{entry.name}: duplicate bindsym {chord} in mode {mode}: "
-                    f"{old_path.relative_to(SWAY)}:{old_line} -> {old_command}; "
-                    f"{path.relative_to(SWAY)}:{line_number} -> {command}"
+                    f"{old_display}:{old_line} -> {old_command}; "
+                    f"{path_display}:{line_number} -> {command}"
                 )
             else:
                 seen[key] = path, line_number, command

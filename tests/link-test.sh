@@ -152,6 +152,8 @@ links+=(.config/sway .config/eww .config/qt6ct/qt6ct.conf
     .config/environment.d/50-desktop.conf .config/mimeapps.list .config/zed
     .config/autostart/protonmail-bridge.desktop .local/share/applications/lf.desktop
     .local/bin/ydl-clip.sh
+    .config/systemd/user/ibus-wayland.service
+    .config/systemd/user/sway-session.target.wants/ibus-wayland.service
     .XCompose)
 sources+=(config/sway config/eww config/qt6ct/qt6ct.conf
     config/qt-palette/Catppuccin-Mocha.conf
@@ -160,6 +162,8 @@ sources+=(config/sway config/eww config/qt6ct/qt6ct.conf
     config/environment.d/50-desktop.conf config/mimeapps.list config/zed
     local/autostart/protonmail-bridge.desktop local/applications/lf.desktop
     local/bin/ydl-clip.sh
+    config/systemd/user/ibus-wayland.service
+    config/systemd/user/ibus-wayland.service
     config/compose/XCompose)
 for index in "${!links[@]}"; do
     target="$test_home/${links[$index]}"

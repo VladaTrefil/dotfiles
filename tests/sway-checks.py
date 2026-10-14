@@ -13,6 +13,9 @@ for name, content, selected in (
 ):
     profiles = re.findall(r'^include profiles/([^\s]+)\.conf$', content, re.M)
     assert profiles == [selected], f'{name}: expected one {selected} profile, got {profiles}'
+    assert content.count('include /etc/sway/config.d/*') == 1, (
+        f'{name}: Fedora session integration must be included exactly once'
+    )
     assert 'include conf.d/60-session.conf' in content
 
 physical_profile = (sway / 'profiles/physical.conf').read_text()
@@ -66,6 +69,16 @@ lock = '$HOME/.config/sway/bin/lock'
 bindings = (sway / 'conf.d/40-bindings.conf').read_text()
 idle = (sway / 'conf.d/60-session.conf').read_text()
 power = (root / 'rofi/power_menu/script.sh').read_text()
+ibus_unit_path = root / 'systemd/user/ibus-wayland.service'
+assert ibus_unit_path.is_file(), 'The supervised IBus Wayland user unit is missing'
+ibus_unit = ibus_unit_path.read_text()
+assert 'PartOf=sway-session.target' in ibus_unit
+assert 'After=sway-session.target' in ibus_unit
+assert 'ConditionEnvironment=WAYLAND_DISPLAY' in ibus_unit
+assert 'ExecStart=/usr/libexec/ibus-ui-gtk3 --enable-wayland-im --exec-daemon' in ibus_unit
+assert 'Restart=always' in ibus_unit
+assert 'dbus-update-activation-environment' not in idle
+assert 'ibus start --type wayland' not in idle
 assert f'exec {lock}' in bindings
 assert f'bindsym $mod+Shift+l move right' in bindings
 assert f'bindsym $mod+Ctrl+l exec {lock}' in bindings
@@ -73,4 +86,4 @@ assert f'    bindsym l exec {lock}, mode "default"' in bindings
 assert idle.count(lock) == 2, 'Idle and before-sleep must use one lock path'
 assert lock in power
 assert 'swaylock' not in bindings + idle + power
-print('PASS: one profile per entry point, VM isolation, and shared lock path.')
+print('PASS: profile isolation, Fedora session lifecycle, supervised IBus, and shared lock path.')

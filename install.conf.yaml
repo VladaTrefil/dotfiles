@@ -16,6 +16,8 @@
     - $XDG_CONFIG_HOME/gtk-4.0
     - $XDG_CONFIG_HOME/environment.d
     - $XDG_CONFIG_HOME/autostart
+    - $XDG_CONFIG_HOME/systemd/user
+    - $XDG_CONFIG_HOME/systemd/user/sway-session.target.wants
     # Individual shell links leave room for private work.sh outside the checkout.
     - $XDG_CONFIG_HOME/shell
     # Shell and less must be able to persist their history on first use.
@@ -66,6 +68,8 @@
     $XDG_CONFIG_HOME/mimeapps.list: config/mimeapps.list
     $XDG_CONFIG_HOME/zed: config/zed
     $XDG_CONFIG_HOME/autostart/protonmail-bridge.desktop: local/autostart/protonmail-bridge.desktop
+    $XDG_CONFIG_HOME/systemd/user/ibus-wayland.service: config/systemd/user/ibus-wayland.service
+    $XDG_CONFIG_HOME/systemd/user/sway-session.target.wants/ibus-wayland.service: config/systemd/user/ibus-wayland.service
     $XDG_DATA_HOME/applications/lf.desktop: local/applications/lf.desktop
     ~/.local/bin/ydl-clip.sh: local/bin/ydl-clip.sh
     ~/.XCompose: config/compose/XCompose

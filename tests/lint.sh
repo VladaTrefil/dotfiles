@@ -82,6 +82,8 @@ sway_check "$repo_dir/config/sway/config"
 sway_check "$repo_dir/config/sway/config.virtualbox"
 printf 'PASS: sway config parses (both entry points).\n'
 python3 "$repo_dir/tests/sway-checks.py"
+systemd-analyze --user verify "$repo_dir/config/systemd/user/ibus-wayland.service"
+printf 'PASS: IBus Wayland user unit verifies.\n'
 python3 "$repo_dir/tests/sway-bindings.py"
 python3 "$repo_dir/tests/eww-checks.py"
 python3 "$repo_dir/tests/secret-service-checks.py"

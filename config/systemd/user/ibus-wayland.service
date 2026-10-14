@@ -1,0 +1,17 @@
+[Unit]
+Description=IBus Wayland input method
+Documentation=https://github.com/ibus/ibus/wiki/WaylandDesktop
+PartOf=sway-session.target
+After=sway-session.target
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+Type=exec
+ExecStart=/usr/libexec/ibus-ui-gtk3 --enable-wayland-im --exec-daemon "--daemon-args=--xim --panel disable"
+Restart=always
+RestartSec=1
+TimeoutStopSec=5
+Slice=session.slice
+
+[Install]
+WantedBy=sway-session.target

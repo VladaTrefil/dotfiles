@@ -1,4 +1,5 @@
 # Selected by bin/start-virtualbox before SwayFX starts.
+include /etc/sway/config.d/*
 include conf.d/10-appearance.conf
 include conf.d/20-input.conf
 include conf.d/30-workspaces.conf

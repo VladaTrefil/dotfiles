@@ -39,10 +39,16 @@ class SecretServiceChecks(unittest.TestCase):
         helper_path = ROOT / 'config/sway/bin/start-autostart'
         self.assertTrue(helper_path.is_file(), 'ordered autostart helper is missing')
         helper = helper_path.read_text()
-        service = 'systemctl --user start gnome-keyring-daemon.service'
+        systemd_daemon = 'systemctl --user start gnome-keyring-daemon.service'
+        pam_daemon = 'gnome-keyring-daemon --start --components=pkcs11,secrets'
         provider = 'org.freedesktop.secrets'
         dex = 'exec dex-autostart --autostart --environment sway'
-        self.assertLess(helper.index(service), helper.index(provider))
+        self.assertNotIn(
+            systemd_daemon,
+            helper,
+            'Sway must continue the PAM-unlocked daemon, not start a competing systemd daemon',
+        )
+        self.assertLess(helper.index(pam_daemon), helper.index(provider))
         self.assertLess(helper.index(provider), helper.index(dex))
         self.assertRegex(helper, r'attempt\s*<\s*[1-9][0-9]*')
         self.assertIn('sleep 0.1', helper)

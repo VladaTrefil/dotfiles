@@ -6,10 +6,10 @@ set -euo pipefail
 # desktop autostart application that follows it.
 /usr/libexec/lxqt-policykit-agent &
 
-# Bridge's XDG autostart entry needs Secret Service before it starts. Starting
-# the packaged user unit is synchronous, but its bus name can appear slightly
-# later, so bound the additional wait to five seconds.
-systemctl --user start gnome-keyring-daemon.service
+# Bridge's XDG autostart entry needs Secret Service before it starts. Complete
+# the daemon initialized by pam_gnome_keyring instead of starting a competing
+# systemd instance, then bound the bus-name wait to five seconds.
+gnome-keyring-daemon --start --components=pkcs11,secrets
 for ((attempt = 0; attempt < 50; attempt++)); do
     if busctl --user list --no-pager --no-legend |
         awk '$1 == "org.freedesktop.secrets" { found = 1 } END { exit !found }'; then

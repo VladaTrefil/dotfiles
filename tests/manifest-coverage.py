@@ -74,6 +74,16 @@ if not any('iwlwifi-mvm-firmware' in command for command in dnf_commands):
         "the apps package plan omits 'iwlwifi-mvm-firmware', so the Intel "
         'AX210 cannot load its Wi-Fi or Bluetooth firmware'
     )
+if not any('restic' in command for command in dnf_commands):
+    failures.append(
+        "the apps package plan omits 'restic', so the documented backup "
+        'restore workflow cannot inspect or restore repositories'
+    )
+if not any('VirtualBox' in command for command in dnf_commands):
+    failures.append(
+        "the apps package plan omits 'VirtualBox', so restored virtual "
+        'machines cannot be validated or started'
+    )
 
 # Each package below needs its companion for the documented feature to work
 # end to end; retaining only the first package leaves a silently incomplete

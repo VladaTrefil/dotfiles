@@ -20,11 +20,13 @@ gnome-system-monitor
 gnome-keyring # Provides Secret Service required by Proton Mail Bridge.
 gnome-keyring-pam # PAM auto-unlock for the login keyring; gnome-keyring alone only provides the Secret Service daemon.
 gparted
+VirtualBox # RPM Fusion host package; pulls the server and akmod kernel module dependencies.
 lxqt-policykit # Explicit policy agent prevents GParted pulling GNOME Shell/GDM.
 telegram-desktop # Native RPM Fusion free package, preferred over Flatpak.
 krita
 strawberry
 timeshift # Snapshot configuration remains machine-specific and manual.
+restic # Encrypted backup repository verification and staged restores.
 libreoffice # Fedora replacement for Arch's libreoffice-fresh.
 libreoffice-langpack-cs
 libreoffice-langpack-en-GB

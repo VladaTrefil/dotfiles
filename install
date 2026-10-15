@@ -41,7 +41,7 @@ install_packages() {
     local groups='' group file line answer release_output fedora_release rpmfusion_url repo_id
     local apps_selected=false desktop_selected=false flatpak_selected=false copr_selected=false
     local rpmfusion_pending=false flathub_pending=false ffmpeg_swap=false
-    local -a files=() names=() packages=() flatpaks=() coprs=() command=() rpm_groups=() release_args=()
+    local -a files=() names=() packages=() flatpaks=() coprs=() command=() kernel_command=() rpm_groups=() release_args=()
     local -a pinned_rpms=() pending_coprs=()
     local -A seen=()
     while (($#)); do
@@ -206,6 +206,13 @@ install_packages() {
         fi
         print_command "${command[@]}"
     fi
+    if [[ ${seen[kernel]+present} ]]; then
+        # kernel is install-only, so `dnf install kernel` is satisfied by any
+        # installed version. Synchronize its latest full package after akmods
+        # may pull a newer kernel-core through kernel-devel-matched.
+        kernel_command=(dnf upgrade -y -- kernel)
+        print_command "${kernel_command[@]}"
+    fi
     if "$flathub_pending"; then
         print_command flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     fi
@@ -226,6 +233,7 @@ install_packages() {
     if "$rpmfusion_pending"; then dnf install -y -- "$rpmfusion_url"; fi
     if "$ffmpeg_swap"; then dnf swap -y --allowerasing ffmpeg-free ffmpeg; fi
     if ((${#packages[@]})); then "${command[@]}"; fi
+    if ((${#kernel_command[@]})); then "${kernel_command[@]}"; fi
     if "$flathub_pending"; then
         flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     fi

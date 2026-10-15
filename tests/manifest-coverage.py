@@ -69,6 +69,11 @@ dnf_commands = [
     for line in apps_plan.splitlines()
     if line.startswith('dnf install -y -- ')
 ]
+dnf_upgrade_commands = [
+    shlex.split(line)
+    for line in apps_plan.splitlines()
+    if line.startswith('dnf upgrade -y -- ')
+]
 if not any('iwlwifi-mvm-firmware' in command for command in dnf_commands):
     failures.append(
         "the apps package plan omits 'iwlwifi-mvm-firmware', so the Intel "
@@ -83,6 +88,12 @@ if not any('VirtualBox' in command for command in dnf_commands):
     failures.append(
         "the apps package plan omits 'VirtualBox', so restored virtual "
         'machines cannot be validated or started'
+    )
+if not any(command == ['dnf', 'upgrade', '-y', '--', 'kernel'] for command in dnf_upgrade_commands):
+    failures.append(
+        "the apps package plan does not synchronize Fedora's full 'kernel' "
+        "package, so VirtualBox's kernel-devel-matched dependency can create "
+        'a bootable kernel-core installation that lacks kernel-modules drivers'
     )
 
 # Each package below needs its companion for the documented feature to work

@@ -1,0 +1,14 @@
+{
+  "claude": {
+    "version": "2.1.301",
+    "installer_url": "https://claude.ai/install.sh",
+    "installer_sha256": "3a68d3406cf674e17bed1733a4dcf37805e2e47d87417700007d7e1aa766a944",
+    "installer_size": 9704
+  },
+  "codex": {
+    "version": "0.163.0",
+    "installer_url": "https://chatgpt.com/codex/install.sh",
+    "installer_sha256": "150e3cf675682efeaac115aa3747add3f27887896d04ce6d0b56478d8b428bf6",
+    "installer_size": 34564
+  }
+}

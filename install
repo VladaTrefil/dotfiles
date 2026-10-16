@@ -6,11 +6,12 @@ dry_run=false
 
 usage() {
     cat <<'EOF'
-Usage: ./install [link|packages|tools|runtimes|system|all] [options]
+Usage: ./install [link|packages|tools|assistants|runtimes|system|all] [options]
 
   link        Initialize pinned submodules and create links (default).
   packages    Enable approved repositories and install RPM/Flatpak manifests as root.
   tools       Install checksum-pinned release tools, including the QMK wheel set.
+  assistants  Install explicitly approved, version-pinned Claude and Codex CLIs.
   runtimes    Provision tool-versions and its npm/gem defaults with Go-asdf.
   system      Configure user state; use --root --user NAME for privileged state.
   all         Run packages, link, tools, runtimes, system, then show docs/manual-steps.md.
@@ -18,6 +19,10 @@ Usage: ./install [link|packages|tools|runtimes|system|all] [options]
 Options for packages and all:
   --group base,dev    Read only the named packages/<group>.txt files.
   --dry-run           Preview without installing packages or changing links.
+
+Options for assistants:
+  --dry-run           Preview pinned assistant CLI versions without downloading.
+  --offline           Require both verified installer scripts to be cached.
   -h, --help          Show help (also accepted by every subcommand).
 
 No command invokes sudo. Run a printed package command as root when needed.
@@ -286,7 +291,7 @@ subcommand=${1:-link}
 if (($#)); then shift; fi
 case "$subcommand" in
     -h|--help) usage; exit 0 ;;
-    link|packages|tools|runtimes|system|all) ;;
+    link|packages|tools|assistants|runtimes|system|all) ;;
     *) die "Unknown subcommand: $subcommand" ;;
 esac
 if [[ $subcommand != system ]]; then
@@ -301,6 +306,7 @@ case "$subcommand" in
         install_link
         ;;
     packages) install_packages "$@" ;;
+    assistants) "$repo_dir/bin/install-assistant-clis" "$@" ;;
     tools|runtimes)
         (($# == 0)) || die "$subcommand accepts only --help"
         if [[ $subcommand == tools ]]; then

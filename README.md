@@ -48,6 +48,8 @@ package lists available for review first.
 ./install link                    # create directories and the Git/Neovim links
 ./install packages --dry-run      # print the exact dnf command; install nothing
 ./install packages --group base,dev --dry-run
+./install assistants --dry-run    # review pinned Claude and Codex CLI versions
+./install assistants              # verify and run both pinned vendor installers
 ./install system                  # descriptive stub; no system changes
 ./install all                     # packages, link, system, then manual steps
 ./install all --dry-run           # preview; no packages or links are changed
@@ -96,6 +98,7 @@ tests/link-test.sh
 tests/sync-nvim-test.sh
 tests/fetch-assets-test.sh
 tests/bootstrap-test.sh
+tests/assistant-clis-test.sh
 tests/lint.sh
 ```
 
@@ -115,6 +118,13 @@ or pass the test. These real downloads can make the test slower or fail during
 a GitHub/network outage.
 The sync test uses disposable local repositories, allows only Git's file
 transport, and never pushes.
+
+The assistants phase is deliberately separate from `all`. It caches and
+verifies the reviewed Claude and Codex bootstrap scripts before running either
+one, passes exact CLI versions, and requires the exact confirmation `yes`.
+`./install assistants --offline` reuses only those checksum-verified cached
+scripts. It never executes a network stream with `curl | sh` and refuses to run
+as root or through `sudo`.
 
 Lint finds ShellCheck on PATH and clearly skips if unavailable. It checks all
 repository-owned shell scripts, including extensionless shell entrypoints;

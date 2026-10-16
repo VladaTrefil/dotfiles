@@ -14,6 +14,8 @@ run the selected groups as root, confirming the complete printed plan:
 sudo ./install packages --group apps,flatpak,copr
 ./install link
 ./install tools
+./install assistants --dry-run
+./install assistants
 ./install system
 sudo ./install system --root --user "$(id -un)"
 ```
@@ -106,6 +108,55 @@ pointer risk. They do not need refresh merely because a newer release appears.
 Versioned URLs are not a promise of permanent hosting: an upstream deletion or
 replacement can still fail closed. Review any replacement and its published
 checksum; never bypass size/SHA-256 checks or substitute `curl | sh`.
+
+## Claude and Codex CLI pins
+
+`./install assistants` is an explicit user-scoped phase and is not part of
+`./install all`. It reads `provision/assistant-clis.json`, shows the pinned
+Claude and Codex versions, and requires the exact confirmation `yes`. Run it
+without `sudo`; the command refuses root and sudo execution. Review the plan
+without downloading or writing anything:
+
+```sh
+./install assistants --dry-run
+```
+
+The installer downloads the two official bootstrap scripts to
+`${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles/assistant-installers`, verifies the
+pinned byte size and SHA-256 of both, and only then executes either script.
+Claude receives an exact version argument. Codex receives `--release` with an
+exact version plus `CODEX_NON_INTERACTIVE=1` and
+`CODEX_INSTALL_DIR=$HOME/.local/bin`. The vendor bootstrap scripts then verify
+their release artifacts against the vendors' release metadata. A warm cache
+can be required explicitly:
+
+```sh
+./install assistants --offline
+```
+
+The bootstrap URLs are vendor-controlled mutable endpoints. Their recorded
+digests freeze the exact scripts reviewed in this repository; they are
+change-detection pins, not independently published vendor signatures. The
+publisher provenance is the HTTPS URL named by each vendor's official install
+documentation plus review of the downloaded script. If either endpoint changes
+or disappears, a cold-cache install fails closed instead of executing new
+bytes.
+
+Refresh an assistant pin as one reviewed change:
+
+1. Confirm the current native installer URL and version-selection syntax in
+   the vendor's official documentation.
+2. Download the script to a temporary file without executing it. Read it and
+   review its diff against the previously pinned script, including download
+   hosts, checksum verification, install destinations, arguments, and updater
+   behavior.
+3. Resolve the intended exact CLI release and its vendor-published artifact
+   digest or manifest entry. Update `version`, `installer_url`,
+   `installer_size`, and `installer_sha256` together. Never pipe the response
+   into a shell.
+4. Run `tests/assistant-clis-test.sh`, `tests/lint.sh`, and
+   `./install assistants --dry-run`. The test requires checksum failure to stop
+   both installations before either vendor script runs.
 
 ## 1Password and the secrets manifest
 

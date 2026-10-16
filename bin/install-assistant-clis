@@ -1,0 +1,170 @@
+#!/usr/bin/env python3
+"""Install checksum-pinned Claude and Codex CLI releases."""
+
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import tempfile
+from urllib.parse import urlsplit
+
+
+INSTALLER_URLS = {
+    "claude": "https://claude.ai/install.sh",
+    "codex": "https://chatgpt.com/codex/install.sh",
+}
+MANIFEST_FIELDS = {
+    "version",
+    "installer_url",
+    "installer_sha256",
+    "installer_size",
+}
+VERSION_PATTERN = re.compile(r"[0-9]+\.[0-9]+\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?")
+SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--offline", action="store_true")
+    return parser.parse_args()
+
+
+def load_manifest(path: Path) -> dict[str, dict[str, object]]:
+    try:
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise SystemExit(f"Cannot read assistant CLI manifest {path}: {error}") from None
+    if not isinstance(manifest, dict) or set(manifest) != set(INSTALLER_URLS):
+        raise SystemExit("Assistant CLI manifest must contain only claude and codex")
+    for name, expected_url in INSTALLER_URLS.items():
+        specification = manifest[name]
+        if not isinstance(specification, dict) or set(specification) != MANIFEST_FIELDS:
+            raise SystemExit(f"{name}: manifest fields are invalid")
+        version = specification["version"]
+        if not isinstance(version, str) or VERSION_PATTERN.fullmatch(version) is None:
+            raise SystemExit(f"{name}: version must be an exact semantic version")
+        if specification["installer_url"] != expected_url:
+            raise SystemExit(f"{name}: installer_url must be {expected_url}")
+        digest = specification["installer_sha256"]
+        if not isinstance(digest, str) or SHA256_PATTERN.fullmatch(digest) is None:
+            raise SystemExit(f"{name}: installer_sha256 must be 64 lowercase hex digits")
+        size = specification["installer_size"]
+        if isinstance(size, bool) or not isinstance(size, int) or size <= 0:
+            raise SystemExit(f"{name}: installer_size must be a positive integer")
+    return manifest
+
+
+def verify(path: Path, specification: dict[str, object], name: str) -> None:
+    expected_size = specification["installer_size"]
+    if path.stat().st_size != expected_size:
+        raise SystemExit(f"{name}: installer size mismatch; nothing installed")
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    if digest != specification["installer_sha256"]:
+        raise SystemExit(f"{name}: installer SHA-256 mismatch; nothing installed")
+
+
+def cache_installer(
+    cache_dir: Path,
+    specification: dict[str, object],
+    name: str,
+    offline: bool,
+) -> Path:
+    url = str(specification["installer_url"])
+    basename = Path(urlsplit(url).path).name
+    target = cache_dir / f"{specification['installer_sha256']}{basename}"
+    if target.exists():
+        verify(target, specification, name)
+        return target
+    if offline:
+        raise SystemExit(f"{name}: verified installer is absent from the offline cache")
+
+    cache_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
+    descriptor, temporary_name = tempfile.mkstemp(prefix=".download-", dir=cache_dir)
+    os.close(descriptor)
+    temporary = Path(temporary_name)
+    try:
+        try:
+            subprocess.run(
+                [
+                    "curl",
+                    "--fail",
+                    "--silent",
+                    "--show-error",
+                    "--location",
+                    "--proto",
+                    "=https",
+                    "--tlsv1.2",
+                    "--output",
+                    str(temporary),
+                    url,
+                ],
+                check=True,
+            )
+        except FileNotFoundError:
+            raise SystemExit("curl is required to download assistant installers") from None
+        except subprocess.CalledProcessError as error:
+            raise SystemExit(
+                f"{name}: installer download failed (exit {error.returncode}); "
+                "nothing installed"
+            ) from None
+        verify(temporary, specification, name)
+        temporary.replace(target)
+    finally:
+        temporary.unlink(missing_ok=True)
+    return target
+
+
+def main() -> None:
+    args = parse_args()
+    repo_dir = Path(__file__).resolve().parent.parent
+    manifest_path = Path(
+        os.environ.get(
+            "DOTFILES_ASSISTANT_CLI_MANIFEST",
+            repo_dir / "provision/assistant-clis.json",
+        )
+    )
+    manifest = load_manifest(manifest_path)
+
+    print(f"Would install Claude CLI {manifest['claude']['version']}.")
+    print(f"Would install Codex CLI {manifest['codex']['version']}.")
+    if args.dry_run:
+        return
+
+    if os.geteuid() == 0 or os.environ.get("SUDO_USER"):
+        raise SystemExit("Do not run the assistants installer as root or with sudo.")
+
+    if input("Install both pinned assistant CLIs? Type yes: ") != "yes":
+        raise SystemExit("Aborted.")
+
+    cache_home = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache"))
+    cache_dir = cache_home / "dotfiles/assistant-installers"
+    installers = {
+        name: cache_installer(cache_dir, manifest[name], name, args.offline)
+        for name in ("claude", "codex")
+    }
+
+    subprocess.run(
+        ["bash", str(installers["claude"]), manifest["claude"]["version"]],
+        check=True,
+    )
+    codex_environment = os.environ.copy()
+    codex_environment["CODEX_NON_INTERACTIVE"] = "1"
+    codex_environment["CODEX_INSTALL_DIR"] = str(Path.home() / ".local/bin")
+    subprocess.run(
+        [
+            "sh",
+            str(installers["codex"]),
+            "--release",
+            manifest["codex"]["version"],
+        ],
+        check=True,
+        env=codex_environment,
+    )
+
+
+if __name__ == "__main__":
+    main()

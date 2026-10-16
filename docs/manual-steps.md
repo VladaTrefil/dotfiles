@@ -127,8 +127,10 @@ pinned byte size and SHA-256 of both, and only then executes either script.
 Claude receives an exact version argument. Codex receives `--release` with an
 exact version plus `CODEX_NON_INTERACTIVE=1` and
 `CODEX_INSTALL_DIR=$HOME/.local/bin`. The vendor bootstrap scripts then verify
-their release artifacts against the vendors' release metadata. A warm cache
-can be required explicitly:
+their release artifacts against the vendors' release metadata. The managed
+desktop environment sets `DISABLE_AUTOUPDATER=1` so Claude cannot silently
+drift away from the reviewed version after the next login. A warm cache can be
+required explicitly:
 
 ```sh
 ./install assistants --offline

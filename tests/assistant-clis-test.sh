@@ -54,6 +54,11 @@ grep -Fq 'Codex CLI 0.163.0' <<< "$production_output" ||
     fail 'production manifest omitted the approved Codex pin'
 printf 'PASS: production manifest exposes the approved release pins.\n'
 
+grep -Fxq 'DISABLE_AUTOUPDATER=1' \
+    "$repo_dir/config/environment.d/50-desktop.conf" ||
+    fail 'Claude auto-updates are not disabled for the pinned installation'
+printf 'PASS: Claude self-updates cannot drift from the provisioned pin.\n'
+
 fake_bin="$fixture/fake-bin"
 installer_sources="$fixture/installer-sources"
 curl_log="$fixture/curl.log"

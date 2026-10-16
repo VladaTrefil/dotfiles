@@ -124,7 +124,8 @@ verifies the reviewed Claude and Codex bootstrap scripts before running either
 one, passes exact CLI versions, and requires the exact confirmation `yes`.
 `./install assistants --offline` reuses only those checksum-verified cached
 scripts. It never executes a network stream with `curl | sh` and refuses to run
-as root or through `sudo`.
+as root or through `sudo`. Claude self-updates are disabled in the managed
+desktop environment so its installed version remains pinned across sessions.
 
 Lint finds ShellCheck on PATH and clearly skips if unavailable. It checks all
 repository-owned shell scripts, including extensionless shell entrypoints;

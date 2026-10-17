@@ -6,7 +6,7 @@
 
 export EDITOR="nvim"
 export TERMINAL="kitty"
-export BROWSER="chromium"
+export BROWSER="xdg-open"
 export EXPLORER="lf"
 
 export DEV_PATH="$HOME/Development"

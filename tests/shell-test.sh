@@ -181,7 +181,8 @@ PY
 cat > "$fixture/check.zsh" <<'ZSH'
 fail() { print -u2 -r -- "FAIL: $*"; exit 1; }
 [[ $ZDOTDIR == $XDG_CONFIG_HOME/zsh ]] || fail 'wrong ZDOTDIR'
-[[ $EDITOR == nvim && $TERMINAL == kitty && $BROWSER == chromium ]] || fail 'profile missing'
+[[ $EDITOR == nvim && $TERMINAL == kitty ]] || fail 'profile missing'
+[[ -n $BROWSER && -x ${commands[$BROWSER]} ]] || fail 'configured browser does not resolve'
 [[ $ZSH == $ZDOTDIR/oh-my-zsh && $ZSH_CUSTOM == $ZDOTDIR/custom ]] || fail 'framework paths'
 (( $+functions[_zsh_autosuggest_start] && $+functions[_zsh_highlight] && $+functions[p10k] )) || fail 'plugins/theme missing'
 [[ -o sharehistory && ! -o incappendhistorytime && ! -o incappendhistory ]] || fail 'history options'

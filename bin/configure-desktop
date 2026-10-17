@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+config_home=${XDG_CONFIG_HOME:-$HOME/.config}
+desktop_environment="$config_home/environment.d/50-desktop.conf"
+[[ -r $desktop_environment ]] || {
+    printf 'Missing desktop environment configuration: %s\n' "$desktop_environment" >&2
+    exit 1
+}
+
+set -a
+# shellcheck source=/dev/null
+. "$desktop_environment"
+set +a
+
+[[ ${XCURSOR_THEME:-} =~ ^[a-zA-Z0-9._+-]+$ ]] || {
+    printf 'Invalid XCURSOR_THEME in %s\n' "$desktop_environment" >&2
+    exit 1
+}
+[[ ${XCURSOR_SIZE:-} =~ ^[1-9][0-9]*$ ]] || {
+    printf 'Invalid XCURSOR_SIZE in %s\n' "$desktop_environment" >&2
+    exit 1
+}
+command -v gsettings >/dev/null || {
+    printf 'gsettings is required to configure the Wayland settings portal\n' >&2
+    exit 1
+}
+
+schema=org.gnome.desktop.interface
+if [[ $(gsettings get "$schema" cursor-theme) != "'$XCURSOR_THEME'" ]]; then
+    gsettings set "$schema" cursor-theme "$XCURSOR_THEME"
+fi
+if [[ $(gsettings get "$schema" cursor-size) != "$XCURSOR_SIZE" ]]; then
+    gsettings set "$schema" cursor-size "$XCURSOR_SIZE"
+fi
+
+# Standard Wayland cursor names can be delegated to the compositor through
+# cursor-shape-v1. If Sway cached its built-in fallback before this theme was
+# installed, setting the same theme and size again is a no-op. A temporary size
+# change forces Sway to rebuild the cursor manager before restoring the desired
+# size.
+if [[ -n ${SWAYSOCK:-} ]] && command -v swaymsg >/dev/null &&
+    swaymsg -q -t get_version >/dev/null 2>&1; then
+    refresh_size=$((10#$XCURSOR_SIZE + 1))
+    swaymsg -q seat '*' xcursor_theme "$XCURSOR_THEME" "$refresh_size"
+    swaymsg -q seat '*' xcursor_theme "$XCURSOR_THEME" "$XCURSOR_SIZE"
+    printf 'REFRESHED Sway cursor: %s at size %s\n' "$XCURSOR_THEME" "$XCURSOR_SIZE"
+fi
+printf 'CONFIGURED desktop cursor: %s at size %s\n' "$XCURSOR_THEME" "$XCURSOR_SIZE"

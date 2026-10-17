@@ -45,7 +45,7 @@ package lists available for review first.
 
 ```sh
 ./install                         # default: link
-./install link                    # create directories and the Git/Neovim links
+./install link                    # install the cursor theme and create managed links
 ./install packages --dry-run      # print the exact dnf command; install nothing
 ./install packages --group base,dev --dry-run
 ./install assistants --dry-run    # review pinned Claude and Codex CLI versions
@@ -67,6 +67,13 @@ No command calls sudo.
 
 Linking creates `~/.config`, `~/.local/state`, `~/.config/git`, and
 `~/.config/nvim`. Neovim creates its own undo and swap directories at runtime.
+It also downloads and verifies the pinned Catppuccin Cursors v2.0.0 Mocha Pink
+release, then installs it below `$XDG_DATA_HOME/icons`. Sway, GTK 3/4, the
+session environment, and the Wayland settings portal select
+`catppuccin-mocha-pink-cursors` at size 32. The link phase synchronizes the
+portal-backed `org.gnome.desktop.interface` settings through `gsettings`. When
+run inside Sway, it also rebuilds Sway's cursor manager so a fallback cached
+before the theme was installed is replaced immediately.
 Linking preserves existing unmanaged targets, reports conflicts, and exits
 nonzero on a conflict.
 It never cleans directories or replaces an existing link. Python bytecode is

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install checksum-pinned upstream executables or selected font faces."""
+"""Install checksum-pinned upstream executables, assets, or RPM inputs."""
 import argparse
 import hashlib
 import json
@@ -161,6 +161,129 @@ def install_fonts(name, spec, archive, font_root, cache):
             shutil.rmtree(staging)
 
 
+def cursor_contents(archive, theme):
+    contents = {}
+    prefix = Path(theme)
+    with zipfile.ZipFile(archive) as package:
+        for info in package.infolist():
+            path = Path(info.filename)
+            if path.is_absolute() or '..' in path.parts:
+                raise SystemExit(f'Unsafe cursor archive member: {info.filename}')
+            if not path.parts or path.parts[0] != theme or info.is_dir():
+                continue
+            relative = path.relative_to(prefix)
+            if not relative.parts:
+                continue
+            mode = info.external_attr >> 16
+            if stat.S_ISLNK(mode):
+                target = package.read(info).decode()
+                link = Path(target)
+                if link.is_absolute() or '..' in link.parts:
+                    raise SystemExit(f'Unsafe cursor symlink: {info.filename} -> {target}')
+                entry = {'type': 'symlink', 'target': target}
+            elif stat.S_IFMT(mode) in (0, stat.S_IFREG):
+                entry = {'type': 'file', 'data': package.read(info)}
+            else:
+                raise SystemExit(f'Unsupported cursor archive member: {info.filename}')
+            key = str(relative)
+            if key in contents:
+                raise SystemExit(f'Duplicate cursor archive member: {info.filename}')
+            contents[key] = entry
+    if 'index.theme' not in contents or not any(
+        Path(relative).parts[0] == 'cursors' for relative in contents
+    ):
+        raise SystemExit(f'Cursor archive does not contain theme {theme}')
+    return contents
+
+
+def cursor_directory_state(directory):
+    state = {}
+    for path in sorted(directory.rglob('*')):
+        relative = str(path.relative_to(directory))
+        if path.is_symlink():
+            state[relative] = {'type': 'symlink', 'target': os.readlink(path)}
+        elif path.is_file():
+            state[relative] = {'type': 'file', 'sha256': digest_file(path)}
+        elif path.is_dir():
+            state[relative] = {'type': 'directory'}
+        else:
+            raise SystemExit(f'Refusing non-file in managed cursor theme: {path}')
+    return state
+
+
+def desired_cursor_state(contents):
+    state = {}
+    directories = set()
+    for relative, entry in contents.items():
+        parent = Path(relative).parent
+        while parent != Path('.'):
+            directories.add(str(parent))
+            parent = parent.parent
+        if entry['type'] == 'symlink':
+            state[relative] = {'type': 'symlink', 'target': entry['target']}
+        else:
+            state[relative] = {'type': 'file', 'sha256': digest_bytes(entry['data'])}
+    for directory in directories:
+        state[directory] = {'type': 'directory'}
+    return dict(sorted(state.items()))
+
+
+def install_cursor_theme(name, spec, archive, icon_root, cache):
+    theme = spec['theme']
+    if Path(theme).name != theme:
+        raise SystemExit(f'{name}: invalid cursor theme name')
+    contents = cursor_contents(archive, theme)
+    desired_state = desired_cursor_state(contents)
+    target = icon_root / theme
+    stamp = cache / (name + '.cursor-theme-installed.json')
+    serialized = json.dumps(desired_state, sort_keys=True, indent=2) + '\n'
+
+    if target.is_symlink() or (target.exists() and not target.is_dir()):
+        raise SystemExit(f'Refusing to replace unmanaged cursor theme path: {target}')
+    if target.exists():
+        actual_state = cursor_directory_state(target)
+        if actual_state == desired_state:
+            if not stamp.exists() or stamp.read_text() != serialized:
+                stamp.write_text(serialized)
+            return
+        if not stamp.exists():
+            raise SystemExit(f'Refusing to replace unmanaged cursor theme: {target}')
+        try:
+            stamped_state = json.loads(stamp.read_text())
+        except (json.JSONDecodeError, OSError) as error:
+            raise SystemExit(f'Invalid cursor-theme stamp {stamp}: {error}') from error
+        if actual_state != stamped_state:
+            raise SystemExit(f'Refusing to replace modified cursor theme: {target}')
+
+    staging = Path(tempfile.mkdtemp(dir=icon_root, prefix=f'.{theme}.'))
+    backup = None
+    try:
+        staging.chmod(0o755)
+        for relative, entry in contents.items():
+            destination = staging / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            if entry['type'] == 'symlink':
+                destination.symlink_to(entry['target'])
+            else:
+                destination.write_bytes(entry['data'])
+                destination.chmod(0o644)
+        if target.exists():
+            backup = Path(tempfile.mkdtemp(dir=icon_root, prefix=f'.{theme}.old.'))
+            backup.rmdir()
+            target.replace(backup)
+        staging.replace(target)
+        if backup is not None:
+            shutil.rmtree(backup)
+        stamp.write_text(serialized)
+    except BaseException:
+        if backup is not None and backup.exists() and not target.exists():
+            backup.replace(target)
+        raise
+    finally:
+        if staging.exists():
+            shutil.rmtree(staging)
+
+
 def directory_state(directory):
     state = {}
     for path in sorted(directory.rglob('*')):
@@ -278,15 +401,16 @@ def install_python_wheel_set(name, spec, archives, bindir, data_home, cache):
 
 
 parser = argparse.ArgumentParser(
-    description='Install checksum-pinned release executables (the default) or fonts.'
+    description='Install checksum-pinned release executables (the default), fonts, or cursor themes.'
 )
 parser.add_argument('--fonts', action='store_true', help='install only pinned font faces')
+parser.add_argument('--cursors', action='store_true', help='install only pinned cursor themes')
 parser.add_argument('--rpm', action='store_true', help='verify and print the pinned RPM path for the packages phase')
 parser.add_argument('--group', action='append', help='with --rpm, select releases for this package group')
 parser.add_argument('--offline', action='store_true', help='use verified cached archives only')
 args = parser.parse_args()
-if args.fonts and args.rpm:
-    parser.error('--fonts and --rpm are mutually exclusive')
+if sum((args.fonts, args.cursors, args.rpm)) > 1:
+    parser.error('--fonts, --cursors and --rpm are mutually exclusive')
 if args.group and not args.rpm:
     parser.error('--group is only valid with --rpm')
 
@@ -296,7 +420,11 @@ if platform.system() != 'Linux' or platform.machine() != 'x86_64':
 cache = Path(os.environ.get('XDG_CACHE_HOME', str(Path.home() / '.cache'))) / 'dotfiles/releases'
 cache.mkdir(parents=True, exist_ok=True)
 releases = json.loads((root / 'provision/releases.json').read_text())
-selected_kinds = {'rpm'} if args.rpm else ({'font'} if args.fonts else {'executable', 'python-wheel-set'})
+selected_kinds = (
+    {'rpm'} if args.rpm else
+    ({'font'} if args.fonts else
+     ({'cursor-theme'} if args.cursors else {'executable', 'python-wheel-set'}))
+)
 selected = [
     (name, spec) for name, spec in releases.items()
     if spec.get('kind', 'executable') in selected_kinds
@@ -328,6 +456,21 @@ if args.fonts:
         print(
             f'VERIFIED {name} {spec["version"]} SHA-256 {spec["sha256"]} '
             f'({len(spec["members"])} fonts)',
+            flush=True,
+        )
+elif args.cursors:
+    data_home = Path(os.environ.get('XDG_DATA_HOME', str(Path.home() / '.local/share')))
+    icon_root = data_home / 'icons'
+    if icon_root.is_symlink() or (icon_root.exists() and not icon_root.is_dir()):
+        raise SystemExit(f'Refusing unmanaged icon root: {icon_root}')
+    if not icon_root.exists():
+        icon_root.mkdir(parents=True)
+        icon_root.chmod(0o755)
+    for name, spec in selected:
+        install_cursor_theme(name, spec, archives[name], icon_root, cache)
+        print(
+            f'VERIFIED {name} {spec["version"]} SHA-256 {spec["sha256"]} '
+            f'(theme {spec["theme"]})',
             flush=True,
         )
 elif args.rpm:

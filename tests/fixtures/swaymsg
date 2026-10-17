@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+: "${FAKE_SWAYMSG_LOG:?FAKE_SWAYMSG_LOG is required}"
+
+{
+    printf '%s' "$1"
+    shift
+    printf '\t%s' "$@"
+    printf '\n'
+} >> "$FAKE_SWAYMSG_LOG"
+
+exit 0

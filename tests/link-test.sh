@@ -10,7 +10,7 @@ done
 
 test_home=$(mktemp -d)
 trap 'rm -rf -- "$test_home"' EXIT
-mkdir -p "$test_home/repo" "$test_home/tmp" "$test_home/logs"
+mkdir -p "$test_home/repo" "$test_home/tmp" "$test_home/logs" "$test_home/gsettings"
 # Keep scaffold edits, but copy neither Git metadata nor submodule contents.
 # A fresh index below records only the gitlink SHAs, never their objects.
 # Never copy excluded secret files, even if a later block adds local ones.
@@ -19,6 +19,41 @@ tar -C "$repo_dir" --exclude='*secret*env*' --exclude='*SECRET*ENV*' \
     --exclude=.git --exclude=./modules --exclude=./config/zsh/custom \
     --exclude=./config/zsh/oh-my-zsh \
     -cf - . | tar -C "$test_home/repo" -xf -
+
+# Supply a local checksum-pinned cursor fixture. The link installer must consume
+# the release mechanism without reaching outside the sandbox for this asset.
+python3 - "$test_home/repo/provision/releases.json" "$test_home/.cache/dotfiles/releases" <<'PY'
+import hashlib
+import json
+from pathlib import Path
+import sys
+import zipfile
+
+manifest = Path(sys.argv[1])
+cache = Path(sys.argv[2])
+cache.mkdir(parents=True)
+theme = 'catppuccin-mocha-pink-cursors'
+archive = cache / f'{theme}.zip'
+with zipfile.ZipFile(archive, 'w') as package:
+    package.writestr(f'{theme}/index.theme', '[Icon Theme]\nName=Catppuccin Mocha Pink\n')
+    package.writestr(f'{theme}/cursors/left_ptr', b'fixture cursor')
+    alias = zipfile.ZipInfo(f'{theme}/cursors/default')
+    alias.create_system = 3
+    alias.external_attr = 0o120777 << 16
+    package.writestr(alias, 'left_ptr')
+digest = hashlib.sha256(archive.read_bytes()).hexdigest()
+cached = cache / (digest + archive.name)
+archive.replace(cached)
+releases = json.loads(manifest.read_text())
+releases[theme] = {
+    'kind': 'cursor-theme',
+    'version': 'fixture',
+    'url': f'https://example.invalid/{archive.name}',
+    'sha256': digest,
+    'theme': theme,
+}
+manifest.write_text(json.dumps(releases))
+PY
 
 # No real HOME or its config is mounted. Only the fixture is writable; even
 # /tmp outside the fixture belongs to the read-only sandbox root.
@@ -39,12 +74,13 @@ for network_config in /etc/resolv.conf /etc/hosts /etc/nsswitch.conf \
 done
 sandbox+=(--dev-bind /dev/null /dev/null --bind "$test_home" "$test_home"
     --chdir "$test_home/repo" --remount-ro / -- /usr/bin/env -i
-    "HOME=$test_home" 'PATH=/usr/bin:/bin' 'LC_ALL=C'
+    "HOME=$test_home" "PATH=$test_home/repo/tests/fixtures:/usr/bin:/bin" 'LC_ALL=C'
     "TMPDIR=$test_home/tmp" "XDG_CONFIG_HOME=$test_home/.config"
     "XDG_STATE_HOME=$test_home/.local/state" "XDG_DATA_HOME=$test_home/.local/share"
     "XDG_CACHE_HOME=$test_home/.cache" 'GIT_CONFIG_NOSYSTEM=1'
     'GIT_CONFIG_GLOBAL=/dev/null' 'GIT_TERMINAL_PROMPT=0'
-    'GIT_ALLOW_PROTOCOL=https' 'PYTHONDONTWRITEBYTECODE=1')
+    'GIT_ALLOW_PROTOCOL=https' 'PYTHONDONTWRITEBYTECODE=1'
+    "FAKE_GSETTINGS_STATE=$test_home/gsettings")
 
 run_link() {
     timeout --kill-after=10s 300s "${sandbox[@]}" ./install "$@"
@@ -134,6 +170,14 @@ grep -Fq 'SKIPPED zsh: completion cache warm-up command reported errors (exit 0)
 [[ $(readlink -f -- "$test_home/.config/nvim") == "$test_home/repo/modules/nvim" ]] ||
     fail 'Neovim symlink points to the wrong source'
 [[ -d $test_home/.config && -d $test_home/.local/state ]] || fail 'Missing expected directories'
+cursor_theme="$test_home/.local/share/icons/catppuccin-mocha-pink-cursors"
+[[ -f $cursor_theme/index.theme ]] || fail 'Configured Catppuccin cursor theme was not installed'
+[[ -L $cursor_theme/cursors/default &&
+   $(readlink -- "$cursor_theme/cursors/default") == left_ptr ]] ||
+    fail 'Catppuccin cursor alias was not preserved'
+[[ $(< "$test_home/gsettings/cursor-theme") == catppuccin-mocha-pink-cursors &&
+   $(< "$test_home/gsettings/cursor-size") == 32 ]] ||
+    fail 'Link install did not synchronize the desktop cursor settings'
 printf 'PASS: clean/default run creates the Git and Neovim links and XDG directories (exit 0).\n'
 links=(.config/git .config/nvim .config/shell/profile .config/shell/aliases.sh
     .config/shell/inputrc .config/zsh .config/wgetrc .zshenv)
@@ -188,7 +232,10 @@ else
     fail 'Second run failed'
 fi
 snapshot > "$test_home/logs/after.json"
-cmp -s "$test_home/logs/before.json" "$test_home/logs/after.json" || fail 'Second run changed installed state'
+if ! cmp -s "$test_home/logs/before.json" "$test_home/logs/after.json"; then
+    diff -U20 "$test_home/logs/before.json" "$test_home/logs/after.json" || true
+    fail 'Second run changed installed state'
+fi
 printf 'PASS: idempotence (exit 0; paths, bytes, link targets, inodes, modes, owners, mtime and ctime unchanged).\n'
 
 for app in "${links[@]}"; do

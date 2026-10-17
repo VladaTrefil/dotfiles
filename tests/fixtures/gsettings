@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+: "${FAKE_GSETTINGS_STATE:?FAKE_GSETTINGS_STATE is required}"
+[[ $# -ge 3 ]] || exit 64
+
+operation=$1
+schema=$2
+key=$3
+[[ $schema == org.gnome.desktop.interface ]] || exit 65
+mkdir -p -- "$FAKE_GSETTINGS_STATE"
+state_file="$FAKE_GSETTINGS_STATE/$key"
+
+case "$operation:$key" in
+    get:cursor-theme)
+        if [[ -f $state_file ]]; then
+            IFS= read -r value < "$state_file"
+            printf "'%s'\n" "$value"
+        else
+            printf "'Adwaita'\n"
+        fi
+        ;;
+    get:cursor-size)
+        if [[ -f $state_file ]]; then
+            cat -- "$state_file"
+        else
+            printf '24\n'
+        fi
+        ;;
+    set:cursor-theme|set:cursor-size)
+        [[ $# == 4 ]] || exit 64
+        printf '%s\n' "$4" > "$state_file"
+        ;;
+    *) exit 66 ;;
+esac

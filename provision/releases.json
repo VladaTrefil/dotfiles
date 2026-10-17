@@ -58,6 +58,14 @@
       "MesloLGSNerdFont-Italic.ttf"
     ]
   },
+  "catppuccin-mocha-pink-cursors": {
+    "kind": "cursor-theme",
+    "version": "v2.0.0",
+    "url": "https://github.com/catppuccin/cursors/releases/download/v2.0.0/catppuccin-mocha-pink-cursors.zip",
+    "sha256": "095c4e3d645a6717a055c72d7104d713cc0db1df2d8829dd9615d55118879247",
+    "size": 1281023,
+    "theme": "catppuccin-mocha-pink-cursors"
+  },
   "eww": {
     "kind": "rpm",
     "groups": ["desktop"],

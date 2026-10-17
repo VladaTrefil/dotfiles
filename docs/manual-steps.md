@@ -300,6 +300,20 @@ Bluetooth script behavior, Proton Bridge autostart, and a registered tray item.
 Multi-output layout, audio hardware, Bluetooth hardware, and the device tasks
 above still require the physical workstation.
 
+`./install link` installs the checksum-pinned Catppuccin Cursors v2.0.0 Mocha
+Pink release below `~/.local/share/icons` (or `$XDG_DATA_HOME/icons`). The
+installer verifies the 1,281,023-byte archive against SHA-256
+`095c4e3d645a6717a055c72d7104d713cc0db1df2d8829dd9615d55118879247`,
+preserves its Xcursor aliases, and refuses to replace an unmanaged or modified
+theme. The Sway, GTK 3/4, environment, and Wayland settings-portal configuration
+selects `catppuccin-mocha-pink-cursors` at size 32. The link phase synchronizes
+the portal-backed `org.gnome.desktop.interface` cursor values with `gsettings`;
+this is necessary because GTK uses the Wayland settings portal ahead of its
+`settings.ini` fallback when a portal is available. In an active Sway session,
+the link phase also forces the compositor's cursor manager to rebuild before
+restoring size 32. This replaces Sway's built-in fallback immediately when it
+was cached before the Catppuccin theme became available.
+
 Public Nerd Fonts and private assets are a separate step:
 
 ```sh

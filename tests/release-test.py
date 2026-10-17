@@ -13,6 +13,14 @@ import zipfile
 
 root = Path(__file__).resolve().parent.parent
 production = json.loads((root / 'provision/releases.json').read_text())
+assert production['catppuccin-mocha-pink-cursors'] == {
+    'kind': 'cursor-theme',
+    'version': 'v2.0.0',
+    'url': 'https://github.com/catppuccin/cursors/releases/download/v2.0.0/catppuccin-mocha-pink-cursors.zip',
+    'sha256': '095c4e3d645a6717a055c72d7104d713cc0db1df2d8829dd9615d55118879247',
+    'size': 1281023,
+    'theme': 'catppuccin-mocha-pink-cursors',
+}
 assert production['eww'] == {
     'kind': 'rpm',
     'groups': ['desktop'],
@@ -184,6 +192,23 @@ with tempfile.TemporaryDirectory() as directory:
         'size': rpm_source.stat().st_size,
     }
     source_by_release['eww'] = rpm_source
+    cursor_source = source_archives / 'catppuccin-mocha-pink-cursors.zip'
+    cursor_theme = 'catppuccin-mocha-pink-cursors'
+    with zipfile.ZipFile(cursor_source, 'w') as package:
+        package.writestr(f'{cursor_theme}/index.theme', '[Icon Theme]\nName=Catppuccin Mocha Pink\n')
+        package.writestr(f'{cursor_theme}/cursors/left_ptr', b'fixture cursor')
+        alias = zipfile.ZipInfo(f'{cursor_theme}/cursors/default')
+        alias.create_system = 3
+        alias.external_attr = 0o120777 << 16
+        package.writestr(alias, 'left_ptr')
+    releases['catppuccin-mocha-pink-cursors'] = {
+        'kind': 'cursor-theme',
+        'version': 'v2.0.0',
+        'url': f'https://example.invalid/{cursor_source.name}',
+        'sha256': checksum(cursor_source),
+        'theme': cursor_theme,
+    }
+    source_by_release['catppuccin-mocha-pink-cursors'] = cursor_source
     (fixture_repo / 'provision/releases.json').write_text(json.dumps(releases))
 
     def prepare_home(name, corrupt=None):
@@ -237,6 +262,114 @@ with tempfile.TemporaryDirectory() as directory:
     assert second.returncode == 0, second
     assert snapshot(font_root) == before, 'second run changed installed fonts'
     print('PASS: selected font faces install, appear in fc-list, and remain byte/metadata-idempotent')
+
+    cursor_command = [
+        str(fixture_repo / 'bin/install-releases'), '--cursors', '--offline',
+    ]
+    cursor = subprocess.run(cursor_command, env=env, text=True, capture_output=True)
+    assert cursor.returncode == 0, cursor
+    cursor_root = home / '.local/share/icons' / cursor_theme
+    assert (cursor_root / 'index.theme').read_text() == (
+        '[Icon Theme]\nName=Catppuccin Mocha Pink\n'
+    )
+    cursor_alias = cursor_root / 'cursors/default'
+    assert cursor_alias.is_symlink() and os.readlink(cursor_alias) == 'left_ptr'
+    assert cursor_alias.read_bytes() == b'fixture cursor'
+    before_cursor = snapshot(cursor_root)
+    repeated_cursor = subprocess.run(
+        cursor_command, env=env, text=True, capture_output=True,
+    )
+    assert repeated_cursor.returncode == 0, repeated_cursor
+    assert snapshot(cursor_root) == before_cursor
+    print('PASS: selected cursor theme installs with aliases and remains byte/metadata-idempotent')
+
+    private_icons_home = prepare_home('private-icons-home')
+    private_icon_root = private_icons_home / '.local/share/icons'
+    private_icon_root.mkdir(parents=True, mode=0o700)
+    private_icons_env = dict(
+        os.environ,
+        HOME=str(private_icons_home),
+        XDG_CACHE_HOME=str(private_icons_home / '.cache'),
+        XDG_DATA_HOME=str(private_icons_home / '.local/share'),
+    )
+    private_icons = subprocess.run(
+        cursor_command, env=private_icons_env, text=True, capture_output=True,
+    )
+    assert private_icons.returncode == 0, private_icons
+    assert private_icon_root.stat().st_mode & 0o777 == 0o700
+    print('PASS: cursor installation preserves an existing private icon-root mode')
+
+    unmanaged_home = prepare_home('unmanaged-cursor-home')
+    unmanaged_target = unmanaged_home / '.local/share/icons' / cursor_theme
+    unmanaged_target.mkdir(parents=True)
+    (unmanaged_target / 'keep').write_bytes(b'unmanaged cursor data')
+    unmanaged_before = snapshot(unmanaged_target)
+    unmanaged_env = dict(
+        os.environ,
+        HOME=str(unmanaged_home),
+        XDG_CACHE_HOME=str(unmanaged_home / '.cache'),
+        XDG_DATA_HOME=str(unmanaged_home / '.local/share'),
+    )
+    unmanaged = subprocess.run(
+        cursor_command, env=unmanaged_env, text=True, capture_output=True,
+    )
+    assert unmanaged.returncode != 0 and 'unmanaged cursor theme' in unmanaged.stderr
+    assert snapshot(unmanaged_target) == unmanaged_before
+
+    modified_index = private_icon_root / cursor_theme / 'index.theme'
+    modified_index.write_text('locally modified\n')
+    modified_before = snapshot(private_icon_root / cursor_theme)
+    modified = subprocess.run(
+        cursor_command, env=private_icons_env, text=True, capture_output=True,
+    )
+    assert modified.returncode != 0 and 'modified cursor theme' in modified.stderr
+    assert snapshot(private_icon_root / cursor_theme) == modified_before
+
+    symlink_home = prepare_home('symlink-cursor-home')
+    symlink_icon_root = symlink_home / '.local/share/icons'
+    symlink_icon_root.mkdir(parents=True)
+    external_theme = symlink_home / 'external-theme'
+    external_theme.mkdir()
+    (external_theme / 'keep').write_bytes(b'external cursor data')
+    symlink_target = symlink_icon_root / cursor_theme
+    symlink_target.symlink_to(external_theme, target_is_directory=True)
+    symlink_env = dict(
+        os.environ,
+        HOME=str(symlink_home),
+        XDG_CACHE_HOME=str(symlink_home / '.cache'),
+        XDG_DATA_HOME=str(symlink_home / '.local/share'),
+    )
+    symlink_result = subprocess.run(
+        cursor_command, env=symlink_env, text=True, capture_output=True,
+    )
+    assert symlink_result.returncode != 0 and 'unmanaged cursor theme path' in symlink_result.stderr
+    assert symlink_target.is_symlink() and symlink_target.resolve() == external_theme
+    assert (external_theme / 'keep').read_bytes() == b'external cursor data'
+    print('PASS: unmanaged, modified, and symlink cursor targets are refused without changes')
+
+    unsafe_cursor = source_archives / 'unsafe-cursor.zip'
+    with zipfile.ZipFile(unsafe_cursor, 'w') as package:
+        package.writestr(f'{cursor_theme}/index.theme', '[Icon Theme]\n')
+        package.writestr(f'{cursor_theme}/cursors/default', b'fixture cursor')
+        package.writestr(f'{cursor_theme}/../escape', b'archive escape')
+    releases[cursor_theme]['url'] = f'https://example.invalid/{unsafe_cursor.name}'
+    releases[cursor_theme]['sha256'] = checksum(unsafe_cursor)
+    source_by_release[cursor_theme] = unsafe_cursor
+    (fixture_repo / 'provision/releases.json').write_text(json.dumps(releases))
+    unsafe_home = prepare_home('unsafe-cursor-home')
+    unsafe_env = dict(
+        os.environ,
+        HOME=str(unsafe_home),
+        XDG_CACHE_HOME=str(unsafe_home / '.cache'),
+        XDG_DATA_HOME=str(unsafe_home / '.local/share'),
+    )
+    unsafe = subprocess.run(
+        cursor_command, env=unsafe_env, text=True, capture_output=True,
+    )
+    assert unsafe.returncode != 0 and 'Unsafe cursor archive member' in unsafe.stderr
+    assert not (unsafe_home / '.local/share/icons' / cursor_theme).exists()
+    assert not (unsafe_home / '.local/share/icons/escape').exists()
+    print('PASS: unsafe cursor archive paths fail closed before theme installation')
 
     tool = subprocess.run(
         [str(fixture_repo / 'bin/install-releases'), '--offline'],

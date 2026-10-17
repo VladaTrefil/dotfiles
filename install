@@ -258,6 +258,7 @@ install_link() {
         return 1
     fi
     git -C "$repo_dir" submodule update --init --recursive
+    "$repo_dir/bin/install-releases" --cursors
     # This pinned p10k compiles beside its sources. Give it a runtime copy in
     # cache so interactive startup never writes into the submodule checkout.
     local theme_source theme_revision theme_cache staging
@@ -280,6 +281,7 @@ install_link() {
     PYTHONDONTWRITEBYTECODE=1 "$repo_dir/modules/dotbot/bin/dotbot" \
         --base-directory "$repo_dir" --config-file "$repo_dir/install.conf.yaml" \
         --no-color --verbose
+    "$repo_dir/bin/configure-desktop"
     "$repo_dir/bin/configure-tools"
 }
 

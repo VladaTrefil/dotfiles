@@ -4,6 +4,7 @@ sway-systemd
 swayidle
 swaylock
 grim
+glib2
 slurp
 wl-clipboard
 kitty

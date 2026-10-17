@@ -1,5 +1,7 @@
 # Fedora capitalization (docs/fedora-packages.md); provides shellcheck.
 ShellCheck
+# GitHub's official command-line interface.
+gh
 # Viewer cache is compiled by install link.
 bat
 # asdf-ruby / ruby-build and native gems (system build dependencies).

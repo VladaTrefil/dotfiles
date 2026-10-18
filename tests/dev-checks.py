@@ -21,12 +21,19 @@ assert all(line.split()[-1] == 'true' for line in actual), actual
 print('PASS: declared and provisioned runtimes are exactly nodejs 24.21.0 / ruby 3.4.10')
 
 npm_root = run('npm', 'root', '-g').stdout.strip()
+npm_packages: dict[str, str] = {}
 for entry in (root / 'config/asdf/default-npm-packages').read_text().splitlines():
     package, separator, pinned = entry.rpartition('@')
     assert separator and package and pinned, f'Unpinned npm global: {entry}'
+    npm_packages[package] = pinned
     metadata = json.loads((Path(npm_root) / package / 'package.json').read_text())
     assert metadata['name'] == package and metadata['version'] == pinned, (entry, metadata)
     print('NPM', package, metadata['version'], 'PIN', pinned)
+assert npm_packages['typescript-language-server'] == '6.0.2'
+assert npm_packages['typescript'] == '6.0.3'
+assert 'vscode-langservers-extracted' not in npm_packages
+assert run('typescript-language-server', '--version').stdout.strip() == '6.0.2'
+assert run('tsc', '--version').stdout.strip() == 'Version 6.0.3'
 gem_names = []
 for entry in (root / 'config/asdf/default-gems').read_text().splitlines():
     gem, separator, pinned = entry.rpartition(':')

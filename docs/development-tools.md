@@ -83,10 +83,11 @@ not intentionally advance a top-level global package.
 | npm `stylelint`, `stylelint-config-standard`, `stylelint-scss` | SCSS/Sass lint rules |
 | npm `jsonlint` | Adapter-compatible JSON lint implementation |
 | npm `standard` | Active JavaScript lint/format adapter |
-| npm `vscode-langservers-extracted` | Active ESLint language server (project ESLint still required) |
+| npm `typescript` | TypeScript 6.0.3 runtime used by JavaScript/JSX language analysis |
+| npm `typescript-language-server` | TypeScript language server 6.0.2 for JavaScript/JSX project intelligence |
 
 Rails is no longer globally installed: projects supply it. Dormant LuaLS, pylsp,
-TypeScript/Vim/YAML servers and unused rustfmt are not promoted to mandatory
+Vim/YAML servers and unused rustfmt are not promoted to mandatory
 requirements. Shell formatting uses Fedora's `shfmt` 3.7.0 with Conform's `-i 2`
 indent setting; its executable ownership, upstream identity and formatting were verified on Fedora 44.
 Fedora's enabled repositories do not provide LazyGit, so its official Linux x86_64

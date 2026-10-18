@@ -119,7 +119,7 @@ inventory. The last nine rows describe dormant configuration or old lists, not m
 | `man` | `man-db` — `2.13.1-3.fc44` (fedora) | Repository availability verified; feature integration not assessed. |
 | `xdg-open` or `gio` | `xdg-utils` — `1.2.1-5.fc44` (fedora)<br>`glib2` — `2.88.3-1.fc44` (updates) | Repository availability verified; feature integration not assessed. |
 | `wl-copy`, `wl-paste` **or** `xclip`/`xsel` | `wl-clipboard` — `2.2.1^git20251124.e808203-2.fc44` (fedora)<br>`xclip` — `0.13-26.git11cba61.fc44` (fedora)<br>`xsel` — `1.2.1-10.fc44` (fedora) | Repository availability verified; feature integration not assessed. |
-| `vscode-eslint-language-server` | **Missing in queried Fedora metadata**; names: `vscode-langservers-extracted` | Missing native candidate/provider; npm vscode-langservers-extracted candidate, unverified. Project ESLint library/config also required. |
+| `vscode-eslint-language-server` | **Missing in queried Fedora metadata**; names: `vscode-langservers-extracted` | Inactive and unmanaged. The previous npm candidate is no longer provisioned. |
 | `rubocop` | **Missing in queried Fedora metadata**; names: `rubygem-rubocop` | Missing native candidate/provider; project gem rubocop via Bundler, unverified. |
 | `shellcheck` | `ShellCheck` — `0.11.0-4.fc44` (fedora) | Package capitalization is ShellCheck. Not installed; guest lint explicitly skipped. |
 | `standard` | **Missing in queried Fedora metadata**; names: `standard`, `nodejs-standard` | Missing native candidate/provider; npm standard candidate, unverified. |
@@ -139,7 +139,7 @@ inventory. The last nine rows describe dormant configuration or old lists, not m
 | `lua-language-server` | **Missing in queried Fedora metadata**; names: `lua-language-server` | Inactive. Missing native candidate/provider; upstream LuaLS binary/source candidate, unverified. |
 | `vscode-css-language-server` (old `css-lsp`) | **Missing in queried Fedora metadata**; names: `vscode-langservers-extracted` | Inactive. Missing native candidate/provider; npm vscode-langservers-extracted candidate, unverified. |
 | `vscode-json-language-server` | **Missing in queried Fedora metadata**; names: `vscode-langservers-extracted` | Inactive. Missing native candidate/provider; npm vscode-langservers-extracted candidate, unverified. |
-| `typescript-language-server` | **Missing in queried Fedora metadata**; names: `typescript-language-server` | Inactive. Server missing; npm typescript-language-server candidate, unverified. Fedora typescript 5.7.3-6.fc44 exists but is not this server. |
+| `typescript-language-server` | **Missing in queried Fedora metadata**; names: `typescript-language-server` | Active through the pinned npm manifest at 6.0.2 with TypeScript 6.0.3; Fedora typescript 5.7.3-6.fc44 is not used. |
 | `pylsp` | `python3-lsp-server` — `1.13.1-6.fc44` (fedora) | Inactive; native package found. |
 | `solargraph` | **Missing in queried Fedora metadata**; names: `rubygem-solargraph` | Inactive. Missing native candidate/provider; gem solargraph candidate, unverified. |
 | `rustfmt` | `rustfmt` — `1.98.1-1.fc44` (updates) | Old list only; not required by current Neovim configuration. |

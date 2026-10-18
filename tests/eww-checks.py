@@ -15,7 +15,7 @@ assert windows == {'bar', 'calendar', 'system', 'bluetooth_menu'}, windows
 bar = (config / 'bar/eww.yuck').read_text()
 assert re.search(r'\(defwindow bar \[monitor\]\s+:monitor monitor', bar)
 assert ':exclusive true' in bar
-assert '(systray)' in bar
+assert '(systray)' not in bar
 assert all(token in bar for token in ('(workspaces)', '(clock)', '(volume)',
                                       '(bluetooth)', '(network)', '(system_widget)'))
 for profile, output in [('physical', 'DP-1'), ('virtualbox', 'Virtual-1')]:

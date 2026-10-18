@@ -39,6 +39,7 @@ def output_settings(profile, name):
         'mode': values_after('mode'),
         'position': values_after('position', 2),
         'scale': values_after('scale'),
+        'background': values_after('bg', 3),
     }
 
 
@@ -46,11 +47,13 @@ assert output_settings(physical_profile, 'DP-1') == {
     'mode': '3840x2160@143.963Hz',
     'position': ('0', '0'),
     'scale': '1',
+    'background': ('~/.background/mountains-blue-and-beige.jpg', 'fill', '$bg'),
 }, 'G3223Q must be the left 4K/143.963 Hz primary output'
 assert output_settings(physical_profile, 'DP-2') == {
     'mode': '2560x1440@59.951Hz',
     'position': ('3840', '0'),
     'scale': '1',
+    'background': ('~/.background/mountains-blue-and-gold.jpg', 'fill', '$bg'),
 }, 'U2720Q must be the adjacent right 2K/59.951 Hz output'
 
 assert 'VBoxClient' not in physical + physical_profile

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure runtime commands in linked scripts have explicit package providers."""
+"""Ensure runtime dependencies in linked scripts have explicit package providers."""
 from pathlib import Path
 import re
 import shlex
@@ -21,20 +21,21 @@ def manifest_packages():
     return packages
 
 
-# Keep this inventory narrow and evidence-based: these commands are invoked by
-# linked desktop scripts, are not shell/core utilities, and previously failed
-# silently because their Fedora providers were absent from every manifest.
+# Keep this inventory narrow and evidence-based: these dependencies are used by
+# linked desktop scripts and previously failed silently when their Fedora
+# providers were absent from every manifest.
 requirements = {
     'bluez': {
-        'binary': 'bluetoothctl',
+        'marker': 'org.bluez',
         'scripts': ['config/eww/bar/scripts/bluetooth'],
     },
     'jq': {
         'binary': 'jq',
-        'scripts': [
-            'config/eww/bar/scripts/bluetooth',
-            'config/eww/bar/scripts/workspace',
-        ],
+        'scripts': ['config/eww/bar/scripts/workspace'],
+    },
+    'python3-gobject-base': {
+        'marker': 'from gi.repository import Gio, GLib',
+        'scripts': ['config/eww/bar/scripts/bluetooth'],
     },
     'lxqt-policykit': {
         'binary': '/usr/libexec/lxqt-policykit-agent',
@@ -111,26 +112,28 @@ for package, companion in companions.items():
         )
 
 for package, requirement in requirements.items():
-    binary = requirement['binary']
-    if requirement.get('active_command'):
+    marker = requirement.get('marker', requirement.get('binary'))
+    if 'marker' in requirement:
+        pattern = re.compile(re.escape(marker))
+    elif requirement.get('active_command'):
         pattern = re.compile(
-            rf'^[ \t]*(?:exec[ \t]+)?{re.escape(binary)}(?=[ \t]|$)',
+            rf'^[ \t]*(?:exec[ \t]+)?{re.escape(marker)}(?=[ \t]|$)',
             re.MULTILINE,
         )
     else:
         pattern = re.compile(
-            rf'(?<![A-Za-z0-9_.-]){re.escape(binary)}(?![A-Za-z0-9_.-])'
+            rf'(?<![A-Za-z0-9_.-]){re.escape(marker)}(?![A-Za-z0-9_.-])'
         )
     for relative in requirement['scripts']:
         script = root / relative
         if not script.is_file():
             failures.append(f'{relative}: tracked runtime script is missing')
         elif not pattern.search(script.read_text()):
-            failures.append(f'{relative}: expected invocation of {binary!r} is missing')
+            failures.append(f'{relative}: expected runtime marker {marker!r} is missing')
     if package not in packages:
         paths = ', '.join(requirement['scripts'])
         failures.append(
-            f'{binary} is invoked by {paths}, but provider package {package!r} '
+            f'{marker} is used by {paths}, but provider package {package!r} '
             'is absent from packages/*.txt'
         )
 

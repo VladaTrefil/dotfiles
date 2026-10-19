@@ -3,21 +3,21 @@ set -euo pipefail
 
 case "${1:-}" in
     calendar|system|bluetooth) ;;
-    *) printf 'Usage: %s {calendar|system|bluetooth}\n' "$0" >&2; exit 2 ;;
+    *) printf 'Usage: %s {calendar|system|bluetooth} MONITOR\n' "$0" >&2; exit 2 ;;
 esac
+[[ -n ${2:-} ]] || { printf 'Usage: %s {calendar|system|bluetooth} MONITOR\n' "$0" >&2; exit 2; }
 window=$1
+monitor=$2
 [[ $window == bluetooth ]] && window=bluetooth_menu
-is_open() {
-    eww active-windows | grep -q "^${1}:"
-}
+active_windows=$(eww active-windows)
 
-if is_open "$window"; then
+if grep -q "^${window}:" <<< "$active_windows"; then
     eww close "$window"
 else
     for other in calendar system bluetooth_menu; do
-        if is_open "$other"; then
+        if grep -q "^${other}:" <<< "$active_windows"; then
             eww close "$other"
         fi
     done
-    eww open --arg "monitor=$(eww get bar_monitor)" "$window"
+    eww open --arg "monitor=$monitor" "$window"
 fi

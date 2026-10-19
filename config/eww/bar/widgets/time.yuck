@@ -7,7 +7,7 @@
 
 (defvar date_reveal false)
 
-(defwidget clock []
+(defwidget clock [monitor]
   (eventbox :onhover "${eww} update date_reveal=true"
             :onhoverlost "${eww} update date_reveal=false"
     (box :class "module clock"
@@ -25,7 +25,7 @@
                 :duration "350ms"
         (eventbox :cursor 'pointer'
           (button :class "clock__date"
-                  :onclick "./bar/scripts/pop calendar"
+                  :onclick "./bar/scripts/pop calendar ${monitor}"
           clock_date))))))
 
 (defwidget cal []

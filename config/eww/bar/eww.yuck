@@ -1,5 +1,4 @@
 (defvar eww "/usr/bin/eww -c $HOME/.config/eww")
-(defvar bar_monitor "Virtual-1")
 
 (defvar spacing "3")
 (defvar window_y "3%")
@@ -23,23 +22,23 @@
     (workspaces)
     ))
 
-(defwidget center []
+(defwidget center [monitor]
   (box
     :orientation "h"
     :space-evenly false
     :halign "center"
     :class "center_modules"
-    (clock)))
+    (clock :monitor monitor)))
 
-(defwidget right []
+(defwidget right [monitor]
   (box :orientation "h"
        :space-evenly false
        :halign "end"
        :class "bar__right"
     (volume)
-    (bluetooth)
+    (bluetooth :monitor monitor)
     (network)
-    (system_widget)))
+    (system_widget :monitor monitor)))
 
 (defwindow bar [monitor]
   :monitor monitor
@@ -52,5 +51,5 @@
     (box :class "bar__inner"
          :orientation "h"
       (left)
-      (center)
-      (right))))
+      (center :monitor monitor)
+      (right :monitor monitor))))

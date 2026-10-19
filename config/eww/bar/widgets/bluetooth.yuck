@@ -1,31 +1,43 @@
-(deflisten bluetooth_devices "./bar/scripts/bluetooth subscribe")
+(deflisten bluetooth_devices :initial "[]" "./bar/scripts/bluetooth watch")
 
-(defwidget bluetooth []
+(defwidget bluetooth [monitor]
   (eventbox :cursor 'pointer'
     (box :class "bluetooth"
          :space-evenly "false"
          :orientation "h"
          :spacing spacing
-      (button :onclick "./bar/scripts/pop bluetooth"
+      (button :onclick "./bar/scripts/pop bluetooth ${monitor}"
               :class "bluetooth__icon" ""))))
 
-(defwidget bluetooth_menu_device [?class key icon icon_class name button_class button_text]
-  (box :orientation 'h' :class 'bluetooth-menu__device ${class}'
+(defwidget bluetooth_menu_device [address connected name]
+  (box :orientation 'h' :class 'bluetooth-menu__device'
     (box :space-evenly 'false'
-      (label :class 'bluetooth-menu__icon ${icon_class}' :text '${icon}')
+      (label
+        :class {connected ? "bluetooth-menu__icon bluetooth-menu__icon--connected" : "bluetooth-menu__icon bluetooth-menu__icon--paired"}
+        :text {connected ? "" : ""})
       (label :class 'bluetooth-menu__name' :text '${name}'))
     (box :space-evenly 'false' :halign 'end'
       (eventbox :cursor 'pointer'
         (button
-          :onclick "./bar/scripts/bluetooth device_button_click ${key}"
-          :class 'bluetooth-menu__button ${button_class}' '${button_text}')))))
+          :onclick "./bar/scripts/bluetooth toggle ${address}"
+          :class {connected ? "bluetooth-menu__button bluetooth-menu__button--disconnect" : "bluetooth-menu__button bluetooth-menu__button--connect"}
+          {connected ? "disconnect" : "connect"})))))
 
 (defwindow bluetooth_menu [monitor]
   :monitor monitor
-  :geometry (geometry :x "-270px"
-                      :y "4%"
+  :geometry (geometry :x "20px"
+                      :y "20px"
                       :anchor "top right"
                       :width "280px")
   (box :class "bluetooth-menu" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
     (box :class "bluetooth-menu__inner" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
-      (literal :content bluetooth_devices))))
+      (label
+        :visible {arraylength(bluetooth_devices) == 0}
+        :class "bluetooth-menu__no-results-label"
+        :text "No Devices :(")
+      (box :class "bluetooth-menu__devices" :orientation "v"
+        (for device in bluetooth_devices
+          (bluetooth_menu_device
+            :address {device.address}
+            :connected {device.connected}
+            :name {device.name}))))))

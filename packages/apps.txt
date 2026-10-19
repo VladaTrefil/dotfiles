@@ -1,9 +1,10 @@
 # Native Fedora/RPM Fusion applications and workstation integration.
 ca-certificates
 gnupg2 # Fedora name for GnuPG command and key tooling.
-bluez # Provides bluetoothctl for the active Eww Bluetooth widget.
+bluez # Provides bluetoothd and its D-Bus API for the active Eww Bluetooth widget.
 iwlwifi-mvm-firmware # Intel AX210 Wi-Fi firmware; pulls the matching Intel Bluetooth firmware.
-jq # Renders Eww Bluetooth and Sway workspace state.
+jq # Renders Sway workspace state.
+python3-gobject-base # Provides the Gio D-Bus bindings used by the Eww Bluetooth watcher.
 
 inkscape
 chromium

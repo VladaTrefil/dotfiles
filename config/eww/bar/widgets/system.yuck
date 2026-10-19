@@ -11,11 +11,11 @@
 (defvar circle_thickness 4)
 (defvar circle_thickness_lg 9)
 
-(defwidget system_widget []
+(defwidget system_widget [monitor]
   (eventbox :cursor 'pointer'
     (button :class "system-widget"
             :tooltip "system menu"
-            :onclick "./bar/scripts/pop system"
+            :onclick "./bar/scripts/pop system ${monitor}"
       (box :orientation "h"
         (system_widget_circle
           :key "cpu"

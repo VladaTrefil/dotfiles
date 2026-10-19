@@ -16,11 +16,12 @@ bar = (config / 'bar/eww.yuck').read_text()
 assert re.search(r'\(defwindow bar \[monitor\]\s+:monitor monitor', bar)
 assert ':exclusive true' in bar
 assert '(systray)' not in bar
-assert all(token in bar for token in ('(workspaces)', '(clock)', '(volume)',
-                                      '(bluetooth)', '(network)', '(system_widget)'))
+assert all(token in bar for token in ('(workspaces)', '(clock :monitor monitor)', '(volume)',
+                                      '(bluetooth :monitor monitor)', '(network)',
+                                      '(system_widget :monitor monitor)'))
 for profile, output in [('physical', 'DP-1'), ('virtualbox', 'Virtual-1')]:
     startup = (root / f'config/sway/profiles/{profile}.conf').read_text()
-    assert f'eww daemon && eww update bar_monitor={output} && eww open --arg monitor={output} bar' in startup
+    assert f'eww daemon && eww open --arg monitor={output} bar' in startup
 session = (root / 'config/sway/conf.d/60-session.conf').read_text()
 assert re.search(r'^exec \$HOME/\.config/sway/bin/start-autostart$', session, re.M)
 assert 'waybar' not in session

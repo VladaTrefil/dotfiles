@@ -1,72 +1,304 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env python3
+"""Expose BlueZ device state to Eww without polling subprocesses."""
 
-connected() {
-    local output
-    output=$(timeout 2 bluetoothctl devices Connected 2>/dev/null || true)
-    awk '/^Device / { count++ } END { print count + 0 }' <<< "$output"
-}
+from __future__ import annotations
 
-devices() {
-    local line key name info icon button_class button_text icon_class entry result=''
-    while IFS= read -r line; do
-        [[ $line == Device\ * ]] || continue
-        key=${line#Device }
-        name=${key#* }
-        key=${key%% *}
-        info=$(timeout 2 bluetoothctl info "$key" 2>/dev/null || true)
-        if [[ $info == *'Connected: yes'* ]]; then
-            icon=''
-            icon_class='bluetooth-menu__icon--connected'
-            button_class='bluetooth-menu__button--disconnect'
-            button_text='disconnect'
-        else
-            icon=''
-            icon_class='bluetooth-menu__icon--paired'
-            button_class='bluetooth-menu__button--connect'
-            button_text='connect'
-        fi
-        entry=$(printf '(bluetooth_menu_device :key %s :icon %s :icon_class %s :name %s :button_class %s :button_text %s)' \
-            "$(jq -Rn --arg value "$key" '$value')" \
-            "$(jq -Rn --arg value "$icon" '$value')" \
-            "$(jq -Rn --arg value "$icon_class" '$value')" \
-            "$(jq -Rn --arg value "$name" '$value')" \
-            "$(jq -Rn --arg value "$button_class" '$value')" \
-            "$(jq -Rn --arg value "$button_text" '$value')")
-        result+=" $entry"
-    done < <(timeout 2 bluetoothctl devices 2>/dev/null || true)
-    if [[ -z $result ]]; then
-        printf '(label :class "bluetooth-menu__no-results-label" :text "No Devices :(")\n'
-    else
-        printf '(box :class "bluetooth-menu__devices" :orientation "v" %s)\n' "$result"
-    fi
-}
+import argparse
+import json
+import re
+import signal
+import sys
+from typing import Any
 
-subscribe() {
-    local previous='' current
-    while true; do
-        current=$(devices)
-        if [[ $current != "$previous" ]]; then
-            printf '%s\n' "$current"
-            previous=$current
-        fi
-        sleep 2
-    done
-}
+import gi
 
-case "${1:-}" in
-    connected) connected ;;
-    devices) devices ;;
-    subscribe) subscribe ;;
-    device_button_click)
-        [[ ${2:-} =~ ^([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}$ ]] || exit 2
-        info=$(timeout 2 bluetoothctl info "$2" 2>/dev/null || true)
-        if [[ $info == *'Connected: yes'* ]]; then
-            timeout 10 bluetoothctl disconnect "$2"
-        else
-            timeout 10 bluetoothctl trust "$2"
-            timeout 10 bluetoothctl connect "$2"
-        fi
-        ;;
-    *) printf 'Usage: %s {connected|devices|subscribe|device_button_click MAC}\n' "$0" >&2; exit 2 ;;
-esac
+gi.require_version("Gio", "2.0")
+from gi.repository import Gio, GLib  # pylint: disable=wrong-import-position
+
+
+BLUEZ_SERVICE = "org.bluez"
+DBUS_SERVICE = "org.freedesktop.DBus"
+DBUS_PATH = "/org/freedesktop/DBus"
+DBUS_INTERFACE = "org.freedesktop.DBus"
+OBJECT_MANAGER_INTERFACE = "org.freedesktop.DBus.ObjectManager"
+PROPERTIES_INTERFACE = "org.freedesktop.DBus.Properties"
+DEVICE_INTERFACE = "org.bluez.Device1"
+SNAPSHOT_TIMEOUT_MS = 2_000
+ACTION_TIMEOUT_MS = 10_000
+ADDRESS_PATTERN = re.compile(r"^(?:[0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$")
+
+
+def get_managed_objects(connection: Gio.DBusConnection) -> dict[str, Any]:
+    """Return every object currently managed by BlueZ."""
+    reply = connection.call_sync(
+        BLUEZ_SERVICE,
+        "/",
+        OBJECT_MANAGER_INTERFACE,
+        "GetManagedObjects",
+        None,
+        GLib.VariantType.new("(a{oa{sa{sv}}})"),
+        Gio.DBusCallFlags.NONE,  # pylint: disable=no-member
+        SNAPSHOT_TIMEOUT_MS,
+        None,
+    )
+    return reply.unpack()[0]
+
+
+class DeviceWatcher:
+    """Maintain an in-memory BlueZ snapshot and publish JSON changes."""
+
+    # PyGObject exposes enum members dynamically, outside pylint's type model.
+    # pylint: disable=no-member,too-few-public-methods
+
+    def __init__(self, connection: Gio.DBusConnection) -> None:
+        self.connection = connection
+        self.devices: dict[str, dict[str, Any]] = {}
+        self.last_payload: str | None = None
+        self.loop = GLib.MainLoop()
+
+    def run(self) -> None:
+        """Publish initial state, then process BlueZ signals until stopped."""
+        self._subscribe()
+        self._reload()
+        signal.signal(signal.SIGINT, self._stop)
+        signal.signal(signal.SIGTERM, self._stop)
+        self.loop.run()
+
+    def _subscribe(self) -> None:
+        self.connection.signal_subscribe(
+            None,
+            PROPERTIES_INTERFACE,
+            "PropertiesChanged",
+            None,
+            DEVICE_INTERFACE,
+            Gio.DBusSignalFlags.NONE,
+            self._properties_changed,
+            None,
+        )
+        self.connection.signal_subscribe(
+            None,
+            OBJECT_MANAGER_INTERFACE,
+            "InterfacesAdded",
+            None,
+            None,
+            Gio.DBusSignalFlags.NONE,
+            self._interfaces_added,
+            None,
+        )
+        self.connection.signal_subscribe(
+            None,
+            OBJECT_MANAGER_INTERFACE,
+            "InterfacesRemoved",
+            None,
+            None,
+            Gio.DBusSignalFlags.NONE,
+            self._interfaces_removed,
+            None,
+        )
+        self.connection.signal_subscribe(
+            DBUS_SERVICE,
+            DBUS_INTERFACE,
+            "NameOwnerChanged",
+            DBUS_PATH,
+            BLUEZ_SERVICE,
+            Gio.DBusSignalFlags.NONE,
+            self._name_owner_changed,
+            None,
+        )
+
+    def _reload(self) -> None:
+        try:
+            objects = get_managed_objects(self.connection)
+        except GLib.Error as error:
+            self.devices.clear()
+            self._emit()
+            print(f"bluetooth: BlueZ is unavailable: {error}", file=sys.stderr)
+            return
+
+        self.devices = {
+            path: dict(interfaces[DEVICE_INTERFACE])
+            for path, interfaces in objects.items()
+            if DEVICE_INTERFACE in interfaces
+        }
+        self._emit()
+
+    def _properties_changed(
+        self,
+        _connection: Gio.DBusConnection,
+        _sender: str,
+        object_path: str,
+        _interface: str,
+        _signal: str,
+        parameters: GLib.Variant,
+        _user_data: object,
+    ) -> None:
+        changed_interface, changed, invalidated = parameters.unpack()
+        if changed_interface != DEVICE_INTERFACE or not object_path.startswith("/org/bluez/"):
+            return
+        if object_path not in self.devices:
+            self._reload()
+            return
+        self.devices[object_path].update(changed)
+        for property_name in invalidated:
+            self.devices[object_path].pop(property_name, None)
+        self._emit()
+
+    def _interfaces_added(
+        self,
+        _connection: Gio.DBusConnection,
+        _sender: str,
+        _object_path: str,
+        _interface: str,
+        _signal: str,
+        parameters: GLib.Variant,
+        _user_data: object,
+    ) -> None:
+        device_path, interfaces = parameters.unpack()
+        if not device_path.startswith("/org/bluez/") or DEVICE_INTERFACE not in interfaces:
+            return
+        self.devices[device_path] = dict(interfaces[DEVICE_INTERFACE])
+        self._emit()
+
+    def _interfaces_removed(
+        self,
+        _connection: Gio.DBusConnection,
+        _sender: str,
+        _object_path: str,
+        _interface: str,
+        _signal: str,
+        parameters: GLib.Variant,
+        _user_data: object,
+    ) -> None:
+        device_path, interfaces = parameters.unpack()
+        if DEVICE_INTERFACE not in interfaces:
+            return
+        self.devices.pop(device_path, None)
+        self._emit()
+
+    def _name_owner_changed(
+        self,
+        _connection: Gio.DBusConnection,
+        _sender: str,
+        _object_path: str,
+        _interface: str,
+        _signal: str,
+        parameters: GLib.Variant,
+        _user_data: object,
+    ) -> None:
+        _name, _old_owner, new_owner = parameters.unpack()
+        if new_owner:
+            self._reload()
+        else:
+            self.devices.clear()
+            self._emit()
+
+    def _emit(self) -> None:
+        devices = []
+        for properties in self.devices.values():
+            address = properties.get("Address")
+            if not address:
+                continue
+            devices.append(
+                {
+                    "address": address,
+                    "connected": bool(properties.get("Connected", False)),
+                    "name": properties.get("Alias") or properties.get("Name") or address,
+                }
+            )
+        devices.sort(
+            key=lambda device: (device["name"].casefold(), device["address"])
+        )
+        payload = json.dumps(
+            devices, ensure_ascii=False, separators=(",", ":"), sort_keys=True
+        )
+        if payload == self.last_payload:
+            return
+        try:
+            print(payload, flush=True)
+        except BrokenPipeError:
+            raise SystemExit(0) from None
+        self.last_payload = payload
+
+    def _stop(self, _signal_number: int, _frame: object) -> None:
+        self.loop.quit()
+
+
+def toggle_device(connection: Gio.DBusConnection, address: str) -> None:
+    """Connect or disconnect the BlueZ device identified by address."""
+    if not ADDRESS_PATTERN.fullmatch(address):
+        raise ValueError(f"invalid Bluetooth address: {address!r}")
+
+    normalized_address = address.upper()
+    for path, interfaces in get_managed_objects(connection).items():
+        properties = interfaces.get(DEVICE_INTERFACE)
+        if properties and properties.get("Address", "").upper() == normalized_address:
+            break
+    else:
+        raise ValueError(f"unknown Bluetooth device: {address}")
+
+    if properties.get("Connected", False):
+        connection.call_sync(
+            BLUEZ_SERVICE,
+            path,
+            DEVICE_INTERFACE,
+            "Disconnect",
+            None,
+            None,
+            Gio.DBusCallFlags.NONE,  # pylint: disable=no-member
+            ACTION_TIMEOUT_MS,
+            None,
+        )
+        return
+
+    if not properties.get("Trusted", False):
+        connection.call_sync(
+            BLUEZ_SERVICE,
+            path,
+            PROPERTIES_INTERFACE,
+            "Set",
+            GLib.Variant("(ssv)", (DEVICE_INTERFACE, "Trusted", GLib.Variant("b", True))),
+            None,
+            Gio.DBusCallFlags.NONE,  # pylint: disable=no-member
+            SNAPSHOT_TIMEOUT_MS,
+            None,
+        )
+    connection.call_sync(
+        BLUEZ_SERVICE,
+        path,
+        DEVICE_INTERFACE,
+        "Connect",
+        None,
+        None,
+        Gio.DBusCallFlags.NONE,  # pylint: disable=no-member
+        ACTION_TIMEOUT_MS,
+        None,
+    )
+
+
+def parse_args() -> argparse.Namespace:
+    """Parse the Eww-facing watcher and action commands."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    subparsers = parser.add_subparsers(dest="command", required=True)
+    subparsers.add_parser("watch", help="stream device state as JSON")
+    toggle_parser = subparsers.add_parser("toggle", help="connect or disconnect a device")
+    toggle_parser.add_argument("address")
+    return parser.parse_args()
+
+
+def main() -> int:
+    """Run the selected Bluetooth command."""
+    args = parse_args()
+    try:
+        connection = Gio.bus_get_sync(Gio.BusType.SYSTEM, None)
+        if args.command == "watch":
+            DeviceWatcher(connection).run()
+        else:
+            toggle_device(connection, args.address)
+    except (GLib.Error, ValueError) as error:
+        print(f"bluetooth: {error}", file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

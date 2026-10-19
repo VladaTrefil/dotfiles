@@ -23,6 +23,12 @@
     color: $blue;
   }
 
+  &__battery {
+    margin-left: $m;
+    color: $blue;
+    font-weight: bold;
+  }
+
   &__button {
     padding: $m * 2 $m * 5 $m * 2.1;
     margin-left: $m * 15;

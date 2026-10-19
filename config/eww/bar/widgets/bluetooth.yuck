@@ -9,13 +9,17 @@
       (button :onclick "./bar/scripts/pop bluetooth ${monitor}"
               :class "bluetooth__icon" ""))))
 
-(defwidget bluetooth_menu_device [address connected name]
+(defwidget bluetooth_menu_device [address battery connected name]
   (box :orientation 'h' :class 'bluetooth-menu__device'
     (box :space-evenly 'false'
       (label
         :class {connected ? "bluetooth-menu__icon bluetooth-menu__icon--connected" : "bluetooth-menu__icon bluetooth-menu__icon--paired"}
         :text {connected ? "" : ""})
-      (label :class 'bluetooth-menu__name' :text '${name}'))
+      (label :class 'bluetooth-menu__name' :text '${name}')
+      (label
+        :visible {battery != "null"}
+        :class 'bluetooth-menu__battery'
+        :text '(${battery}%)'))
     (box :space-evenly 'false' :halign 'end'
       (eventbox :cursor 'pointer'
         (button
@@ -39,5 +43,6 @@
         (for device in bluetooth_devices
           (bluetooth_menu_device
             :address {device.address}
+            :battery {device.battery}
             :connected {device.connected}
             :name {device.name}))))))

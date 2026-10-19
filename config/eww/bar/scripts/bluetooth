@@ -23,6 +23,7 @@ DBUS_INTERFACE = "org.freedesktop.DBus"
 OBJECT_MANAGER_INTERFACE = "org.freedesktop.DBus.ObjectManager"
 PROPERTIES_INTERFACE = "org.freedesktop.DBus.Properties"
 DEVICE_INTERFACE = "org.bluez.Device1"
+BATTERY_INTERFACE = "org.bluez.Battery1"
 SNAPSHOT_TIMEOUT_MS = 2_000
 ACTION_TIMEOUT_MS = 10_000
 ADDRESS_PATTERN = re.compile(r"^(?:[0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$")
@@ -53,6 +54,7 @@ class DeviceWatcher:
     def __init__(self, connection: Gio.DBusConnection) -> None:
         self.connection = connection
         self.devices: dict[str, dict[str, Any]] = {}
+        self.batteries: dict[str, dict[str, Any]] = {}
         self.last_payload: str | None = None
         self.loop = GLib.MainLoop()
 
@@ -71,6 +73,16 @@ class DeviceWatcher:
             "PropertiesChanged",
             None,
             DEVICE_INTERFACE,
+            Gio.DBusSignalFlags.NONE,
+            self._properties_changed,
+            None,
+        )
+        self.connection.signal_subscribe(
+            None,
+            PROPERTIES_INTERFACE,
+            "PropertiesChanged",
+            None,
+            BATTERY_INTERFACE,
             Gio.DBusSignalFlags.NONE,
             self._properties_changed,
             None,
@@ -111,6 +123,7 @@ class DeviceWatcher:
             objects = get_managed_objects(self.connection)
         except GLib.Error as error:
             self.devices.clear()
+            self.batteries.clear()
             self._emit()
             print(f"bluetooth: BlueZ is unavailable: {error}", file=sys.stderr)
             return
@@ -119,6 +132,11 @@ class DeviceWatcher:
             path: dict(interfaces[DEVICE_INTERFACE])
             for path, interfaces in objects.items()
             if DEVICE_INTERFACE in interfaces
+        }
+        self.batteries = {
+            path: dict(interfaces[BATTERY_INTERFACE])
+            for path, interfaces in objects.items()
+            if DEVICE_INTERFACE in interfaces and BATTERY_INTERFACE in interfaces
         }
         self._emit()
 
@@ -133,14 +151,22 @@ class DeviceWatcher:
         _user_data: object,
     ) -> None:
         changed_interface, changed, invalidated = parameters.unpack()
-        if changed_interface != DEVICE_INTERFACE or not object_path.startswith("/org/bluez/"):
+        if not object_path.startswith("/org/bluez/"):
             return
-        if object_path not in self.devices:
+
+        if changed_interface == DEVICE_INTERFACE:
+            properties = self.devices.get(object_path)
+        elif changed_interface == BATTERY_INTERFACE and object_path in self.devices:
+            properties = self.batteries.setdefault(object_path, {})
+        else:
+            return
+
+        if properties is None:
             self._reload()
             return
-        self.devices[object_path].update(changed)
+        properties.update(changed)
         for property_name in invalidated:
-            self.devices[object_path].pop(property_name, None)
+            properties.pop(property_name, None)
         self._emit()
 
     def _interfaces_added(
@@ -154,9 +180,20 @@ class DeviceWatcher:
         _user_data: object,
     ) -> None:
         device_path, interfaces = parameters.unpack()
-        if not device_path.startswith("/org/bluez/") or DEVICE_INTERFACE not in interfaces:
+        if not device_path.startswith("/org/bluez/"):
             return
-        self.devices[device_path] = dict(interfaces[DEVICE_INTERFACE])
+
+        device = interfaces.get(DEVICE_INTERFACE)
+        battery = interfaces.get(BATTERY_INTERFACE)
+        if device is None and battery is None:
+            return
+        if device is not None:
+            self.devices[device_path] = dict(device)
+        if battery is not None:
+            if device_path not in self.devices:
+                self._reload()
+                return
+            self.batteries[device_path] = dict(battery)
         self._emit()
 
     def _interfaces_removed(
@@ -170,9 +207,13 @@ class DeviceWatcher:
         _user_data: object,
     ) -> None:
         device_path, interfaces = parameters.unpack()
-        if DEVICE_INTERFACE not in interfaces:
+        if DEVICE_INTERFACE not in interfaces and BATTERY_INTERFACE not in interfaces:
             return
-        self.devices.pop(device_path, None)
+        if DEVICE_INTERFACE in interfaces:
+            self.devices.pop(device_path, None)
+            self.batteries.pop(device_path, None)
+        else:
+            self.batteries.pop(device_path, None)
         self._emit()
 
     def _name_owner_changed(
@@ -190,17 +231,19 @@ class DeviceWatcher:
             self._reload()
         else:
             self.devices.clear()
+            self.batteries.clear()
             self._emit()
 
     def _emit(self) -> None:
         devices = []
-        for properties in self.devices.values():
+        for path, properties in self.devices.items():
             address = properties.get("Address")
             if not address:
                 continue
             devices.append(
                 {
                     "address": address,
+                    "battery": self.batteries.get(path, {}).get("Percentage"),
                     "connected": bool(properties.get("Connected", False)),
                     "name": properties.get("Alias") or properties.get("Name") or address,
                 }

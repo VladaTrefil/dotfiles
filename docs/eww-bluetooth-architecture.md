@@ -135,13 +135,17 @@ to interfaces, to property maps. A device resembles:
     Alias     = "Major V"
     Connected = true
     Trusted   = true
+  org.bluez.Battery1
+    Percentage = 76
 ```
 
-The watcher keeps only objects that expose `org.bluez.Device1`. Their complete
-property dictionaries are stored in memory by BlueZ object path:
+The watcher keeps only objects that expose `org.bluez.Device1`. Device and
+battery property dictionaries are stored separately under the same BlueZ
+object path:
 
 ```python
-self.devices[object_path] = properties
+self.devices[object_path] = device_properties
+self.batteries[object_path] = battery_properties
 ```
 
 The object path is BlueZ's internal device identity. The Bluetooth address is
@@ -153,12 +157,14 @@ watcher can recover when BlueZ returns.
 
 ## D-Bus signal subscriptions
 
-`DeviceWatcher._subscribe()` installs four subscriptions.
+`DeviceWatcher._subscribe()` installs five subscriptions: one property
+subscription each for `Device1` and `Battery1`, plus the three lifecycle
+subscriptions below.
 
 ### `PropertiesChanged`
 
 This signal is emitted when device properties such as `Connected`, `Alias`, or
-`Trusted` change. The signal carries:
+`Trusted` change, and when `Battery1.Percentage` changes. The signal carries:
 
 ```text
 changed interface
@@ -166,28 +172,30 @@ changed properties
 invalidated properties
 ```
 
-The callback rejects signals that are not for `org.bluez.Device1` or whose
-object path is outside `/org/bluez/`. For a known object, it merges the changed
-properties into the cache, removes invalidated properties, and calls `_emit()`.
+The two subscriptions filter for `org.bluez.Device1` and
+`org.bluez.Battery1`. For a known object, the shared callback selects the
+matching cache, merges changed properties, removes invalidated properties,
+and calls `_emit()`.
 
 If the object is not in the cache, the watcher performs a complete `_reload()`
 instead. This restores a consistent snapshot rather than guessing the missing
 device state.
 
 This signal normally changes the menu button from `connect` to `disconnect`
-after a connection succeeds.
+after a connection succeeds and refreshes the displayed battery percentage
+when the headset reports a new value.
 
 ### `InterfacesAdded`
 
-BlueZ emits this when a new D-Bus interface appears. If the new interface map
-contains `org.bluez.Device1`, the callback adds its initial properties to the
-cache and emits a new device list.
+BlueZ emits this when a new D-Bus interface appears. The callback adds initial
+`Device1` and `Battery1` properties to their caches and emits a new device
+list. `Battery1` can appear after the device's services finish resolving.
 
 ### `InterfacesRemoved`
 
-BlueZ emits this when interfaces disappear. If `org.bluez.Device1` was removed,
-the callback removes that object path from the cache and emits the reduced
-list.
+BlueZ emits this when interfaces disappear. Removing `Battery1` clears only
+the percentage; removing `Device1` clears both caches for that object path.
+The callback then emits the updated device list.
 
 ### `NameOwnerChanged`
 
@@ -209,6 +217,7 @@ JSON structure needed by the UI:
 [
   {
     "address": "00:25:D1:44:F9:2E",
+    "battery": 76,
     "connected": true,
     "name": "Major V"
   }
@@ -218,6 +227,7 @@ JSON structure needed by the UI:
 For every device:
 
 - `address` comes from `Address`.
+- `battery` comes from `Battery1.Percentage` and is `null` when unavailable.
 - `connected` comes from `Connected` and defaults to `false`.
 - `name` prefers `Alias`, then `Name`, then the address.
 
@@ -238,8 +248,10 @@ over `bluetooth_devices` with:
 ```
 
 Each device's `connected` value directly determines its icon, CSS classes,
-button label, and action. If Eww closes the listening pipe, Python receives a
-broken pipe and exits normally. `SIGINT` and `SIGTERM` stop the GLib main loop.
+button label, and action. A non-null `battery` value renders after the device
+name as bold blue text such as `(76%)`; devices without `Battery1` show no
+battery label. If Eww closes the listening pipe, Python receives a broken pipe
+and exits normally. `SIGINT` and `SIGTERM` stop the GLib main loop.
 
 ## Connect and disconnect actions
 

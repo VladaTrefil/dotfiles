@@ -21,10 +21,10 @@ sudo ./install system --root --user "$(id -un)"
 ```
 
 The repository never invokes `sudo` itself. The packages phase idempotently
-enables the reviewed SwayFX COPR, RPM Fusion free, and the system Flathub
-remote. It installs the RPM and Flatpak manifests only after showing the
-actions and receiving the exact confirmation `yes`. Existing link conflicts
-still require a manual decision.
+enables the reviewed SwayFX COPR, RPM Fusion free, the official 1Password
+stable RPM repository, and the system Flathub remote. It installs the RPM and
+Flatpak manifests only after showing the actions and receiving the exact
+confirmation `yes`. Existing link conflicts still require a manual decision.
 
 The desktop group downloads the pinned Fedora 44 Wayland eww RPM in
 `provision/releases.json`; the apps group does the same for Lens. Both are
@@ -162,10 +162,11 @@ Refresh an assistant pin as one reviewed change:
 
 ## 1Password and the secrets manifest
 
-`./install tools` installs only the checksum-pinned 1Password CLI. The
-1Password desktop application is deliberately not installed; install it
-manually if desktop integration or biometric unlock is wanted, then enable its
-CLI integration and sign in.
+`./install tools` installs the checksum-pinned 1Password CLI. The `apps`
+package group imports 1Password's signing key, installs the reviewed stable RPM
+repository definition from `provision/1password.repo`, and installs the native
+`1password` desktop package. Enable the app's CLI integration and sign in after
+installation.
 
 Keep the real manifest at
 `${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/secrets.tsv`, outside this checkout.

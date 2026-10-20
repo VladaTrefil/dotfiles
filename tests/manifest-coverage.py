@@ -65,16 +65,43 @@ apps_plan = subprocess.run(
     capture_output=True,
     text=True,
 ).stdout
+apps_plan_lines = apps_plan.splitlines()
 dnf_commands = [
     shlex.split(line)
-    for line in apps_plan.splitlines()
+    for line in apps_plan_lines
     if line.startswith('dnf install -y -- ')
 ]
 dnf_upgrade_commands = [
     shlex.split(line)
-    for line in apps_plan.splitlines()
+    for line in apps_plan_lines
     if line.startswith('dnf upgrade -y -- ')
 ]
+onepassword_key_command = [
+    'rpm',
+    '--import',
+    'https://downloads.1password.com/linux/keys/1password.asc',
+]
+onepassword_repo_command = [
+    'install',
+    '-m',
+    '0644',
+    '--',
+    str(root / 'provision/1password.repo'),
+    '/etc/yum.repos.d/1password.repo',
+]
+parsed_plan_lines = [shlex.split(line) for line in apps_plan_lines]
+if onepassword_key_command not in parsed_plan_lines:
+    failures.append(
+        'the apps package plan does not import the official 1Password signing key'
+    )
+if onepassword_repo_command not in parsed_plan_lines:
+    failures.append(
+        'the apps package plan does not install the reviewed 1Password repository file'
+    )
+if not any('1password' in command for command in dnf_commands):
+    failures.append(
+        "the apps package plan omits the native '1password' desktop package"
+    )
 if not any('iwlwifi-mvm-firmware' in command for command in dnf_commands):
     failures.append(
         "the apps package plan omits 'iwlwifi-mvm-firmware', so the Intel "

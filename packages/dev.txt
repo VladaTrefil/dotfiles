@@ -16,3 +16,9 @@ zlib-ng-compat-devel
 libffi-devel
 gdbm-devel
 perl-FindBin
+
+# QMK firmware builds for ARM controllers, including Liatris/RP2040.
+arm-none-eabi-binutils-cs
+arm-none-eabi-gcc-cs
+arm-none-eabi-gcc-cs-c++
+arm-none-eabi-newlib

@@ -139,7 +139,7 @@ def visit(path):
         for child in sorted(path.iterdir()):
             visit(child)
 
-for name in ['.config', '.local', '.cache', '.zshenv']:
+for name in ['.config', '.local', '.cache', '.zshenv', '.codex', '.claude']:
     visit(home / name)
 print(json.dumps(rows, indent=2))
 PY
@@ -179,10 +179,12 @@ cursor_theme="$test_home/.local/share/icons/catppuccin-mocha-pink-cursors"
    $(< "$test_home/gsettings/cursor-size") == 32 ]] ||
     fail 'Link install did not synchronize the desktop cursor settings'
 printf 'PASS: clean/default run creates the Git and Neovim links and XDG directories (exit 0).\n'
-links=(.config/git .config/nvim .config/shell/profile .config/shell/aliases.sh
-    .config/shell/inputrc .config/zsh .config/wgetrc .zshenv)
-sources=(config/git modules/nvim config/shell/profile config/shell/aliases.sh
-    config/shell/inputrc config/zsh config/wgetrc config/zsh/.zshenv)
+links=(.codex/AGENTS.md .claude/CLAUDE.md
+  .config/git .config/nvim .config/shell/profile .config/shell/aliases.sh
+  .config/shell/inputrc .config/zsh .config/wgetrc .zshenv)
+sources=(config/assistants/instructions.md config/assistants/instructions.md
+  config/git modules/nvim config/shell/profile config/shell/aliases.sh
+  config/shell/inputrc config/zsh config/wgetrc config/zsh/.zshenv)
 for name in asdf stylelint stylua rubocop solargraph npm pry bat lazygit; do
     links+=(".config/$name")
     sources+=("config/$name")

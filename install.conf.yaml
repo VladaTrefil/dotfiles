@@ -31,8 +31,13 @@
     - $XDG_CONFIG_HOME/bundle
     - $XDG_DATA_HOME/applications
     - ~/.local/bin
+    # Link only instruction files; assistant runtime state stays unmanaged.
+    - ~/.codex
+    - ~/.claude
 
 - link:
+    ~/.codex/AGENTS.md: config/assistants/instructions.md
+    ~/.claude/CLAUDE.md: config/assistants/instructions.md
     $XDG_CONFIG_HOME/git: config/git
     $XDG_CONFIG_HOME/nvim: modules/nvim
     $XDG_CONFIG_HOME/shell/profile: config/shell/profile

@@ -80,6 +80,14 @@ It never cleans directories or replaces an existing link. Python bytecode is
 disabled during linking, so it leaves no interpreter cache in the repository.
 Git may update its own submodule metadata during initialization.
 
+Codex's `~/.codex/AGENTS.md` and Claude's `~/.claude/CLAUDE.md` share
+`config/assistants/instructions.md`. These global rules require linting and
+formatting changed code with project-local configuration when available, falling
+back to the current Neovim tool mappings and global settings otherwise. Unrelated
+lint or format cleanup must be committed separately. Existing instruction files
+are preserved as link conflicts: merge their rules into the shared source and
+move the old files aside before running `./install link`.
+
 The Neovim submodule tracks `main` at `https://github.com/VladaTrefil/nvim.git`.
 Public submodules clone over HTTPS without credentials. The linked Git config
 uses `pushInsteadOf` for this Neovim URL so pushes use

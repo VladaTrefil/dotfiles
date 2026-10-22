@@ -10,6 +10,7 @@
 (include "./bar/widgets/time.yuck")
 
 (include "./bar/widgets/network.yuck")
+(include "./bar/widgets/agents.yuck")
 (include "./bar/widgets/system.yuck")
 (include "./bar/widgets/bluetooth.yuck")
 (include "./bar/widgets/audio.yuck")
@@ -38,6 +39,7 @@
     (volume)
     (bluetooth :monitor monitor)
     (network)
+    (agents)
     (system_widget :monitor monitor)))
 
 (defwindow bar [monitor]

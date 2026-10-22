@@ -1,0 +1,15 @@
+(defpoll agent_counts :initial '{"running":0,"waiting":0}' :interval "3s" "./bar/scripts/agents")
+
+(defwidget agents []
+  (box :class "agents"
+       :orientation "h"
+       :space-evenly false
+    (label :class "agents__icon" :text "")
+    (label :class "agents__count agents__count--waiting"
+           :valign "center"
+           :tooltip "Waiting agents"
+           :text {agent_counts.waiting})
+    (label :class "agents__count agents__count--running"
+           :valign "center"
+           :tooltip "Waiting agents"
+           :text {agent_counts.running})))

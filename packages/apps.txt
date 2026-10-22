@@ -6,6 +6,7 @@ bluez # Provides bluetoothd and its D-Bus API for the active Eww Bluetooth widge
 iwlwifi-mvm-firmware # Intel AX210 Wi-Fi firmware; pulls the matching Intel Bluetooth firmware.
 jq # Renders Sway workspace state.
 python3-gobject-base # Provides the Gio D-Bus bindings used by the Eww Bluetooth watcher.
+python3-websockets # Reads the local Codex daemon for the Eww agent counts.
 
 inkscape
 chromium

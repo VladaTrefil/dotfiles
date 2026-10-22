@@ -87,6 +87,7 @@ printf 'PASS: IBus Wayland user unit verifies.\n'
 python3 "$repo_dir/tests/sway-bindings.py"
 python3 "$repo_dir/tests/eww-checks.py"
 python3 "$repo_dir/tests/eww_bluetooth_checks.py"
+python3 "$repo_dir/tests/eww_agents_checks.py"
 python3 "$repo_dir/tests/secret-service-checks.py"
 python3 "$repo_dir/tests/font-families.py"
 python3 "$repo_dir/tests/kitty-config.py"

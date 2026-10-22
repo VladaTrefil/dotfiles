@@ -186,3 +186,35 @@ $widget-row-padding: $m * 2 $m * 4 $m * 2 $m * 4;
     color: $light-pink;
   }
 }
+
+.agents {
+  @include widget;
+  padding: $m * 2 $m * 3 $m * 2 $m * 3;
+
+  &__icon {
+    font-family: $awesome;
+    font-size: $bar-icon-size;
+    color: $purple;
+    margin-right: 15px;
+    padding-bottom: 1px;
+  }
+
+  &__count {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 12px;
+    min-height: 12px;
+    padding: 2px;
+
+    &--waiting {
+      background-color: $red;
+      border-radius: 5px 0 0 5px;
+    }
+
+    &--running {
+      background-color: $purple;
+      border-radius: 0 5px 5px 0;
+    }
+  }
+}

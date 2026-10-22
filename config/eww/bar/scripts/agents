@@ -5,17 +5,20 @@ from __future__ import annotations
 
 import json
 import os
+import socket
 import subprocess
 import sys
 import time
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
 from websockets.exceptions import WebSocketException
 from websockets.sync.client import unix_connect
 from websockets.sync.connection import Connection
 
 TIMEOUT = 2
+CLIENT_TIMEOUT = 0.2
 
 
 def codex_state(thread: dict[str, Any]) -> str | None:
@@ -102,10 +105,38 @@ def rpc(
             return message["result"]
 
 
+def codex_client_alive(servers: list[dict[str, Any]], clients: dict[str, bool]) -> bool:
+    """Drop cached TUIs whose local task-tool service has stopped listening."""
+    for server in servers:
+        origin = server.get("httpOrigin")
+        if server.get("name") != "codex_tui" or not origin:
+            continue
+        endpoint = urlsplit(origin)
+        if (
+            endpoint.scheme != "http"
+            or endpoint.hostname not in {"127.0.0.1", "::1"}
+            or endpoint.port is None
+        ):
+            # Other clients and transports have no equivalent local liveness signal.
+            return True
+        if origin not in clients:
+            try:
+                with socket.create_connection(
+                    (endpoint.hostname, endpoint.port),
+                    timeout=CLIENT_TIMEOUT,
+                ):
+                    clients[origin] = True
+            except OSError:
+                clients[origin] = False
+        return clients[origin]
+    return True
+
+
 def codex_threads(config_home: Path) -> list[dict[str, Any]]:
     """Query the existing daemon without loading, resuming, or starting threads."""
     socket_path = config_home / "app-server-control/app-server-control.sock"
     threads = []
+    clients: dict[str, bool] = {}
     with unix_connect(
         str(socket_path), open_timeout=TIMEOUT, close_timeout=0.2
     ) as connection:
@@ -139,7 +170,26 @@ def codex_threads(config_home: Path) -> list[dict[str, Any]]:
                 except RuntimeError:
                     # A session can close between listing it and reading its status.
                     continue
-                threads.append(result["thread"])
+                thread = result["thread"]
+                if thread.get("originator") == "codex-tui" and codex_state(thread):
+                    request_id += 1
+                    try:
+                        inventory = rpc(
+                            connection,
+                            request_id,
+                            "mcpServerStatus/list",
+                            {
+                                "threadId": thread_id,
+                                "serverName": "codex_tui",
+                                "detail": "toolsAndAuthOnly",
+                            },
+                        )
+                    except RuntimeError:
+                        # Older servers may not expose per-thread client metadata.
+                        inventory = {"data": []}
+                    if not codex_client_alive(inventory["data"], clients):
+                        continue
+                threads.append(thread)
             cursor = loaded.get("nextCursor")
             if not cursor:
                 return threads

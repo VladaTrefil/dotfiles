@@ -3,9 +3,13 @@
 
 import json
 import runpy
+import socket
+import subprocess
+import sys
 import tempfile
 import threading
 import unittest
+from contextlib import contextmanager
 from pathlib import Path
 from unittest.mock import patch
 
@@ -32,6 +36,65 @@ def codex_thread(thread_id, status, preview="Implement the task", **extra):
         "turns": [],
         **extra,
     }
+
+
+@contextmanager
+def codex_daemon(home, threads, origins=None):
+    """Keep cached sessions and MCP metadata alive independently of their TUIs."""
+    socket_dir = home / "app-server-control"
+    socket_dir.mkdir()
+    origins = origins or {}
+
+    def respond(connection):
+        for raw in connection:
+            request = json.loads(raw)
+            if "id" not in request:
+                continue
+            method = request["method"]
+            if method == "initialize":
+                result = {}
+            elif method == "thread/loaded/list":
+                # A second page catches collectors that stop at the first page.
+                remaining = bool(request["params"].get("cursor"))
+                result = {
+                    "data": list(threads)[2:] if remaining else list(threads)[:2],
+                    "nextCursor": None if remaining or len(threads) <= 2 else "next",
+                }
+            elif method == "thread/read":
+                result = {"thread": threads[request["params"]["threadId"]]}
+            elif method == "mcpServerStatus/list":
+                origin = origins.get(request["params"]["threadId"])
+                result = {
+                    "data": (
+                        []
+                        if origin is None
+                        else [
+                            {
+                                "name": "codex_tui",
+                                "httpOrigin": origin,
+                                "runtimeStatus": "connected",
+                                "authStatus": "unsupported",
+                                "tools": {},
+                                "resources": [],
+                                "resourceTemplates": [],
+                            }
+                        ]
+                    ),
+                    "nextCursor": None,
+                }
+            else:
+                raise AssertionError(f"Unexpected mutating request: {method}")
+            connection.send(json.dumps({"method": "unrelated/notification"}))
+            connection.send(json.dumps({"id": request["id"], "result": result}))
+
+    with unix_serve(respond, str(socket_dir / "app-server-control.sock")) as server:
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        try:
+            yield
+        finally:
+            server.shutdown()
+            worker.join(timeout=2)
 
 
 class AgentChecks(unittest.TestCase):
@@ -161,46 +224,75 @@ class AgentChecks(unittest.TestCase):
 
     def test_codex_reads_existing_daemon_over_websocket_with_pagination(self):
         """Real socket framing, notifications, and pagination preserve all sessions."""
-        socket_dir = self.home / "app-server-control"
-        socket_dir.mkdir()
         threads = {
             "running": codex_thread("running", {"type": "active", "activeFlags": []}),
             "empty": codex_thread("empty", {"type": "idle"}, preview=""),
             "waiting": codex_thread("waiting", {"type": "idle"}),
         }
 
-        def respond(connection):
-            for raw in connection:
-                request = json.loads(raw)
-                if "id" not in request:
-                    continue
-                method = request["method"]
-                if method == "initialize":
-                    result = {}
-                elif method == "thread/loaded/list":
-                    result = (
-                        {"data": ["waiting"], "nextCursor": None}
-                        if request["params"].get("cursor")
-                        else {"data": ["running", "empty"], "nextCursor": "next"}
-                    )
-                elif method == "thread/read":
-                    result = {"thread": threads[request["params"]["threadId"]]}
-                else:
-                    raise AssertionError(f"Unexpected mutating request: {method}")
-                connection.send(json.dumps({"method": "unrelated/notification"}))
-                connection.send(json.dumps({"id": request["id"], "result": result}))
+        with codex_daemon(self.home, threads):
+            result = self.agent["codex_threads"](self.home)
+            self.assertEqual(
+                [thread["id"] for thread in result], ["running", "empty", "waiting"]
+            )
 
-        with unix_serve(respond, str(socket_dir / "app-server-control.sock")) as server:
-            worker = threading.Thread(target=server.serve_forever, daemon=True)
-            worker.start()
-            try:
+    def test_killed_terminal_drops_cached_waiting_task_without_exit_hook(self):
+        """A force-killed terminal disappears even when its cached status is connected."""
+        threads = {
+            "task": codex_thread(
+                "task",
+                {"type": "idle"},
+                originator="codex-tui",
+            )
+        }
+        command = (
+            "import socket, sys; "
+            "server = socket.create_server(('127.0.0.1', 0)); "
+            "print(server.getsockname()[1], flush=True); sys.stdin.read()"
+        )
+        with subprocess.Popen(
+            [sys.executable, "-c", command],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            text=True,
+        ) as client:
+            self.assertIsNotNone(client.stdout)
+            origin = f"http://127.0.0.1:{client.stdout.readline().strip()}"
+            with codex_daemon(self.home, threads, {"task": origin}):
+                self.assertEqual(len(self.agent["codex_threads"](self.home)), 1)
+                client.kill()
+                client.wait(timeout=2)
+                self.assertEqual(self.agent["codex_threads"](self.home), [])
+
+    def test_dead_terminal_does_not_hide_live_terminal_or_other_clients(self):
+        """Filter per session, including pending prompts, rather than per daemon."""
+        with socket.create_server(("127.0.0.1", 0)) as closed:
+            dead_origin = f"http://127.0.0.1:{closed.getsockname()[1]}"
+        threads = {
+            "dead": codex_thread(
+                "dead",
+                {
+                    "type": "active",
+                    "activeFlags": ["waitingOnUserInput"],
+                },
+                originator="codex-tui",
+            ),
+            "live": codex_thread("live", {"type": "idle"}, originator="codex-tui"),
+            "other": codex_thread("other", {"type": "idle"}, originator="vscode"),
+            "unknown": codex_thread(
+                "unknown", {"type": "idle"}, originator="codex-tui"
+            ),
+        }
+        with socket.create_server(("127.0.0.1", 0)) as live:
+            origins = {
+                "dead": dead_origin,
+                "live": f"http://127.0.0.1:{live.getsockname()[1]}",
+            }
+            with codex_daemon(self.home, threads, origins):
                 result = self.agent["codex_threads"](self.home)
                 self.assertEqual(
-                    [thread["id"] for thread in result], ["running", "empty", "waiting"]
+                    [thread["id"] for thread in result], ["live", "other", "unknown"]
                 )
-            finally:
-                server.shutdown()
-                worker.join(timeout=2)
 
     def test_unavailable_codex_does_not_hide_working_claude(self):
         """Failure of one provider leaves the other provider's count intact."""

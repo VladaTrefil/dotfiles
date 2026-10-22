@@ -147,10 +147,10 @@
   format = "<b>%s</b>\n%b"
 
 [urgency_low]
-  timeout = 3s
+  timeout = 5s
 
 [urgency_normal]
-  timeout = 3s
+  timeout = 10s
 
 [urgency_critical]
   timeout = 0

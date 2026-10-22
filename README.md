@@ -114,6 +114,7 @@ tests/sync-nvim-test.sh
 tests/fetch-assets-test.sh
 tests/bootstrap-test.sh
 tests/assistant-clis-test.sh
+tests/chromium-launcher-test.sh
 tests/lint.sh
 ```
 

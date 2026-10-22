@@ -197,7 +197,8 @@ links+=(.config/sway .config/eww .config/qt6ct/qt6ct.conf
     .config/gtk-3.0/settings.ini .config/gtk-4.0/settings.ini
     .config/environment.d/50-desktop.conf .config/mimeapps.list .config/zed
     .config/autostart/protonmail-bridge.desktop .local/share/applications/lf.desktop
-    .local/bin/ydl-clip.sh
+    .local/share/applications/chromium-browser.desktop
+    .local/bin/chromium-browser .local/bin/ydl-clip.sh
     .config/systemd/user/ibus-wayland.service
     .config/systemd/user/sway-session.target.wants/ibus-wayland.service
     .XCompose)
@@ -207,7 +208,8 @@ sources+=(config/sway config/eww config/qt6ct/qt6ct.conf
     config/gtk-3.0/settings.ini config/gtk-4.0/settings.ini
     config/environment.d/50-desktop.conf config/mimeapps.list config/zed
     local/autostart/protonmail-bridge.desktop local/applications/lf.desktop
-    local/bin/ydl-clip.sh
+    local/applications/chromium-browser.desktop
+    local/bin/chromium-browser local/bin/ydl-clip.sh
     config/systemd/user/ibus-wayland.service
     config/systemd/user/ibus-wayland.service
     config/compose/XCompose)

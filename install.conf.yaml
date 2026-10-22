@@ -75,7 +75,9 @@
     $XDG_CONFIG_HOME/autostart/protonmail-bridge.desktop: local/autostart/protonmail-bridge.desktop
     $XDG_CONFIG_HOME/systemd/user/ibus-wayland.service: config/systemd/user/ibus-wayland.service
     $XDG_CONFIG_HOME/systemd/user/sway-session.target.wants/ibus-wayland.service: config/systemd/user/ibus-wayland.service
+    $XDG_DATA_HOME/applications/chromium-browser.desktop: local/applications/chromium-browser.desktop
     $XDG_DATA_HOME/applications/lf.desktop: local/applications/lf.desktop
+    ~/.local/bin/chromium-browser: local/bin/chromium-browser
     ~/.local/bin/ydl-clip.sh: local/bin/ydl-clip.sh
     ~/.XCompose: config/compose/XCompose
     $XDG_CONFIG_HOME/ibus/Compose:

@@ -5,6 +5,14 @@
 - Preserve the repository's review, dry-run, privilege, and confirmation boundaries; run the relevant repository tests and verify the installed behavior afterward.
 - Project-local dependencies managed by a project's own manifest and lockfile are outside this rule unless the user asks to provision them globally.
 
+# MCP credentials
+
+- When adding or changing a Codex MCP server that requires API keys or static tokens, add or update every required credential's variable-to-reference mapping in `${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/codex-mcp.env` as part of the same task. For HTTP servers, configure `http_headers_helper` to run `~/Development/dotfiles/bin/codex-mcp-headers` with matching `HEADER=ENV_NAME` arguments or `--bearer ENV_NAME`; use an absolute executable path in the actual configuration. Client environment variables alone do not refresh an already-running Codex daemon. For stdio servers, arrange equivalent 1Password retrieval in the server's launcher.
+- Store only `op://` secret references in that file. Preserve existing entries and keep `config/codex-mcp.env.example` and setup documentation in sync using synthetic references. Never put resolved keys in tracked configuration, shell startup exports, command history, or diagnostics.
+- On Linux, use the official `1password-cli` package for desktop integration and select its binary with `--op /usr/bin/op` in HTTP helper commands. A user-local `op` can shadow the package binary and lack the group/setgid permissions required by the desktop app; provision the package through the dotfiles `onepassword` or `apps` group rather than changing these permissions manually.
+- If a required 1Password item or reference is unavailable, ask for the secret reference rather than the key and report the setup as incomplete until it is supplied. Do not invent references or silently omit a required credential.
+- Verify the MCP server authenticates from a normal `codex` launch, including with an already-running daemon, without displaying credential values. Servers that use OAuth or need no credentials do not require a reference entry unless they also need an API key or static token.
+
 # Code linting and formatting
 
 - Always format and lint code you create or change before completing a task. Prefer the project's commands and dependencies.

@@ -162,11 +162,28 @@ Refresh an assistant pin as one reviewed change:
 
 ## 1Password and the secrets manifest
 
-`./install tools` installs the checksum-pinned 1Password CLI. The `apps`
-package group imports 1Password's signing key, installs the reviewed stable RPM
-repository definition from `provision/1password.repo`, and installs the native
-`1password` desktop package. Enable the app's CLI integration and sign in after
-installation.
+`./install tools` installs a checksum-pinned user-local 1Password CLI for
+standalone use. Desktop integration on Linux additionally requires the
+package-managed `1password-cli`: its binary has the `onepassword-cli` group and
+setgid permission that the desktop app verifies. The `apps` package group
+imports 1Password's signing key, installs the reviewed stable RPM repository
+definition from `provision/1password.repo`, and installs both `1password` and
+`1password-cli`. Enable the app's CLI integration and sign in after installation.
+
+An existing `~/.local/bin/op` can shadow `/usr/bin/op`. Use `/usr/bin/op` when
+checking desktop integration, and use `--op /usr/bin/op` in the MCP helper
+configuration below. Do not repair ownership or setgid permissions on a
+user-writable binary manually. Review and run the documented package workflow:
+
+```sh
+./install packages --group onepassword --dry-run
+sudo ./install packages --group onepassword
+```
+
+The actual package phase requires root and the exact confirmation `yes`; review
+its complete plan before accepting it. This focused group configures the
+official repository and installs only the 1Password desktop and CLI packages.
+The broader `apps` group includes these packages as well.
 
 Keep the real manifest at
 `${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/secrets.tsv`, outside this checkout.
@@ -181,6 +198,56 @@ whole credential set even though those two values are not secrets. Review the
 remaining need for `GITHUB_PASSWORD`: if a current consumer still exists now
 that `install-base.sh` is gone, a least-privilege fine-grained GitHub token is a
 better fit than an account password.
+
+### Codex MCP API keys
+
+Keep MCP API keys in 1Password and their literal references in
+`${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/codex-mcp.env`. Create the containing
+directory with mode `0700` and the file with mode `0600`. Use
+`config/codex-mcp.env.example` as a starting point without overwriting an existing
+file, then replace the example with the field's Copy Secret Reference value.
+Only `NAME=op://...`, `NAME="op://..."`, and `NAME='op://...'` rows, blank lines,
+and full-line comments are supported. Values are literal: there is no expansion,
+multiline syntax, or inline-comment syntax. Plaintext credentials are rejected.
+
+For Stitch, configure `~/.codex/config.toml` as follows, using the actual absolute
+path of this checkout:
+
+```toml
+[mcp_servers.stitch]
+url = "https://stitch.googleapis.com/mcp"
+http_headers_helper = "/home/vlada/Development/dotfiles/bin/codex-mcp-headers --op /usr/bin/op X-Goog-Api-Key=STITCH_API_KEY"
+startup_timeout_sec = 120
+tool_timeout_sec = 300
+```
+
+Remove the previous `env_http_headers` entry for this server. Then launch
+`codex` normally and approve 1Password's desktop authorization prompt if asked.
+Use `/mcp` to check the connection without displaying its headers. Missing
+references or failed authorization stop header generation; the helper emits no
+partial headers or 1Password error output. If authentication fails, authorize
+1Password CLI and check that the copied reference points to the correct field.
+
+The native helper retrieves only the variables named in its arguments using
+`op read`. It returns JSON directly to Codex without exporting keys into Kitty,
+your parent shell, or agent shell commands. Do not run the helper directly in a
+terminal: its standard output is the credential-bearing protocol response.
+Codex caches the returned headers for its connection, so locking 1Password does
+not clear an existing connection's key. Revocation or rotation happens at the
+API provider. The shared daemon and Eww integration remain available. An
+`op run -- codex` shell wrapper was rejected after an isolated Codex 0.163.0 test
+showed the daemon reused its original environment after a later client supplied
+a changed key.
+
+For another HTTP MCP, add each required key's reference to the same file and add
+`HEADER=ENV_NAME` arguments to that server's helper command. Use
+`--bearer ENV_NAME` when it needs `Authorization: Bearer ...`. Duplicate header
+names, missing references, empty credentials, and HTTP control characters are
+rejected. OAuth-only and anonymous servers need no entry. Stdio MCP servers
+need equivalent retrieval in their server launcher; the HTTP helper does not
+launch stdio servers. Update the reference template and these instructions as
+needed, and verify new credentials with an already-running daemon. The shared
+global agent instructions require this registration as part of an MCP addition.
 
 ## GNOME Keyring login auto-unlock
 

@@ -1,0 +1,130 @@
+#!/usr/bin/env python3
+"""Supply Codex MCP HTTP headers from literal 1Password secret references."""
+
+# pylint: disable=invalid-name  # Match the repository's executable naming convention.
+
+import argparse
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+ENV_NAME = re.compile(r"[A-Z_][A-Z0-9_]*")
+HEADER_NAME = re.compile(r"[!#$%&'*+.^_`|~0-9A-Za-z-]+")
+REFERENCE = re.compile(r'op://[^/\r\n"]+/[^/\r\n"]+/[^\r\n"]+')
+
+
+def read_references(path: Path) -> dict[str, str]:
+    """Read the reference-only subset of dotenv syntax without expansion."""
+    references: dict[str, str] = {}
+    for number, raw_line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        name, separator, value = line.partition("=")
+        name, value = name.strip(), value.strip()
+        if value[:1] in ("'", '"') and value[-1:] == value[:1]:
+            value = value[1:-1]
+        if (
+            not separator
+            or not ENV_NAME.fullmatch(name)
+            or name in references
+            or not REFERENCE.fullmatch(value)
+            or any(ord(char) < 32 for char in value)
+        ):
+            raise ValueError(f"Invalid secret reference on line {number}.")
+        references[name] = value
+    return references
+
+
+def header_mappings(args: argparse.Namespace) -> list[tuple[str, str, str]]:
+    """Validate header-to-variable mappings before retrieving any credentials."""
+    mappings = []
+    for variable in args.bearer:
+        mappings.append(("Authorization", variable, "Bearer "))
+    for mapping in args.headers:
+        header, separator, variable = mapping.partition("=")
+        if not separator:
+            raise ValueError("Expected a HEADER=ENV_NAME mapping.")
+        mappings.append((header, variable, ""))
+    names = set()
+    for header, variable, _prefix in mappings:
+        if (
+            not HEADER_NAME.fullmatch(header)
+            or not ENV_NAME.fullmatch(variable)
+            or header.lower() in names
+        ):
+            raise ValueError("Invalid or duplicate header mapping.")
+        names.add(header.lower())
+    if not mappings:
+        raise ValueError("At least one header mapping is required.")
+    return mappings
+
+
+def main() -> int:
+    """Emit a complete JSON header object, or fail without emitting credentials."""
+    config_home = Path(os.environ.get("XDG_CONFIG_HOME") or Path.home() / ".config")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--env-file", type=Path, default=config_home / "dotfiles/codex-mcp.env"
+    )
+    parser.add_argument(
+        "--op", type=Path, help="Path to the desktop-integrated 1Password CLI"
+    )
+    parser.add_argument("--bearer", metavar="ENV_NAME", action="append", default=[])
+    parser.add_argument("headers", nargs="*", metavar="HEADER=ENV_NAME")
+    args = parser.parse_args()
+    try:
+        mappings = header_mappings(args)
+        references = read_references(args.env_file)
+        variables = list(
+            dict.fromkeys(variable for _header, variable, _prefix in mappings)
+        )
+        for variable in variables:
+            if variable not in references:
+                raise ValueError(f"Missing secret reference for {variable}.")
+        op = str(args.op.resolve()) if args.op else shutil.which("op")
+        if not op or not os.path.isfile(op) or not os.access(op, os.X_OK):
+            raise ValueError(
+                "1Password CLI is missing; for Linux desktop integration, "
+                "run ./install packages --group onepassword as root after reviewing --dry-run."
+            )
+        credentials = {}
+        for variable in variables:
+            try:
+                result = subprocess.run(
+                    [op, "read", "--no-newline", references[variable]],
+                    stdin=subprocess.DEVNULL,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.DEVNULL,
+                    text=True,
+                    check=True,
+                    timeout=120,
+                )
+            except (OSError, subprocess.SubprocessError, UnicodeError):
+                raise ValueError(
+                    f"Cannot retrieve {variable}; authorize 1Password and check its reference."
+                ) from None
+            value = result.stdout
+            if not value or any(ord(char) < 32 or ord(char) == 127 for char in value):
+                raise ValueError(f"Invalid HTTP credential for {variable}.")
+            credentials[variable] = value
+        headers = {
+            header: prefix + credentials[variable]
+            for header, variable, prefix in mappings
+        }
+    except (OSError, UnicodeError):
+        print("Cannot read the Codex MCP secret-reference file.", file=sys.stderr)
+        return 1
+    except ValueError as error:
+        print(str(error), file=sys.stderr)
+        return 1
+    print(json.dumps(headers))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

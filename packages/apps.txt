@@ -2,6 +2,7 @@
 ca-certificates
 gnupg2 # Fedora name for GnuPG command and key tooling.
 1password # Native desktop app from the official 1Password stable RPM repository.
+1password-cli # Desktop integration needs the package-managed onepassword-cli group and setgid binary.
 bluez # Provides bluetoothd and its D-Bus API for the active Eww Bluetooth widget.
 iwlwifi-mvm-firmware # Intel AX210 Wi-Fi firmware; pulls the matching Intel Bluetooth firmware.
 jq # Renders Sway workspace state.

@@ -48,6 +48,7 @@ install_packages() {
     local onepassword_repo_source="$repo_dir/provision/1password.repo"
     local onepassword_repo_target='/etc/yum.repos.d/1password.repo'
     local apps_selected=false desktop_selected=false flatpak_selected=false copr_selected=false
+    local onepassword_selected=false
     local rpmfusion_pending=false flathub_pending=false ffmpeg_swap=false
     local -a files=() names=() packages=() flatpaks=() coprs=() command=() kernel_command=() rpm_groups=() release_args=()
     local -a pinned_rpms=() pending_coprs=()
@@ -80,7 +81,8 @@ install_packages() {
 
     for file in "${files[@]}"; do
         case "${file##*/}" in
-            apps.txt) apps_selected=true; rpm_groups+=(apps) ;;
+            apps.txt) apps_selected=true; onepassword_selected=true; rpm_groups+=(apps) ;;
+            onepassword.txt) onepassword_selected=true ;;
             desktop.txt) desktop_selected=true; rpm_groups+=(desktop) ;;
             flatpak.txt) flatpak_selected=true; continue ;;
             copr.txt) copr_selected=true; continue ;;
@@ -202,7 +204,7 @@ install_packages() {
         fi
         print_command dnf install -y -- "$rpmfusion_url"
     fi
-    if "$apps_selected"; then
+    if "$onepassword_selected"; then
         print_command rpm --import "$onepassword_key_url"
         print_command install -m 0644 -- "$onepassword_repo_source" "$onepassword_repo_target"
     fi
@@ -243,7 +245,7 @@ install_packages() {
     fi
     for line in "${pending_coprs[@]}"; do dnf copr enable -y "$line"; done
     if "$rpmfusion_pending"; then dnf install -y -- "$rpmfusion_url"; fi
-    if "$apps_selected"; then
+    if "$onepassword_selected"; then
         rpm --import "$onepassword_key_url"
         install -m 0644 -- "$onepassword_repo_source" "$onepassword_repo_target"
     fi

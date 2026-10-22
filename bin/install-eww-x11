@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+dry_run=false
+offline=false
+for argument in "$@"; do
+  case "$argument" in
+  --dry-run) dry_run=true ;;
+  --offline) offline=true ;;
+  -h | --help)
+    printf 'Usage: bin/install-eww-x11 [--dry-run] [--offline]\n'
+    exit 0
+    ;;
+  *)
+    printf 'Unknown option: %s\n' "$argument" >&2
+    exit 2
+    ;;
+  esac
+done
+
+fail() {
+  printf 'Error: %s\n' "$*" >&2
+  exit 1
+}
+digest() {
+  local result
+  result=$(sha256sum -- "$1")
+  printf '%s\n' "${result%% *}"
+}
+
+manifest=${DOTFILES_EWW_X11_MANIFEST:-$repo_dir/provision/eww-x11.json}
+metadata=$(jq -er '.version, .url, .sha256' "$manifest")
+mapfile -t fields <<<"$metadata"
+[[ ${#fields[@]} == 3 ]] || fail 'Invalid Eww X11 manifest'
+version=${fields[0]}
+url=${fields[1]}
+checksum=${fields[2]}
+[[ $url == https://* && $checksum =~ ^[0-9a-f]{64}$ ]] || fail 'Invalid source URL or SHA-256'
+
+cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles/eww-x11
+state_dir=${XDG_STATE_HOME:-$HOME/.local/state}/dotfiles
+target_dir=$HOME/.local/bin
+target=$target_dir/eww-x11
+stamp=$state_dir/eww-x11.sha256
+archive=$cache_dir/source-$checksum.tar.gz
+build_args=(build --release --locked --no-default-features --features x11 --package eww)
+if "$offline"; then build_args+=(--offline); fi
+
+printf 'Eww X11 %s\nSource: %s\nSHA-256: %s\nInstall: %s\n' "$version" "$url" "$checksum" "$target"
+printf 'Build: cargo'
+printf ' %q' "${build_args[@]}"
+printf '\n'
+if "$dry_run"; then exit 0; fi
+((EUID != 0)) && [[ -z ${SUDO_USER:-} ]] || fail 'Run the source build as your desktop user, without sudo'
+
+expected_digest=''
+if [[ -e $target || -L $target ]]; then
+  [[ -f $target && ! -L $target && -f $stamp ]] || fail "Refusing to replace unmanaged executable: $target"
+  read -r installed_source installed_binary <"$stamp" || fail "Invalid installation stamp: $stamp"
+  expected_digest=$(digest "$target")
+  [[ $expected_digest == "$installed_binary" ]] || fail "Refusing to replace modified executable: $target"
+  if [[ $installed_source == "$checksum" ]]; then
+    printf 'Already installed from this source archive.\n'
+    exit 0
+  fi
+fi
+
+printf 'Build and install the executable above? Type yes: '
+IFS= read -r answer && [[ $answer == yes ]] || fail 'Cancelled'
+for dependency in cargo pkg-config; do
+  command -v "$dependency" >/dev/null || fail "Missing $dependency; run ./install packages --group eww-build as root"
+done
+pkg-config --exists gtk+-3.0 gdk-x11-3.0 dbusmenu-gtk3-0.4 ||
+  fail 'Missing development libraries; run ./install packages --group eww-build as root'
+
+mkdir -p -- "$cache_dir"
+work_dir=$(mktemp -d "$cache_dir/build.XXXXXX")
+staging=''
+trap '[[ -z $staging ]] || rm -f -- "$staging"; rm -rf -- "$work_dir"' EXIT
+if [[ ! -f $archive ]]; then
+  if "$offline"; then fail "Source archive is not cached: $archive"; fi
+  curl --fail --location --retry 3 --proto '=https' --tlsv1.2 --output "$work_dir/source.tar.gz" "$url"
+  [[ $(digest "$work_dir/source.tar.gz") == "$checksum" ]] || fail 'Source SHA-256 mismatch; nothing installed'
+  mv -- "$work_dir/source.tar.gz" "$archive"
+fi
+[[ $(digest "$archive") == "$checksum" ]] || fail "Source SHA-256 mismatch: $archive"
+tar --extract --gzip --file "$archive" --strip-components=1 --directory "$work_dir"
+(
+  cd -- "$work_dir"
+  CARGO_HOME="$cache_dir/cargo" CARGO_TARGET_DIR="$cache_dir/target" \
+    CARGO_BUILD_JOBS="${CARGO_BUILD_JOBS:-2}" cargo "${build_args[@]}"
+)
+
+if [[ -e $target || -L $target ]]; then
+  [[ -n $expected_digest && -f $target && ! -L $target ]] &&
+    [[ $(digest "$target") == "$expected_digest" ]] ||
+    fail "Refusing to replace an executable changed during compilation: $target"
+elif [[ -n $expected_digest ]]; then
+  fail "Executable disappeared during compilation: $target"
+fi
+mkdir -p -- "$target_dir" "$state_dir"
+staging=$(mktemp "$target_dir/.eww-x11.XXXXXX")
+install -m 0755 -- "$cache_dir/target/release/eww" "$staging"
+mv -f -- "$staging" "$target"
+printf '%s %s\n' "$checksum" "$(digest "$target")" >"$stamp"
+"$target" --version
+printf 'Installed: %s\n' "$target"

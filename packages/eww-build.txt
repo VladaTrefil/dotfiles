@@ -1,0 +1,9 @@
+# Opt-in Eww X11 source-build dependencies; used by bin/install-eww-x11.
+cargo
+rust
+gcc
+pkgconf-pkg-config
+jq
+gtk3-devel
+libX11-devel
+libdbusmenu-gtk3-devel

@@ -1,0 +1,10 @@
+window {
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  border: 2px solid #cba6f7;
+}
+
+label {
+  padding: 24px;
+  font-size: 18px;
+}

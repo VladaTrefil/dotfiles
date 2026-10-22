@@ -1,0 +1,5 @@
+(defwindow drag_test
+  ; Let Sway position the window; dialog geometry would snap it back on movement.
+  :windowtype "dialog"
+  :wm-ignore false
+  (label :text "Eww drag test: hold Alt and drag me"))

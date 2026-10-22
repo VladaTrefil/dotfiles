@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+config_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+if (($# == 0)); then
+  set -- open drag_test
+fi
+
+exec env -u WAYLAND_DISPLAY GDK_BACKEND=x11 XDG_SESSION_TYPE=x11 \
+  "$HOME/.local/bin/eww-x11" --config "$config_dir" "$@"

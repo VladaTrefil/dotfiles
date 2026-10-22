@@ -1,4 +1,4 @@
-# Agent widget implementation handoff
+# Eww agent widget implementation handoff
 
 Snapshot: 2026-10-22, `/home/vlada/Development/dotfiles`.
 
@@ -19,10 +19,10 @@ existing data collection so the counter and the list describe the same agents.
 - The subsequent fix for stale sessions after killing Kitty is included with
   this handoff in `config/eww/bar/scripts/agents` and
   `tests/eww_agents_checks.py`. Preserve it when extending either file.
-- Separate floating-window work landed in commit `ea6e523`, including `bin/install-eww-x11`,
-  `docs/eww-x11.md`, `experiments/`, `packages/eww-build.txt`,
-  `provision/eww-x11.json`, and `tests/eww-x11-test.sh`. Inspect its current state
-  and coordinate with that work; do not overwrite it.
+- Commit `ea6e523` completed the separate X11 Eww build and static-text drag
+  experiment. The executable is installed, and the user tested and accepted the
+  corrected dragging behavior. Reuse this foundation for the floating agent
+  window; the setup, launcher, and geometry caveat are documented below.
 - Installed versions checked during this work: Codex CLI `0.163.0`, Claude Code
   `2.1.302`, and Python `websockets` `15.0.1`. The collector's WebSocket dependency
   is declared as `python3-websockets` in `packages/apps.txt`.
@@ -44,6 +44,9 @@ Recheck `git status` before working; this is an active shared checkout.
 | [Eww configuration checks](../tests/eww-checks.py)    | Includes an exact inventory of main-config window names.                 |
 | [Repository checks](../tests/lint.sh)                 | Runs the collector tests and the broader desktop/config checks.          |
 | [X11 experiment notes](eww-x11.md)                    | Separate Eww build and draggable XWayland window experiment.             |
+| [X11 provisioning command](../bin/install-eww-x11)    | Builds the verified source pin and installs `~/.local/bin/eww-x11`.       |
+| [Drag-test configuration](../experiments/eww-drag/eww.yuck) | Minimal working floating window to extend or copy into a production config. |
+| [Drag-test launcher](../experiments/eww-drag/run)      | Routes commands to the isolated X11 configuration and daemon.            |
 
 The user changed the initial design after testing. The current bar shows a purple
 robot, then joined **waiting first / running second** badges: red waiting and
@@ -53,10 +56,10 @@ The running label currently has the copied tooltip `Waiting agents`; correct tha
 small mismatch when wiring the click interaction.
 
 The existing widget has no button/event handler, no `monitor` argument, and no
-floating agent window. For a main-config popup, propagate the bar's monitor into
-the launcher and extend the popup helper's whitelist/toggle logic. If the new
-window uses the separate X11 daemon, route its commands to that daemon and config
-instead of the bar's `/usr/bin/eww` instance.
+floating agent window. Wire its click action to the separate X11 window launcher
+described below. The existing popup helper toggles the bar daemon's windows;
+reusing it for the new popup requires explicit routing to the X11 binary and
+configuration directory.
 
 ## Current count contract and filtering
 
@@ -282,19 +285,102 @@ all prompts support the same three actions.
 - General questions may require options or free text. Do not turn every
   `waitingOnUserInput` state into a Yes/Always/No permission prompt.
 
-## Floating window coordination
+## Working draggable window foundation
 
-The bar is the packaged Wayland Eww instance. The separate X11 experiment uses
-`~/.local/bin/eww-x11` and its own configuration and daemon through
-`experiments/eww-drag/run`. Its notes explain why the draggable window omits
-`:geometry`: Eww reapplying geometry conflicts with movement, while Sway manages
-initial placement and dragging.
+Use the tested XWayland path as the starting point for the floating agent window.
+The bar continues to use the packaged `/usr/bin/eww` on native Wayland. The
+separately installed `~/.local/bin/eww-x11` is Eww `0.6.0`, compiled from the same
+upstream revision as the packaged build with only the X11 feature enabled.
+XWayland is available in the running Sway session.
 
-Confirm whether the requested floating agent window will use that XWayland path
-or the main Wayland popup path before choosing its launcher. Keep the existing
-Wayland bar working. Coordinate with the other work rather than provisioning a
-second competing solution. Adding a main-config `defwindow` also requires
-updating the window inventory in `tests/eww-checks.py`.
+### Build and provisioning
+
+[The source manifest](../provision/eww-x11.json) pins the full revision, archive
+URL, and SHA-256. [The dependency group](../packages/eww-build.txt) declares
+Cargo/Rust and the GTK, X11, and DBusMenu development packages. Both the
+dependencies and executable have already been installed on this machine.
+
+To reproduce the setup, review the dependency plan and run the packages phase
+as root, preserving its confirmation prompt:
+
+```sh
+./install packages --group eww-build --dry-run
+./install packages --group eww-build
+```
+
+Then run the source provisioning command as the desktop user:
+
+```sh
+bin/install-eww-x11 --dry-run
+bin/install-eww-x11
+```
+
+It verifies the source checksum, uses Cargo's lockfile, and installs a separate
+executable. It reuses an unchanged managed installation and preserves unmanaged
+or modified targets, including changes made while compilation is running.
+`--offline` supports rebuilding from cached source and dependencies. See
+[the build notes](eww-x11.md) for cache locations and build-job controls.
+
+### Reusable widget and launcher
+
+The working [Yuck configuration](../experiments/eww-drag/eww.yuck) is deliberately
+small:
+
+```lisp
+(defwindow drag_test
+  :windowtype "dialog"
+  :wm-ignore false
+  (label :text "Eww drag test: hold Alt and drag me"))
+```
+
+[Its CSS](../experiments/eww-drag/eww.css) supplies the background, border,
+padding, and text size. Sway automatically floats this dialog; no permanent
+window rule was needed. The existing `floating_modifier Mod1` provides
+**Alt + left-drag**.
+
+Use the existing launcher to open, inspect, or stop the experiment:
+
+```sh
+experiments/eww-drag/run
+experiments/eww-drag/run active-windows
+experiments/eww-drag/run close drag_test
+experiments/eww-drag/run kill
+```
+
+The launcher unsets `WAYLAND_DISPLAY`, sets `GDK_BACKEND=x11` and
+`XDG_SESSION_TYPE=x11`, and calls `~/.local/bin/eww-x11` with an explicit
+`--config` directory. That directory identifies the separate Eww daemon.
+Use the launcher as a template for the production agent-window configuration.
+Send every open, close, update, and other popup command to the same binary and
+configuration directory. The bar's existing `eww` variable and popup helper
+currently address its Wayland daemon.
+
+Eww variables are local to each daemon. The X11 window cannot automatically
+reuse the bar daemon's `agent_counts` variable; feed both views from the shared
+collector/bridge described above, and route UI updates to the appropriate daemon.
+
+### Geometry pitfall and verified behavior
+
+**Omit `:geometry` from the draggable dialog.** In the pinned Eww revision,
+non-`normal` X11 windows with geometry register a configure-event handler that
+reapplies their configured position. The first test combined dialog geometry
+with dragging and snapped back to its initial position with very choppy movement.
+Removing geometry lets Sway own placement and movement. Use child-widget/CSS
+sizing, and Sway rules if explicit initial placement is needed.
+
+After the change, Sway reported the window as `type: "floating_con"`,
+`shell: "xwayland"`, class `Eww-x11`, instance `eww-x11`, title
+`Eww - drag_test`, and window type `dialog`. A programmatic Sway move held its new
+position, and the user confirmed the revised manual dragging behavior was
+accepted. Recheck the production window's actual properties before adding Sway
+rules; the class is shared by X11 widgets, so scope rules to the intended window.
+
+The experiment contains static text only and validates dragging during the
+window's lifetime; it does not save positions across closing/reopening. Agent
+rows, terminal targeting, and approval controls remain to be implemented.
+Keep the bar on its existing Wayland instance. A new main-config
+`defwindow` also requires updating the inventory in `tests/eww-checks.py`; the
+isolated experiment is outside that inventory.
 
 ## Validation and next steps
 
@@ -303,7 +389,12 @@ fix. Python formatting, type checking, linting, and spelling checks also passed.
 For a documentation-only handoff, those are the last implementation verification
 results, not a claim that the proposed popup or approvals work.
 
-Start by reading the collector/tests, confirming the floating-window approach,
+The pinned X11 build succeeded, the provisioning tests and repository checks
+passed, and the user accepted the corrected live drag test. The draggable window
+foundation is ready to reuse; approval routing and the actual agent UI remain
+unverified.
+
+Start by reading the collector/tests, reusing the proven XWayland window pattern,
 and proving Codex approval routing with a benign request. Then connect a shared
 session list, stable window targeting, and provider-specific approval bridges to
 the new UI. Preserve the existing count output and no-task/liveness exclusions.
@@ -312,6 +403,7 @@ Run the relevant checks after implementation:
 
 ```sh
 python3 tests/eww_agents_checks.py
+bash tests/eww-x11-test.sh
 tests/lint.sh
 ```
 

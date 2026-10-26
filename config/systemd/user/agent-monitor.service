@@ -1,0 +1,18 @@
+[Unit]
+Description=Agent monitor bridge and Codex approval relay
+PartOf=sway-session.target
+After=sway-session.target
+ConditionEnvironment=SWAYSOCK
+
+[Service]
+Type=exec
+ExecStart=/usr/bin/python3 %h/Development/dotfiles/modules/agent-monitor/bridge serve
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin
+Restart=on-failure
+RestartSec=2
+TimeoutStopSec=5
+Slice=session.slice
+UMask=0077
+
+[Install]
+WantedBy=sway-session.target

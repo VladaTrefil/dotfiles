@@ -185,7 +185,7 @@ links=(.codex/AGENTS.md .claude/CLAUDE.md
 sources=(config/assistants/instructions.md config/assistants/instructions.md
   config/git modules/nvim config/shell/profile config/shell/aliases.sh
   config/shell/inputrc config/zsh config/wgetrc config/zsh/.zshenv)
-for name in asdf stylelint stylua rubocop solargraph npm pry bat lazygit; do
+for name in asdf stylelint stylua rubocop solargraph npm pry bat lazygit zathura; do
     links+=(".config/$name")
     sources+=("config/$name")
 done

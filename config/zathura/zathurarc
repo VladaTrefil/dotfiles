@@ -1,0 +1,8 @@
+# Fit documents to the window width when opening them.
+set adjust-open width
+
+# Copy selected text to the clipboard for pasting with Ctrl+V.
+set selection-clipboard clipboard
+
+# Show the document filename in the window title.
+set window-title-basename true

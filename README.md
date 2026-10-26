@@ -80,6 +80,14 @@ It never cleans directories or replaces an existing link. Python bytecode is
 disabled during linking, so it leaves no interpreter cache in the repository.
 Git may update its own submodule metadata during initialization.
 
+Zathura is the default PDF viewer through the linked `mimeapps.list`.
+The `apps` group includes both `zathura` and its required `zathura-pdf-poppler`
+plugin. For a focused installation, review
+`./install packages --group pdf --dry-run`, then run
+`./install packages --group pdf` as root and `./install link` as your desktop
+user. The linked `config/zathura/zathurarc` fits documents to the window width,
+copies selected text to the clipboard, and shows filenames in window titles.
+
 Codex's `~/.codex/AGENTS.md` and Claude's `~/.claude/CLAUDE.md` share
 `config/assistants/instructions.md`. These global rules require linting and
 formatting changed code with project-local configuration when available, falling

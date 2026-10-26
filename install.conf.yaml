@@ -71,6 +71,7 @@
     $XDG_CONFIG_HOME/gtk-4.0/settings.ini: config/gtk-4.0/settings.ini
     $XDG_CONFIG_HOME/environment.d/50-desktop.conf: config/environment.d/50-desktop.conf
     $XDG_CONFIG_HOME/mimeapps.list: config/mimeapps.list
+    $XDG_CONFIG_HOME/zathura: config/zathura
     $XDG_CONFIG_HOME/zed: config/zed
     $XDG_CONFIG_HOME/autostart/protonmail-bridge.desktop: local/autostart/protonmail-bridge.desktop
     $XDG_CONFIG_HOME/systemd/user/ibus-wayland.service: config/systemd/user/ibus-wayland.service
